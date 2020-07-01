@@ -13,4 +13,12 @@ public class TreeNode {
     public TreeNode(int x){
         this.val = x;
     }
+    public static void display(TreeNode root){
+        if(root != null){
+            display(root.left);
+            display(root.right);
+            System.out.print(root.val+" ");
+        }
+    }
+
 }
