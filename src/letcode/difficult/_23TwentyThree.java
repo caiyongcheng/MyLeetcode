@@ -38,7 +38,7 @@ package letcode.difficult;
  }
 
 
-public class TwentyThree {
+public class _23TwentyThree {
 
 
      static ListNode[] slists;
