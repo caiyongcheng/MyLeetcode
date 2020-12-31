@@ -1,4 +1,4 @@
-package letcode.easy;
+package normal.easy;
 
 
 class Node{

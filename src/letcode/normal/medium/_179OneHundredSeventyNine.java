@@ -1,25 +1,16 @@
 package normal.medium;
 
+import java.util.Arrays;
+
 /**
  * @program: Leetcode
- * @description: 给定一组非负整数 nums，重新排列它们每位数字的顺序使之组成一个最大的整数。  注意：输出结果可能非常大，所以你需要返回一个字符串而不是整数。
+ * @description: 给定一组非负整数 nums，重新排列它们每位数字的顺序使之组成一个最大的整数。
+ * 注意：输出结果可能非常大，所以你需要返回一个字符串而不是整数。
  * @author: 蔡永程
  * @create: 2020-10-16 15:34
  */
 public class _179OneHundredSeventyNine {
 
-
-    private int[] numChars = new int[10];
-
-    private void parseNUm(int num) {
-        if (num == 0) {
-            numChars[0]++;
-        }
-        while (num > 0) {
-            numChars[num%10]++;
-            num/=10;
-        }
-    }
 
     /**
      * 示例 1：
@@ -41,19 +32,33 @@ public class _179OneHundredSeventyNine {
      * @return
      */
     public String largestNumber(int[] nums) {
-        for (int num : nums) {
-            parseNUm(num);
+        Integer[] nums1 = new Integer[nums.length];
+        for (int index = 0; index < nums.length; index++) {
+            nums1[index] = nums[index];
         }
-        StringBuffer stringBuffer = new StringBuffer();
-        for (int i=9; i>-1; --i) {
-            for (int j=0; j<numChars[i]; ++j){
-                stringBuffer.append(i);
+        Arrays.sort(nums1, (o1, o2) -> {
+            if (o1.intValue() == o2.intValue()) {
+                return 0;
             }
+            String astr = o1 + "";
+            String bstr = o2 + "";
+            int index = 0;
+            int minLength = Math.min(astr.length(), bstr.length());
+            while (index < minLength) {
+                if (astr.charAt(index) > bstr.charAt(index)) {
+                    return -1;
+                } else if (astr.charAt(index) < bstr.charAt(index)) {
+                    return 1;
+                }
+                ++index;
+            }
+            return index >= astr.length() ? -1 : 1;
+        });
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (Integer integer : nums1) {
+            stringBuilder.append(integer);
         }
-        if (stringBuffer.length() == 0 || stringBuffer.charAt(0) == '0') {
-            return "0";
-        }
-        return stringBuffer.toString();
+        return stringBuilder.toString();
     }
 
     public static void main(String[] args) {
