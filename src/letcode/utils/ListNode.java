@@ -12,27 +12,63 @@ public class ListNode {
     public int val;
     public ListNode next;
     public ListNode(int x) { val = x; }
+    public String prefix = "[";
+    public String suffix = "\t]";
+    public String separator = "\t";
 
     public ListNode(int[] nums){
-        ListNode head = new ListNode(1);
-        ListNode p = head;
-        int n = nums.length-1;
+
         this.val = nums[0];
-        for(int i=1; i<n; ++i){
-            head.next = new ListNode(nums[i]);
-            head = head.next;
+        for (int i = nums.length - 1; i >= 1; i--) {
+            ListNode listNode = new ListNode(nums[i]);
+            listNode.next = this.next;
+            this.next = listNode;
         }
-        head.next = new ListNode(nums[n]);
-        this.next = p.next;
     }
 
     public void display(){
+        display(prefix, suffix, separator);
+    }
+
+    public void display(String prefix, String suffix, String separator){
         ListNode head = this;
-        System.out.print("[\t");
+        System.out.print(prefix);
         while (head != null){
-            System.out.print(head.val+"\t");
+            System.out.print(separator + head.getVal());
             head = head.next;
         }
-        System.out.println("]");
+        System.out.println(suffix);
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
+
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
+    }
+
+    public int getVal() {
+        return val;
+    }
+
+    public void setVal(int val) {
+        this.val = val;
+    }
+
+    public ListNode getNext() {
+        return next;
+    }
+
+    public void setNext(ListNode next) {
+        this.next = next;
     }
 }
