@@ -7,5 +7,5 @@ package normal.medium;
  * @author: 蔡永程
  * @create: 2020-12-22 10:50
  */
-public class _N103OneHundredThree {
+public class N_103OneHundredThree {
 }
