@@ -26,7 +26,7 @@ public class _38ThirtyEight {
      * 输入: 1
      * 输出: "1"
      * 解释：这是一个基本样例。
-     *
+     * <p>
      * 示例 2:
      * 输入: 4
      * 输出: "1211"
@@ -47,18 +47,18 @@ public class _38ThirtyEight {
         int j;
         int length;
         char ch;
-        for(k = 1; k<n; ++k){
+        for (k = 1; k < n; ++k) {
             y = new StringBuilder();
             length = x.length();
-            for(i=0; i<length; ){
+            for (i = 0; i < length; ) {
                 ch = x.charAt(i);
-                for(j=i+1; j<length;++j){
-                    if(x.charAt(j) != ch) break;
+                for (j = i + 1; j < length; ++j) {
+                    if (x.charAt(j) != ch) break;
                 }
-                y.append((char)('0'+(j-i))).append(ch);
-                i=j;
+                y.append((char) ('0' + (j - i))).append(ch);
+                i = j;
             }
-            x=y;
+            x = y;
         }
         return y.toString();
     }

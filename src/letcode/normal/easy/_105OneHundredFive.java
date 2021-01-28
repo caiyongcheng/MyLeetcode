@@ -9,7 +9,7 @@ package letcode.easy;
  */
 public class _105OneHundredFive {
 
-    public static boolean isLegal(char ch){
+    public static boolean isLegal(char ch) {
         if (ch >= '0' && ch <= '9') {
             return true;
         }
@@ -29,34 +29,35 @@ public class _105OneHundredFive {
      * 示例 2:
      * 输入: "race a car"
      * 输出: false
+     *
      * @param s
      * @return
      */
     public static boolean isPalindrome(String s) {
-        if (s==null || s.length() == 0 || s.length() == 1) {
+        if (s == null || s.length() == 0 || s.length() == 1) {
             return true;
         }
         int left = 0;
-        int right = s.length()-1;
+        int right = s.length() - 1;
         int t = 0;
         char leftch = '0';
         char rightch = '0';
-        while (left <= right){
-            while (left<=right){
+        while (left <= right) {
+            while (left <= right) {
                 leftch = s.charAt(left);
                 if (isLegal(leftch)) break;
                 ++left;
             }
             if (left > right) break;
-            while (left<=right){
+            while (left <= right) {
                 rightch = s.charAt(right);
                 if (isLegal(rightch)) break;
                 --right;
             }
             if (left > right) break;
             t = Math.abs(leftch - rightch);
-            if(t!=0 && t!=32) return false;
-            if(t==32 && ((leftch >= '0' && leftch <= '9') || (rightch >= '0' && rightch <= '9')))
+            if (t != 0 && t != 32) return false;
+            if (t == 32 && ((leftch >= '0' && leftch <= '9') || (rightch >= '0' && rightch <= '9')))
                 return false;
             ++left;
             --right;

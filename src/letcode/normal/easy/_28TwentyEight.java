@@ -16,14 +16,15 @@ public class _28TwentyEight {
      * 示例 1:
      * 输入: haystack = "hello", needle = "ll"
      * 输出: 2
-     *
+     * <p>
      * 示例 2:
      * 输入: haystack = "aaaaa", needle = "bba"
      * 输出: -1
      * 说明:
-     *
+     * <p>
      * 当 needle 是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。
      * 对于本题而言，当 needle 是空字符串时我们应当返回 0 。这与C语言的 strstr() 以及 Java的 indexOf() 定义相符。
+     *
      * @param haystack
      * @param needle
      * @return
@@ -42,28 +43,28 @@ public class _28TwentyEight {
         int sn = haystack.length();
         int[] next = new int[pn];
         next[0] = -1;
-        while (i < pn -1){
-            if(k==-1 || next[i] == next[k]){
+        while (i < pn - 1) {
+            if (k == -1 || next[i] == next[k]) {
                 i++;
                 k++;
                 next[i] = k;
-            }else{
+            } else {
                 k = next[k];
             }
         }
         i = 0;
         k = 0;
-        while (i<sn && k<pn){
-            if(k==-1 || haystack.charAt(i) == needle.charAt(k)){
-                System.out.println(i + "  " +k);
+        while (i < sn && k < pn) {
+            if (k == -1 || haystack.charAt(i) == needle.charAt(k)) {
+                System.out.println(i + "  " + k);
                 ++i;
                 ++k;
-            }else{
+            } else {
                 k = next[k];
             }
         }
         System.out.println(Arrays.toString(next));
-        if(k >= pn) return i - k;
+        if (k >= pn) return i - k;
         return -1;
     }
 
@@ -72,6 +73,6 @@ public class _28TwentyEight {
          * "mississippi"
          * "issip"
          */
-        System.out.println(strStrUseKMP("mississippi","issip"));
+        System.out.println(strStrUseKMP("mississippi", "issip"));
     }
 }

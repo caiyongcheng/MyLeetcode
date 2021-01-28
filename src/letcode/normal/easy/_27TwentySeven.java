@@ -16,12 +16,13 @@ public class _27TwentySeven {
      * 给定 nums = [3,2,2,3], val = 3,
      * 函数应该返回新的长度 2, 并且 nums 中的前两个元素均为 2。
      * 你不需要考虑数组中超出新长度后面的元素。
-     *
+     * <p>
      * 示例 2:
      * 给定 nums = [0,1,2,2,3,0,4,2], val = 2,
      * 函数应该返回新的长度 5, 并且 nums 中的前五个元素为 0, 1, 3, 0, 4。
      * 注意这五个元素可为任意顺序。
      * 你不需要考虑数组中超出新长度后面的元素。
+     *
      * @param nums
      * @param val
      * @return
@@ -29,14 +30,14 @@ public class _27TwentySeven {
 
     public static int removeElement(int[] nums, int val) {
         int left = 0;
-        int border = nums.length-1;
-        while (left <= border){
+        int border = nums.length - 1;
+        while (left <= border) {
             // if index < left => nums[index] != var
-            if(nums[left] == val){
+            if (nums[left] == val) {
                 // exit: 1.border < left    2.nums[border] != var && border > left
                 while (border >= left && nums[border] == val) --border;
                 // if border < left => nums[left] is last val => [0,left-1] is not val array => border is left
-                if(border < left ) break;
+                if (border < left) break;
                 // else nums[border] != var && border > left
                 nums[left] = nums[border];
                 --border;
@@ -49,7 +50,7 @@ public class _27TwentySeven {
     public static void main(String[] args) {
         int[] ints = new int[]{2};
         int length = removeElement(ints, 2);
-        for(int i=0; i<length; ++i){
+        for (int i = 0; i < length; ++i) {
             System.out.print(ints[i] + " ");
         }
     }

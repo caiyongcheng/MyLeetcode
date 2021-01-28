@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,23 +20,6 @@ import java.util.List;
 public class _49FourtyNine {
 
 
-    public List<List<String>> groupAnagrams(String[] strs) {
-        HashMap<String, List<String>> stringListHashMap = new HashMap<>(strs.length);
-        for (String str : strs) {
-            byte[] bytes = str.getBytes();
-            Arrays.sort(bytes);
-            String sortStr = new String(bytes);
-            if (stringListHashMap.containsKey(sortStr)) {
-                stringListHashMap.get(sortStr).add(str);
-            }else{
-                ArrayList<String> strings = new ArrayList<>();
-                strings.add(str);
-                stringListHashMap.put(sortStr, strings);
-            }
-        }
-        return new ArrayList<>(stringListHashMap.values());
-    }
-
     public static void main(String[] args) {
         String[] strings = new String[]{
                 "eat", "tea", "tan", "ate", "nat", "bat"
@@ -48,6 +31,23 @@ public class _49FourtyNine {
             }
             System.out.println();
         }
+    }
+
+    public List<List<String>> groupAnagrams(String[] strs) {
+        HashMap<String, List<String>> stringListHashMap = new HashMap<>(strs.length);
+        for (String str : strs) {
+            byte[] bytes = str.getBytes();
+            Arrays.sort(bytes);
+            String sortStr = new String(bytes);
+            if (stringListHashMap.containsKey(sortStr)) {
+                stringListHashMap.get(sortStr).add(str);
+            } else {
+                ArrayList<String> strings = new ArrayList<>();
+                strings.add(str);
+                stringListHashMap.put(sortStr, strings);
+            }
+        }
+        return new ArrayList<>(stringListHashMap.values());
     }
 
 }

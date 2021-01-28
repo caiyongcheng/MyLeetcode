@@ -19,10 +19,10 @@ public class _6Six {
 
 
     /**
-     *示例 1:
+     * 示例 1:
      * 输入: s = "LEETCODEISHIRING", numRows = 3
      * 输出: "LCIRETOESIIGEDHN"
-     *
+     * <p>
      * 示例 2:
      * 输入: s = "LEETCODEISHIRING", numRows = 4
      * 输出: "LDREOEIIECIHNTSG"
@@ -34,28 +34,29 @@ public class _6Six {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/zigzag-conversion
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param s
      * @param numRows
      * @return
      */
     public static String convert(String s, int numRows) {
-        if(numRows <= 1 || s.length() == 0) return s;
+        if (numRows <= 1 || s.length() == 0) return s;
         int n = s.length();
         int i = 0;
         int j = 0;
         int t = 0;
-        int step = 2*numRows-2;
+        int step = 2 * numRows - 2;
         StringBuilder stringBuilder = new StringBuilder();
         // 依次填充每一行
-        for(; i<numRows; ++i){
-            for(j=0; j<=n/step; ++j){
-                t = j*step+i;
-                if(t<n){
+        for (; i < numRows; ++i) {
+            for (j = 0; j <= n / step; ++j) {
+                t = j * step + i;
+                if (t < n) {
                     //填充每行的开头
                     stringBuilder.append(s.charAt(t));
                     //下一个字符
-                    t += step-i*2;
-                    if(i!=0 && i!=numRows-1 && t<n){
+                    t += step - i * 2;
+                    if (i != 0 && i != numRows - 1 && t < n) {
                         stringBuilder.append(s.charAt(t));
                     }
                 }
@@ -68,7 +69,6 @@ public class _6Six {
         String leetcodeishiring = convert("LsET", 2);
         System.out.println(leetcodeishiring);
     }
-
 
 
 }

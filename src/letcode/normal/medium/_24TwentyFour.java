@@ -16,6 +16,7 @@ public class _24TwentyFour {
     /**
      * 示例:
      * 给定 1->2->3->4, 你应该返回 2->1->4->3
+     *
      * @param head
      * @return
      */
@@ -24,7 +25,7 @@ public class _24TwentyFour {
         ListNode p = phead;
         ListNode tmp;
         phead.next = head;
-        while (p!=null && p.next!=null && p.next.next!=null){
+        while (p != null && p.next != null && p.next.next != null) {
             tmp = p.next.next;
             p.next.next = p.next.next.next;
             tmp.next = p.next;
@@ -35,12 +36,10 @@ public class _24TwentyFour {
     }
 
     public static void main(String[] args) {
-        ListNode listNode = new ListNode(new int[]{1,2,3,4});
+        ListNode listNode = new ListNode(new int[]{1, 2, 3, 4});
         listNode.display();
         swapPairs(listNode).display();
     }
-
-
 
 
 }

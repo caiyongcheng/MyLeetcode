@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -20,22 +20,6 @@ import java.util.Comparator;
  */
 public class _452FourHundredFiftyTwo {
 
-    public int findMinArrowShots(int[][] points) {
-        if (points.length < 2) {
-            return points.length;
-        }
-        Arrays.sort(points, Comparator.comparingInt(array -> array[1]));
-        int limitValue = points[0][1];
-        int count = 1;
-        for (int[] point : points) {
-            if (point[0] > limitValue) {
-                ++count;
-                limitValue = point[1];
-            }
-        }
-        return count;
-    }
-
     /**
      * 示例 1：
      * 输入：points = {{10,16},{2,8},{1,6},{7,12}}
@@ -56,11 +40,28 @@ public class _452FourHundredFiftyTwo {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param args
      */
     public static void main(String[] args) {
         System.out.println(new _452FourHundredFiftyTwo().findMinArrowShots(
-                new int[][]{{10,16},{2,8},{1,6},{7,12}}
+                new int[][]{{10, 16}, {2, 8}, {1, 6}, {7, 12}}
         ));
+    }
+
+    public int findMinArrowShots(int[][] points) {
+        if (points.length < 2) {
+            return points.length;
+        }
+        Arrays.sort(points, Comparator.comparingInt(array -> array[1]));
+        int limitValue = points[0][1];
+        int count = 1;
+        for (int[] point : points) {
+            if (point[0] > limitValue) {
+                ++count;
+                limitValue = point[1];
+            }
+        }
+        return count;
     }
 }

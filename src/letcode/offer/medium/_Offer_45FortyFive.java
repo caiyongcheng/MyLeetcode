@@ -11,12 +11,25 @@ import java.util.Arrays;
 public class _Offer_45FortyFive {
 
 
+    /**
+     * 示例 1:
+     * 输入: [10,2]
+     * 输出: "102"
+     * 示例 2:
+     * 输入: [3,30,34,5,9]
+     * 输出: "3033459"
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+
+    }
 
     public int compare(String x, String y) {
         final char xc = x.charAt(0);
         final char yc = y.charAt(0);
         if (xc == yc) {
-            return (x+y).compareTo((y+x));
+            return (x + y).compareTo((y + x));
         }
         if (xc < yc) {
             return -1;
@@ -38,20 +51,6 @@ public class _Offer_45FortyFive {
             System.out.print(strings[i] + " ");
         }
         return stringBuilder.toString();
-    }
-
-
-    /**
-     * 示例 1:
-     * 输入: [10,2]
-     * 输出: "102"
-     * 示例 2:
-     * 输入: [3,30,34,5,9]
-     * 输出: "3033459"
-     * @param args
-     */
-    public static void main(String[] args) {
-
     }
 
 

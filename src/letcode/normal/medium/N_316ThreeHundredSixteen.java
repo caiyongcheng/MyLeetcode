@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.LinkedList;
 
@@ -12,6 +12,20 @@ import java.util.LinkedList;
 public class N_316ThreeHundredSixteen {
 
 
+    /**
+     * 示例 1：
+     * 输入：s = "bcabc"
+     * 输出："abc"
+     * 示例 2：
+     * 输入：s = "cbacdcbc"
+     * 输出："acdb"
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(new N_316ThreeHundredSixteen().removeDuplicateLetters("cbacdcbc"));
+    }
+
     public String removeDuplicateLetters(String s) {
         boolean[] isUse = new boolean[23];
         LinkedList<Character> linkedList = new LinkedList<>();
@@ -20,16 +34,16 @@ public class N_316ThreeHundredSixteen {
         int size = -1;
         StringBuilder stringBuilder = new StringBuilder();
         for (index = 0; index < charArray.length; index++) {
-            isUse[charArray[index]-'a'] = true;
+            isUse[charArray[index] - 'a'] = true;
         }
         for (boolean b : isUse) {
-            if (b){
+            if (b) {
                 ++size;
             }
         }
         for (index = charArray.length - 1; index >= 0 && size > -1; index--) {
-            if (isUse[charArray[index]-'a']){
-                isUse[charArray[index]-'a'] = false;
+            if (isUse[charArray[index] - 'a']) {
+                isUse[charArray[index] - 'a'] = false;
                 --size;
                 linkedList.add(0, charArray[index]);
             }
@@ -48,19 +62,6 @@ public class N_316ThreeHundredSixteen {
             stringBuilder.append(character);
         }
         return stringBuilder.toString();
-    }
-
-    /**
-     * 示例 1：
-     * 输入：s = "bcabc"
-     * 输出："abc"
-     * 示例 2：
-     * 输入：s = "cbacdcbc"
-     * 输出："acdb"
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new N_316ThreeHundredSixteen().removeDuplicateLetters("cbacdcbc"));
     }
 
 

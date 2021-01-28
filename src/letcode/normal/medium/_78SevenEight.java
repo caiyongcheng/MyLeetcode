@@ -17,15 +17,15 @@ public class _78SevenEight {
     private static ArrayList<Integer> list;
     private static int[] data;
 
-    private static void dfs(int startIndex){
-        if (startIndex >= data.length){
+    private static void dfs(int startIndex) {
+        if (startIndex >= data.length) {
             return;
         }
-        for (; startIndex<data.length; ++startIndex){
+        for (; startIndex < data.length; ++startIndex) {
             list.add(data[startIndex]);
             lists.add(new ArrayList<>(list));
-            dfs(startIndex+1);
-            list.remove(list.size()-1);
+            dfs(startIndex + 1);
+            list.remove(list.size() - 1);
         }
     }
 
@@ -34,7 +34,7 @@ public class _78SevenEight {
      * 输入: nums = [1,2,3]
      * 输出:
      * [
-     *   [3],
+     * [3],
      *   [1],
      *   [2],
      *   [1,2,3],
@@ -43,12 +43,13 @@ public class _78SevenEight {
      *   [1,2],
      *   []
      * ]
+     *
      * @param nums
      * @return
      */
     public static List<List<Integer>> subsets(int[] nums) {
         list = new ArrayList<>(nums.length);
-        lists = new ArrayList<List<Integer>>(1<<nums.length);
+        lists = new ArrayList<List<Integer>>(1 << nums.length);
         lists.add(new ArrayList<>(list));
         data = nums;
         dfs(0);

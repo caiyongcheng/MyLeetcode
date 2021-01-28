@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.ArrayList;
 
@@ -18,8 +18,18 @@ import java.util.ArrayList;
 public class _71SeventyOne {
 
 
+    public static void main(String[] args) {
+        ArrayList<Integer> integers = new ArrayList<>();
+        ArrayList<String> strings = new ArrayList<>();
+        integers.add(1);
+        strings.add("1");
+        System.out.println(integers.get(0).getClass());
+        System.out.println(strings.get(0).getClass());
+    }
+
     /**
      * 格式化路径
+     *
      * @param path
      * @return
      */
@@ -32,21 +42,12 @@ public class _71SeventyOne {
         if (path.charAt(0) == '/') {
             path = path.substring(1);
         }
-        if (path.charAt(length-1) == '/') {
-            path = path.substring(0, length-1);
+        if (path.charAt(length - 1) == '/') {
+            path = path.substring(0, length - 1);
         }
         String[] split = path.split("/");
         return null;
 
-    }
-
-    public static void main(String[] args) {
-        ArrayList<Integer> integers = new ArrayList<>();
-        ArrayList<String> strings = new ArrayList<>();
-        integers.add(1);
-        strings.add("1");
-        System.out.println(integers.get(0).getClass());
-        System.out.println(strings.get(0).getClass());
     }
 
 }

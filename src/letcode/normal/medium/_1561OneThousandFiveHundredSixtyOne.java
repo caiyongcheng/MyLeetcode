@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.Arrays;
 
@@ -18,19 +18,19 @@ import java.util.Arrays;
 public class _1561OneThousandFiveHundredSixtyOne {
 
 
+    public static void main(String[] args) {
+        System.out.println(new _1561OneThousandFiveHundredSixtyOne().maxCoins(
+                new int[]{9, 8, 7, 6, 5, 1, 2, 3, 4}
+        ));
+    }
+
     public int maxCoins(int[] piles) {
         Arrays.sort(piles);
         int result = 0;
-        for (int index = piles.length/3; index < piles.length; index+=2) {
+        for (int index = piles.length / 3; index < piles.length; index += 2) {
             result += piles[index];
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new _1561OneThousandFiveHundredSixtyOne().maxCoins(
-                new int[]{9,8,7,6,5,1,2,3,4}
-        ));
     }
 
 }

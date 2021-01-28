@@ -1,6 +1,4 @@
-package normal.medium;
-
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+package letcode.normal.medium;
 
 import java.util.HashMap;
 
@@ -32,7 +30,7 @@ public class N_322ThreeHundredTwentyTwo {
         }
         while (remainAount >= coins[coinsIndex]) {
             remainAount -= coins[coinsIndex];
-            key = remainAount + "_" + coins[coinsIndex+1];
+            key = remainAount + "_" + coins[coinsIndex + 1];
             if (cache.containsKey(key)
                     && cache.get(key) < minCost) {
 

@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,28 +16,29 @@ import java.util.List;
  */
 public class _424FourHundredTwentyFour {
 
-    public List<Integer> findDuplicates(int[] nums) {
-        final ArrayList<Integer> integers = new ArrayList<>(nums.length);
-        for (int num : nums) {
-            if (nums[Math.abs(num)-1] < 0) {
-                integers.add(Math.abs(num));
-            }
-            nums[Math.abs(num)-1] = -nums[Math.abs(num)-1];
-        }
-        return integers;
-    }
-
     /**
      * 输入:
      * [4,3,2,7,8,2,3,1]
      * 输出:
      * [2,3]
+     *
      * @param args
      */
     public static void main(String[] args) {
         System.out.println(new _424FourHundredTwentyFour().findDuplicates(
-                new int[]{4,3,2,7,8,2,3,1}
+                new int[]{4, 3, 2, 7, 8, 2, 3, 1}
         ));
+    }
+
+    public List<Integer> findDuplicates(int[] nums) {
+        final ArrayList<Integer> integers = new ArrayList<>(nums.length);
+        for (int num : nums) {
+            if (nums[Math.abs(num) - 1] < 0) {
+                integers.add(Math.abs(num));
+            }
+            nums[Math.abs(num) - 1] = -nums[Math.abs(num) - 1];
+        }
+        return integers;
     }
 
 }

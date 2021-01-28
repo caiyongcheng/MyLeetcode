@@ -15,12 +15,13 @@ public class _69SixtyNine {
      * 示例 1:
      * 输入: 4
      * 输出: 2
-     *
+     * <p>
      * 示例 2:
      * 输入: 8
      * 输出: 2
      * 说明: 8 的平方根是 2.82842...,
      *      由于返回类型是整数，小数部分将被舍去。
+     *
      * @param x
      * @return
      */
@@ -37,7 +38,7 @@ public class _69SixtyNine {
             }
             x0 = xi;
         }
-        return (int)x0;
+        return (int) x0;
     }
 
     public static void main(String[] args) {

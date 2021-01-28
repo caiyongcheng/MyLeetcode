@@ -9,17 +9,6 @@ package normal.easy;
 public class _191OneHundredNinetyOne {
 
 
-    public int hammingWeight(int n) {
-        int binary = 1;
-        int result = n < 0 ? 1 : 0;
-        for (int i=0; i<31; ++i){
-            System.out.println(binary);
-            result += (n&binary)>>i;
-            binary <<= 1;
-        }
-        return result;
-    }
-
     /**
      * 示例 1：
      * 输入：00000000000000000000000000001011
@@ -36,11 +25,23 @@ public class _191OneHundredNinetyOne {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/number-of-1-bits
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param args
      */
     public static void main(String[] args) {
         System.out.println(new _191OneHundredNinetyOne().
-                hammingWeight(Integer.parseUnsignedInt("11111111111111111111111111111101",2)));
+                hammingWeight(Integer.parseUnsignedInt("11111111111111111111111111111101", 2)));
+    }
+
+    public int hammingWeight(int n) {
+        int binary = 1;
+        int result = n < 0 ? 1 : 0;
+        for (int i = 0; i < 31; ++i) {
+            System.out.println(binary);
+            result += (n & binary) >> i;
+            binary <<= 1;
+        }
+        return result;
     }
 
 }

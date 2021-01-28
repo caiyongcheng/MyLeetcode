@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.Arrays;
 
@@ -12,22 +12,29 @@ import java.util.Arrays;
 public class _179OneHundredSeventyNine {
 
 
+    public static void main(String[] args) {
+        System.out.println(new _179OneHundredSeventyNine().largestNumber(new int[]{
+                3, 30, 34, 5, 9
+        }));
+    }
+
     /**
      * 示例 1：
      * 输入：nums = [10,2]
      * 输出："210"
-     *
+     * <p>
      * 示例 2：
      * 输入：nums = [3,30,34,5,9]
      * 输出："9534330"
-     *
+     * <p>
      * 示例 3：
      * 输入：nums = [1]
      * 输出："1"
-     *
+     * <p>
      * 示例 4：
      * 输入：nums = [10]
      * 输出："10"
+     *
      * @param nums
      * @return
      */
@@ -59,11 +66,5 @@ public class _179OneHundredSeventyNine {
             stringBuilder.append(integer);
         }
         return stringBuilder.toString();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new _179OneHundredSeventyNine().largestNumber(new int[]{
-                3,30,34,5,9
-        }));
     }
 }

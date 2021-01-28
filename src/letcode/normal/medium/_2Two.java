@@ -14,9 +14,6 @@ import letcode.utils.ListNode;
  */
 
 
-
-
-
 public class _2Two {
     /**
      * 示例：
@@ -32,38 +29,38 @@ public class _2Two {
         /*
         计算公共部分
          */
-        while (l1 != null && l2 !=null){
-            i =  (l1.val+l2.val+j)%10;
+        while (l1 != null && l2 != null) {
+            i = (l1.val + l2.val + j) % 10;
             p.next = new ListNode(i);
-            j = (l1.val+l2.val+j)/10;
+            j = (l1.val + l2.val + j) / 10;
             l1 = l1.next;
             l2 = l2.next;
             p = p.next;
         }
-        while (l2 != null){
-            i = (l2.val+j)%10;
-            p.next =  new ListNode(i);
-            j = (l2.val+j)/10;
+        while (l2 != null) {
+            i = (l2.val + j) % 10;
+            p.next = new ListNode(i);
+            j = (l2.val + j) / 10;
             l2 = l2.next;
             p = p.next;
         }
-        while (l1 != null){
-            i = (l1.val+j)%10;
-            p.next =  new ListNode(i);
-            j = (l1.val+j)/10;
+        while (l1 != null) {
+            i = (l1.val + j) % 10;
+            p.next = new ListNode(i);
+            j = (l1.val + j) / 10;
             l1 = l1.next;
             p = p.next;
         }
-        if(j==1){
+        if (j == 1) {
             p.next = new ListNode(1);
         }
         return res.next;
     }
 
-    public static void printListNode(ListNode a){
-        if (a==null) {
+    public static void printListNode(ListNode a) {
+        if (a == null) {
             System.out.println();
-        }else{
+        } else {
             System.out.print(a.val);
             printListNode(a.next);
         }
@@ -81,7 +78,7 @@ public class _2Two {
 
         ListNode c = addTwoNumbers(a, b);
         printListNode(c);
-        
+
         printListNode(a);
         printListNode(b);
     }

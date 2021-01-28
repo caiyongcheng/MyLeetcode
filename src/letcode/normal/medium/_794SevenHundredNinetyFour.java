@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 /**
  * @program: Leetcode
@@ -17,13 +17,43 @@ package normal.medium;
 public class _794SevenHundredNinetyFour {
 
 
+    /**
+     * 示例 1:
+     * 输入: board = ["O  ", "   ", "   "]
+     * 输出: false
+     * 解释: 第一个玩家总是放置“X”。
+     * <p>
+     * 示例 2:
+     * 输入: board = ["XOX", " X ", "   "]
+     * 输出: false
+     * 解释: 玩家应该是轮流放置的。
+     * <p>
+     * 示例 3:
+     * 输入: board = ["XXX", "   ", "OOO"]
+     * 输出: false
+     * <p>
+     * 示例 4:
+     * 输入: board = ["XOX", "O O", "XOX"]
+     * 输出: true
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/valid-tic-tac-toe-state
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        final String[] strings = new String[]{"OXX", "XOX", "OXO"};
+        System.out.println(new _794SevenHundredNinetyFour().validTicTacToe(strings));
+    }
+
     public boolean validTicTacToe(String[] board) {
 
         int isfunishX = 0;
         int isfunishO = 0;
         int xAcount = 0;
         int oAcount = 0;
-        
+
 
         final char[][] boards = new char[3][3];
         for (int i = 0; i < board.length; i++) {
@@ -63,60 +93,31 @@ public class _794SevenHundredNinetyFour {
             if (isfunishX != 0 && isfunishO != 0) {
                 return false;
             }
-            for (int j = i+1; j<3; ++j) {
+            for (int j = i + 1; j < 3; ++j) {
                 if (boards[i][j] == 'X') {
                     ++xAcount;
-                } else if (boards[i][j] == 'O'){
+                } else if (boards[i][j] == 'O') {
                     ++oAcount;
                 }
                 if (boards[j][i] == 'X') {
                     ++xAcount;
-                } else if (boards[j][i] == 'O'){
+                } else if (boards[j][i] == 'O') {
                     ++oAcount;
                 }
             }
             if (boards[i][i] == 'X') {
                 ++xAcount;
-            } else if (boards[i][i] == 'O'){
+            } else if (boards[i][i] == 'O') {
                 ++oAcount;
             }
         }
         if (isfunishX > 0) {
-            return xAcount -1 == oAcount;
+            return xAcount - 1 == oAcount;
         }
         if (isfunishO > 0) {
             return xAcount == oAcount;
         }
         return xAcount == oAcount || xAcount - 1 == oAcount;
-    }
-
-    /**
-     * 示例 1:
-     * 输入: board = ["O  ", "   ", "   "]
-     * 输出: false
-     * 解释: 第一个玩家总是放置“X”。
-     *
-     * 示例 2:
-     * 输入: board = ["XOX", " X ", "   "]
-     * 输出: false
-     * 解释: 玩家应该是轮流放置的。
-     *
-     * 示例 3:
-     * 输入: board = ["XXX", "   ", "OOO"]
-     * 输出: false
-     *
-     * 示例 4:
-     * 输入: board = ["XOX", "O O", "XOX"]
-     * 输出: true
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/valid-tic-tac-toe-state
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        final String[] strings = new String[]{"OXX","XOX","OXO"};
-        System.out.println(new _794SevenHundredNinetyFour().validTicTacToe(strings));
     }
 
 }

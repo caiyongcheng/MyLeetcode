@@ -12,6 +12,28 @@ import java.util.Arrays;
 public class _350ThreeHundredFifty {
 
 
+    /**
+     * 示例 1：
+     * 输入：nums1 = [1,2,2,1], nums2 = [2,2]
+     * 输出：[2,2]
+     * 示例 2:
+     * 输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+     * 输出：[4,9]
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/intersection-of-two-arrays-ii
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(Arrays.toString(
+                new _350ThreeHundredFifty().intersect(
+                        new int[]{1, 2, 2, 1},
+                        new int[]{1, 1}
+                )
+        ));
+    }
+
     public void quickSortForArray(int[] nums, int left, int right) {
         if (left >= right) {
             return;
@@ -26,11 +48,9 @@ public class _350ThreeHundredFifty {
             if (l < r) nums[r--] = nums[l];
         }
         nums[r] = separateValue;
-        quickSortForArray(nums, left, r-1);
-        quickSortForArray(nums, r+1, right);
+        quickSortForArray(nums, left, r - 1);
+        quickSortForArray(nums, r + 1, right);
     }
-
-
 
     public int[] intersect(int[] nums1, int[] nums2) {
         final ArrayList<Integer> uniteSet = new ArrayList<>();
@@ -43,7 +63,7 @@ public class _350ThreeHundredFifty {
                 ++index1;
             } else if (nums1[index1] > nums2[index2]) {
                 ++index2;
-            } else{
+            } else {
                 uniteSet.add(nums1[index1]);
                 ++index1;
                 ++index2;
@@ -54,27 +74,6 @@ public class _350ThreeHundredFifty {
             resultArray[i] = uniteSet.get(i);
         }
         return resultArray;
-    }
-
-    /**
-     * 示例 1：
-     * 输入：nums1 = [1,2,2,1], nums2 = [2,2]
-     * 输出：[2,2]
-     * 示例 2:
-     * 输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]
-     * 输出：[4,9]
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/intersection-of-two-arrays-ii
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(Arrays.toString(
-                new _350ThreeHundredFifty().intersect(
-                        new int[]{1,2,2,1},
-                        new int[]{1,1}
-                )
-        ));
     }
 
 }

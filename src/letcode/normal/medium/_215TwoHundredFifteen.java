@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 /**
  * @program: Leetcode
@@ -9,6 +9,26 @@ package normal.medium;
  */
 public class _215TwoHundredFifteen {
 
+
+    /**
+     * 示例 1:
+     * 输入: [3,2,1,5,6,4] 和 k = 2
+     * 输出: 5
+     * 示例 2:
+     * 输入: [3,2,3,1,2,4,5,5,6] 和 k = 4
+     * 输出: 4
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/kth-largest-element-in-an-array
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(new _215TwoHundredFifteen().findKthLargest(
+                new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6},
+                4
+        ));
+    }
 
     public int segmentation(int[] nums, int left, int right, int k) {
         if (left >= right) {
@@ -24,44 +44,25 @@ public class _215TwoHundredFifteen {
         int r = right;
         int iniValue = nums[left];
         while (l < r) {
-            while (l < r && nums[r]<iniValue) --r;
+            while (l < r && nums[r] < iniValue) --r;
             if (r <= l) break;
             nums[l++] = nums[r];
-            while (l < r && nums[l]>=iniValue) ++l;
+            while (l < r && nums[l] >= iniValue) ++l;
             if (l >= r) break;
             nums[r--] = nums[l];
         }
         nums[l] = iniValue;
         if (r == k) {
             return nums[r];
-        }else if (r > k) {
-            return segmentation(nums, left, r-1, k);
+        } else if (r > k) {
+            return segmentation(nums, left, r - 1, k);
         } else {
-            return segmentation(nums, r+1, right, k);
+            return segmentation(nums, r + 1, right, k);
         }
     }
 
     public int findKthLargest(int[] nums, int k) {
-        return segmentation(nums, 0, nums.length-1, k-1);
-    }
-
-    /**
-     * 示例 1:
-     * 输入: [3,2,1,5,6,4] 和 k = 2
-     * 输出: 5
-     * 示例 2:
-     * 输入: [3,2,3,1,2,4,5,5,6] 和 k = 4
-     * 输出: 4
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/kth-largest-element-in-an-array
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _215TwoHundredFifteen().findKthLargest(
-                new int[]{3,2,3,1,2,4,5,5,6},
-                4
-        ));
+        return segmentation(nums, 0, nums.length - 1, k - 1);
     }
 
 }

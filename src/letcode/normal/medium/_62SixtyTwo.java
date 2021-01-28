@@ -11,14 +11,14 @@ public class _62SixtyTwo {
 
     public static int[][] cache;
 
-    private static int dfs(int y, int x){
-        if (y >= cache.length || x >= cache[0].length){
+    private static int dfs(int y, int x) {
+        if (y >= cache.length || x >= cache[0].length) {
             return 0;
         }
-        if (cache[y][x] != 0){
+        if (cache[y][x] != 0) {
             return cache[y][x];
         }
-        cache[y][x] = dfs(y+1, x) + dfs(y, x+1);
+        cache[y][x] = dfs(y + 1, x) + dfs(y, x + 1);
         return cache[y][x];
     }
 
@@ -31,25 +31,26 @@ public class _62SixtyTwo {
      * 1. 向右 -> 向右 -> 向下
      * 2. 向右 -> 向下 -> 向右
      * 3. 向下 -> 向右 -> 向右
-     *
+     * <p>
      * 示例 2:
      * 输入: m = 7, n = 3
      * 输出: 28
      * 提示：
      * 1 <= m, n <= 100
      * 题目数据保证答案小于等于 2 * 10 ^ 9
-     *
+     * <p>
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/unique-paths
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param m
      * @param n
      * @return
      */
     public static int uniquePaths(int m, int n) {
         cache = new int[n][m];
-        cache[n-1][m-1] = 1;
-        dfs(0,0);
+        cache[n - 1][m - 1] = 1;
+        dfs(0, 0);
         return cache[0][0];
     }
 

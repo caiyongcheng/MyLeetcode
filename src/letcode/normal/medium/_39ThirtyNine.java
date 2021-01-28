@@ -24,9 +24,9 @@ public class _39ThirtyNine {
 
     static int goal;
 
-    public static void search(int index, int sum, List<Integer> list){
+    public static void search(int index, int sum, List<Integer> list) {
         int limit = goal - sum;
-        if(sum == goal){
+        if (sum == goal) {
             ArrayList<Integer> res = new ArrayList<>();
             for (Integer integer : list) {
                 res.add(integer);
@@ -34,15 +34,14 @@ public class _39ThirtyNine {
             lists.add(res);
             return;
         }
-        for (; index < data.length && data[index] <= limit; ++index){
+        for (; index < data.length && data[index] <= limit; ++index) {
             list.add(data[index]);
-            search(index, sum+ data[index], list);
+            search(index, sum + data[index], list);
             list.remove(list.size() - 1);
         }
     }
 
     /**
-     *
      * @param candidates
      * @param target
      * @return
@@ -56,7 +55,7 @@ public class _39ThirtyNine {
     }
 
     public static void main(String[] args) {
-        int[] ints = new int[]{2,3,5};
+        int[] ints = new int[]{2, 3, 5};
         List<List<Integer>> rlists = combinationSum(ints, 8);
         for (List<Integer> rlist : rlists) {
             System.out.println(rlist);

@@ -1,7 +1,5 @@
 package letcode.medium;
 
-import java.util.TreeMap;
-
 /**
  * StudyHTTP
  * 罗马数字包含以下七种字符： I， V， X， L，C，D 和 M。
@@ -32,8 +30,8 @@ import java.util.TreeMap;
  **/
 public class _12Twelve {
 
-    public static int intToRoman(int num,int grade,String romanNumber,StringBuilder stringBuilder){
-        while (num >= grade){
+    public static int intToRoman(int num, int grade, String romanNumber, StringBuilder stringBuilder) {
+        while (num >= grade) {
             stringBuilder.append(romanNumber);
             num -= grade;
         }
@@ -44,34 +42,35 @@ public class _12Twelve {
      * 示例 1:
      * 输入: 3
      * 输出: "III"
-     *
+     * <p>
      * 示例 2:
      * 输入: 4
      * 输出: "IV"
-     *
+     * <p>
      * 示例 3:
      * 输入: 9
      * 输出: "IX"
-     *
+     * <p>
      * 示例 4:
      * 输入: 58
      * 输出: "LVIII"
      * 解释: L = 50, V = 5, III = 3.
-     *
+     * <p>
      * 示例 5:
      * 输入: 1994
      * 输出: "MCMXCIV"
      * 解释: M = 1000, CM = 900, XC = 90, IV = 4.
+     *
      * @param num
      * @return
      */
     public static String intToRoman(int num) {
         StringBuilder stringBuilder = new StringBuilder();
-        int[] grades = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
-        String[] romanNumbers = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        int[] grades = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] romanNumbers = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
         int n = grades.length;
-        for(int i=0; i<n; ++i){
-            num = intToRoman(num,grades[i],romanNumbers[i],stringBuilder);
+        for (int i = 0; i < n; ++i) {
+            num = intToRoman(num, grades[i], romanNumbers[i], stringBuilder);
         }
         return stringBuilder.toString();
 

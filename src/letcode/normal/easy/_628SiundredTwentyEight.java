@@ -10,13 +10,6 @@ import java.util.Arrays;
  */
 public class _628SiundredTwentyEight {
 
-    public int maximumProduct(int[] nums) {
-        Arrays.sort(nums);
-        int m1 = nums[nums.length-3] * nums[nums.length-2] * nums[nums.length-1];
-        int m2 = nums[0] * nums[1] * nums[nums.length-1];
-        return Math.max(m1, m2);
-    }
-
     /**
      * 示例 1:
      * 输入: [1,2,3]
@@ -24,11 +17,19 @@ public class _628SiundredTwentyEight {
      * 示例 2:
      * 输入: [1,2,3,4]
      * 输出: 24
+     *
      * @param args
      */
     public static void main(String[] args) {
-        final int[] ints = {-100,-98,-1,2,3,4};
+        final int[] ints = {-100, -98, -1, 2, 3, 4};
         System.out.println(new _628SiundredTwentyEight().maximumProduct(ints));
+    }
+
+    public int maximumProduct(int[] nums) {
+        Arrays.sort(nums);
+        int m1 = nums[nums.length - 3] * nums[nums.length - 2] * nums[nums.length - 1];
+        int m2 = nums[0] * nums[1] * nums[nums.length - 1];
+        return Math.max(m1, m2);
     }
 
 }

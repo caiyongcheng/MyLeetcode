@@ -14,40 +14,6 @@ package normal.easy;
 public class _860EightHundredSixty {
 
     /**
-     * 循环处理
-     * 根据条件判断 当没有5元时 表明无法正确找零
-     * 对于二十元优先找回10+5的组合
-     * 因为10元钞票是无用的
-     * 注意循环的退出条件要放到循环的最后才不会
-     * 遗漏最后一次找零的判断
-     * @param bills
-     * @return
-     */
-    public boolean lemonadeChange(int[] bills) {
-        int fiveDollarSize = 0;
-        int tenDollarSize = 0;
-        for (int bill : bills) {
-            if (bill == 5) {
-                ++fiveDollarSize;
-            }else if (bill == 10) {
-                --fiveDollarSize;
-                ++tenDollarSize;
-            }else{
-                if (tenDollarSize > 0) {
-                    --tenDollarSize;
-                    --fiveDollarSize;
-                }else {
-                    fiveDollarSize -= 3;
-                }
-            }
-            if (fiveDollarSize < 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
      * 示例 1：
      * 输入：[5,5,5,10,20]
      * 输出：true
@@ -73,11 +39,47 @@ public class _860EightHundredSixty {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/lemonade-change
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param args
      */
     public static void main(String[] args) {
-        int[] ints = {5,5,10,10,20};
+        int[] ints = {5, 5, 10, 10, 20};
         System.out.println(new _860EightHundredSixty().lemonadeChange(ints));
+    }
+
+    /**
+     * 循环处理
+     * 根据条件判断 当没有5元时 表明无法正确找零
+     * 对于二十元优先找回10+5的组合
+     * 因为10元钞票是无用的
+     * 注意循环的退出条件要放到循环的最后才不会
+     * 遗漏最后一次找零的判断
+     *
+     * @param bills
+     * @return
+     */
+    public boolean lemonadeChange(int[] bills) {
+        int fiveDollarSize = 0;
+        int tenDollarSize = 0;
+        for (int bill : bills) {
+            if (bill == 5) {
+                ++fiveDollarSize;
+            } else if (bill == 10) {
+                --fiveDollarSize;
+                ++tenDollarSize;
+            } else {
+                if (tenDollarSize > 0) {
+                    --tenDollarSize;
+                    --fiveDollarSize;
+                } else {
+                    fiveDollarSize -= 3;
+                }
+            }
+            if (fiveDollarSize < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

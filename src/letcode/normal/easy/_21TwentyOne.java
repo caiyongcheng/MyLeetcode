@@ -10,14 +10,13 @@ import letcode.utils.ListNode;
  */
 
 
-
-
 public class _21TwentyOne {
 
     /**
      * 示例：
      * 输入：1->2->4, 1->3->4
      * 输出：1->1->2->3->4->4
+     *
      * @param l1
      * @param l2
      * @return
@@ -28,24 +27,24 @@ public class _21TwentyOne {
         ListNode p = res;
         int v = 0;
 
-        while (l1 != null && l2 != null){
+        while (l1 != null && l2 != null) {
             if (l1.val > l2.val) {
                 p.next = new ListNode(l2.val);
                 p = p.next;
                 l2 = l2.next;
-            }else{
+            } else {
                 p.next = new ListNode(l1.val);
                 p = p.next;
                 l1 = l1.next;
             }
         }
 
-        while (l1 != null){
+        while (l1 != null) {
             p.next = new ListNode(l1.val);
             l1 = l1.next;
             p = p.next;
         }
-        while (l2 != null){
+        while (l2 != null) {
             p.next = new ListNode(l2.val);
             l2 = l2.next;
             p = p.next;
@@ -54,9 +53,9 @@ public class _21TwentyOne {
         return res.next;
     }
 
-    public static void printListNode(ListNode l){
-        while (l.next !=null){
-            System.out.print(l.val+"->");
+    public static void printListNode(ListNode l) {
+        while (l.next != null) {
+            System.out.print(l.val + "->");
             l = l.next;
         }
         if (l != null) {

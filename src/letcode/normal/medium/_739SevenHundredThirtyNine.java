@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.Arrays;
 import java.util.TreeSet;
@@ -22,6 +22,11 @@ import java.util.TreeSet;
 public class _739SevenHundredThirtyNine {
 
 
+    public static void main(String[] args) {
+        System.out.println(Arrays.toString(new _739SevenHundredThirtyNine().dailyTemperatures(
+                new int[]{73, 74, 75, 71, 69, 72, 76, 73}
+        )));
+    }
 
     public int[] dailyTemperatures(int[] T) {
         int[] waitDaysList = new int[T.length];
@@ -35,22 +40,22 @@ public class _739SevenHundredThirtyNine {
             hashList[T[i]].add(i);
         }
         for (int i = 0; i < T.length; i++) {
-            int nextT = T[i]+1;
+            int nextT = T[i] + 1;
             //搜寻大于当前温度的下一个位置
-            for (; nextT < 101; ++nextT){
+            for (; nextT < 101; ++nextT) {
                 if (!hashList[nextT].isEmpty() && hashList[nextT].last() > i) {
                     break;
                 }
             }
             if (nextT > 100) {
                 waitDaysList[i] = 0;
-                System.out.println(i+"--"+T[i]+"--"+nextT+"--");
-            }else {
+                System.out.println(i + "--" + T[i] + "--" + nextT + "--");
+            } else {
                 higher = hashList[nextT].higher(i);
-                System.out.println(i+"--"+T[i]+"--"+nextT+"--"+higher);
+                System.out.println(i + "--" + T[i] + "--" + nextT + "--" + higher);
                 if (higher == null) {
                     waitDaysList[i] = 0;
-                }else {
+                } else {
                     waitDaysList[i] = higher - i;
                 }
             }
@@ -59,11 +64,5 @@ public class _739SevenHundredThirtyNine {
             System.out.println(Arrays.toString(integers.toArray()));
         }*/
         return waitDaysList;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(Arrays.toString(new _739SevenHundredThirtyNine().dailyTemperatures(
-                new int[]{73, 74, 75, 71, 69, 72, 76, 73}
-        )));
     }
 }

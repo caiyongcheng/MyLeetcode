@@ -19,6 +19,7 @@ public class _88EightyEight {
      * nums1 = [1,2,3,0,0,0], m = 3
      * nums2 = [2,5,6],       n = 3
      * 输出: [1,2,2,3,5,6]
+     *
      * @param nums1
      * @param m
      * @param nums2
@@ -29,24 +30,24 @@ public class _88EightyEight {
         int i = 0;
         int j = 0;
         int k = 0;
-        while (i<m && j<n){
-            ints[k++] = nums1[i]<nums2[j]?nums1[i++]:nums2[j++];
+        while (i < m && j < n) {
+            ints[k++] = nums1[i] < nums2[j] ? nums1[i++] : nums2[j++];
         }
-        while (i<m){
+        while (i < m) {
             ints[k++] = nums1[i++];
         }
-        while (j<n){
+        while (j < n) {
             ints[k++] = nums2[j++];
         }
-        for(k=0;k<ints.length;++k){
+        for (k = 0; k < ints.length; ++k) {
             nums1[k] = ints[k];
         }
     }
 
     public static void main(String[] args) {
-        int[] int1 = {1,2,3,0,0,0};
-        int[] int2 = {2,5,6};
-        merge(int1,3,int2,3);
+        int[] int1 = {1, 2, 3, 0, 0, 0};
+        int[] int2 = {2, 5, 6};
+        merge(int1, 3, int2, 3);
         System.out.println(Arrays.toString(int1));
     }
 }

@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 /**
  * @program: Leetcode
@@ -12,6 +12,14 @@ package normal.medium;
 public class _287TwoHundredEightySeven {
 
 
+    public static void main(String[] args) {
+        System.out.println(new _287TwoHundredEightySeven().findDuplicate(
+                new int[]{
+                        1, 3, 4, 2, 2
+                }
+        ));
+    }
+
     public int findDuplicate(int[] nums) {
         int[] deRepetition = new int[nums.length];
         for (int num : nums) {
@@ -21,14 +29,6 @@ public class _287TwoHundredEightySeven {
             }
         }
         return 0;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new _287TwoHundredEightySeven().findDuplicate(
-                new int[]{
-                        1,3,4,2,2
-                }
-        ));
     }
 
 }

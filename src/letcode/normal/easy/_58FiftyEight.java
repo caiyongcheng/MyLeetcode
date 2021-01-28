@@ -16,6 +16,7 @@ public class _58FiftyEight {
      * 示例:
      * 输入: "Hello World"
      * 输出: 5
+     *
      * @param s
      * @return
      */
@@ -26,12 +27,12 @@ public class _58FiftyEight {
         int i = 0, j = 0;
         int n = s.length();
         int res = 0;
-        for(; i<n; ++i){
-            if(s.charAt(i) != ' '){
+        for (; i < n; ++i) {
+            if (s.charAt(i) != ' ') {
                 //此处需注意，条件不满足的情况是j==n||s[j] == ‘ ’
                 // 所以长度是j-i
-                for (j=i; j<n&&s.charAt(j)!= ' '; ++j);
-                res = j-i;
+                for (j = i; j < n && s.charAt(j) != ' '; ++j) ;
+                res = j - i;
                 i = j;
             }
         }
@@ -42,13 +43,13 @@ public class _58FiftyEight {
         if (s == null || s.length() == 0) {
             return 0;
         }
-        int i = s.length()-1, j = 0;
+        int i = s.length() - 1, j = 0;
         int n = s.length();
         int res = 0;
-        for(; i>-1; --i){
-            if(s.charAt(i) != ' '){
-                for (j=i; j>-1&&s.charAt(j)!= ' '; --j);
-                return i-j;
+        for (; i > -1; --i) {
+            if (s.charAt(i) != ' ') {
+                for (j = i; j > -1 && s.charAt(j) != ' '; --j) ;
+                return i - j;
             }
         }
         return res;

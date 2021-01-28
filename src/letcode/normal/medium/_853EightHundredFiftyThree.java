@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 /**
  * @program: Leetcode
@@ -20,6 +20,26 @@ public class _853EightHundredFiftyThree {
     private int[] pos;
     private int[] spd;
 
+    /**
+     * 示例：
+     * 输入：target = 12, position = [10,8,0,5,3], speed = [2,4,1,1,3]
+     * 输出：3
+     * 解释：
+     * 从 10 和 8 开始的车会组成一个车队，它们在 12 处相遇。
+     * 从 0 处开始的车无法追上其它车，所以它自己就是一个车队。
+     * 从 5 和 3 开始的车会组成一个车队，它们在 6 处相遇。
+     * 请注意，在到达目的地之前没有其它车会遇到这些车队，所以答案是 3。
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/car-fleet
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     */
+    public static void main(String[] args) {
+        System.out.println(new _853EightHundredFiftyThree().carFleet(
+                10,
+                new int[]{8, 3, 7, 4, 6, 5},
+                new int[]{4, 4, 4, 4, 4, 4}
+        ));
+    }
 
     public void quickSort(int left, int right) {
         if (left >= right) {
@@ -45,10 +65,9 @@ public class _853EightHundredFiftyThree {
         }
         pos[l] = basePositionValue;
         spd[l] = baseSpeedValue;
-        quickSort(left, l-1);
-        quickSort(l+1, right);
+        quickSort(left, l - 1);
+        quickSort(l + 1, right);
     }
-
 
     public int carFleet(int target, int[] position, int[] speed) {
         if (position.length < 2) {
@@ -56,14 +75,14 @@ public class _853EightHundredFiftyThree {
         }
         this.pos = position;
         this.spd = speed;
-        quickSort(0, pos.length-1);
+        quickSort(0, pos.length - 1);
         int ans = 1;
         int i, j;
         float time;
         float time2;
-        for (i = pos.length-1; i > -1; ) {
+        for (i = pos.length - 1; i > -1; ) {
             time = (target - pos[i]) * 1.0f / spd[i];
-            for (j = i-1; j > -1; --j) {
+            for (j = i - 1; j > -1; --j) {
                 if ((target - pos[j]) * 1.0f / spd[j] > time) {
                     ++ans;
                     break;
@@ -72,27 +91,6 @@ public class _853EightHundredFiftyThree {
             i = j;
         }
         return ans;
-    }
-
-    /**
-     * 示例：
-     * 输入：target = 12, position = [10,8,0,5,3], speed = [2,4,1,1,3]
-     * 输出：3
-     * 解释：
-     * 从 10 和 8 开始的车会组成一个车队，它们在 12 处相遇。
-     * 从 0 处开始的车无法追上其它车，所以它自己就是一个车队。
-     * 从 5 和 3 开始的车会组成一个车队，它们在 6 处相遇。
-     * 请注意，在到达目的地之前没有其它车会遇到这些车队，所以答案是 3。
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/car-fleet
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     */
-    public static void main(String[] args) {
-        System.out.println(new _853EightHundredFiftyThree().carFleet(
-                10,
-                new int[]{8,3,7,4,6,5},
-                new int[]{4,4,4,4,4,4}
-        ));
     }
 
 }

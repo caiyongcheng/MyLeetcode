@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -29,44 +29,6 @@ public class _649SixHundredFortyNine {
 
 
     /**
-     * 分析：
-     * 对于某个党派的人来说，操作只有两个，一个是让对方党派的人失去资格。
-     * 一个是获得胜利。只有当只剩下自己党派的人时才会获得胜利。所以实际上
-     * 的每次操作是让敌对党派的人失去资格。所以最优策略是让自己之后的第一
-     * 个敌对党派的人失去资格，这样可以让之后的自己党派成员不被之前的敌对
-     * 党派成员操作。
-     * @param senate
-     * @return
-     */
-    public String predictPartyVictory(String senate) {
-        Queue<Integer> queueR = new LinkedList<>();
-        Queue<Integer> queueD = new LinkedList<>();
-        char[] chars = senate.toCharArray();
-        for (int index = 0; index < chars.length; index++) {
-            if (chars[index] == 'R') {
-                queueR.add(index);
-            }else{
-                queueD.add(index);
-            }
-        }
-        while (true) {
-            if (queueR.isEmpty()) {
-                return "Dire";
-            }
-            if (queueD.isEmpty()) {
-                return "Radiant";
-            }
-            Integer nowIndexD = queueD.poll();
-            Integer nowIndexR = queueR.poll();
-            if (nowIndexR < nowIndexD) {
-                queueR.add(nowIndexR+senate.length());
-            }else{
-                queueD.add(nowIndexD+senate.length());
-            }
-        }
-    }
-
-    /**
      * 示例 1：
      * 输入："RD"
      * 输出："Radiant"
@@ -82,9 +44,49 @@ public class _649SixHundredFortyNine {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/dota2-senate
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param args
      */
     public static void main(String[] args) {
         System.out.println(new _649SixHundredFortyNine().predictPartyVictory("RDD"));
+    }
+
+    /**
+     * 分析：
+     * 对于某个党派的人来说，操作只有两个，一个是让对方党派的人失去资格。
+     * 一个是获得胜利。只有当只剩下自己党派的人时才会获得胜利。所以实际上
+     * 的每次操作是让敌对党派的人失去资格。所以最优策略是让自己之后的第一
+     * 个敌对党派的人失去资格，这样可以让之后的自己党派成员不被之前的敌对
+     * 党派成员操作。
+     *
+     * @param senate
+     * @return
+     */
+    public String predictPartyVictory(String senate) {
+        Queue<Integer> queueR = new LinkedList<>();
+        Queue<Integer> queueD = new LinkedList<>();
+        char[] chars = senate.toCharArray();
+        for (int index = 0; index < chars.length; index++) {
+            if (chars[index] == 'R') {
+                queueR.add(index);
+            } else {
+                queueD.add(index);
+            }
+        }
+        while (true) {
+            if (queueR.isEmpty()) {
+                return "Dire";
+            }
+            if (queueD.isEmpty()) {
+                return "Radiant";
+            }
+            Integer nowIndexD = queueD.poll();
+            Integer nowIndexR = queueR.poll();
+            if (nowIndexR < nowIndexD) {
+                queueR.add(nowIndexR + senate.length());
+            } else {
+                queueD.add(nowIndexD + senate.length());
+            }
+        }
     }
 }

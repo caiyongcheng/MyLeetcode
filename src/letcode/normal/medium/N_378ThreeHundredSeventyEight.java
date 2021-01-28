@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 /**
  * @program: Leetcode
@@ -8,17 +8,16 @@ package normal.medium;
  */
 public class N_378ThreeHundredSeventyEight {
 
+    public static void main(String[] args) {
+
+    }
+
     public int kthSmallest(int[][] matrix, int k) {
         int limit = (int) Math.sqrt(k);
         if (limit * limit != k) {
             ++limit;
         }
         return 0;
-    }
-
-
-    public static void main(String[] args) {
-
     }
 
 }

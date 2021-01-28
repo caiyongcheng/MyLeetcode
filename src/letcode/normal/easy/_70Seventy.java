@@ -1,4 +1,4 @@
-package letcode.easy;
+package normal.letcode.easy;
 
 /**
  * StudyHTTP
@@ -16,7 +16,7 @@ public class _70Seventy {
      * 解释： 有两种方法可以爬到楼顶。
      * 1.  1 阶 + 1 阶
      * 2.  2 阶
-     *
+     * <p>
      * 示例 2：
      * 输入： 3
      * 输出： 3
@@ -24,17 +24,18 @@ public class _70Seventy {
      * 1.  1 阶 + 1 阶 + 1 阶
      * 2.  1 阶 + 2 阶
      * 3.  2 阶 + 1 阶
+     *
      * @param n
      * @return
      */
     public static int climbStairs(int n) {
-        if(n==1) return 1;
-        if(n==2) return 2;
+        if (n == 1) return 1;
+        if (n == 2) return 2;
         int one = 1;
         int two = 2;
         int three = 0;
         ++n;
-        for(int i=3; i<n; ++i){
+        for (int i = 3; i < n; ++i) {
             three = one + two;
             one = two;
             two = three;

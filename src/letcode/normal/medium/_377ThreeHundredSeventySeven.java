@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.Arrays;
 
@@ -10,27 +10,6 @@ import java.util.Arrays;
  */
 public class _377ThreeHundredSeventySeven {
 
-
-    public int combinationSum4(int[] nums, int target) {
-        Arrays.sort(nums);
-        int[] targets = new int[target+1];
-        for (int num : nums) {
-            if (num > target) {
-                break;
-            }
-            targets[num] = 1;
-        }
-        for (int index = 1; index < targets.length; index++) {
-            for (int num : nums) {
-                if (index - num > 0) {
-                    targets[index] += targets[index-num];
-                }else{
-                    break;
-                }
-            }
-        }
-        return targets[target];
-    }
 
     /**
      * nums = [1, 2, 3]
@@ -48,11 +27,33 @@ public class _377ThreeHundredSeventySeven {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/combination-sum-iv
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param args
      */
     public static void main(String[] args) {
         System.out.println(new _377ThreeHundredSeventySeven().combinationSum4(
                 new int[]{1, 2, 5}, 5
         ));
+    }
+
+    public int combinationSum4(int[] nums, int target) {
+        Arrays.sort(nums);
+        int[] targets = new int[target + 1];
+        for (int num : nums) {
+            if (num > target) {
+                break;
+            }
+            targets[num] = 1;
+        }
+        for (int index = 1; index < targets.length; index++) {
+            for (int num : nums) {
+                if (index - num > 0) {
+                    targets[index] += targets[index - num];
+                } else {
+                    break;
+                }
+            }
+        }
+        return targets[target];
     }
 }

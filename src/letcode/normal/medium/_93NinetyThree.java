@@ -18,20 +18,27 @@ public class _93NinetyThree {
     private List<String> list;
     private int[] ip;
 
-    private void dfs(int dataIndex, int IPIndex){
+    public static void main(String[] args) {
+        List<String> strings = new _93NinetyThree().restoreIpAddresses("010010");
+        for (String string : strings) {
+            System.out.println(string);
+        }
+    }
+
+    private void dfs(int dataIndex, int IPIndex) {
         if (dataIndex >= datas.length) {
-            if (IPIndex == 4){
+            if (IPIndex == 4) {
                 list.add(new StringBuilder().append(ip[0]).append('.').append(ip[1])
                         .append('.').append(ip[2]).append('.').append(ip[3]).toString());
             }
             return;
         }
-        if (IPIndex >= 4){
+        if (IPIndex >= 4) {
             return;
         }
-        if (datas[dataIndex] == '0'){
+        if (datas[dataIndex] == '0') {
             ip[IPIndex] = 0;
-            dfs(dataIndex+1, IPIndex+1);
+            dfs(dataIndex + 1, IPIndex + 1);
             return;
         }
         int length = datas.length - 3 + IPIndex;
@@ -39,12 +46,12 @@ public class _93NinetyThree {
             length = dataIndex + 3;
         }
         ip[IPIndex] = 0;
-        for (; dataIndex < length; ++dataIndex){
+        for (; dataIndex < length; ++dataIndex) {
             ip[IPIndex] = ip[IPIndex] * 10 + (datas[dataIndex] - '0');
             if (ip[IPIndex] > 255) {
                 break;
             }
-            dfs(dataIndex+1, IPIndex+1);
+            dfs(dataIndex + 1, IPIndex + 1);
         }
     }
 
@@ -52,6 +59,7 @@ public class _93NinetyThree {
      * 示例:
      * 输入: "25525511135"
      * 输出: ["255.255.11.135", "255.255.111.35"]
+     *
      * @param s
      * @return
      */
@@ -62,14 +70,7 @@ public class _93NinetyThree {
         }
         datas = s.toCharArray();
         ip = new int[]{0, 0, 0, 0};
-        dfs(0 ,0);
+        dfs(0, 0);
         return list;
-    }
-
-    public static void main(String[] args) {
-        List<String> strings = new _93NinetyThree().restoreIpAddresses("010010");
-        for (String string : strings) {
-            System.out.println(string);
-        }
     }
 }

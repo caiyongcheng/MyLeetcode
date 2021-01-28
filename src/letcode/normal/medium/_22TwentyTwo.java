@@ -19,36 +19,37 @@ public class _22TwentyTwo {
     static StringBuilder str;
 
     public static void generateParenthesis(int left, int right) {
-        if(right > left) return;
-        if(left > limit || right > limit) return;
-        if(left == limit){
+        if (right > left) return;
+        if (left > limit || right > limit) return;
+        if (left == limit) {
             int r = right;
-            while (r++ < left){
+            while (r++ < left) {
                 str.append(')');
             }
             list.add(str.toString());
-            str.delete(left+right,str.length());
+            str.delete(left + right, str.length());
             return;
         }
         str.append('(');
-        generateParenthesis(left+1,right);
-        str.deleteCharAt(str.length()-1);
-        if(left > right){
+        generateParenthesis(left + 1, right);
+        str.deleteCharAt(str.length() - 1);
+        if (left > right) {
             str.append(')');
-            generateParenthesis(left,right+1);
-            str.deleteCharAt(str.length()-1);
+            generateParenthesis(left, right + 1);
+            str.deleteCharAt(str.length() - 1);
         }
     }
 
     /**
      * 输入：n = 3
      * 输出：[
-     *        "((()))",
-     *        "(()())",
-     *        "(())()",
-     *        "()(())",
-     *        "()()()"
-     *      ]
+     * "((()))",
+     * "(()())",
+     * "(())()",
+     * "()(())",
+     * "()()()"
+     * ]
+     *
      * @param n
      * @return
      */
@@ -56,7 +57,7 @@ public class _22TwentyTwo {
         limit = n;
         list = new ArrayList<String>();
         str = new StringBuilder();
-        generateParenthesis(0,0);
+        generateParenthesis(0, 0);
         return list;
     }
 

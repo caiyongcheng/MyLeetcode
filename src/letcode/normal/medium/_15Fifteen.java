@@ -17,15 +17,16 @@ public class _15Fifteen {
 
     /**
      * 给定数组 nums = [-1, 0, 1, 2, -1, -4]，
-     *
+     * <p>
      * 满足要求的三元组集合为：
      * [
-     *   [-1, 0, 1],
-     *   [-1, -1, 2]
+     * [-1, 0, 1],
+     * [-1, -1, 2]
      * ]
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/3sum
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param nums
      * @return
      */
@@ -41,20 +42,20 @@ public class _15Fifteen {
         List<Integer> arrayList;
         List<List<Integer>> lists = new ArrayList<List<Integer>>();
         Arrays.sort(nums);
-        for(i=0; i<n; ++i){
-            map.put(nums[i],i);
+        for (i = 0; i < n; ++i) {
+            map.put(nums[i], i);
         }
-        for(i=0; i<n-1; ++i){
-            for(j=i+1; j<n; ++j){
+        for (i = 0; i < n - 1; ++i) {
+            for (j = i + 1; j < n; ++j) {
                 key = 0 - nums[i] - nums[j];
                 //if(key < 0) break;
                 Integer value = map.get(key);
-                if(value != null && value > j ){
+                if (value != null && value > j) {
                     arrayList = new ArrayList<Integer>();
                     arrayList.add(nums[i]);
                     arrayList.add(nums[j]);
                     arrayList.add(nums[value]);
-                    if(set.add(arrayList)){
+                    if (set.add(arrayList)) {
                         lists.add(arrayList);
                     }
                 }
@@ -67,37 +68,37 @@ public class _15Fifteen {
         List<Integer> arrayList;
         List<List<Integer>> lists = new ArrayList<List<Integer>>();
         Arrays.sort(nums);
-        int i, j, k, n=nums.length;
+        int i, j, k, n = nums.length;
         int left;
         int right;
         int p;
-        for(i=0; i<n-2; ++i){
-            if(nums[i] > 0){
+        for (i = 0; i < n - 2; ++i) {
+            if (nums[i] > 0) {
                 break;
             }
             //保证不重复
-            if(i>0 && nums[i] == nums[i-1]){
+            if (i > 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
-            left = i+1;
-            right = n-1;
-            while (left < right){
+            left = i + 1;
+            right = n - 1;
+            while (left < right) {
                 p = nums[i] + nums[left] + nums[right];
-                if(p == 0){
+                if (p == 0) {
                     arrayList = new ArrayList<Integer>();
                     arrayList.add(nums[i]);
                     arrayList.add(nums[left]);
                     arrayList.add(nums[right]);
                     lists.add(arrayList);
-                    while (left < right && nums[right] == nums[right-1]) --right;
-                    while (left < right && nums[left] == nums[left+1]) ++left;
+                    while (left < right && nums[right] == nums[right - 1]) --right;
+                    while (left < right && nums[left] == nums[left + 1]) ++left;
                     --right;
                     ++left;
-                }else if(p > 0){
-                    while (left < right && nums[right] == nums[right-1]) --right;
+                } else if (p > 0) {
+                    while (left < right && nums[right] == nums[right - 1]) --right;
                     --right;
-                }else{
-                    while (left < right && nums[left] == nums[left+1]) ++left;
+                } else {
+                    while (left < right && nums[left] == nums[left + 1]) ++left;
                     ++left;
                 }
             }
@@ -112,7 +113,7 @@ public class _15Fifteen {
         for (List<Integer> list : lists) {
             System.out.print("    [");
             for (Integer integer : list) {
-                System.out.print(integer+"  ");
+                System.out.print(integer + "  ");
             }
             System.out.println("]");
         }

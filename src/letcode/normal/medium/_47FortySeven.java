@@ -18,20 +18,20 @@ public class _47FortySeven {
     static ArrayList<Integer> list = new ArrayList<Integer>();
     static ArrayList<List<Integer>> lists = new ArrayList<List<Integer>>();
 
-    public static void search(int size){
-        if (size == used.length){
+    public static void search(int size) {
+        if (size == used.length) {
             lists.add(new ArrayList<>(list));
             return;
         }
-        for (int i=0; i<used.length; ++i){
+        for (int i = 0; i < used.length; ++i) {
             if (!used[i] && ((i < 1)
-                    || (datas[i] == datas[i-1] && used[i-1])
-                    || (datas[i] != datas[i-1]))){
+                    || (datas[i] == datas[i - 1] && used[i - 1])
+                    || (datas[i] != datas[i - 1]))) {
                 used[i] = true;
                 list.add(datas[i]);
-                search(size+1);
+                search(size + 1);
                 used[i] = false;
-                list.remove(list.size()-1);
+                list.remove(list.size() - 1);
             }
         }
     }
@@ -40,10 +40,11 @@ public class _47FortySeven {
      * 输入: [1,1,2]
      * 输出:
      * [
-     *   [1,1,2],
-     *   [1,2,1],
-     *   [2,1,1]
+     * [1,1,2],
+     * [1,2,1],
+     * [2,1,1]
      * ]
+     *
      * @param nums
      * @return
      */

@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.Arrays;
 
@@ -20,37 +20,6 @@ import java.util.Arrays;
 public class _376ThreeHundredSeventySix {
 
 
-    public int wiggleMaxLength(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-        if (nums.length == 1) {
-            return 1;
-        }
-        if (nums.length == 2) {
-            return nums[0] == nums[1] ? 1 : 2;
-        }
-        int maxLength = Integer.MIN_VALUE;
-        int[][] seqLength = new int[nums.length][2];
-        Arrays.fill(seqLength, new int[]{1,1});
-        for (int index = nums.length - 2; index >= 0; index--) {
-            if (nums[index+1] > nums[index]) {
-                seqLength[index][0] = 1 + seqLength[index+1][1];
-            } else if (nums[index+1] < nums[index]) {
-                seqLength[index][1] = 1 + seqLength[index+1][0];
-            }
-        }
-        for (int index = seqLength.length - 1; index >= 0; index--) {
-            if (seqLength[index][0] > maxLength) {
-                maxLength = seqLength[index][0];
-            }
-            if (seqLength[index][1] > maxLength) {
-                maxLength = seqLength[index][1];
-            }
-        }
-        return maxLength;
-    }
-
     /**
      * 示例 1:
      * 输入: [1,7,4,9,2,5]
@@ -66,12 +35,44 @@ public class _376ThreeHundredSeventySix {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/wiggle-subsequence
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param args
      */
     public static void main(String[] args) {
         System.out.println(new _376ThreeHundredSeventySix().wiggleMaxLength(
-                new int[]{1,2,3,4,5,6,7,8,9}
+                new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9}
         ));
+    }
+
+    public int wiggleMaxLength(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        if (nums.length == 1) {
+            return 1;
+        }
+        if (nums.length == 2) {
+            return nums[0] == nums[1] ? 1 : 2;
+        }
+        int maxLength = Integer.MIN_VALUE;
+        int[][] seqLength = new int[nums.length][2];
+        Arrays.fill(seqLength, new int[]{1, 1});
+        for (int index = nums.length - 2; index >= 0; index--) {
+            if (nums[index + 1] > nums[index]) {
+                seqLength[index][0] = 1 + seqLength[index + 1][1];
+            } else if (nums[index + 1] < nums[index]) {
+                seqLength[index][1] = 1 + seqLength[index + 1][0];
+            }
+        }
+        for (int index = seqLength.length - 1; index >= 0; index--) {
+            if (seqLength[index][0] > maxLength) {
+                maxLength = seqLength[index][0];
+            }
+            if (seqLength[index][1] > maxLength) {
+                maxLength = seqLength[index][1];
+            }
+        }
+        return maxLength;
     }
 
 

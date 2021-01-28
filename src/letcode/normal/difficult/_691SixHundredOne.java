@@ -24,9 +24,22 @@ public class _691SixHundredOne {
 
     private int minSize;
 
+    /**
+     * ["major","love","help","weight","flow","energy","year","it","done","duck","fear","soon","yes","best","little","afraid","eye","tire","mix","rather","broad","support","father","cent","continent","field","rich","basic","several","happy","draw","north","string","leg","syllable","never","quite","game","lay","exact","throw","arrange","bat","we","camp","cover","together","ocean","radio","top"]
+     * "speakcry"
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(new _691SixHundredOne().minStickers(
+                new String[]{"major", "love", "help", "weight", "flow", "energy", "year", "it", "done", "duck", "fear", "soon", "yes", "best", "little", "afraid", "eye", "tire", "mix", "rather", "broad", "support", "father", "cent", "continent", "field", "rich", "basic", "several", "happy", "draw", "north", "string", "leg", "syllable", "never", "quite", "game", "lay", "exact", "throw", "arrange", "bat", "we", "camp", "cover", "together", "ocean", "radio", "top"},
+                "speakcry"
+        ));
+    }
 
     /**
      * 判断目标单词是否被凑出
+     *
      * @return
      */
     private boolean checkAccomplish() {
@@ -40,12 +53,13 @@ public class _691SixHundredOne {
 
     /**
      * 裁剪一张贴纸
+     *
      * @param index 表示被裁减的是第几种贴纸
      * @return 是否还有必要继续裁剪这种贴纸
      */
     private boolean tailor(int index) {
         boolean necessary = false;
-        for (int i=0; i<26; ++i) {
+        for (int i = 0; i < 26; ++i) {
             targetToChars[i] = targetToChars[i] - stickersToChars[index][i];
             //裁剪后 目标单词仍需要该字母 说明可以继续冲裁件
             if (targetToChars[i] > 0 && stickersToChars[index][i] > 0) {
@@ -57,24 +71,26 @@ public class _691SixHundredOne {
 
     /**
      * 还原目标单词状态至 第index种贴纸被裁剪size次后
+     *
      * @param index
      * @param size
      */
-    private void recover(int index, int size){
-        for (int i=0; i<26; ++i) {
+    private void recover(int index, int size) {
+        for (int i = 0; i < 26; ++i) {
             targetToChars[i] += stickersToChars[index][i] * size;
         }
     }
 
     /**
      * 搜索最少数量
+     *
      * @param index 当前被裁的贴纸是第几种
-     * @param size 已经裁的贴纸数量
+     * @param size  已经裁的贴纸数量
      */
     private void search(int index, int size) {
         //剪枝 如果当前已选数量大于等于最少数量 那么返回
         if (size >= minSize) {
-            return ;
+            return;
         }
         // 如果完成了 更新最少数量 并结束
         if (checkAccomplish()) {
@@ -86,7 +102,7 @@ public class _691SixHundredOne {
             return;
         }
         //跳过当前贴纸
-        search(index+1, size);
+        search(index + 1, size);
         //能选贴纸能选的最大数量
         int limitSize = minSize - size;
         //统计被裁减次数
@@ -96,7 +112,7 @@ public class _691SixHundredOne {
             tailorSize++;
             --limitSize;
             contineTailor = tailor(index);
-            search(index+1, size+tailorSize);
+            search(index + 1, size + tailorSize);
         }
         recover(index, tailorSize);
     }
@@ -111,7 +127,7 @@ public class _691SixHundredOne {
      * 我们可以使用 2 个 "with" 贴纸，和 1 个 "example" 贴纸。
      * 把贴纸上的字母剪下来并重新排列后，就可以形成目标 “thehat“ 了。
      * 此外，这是形成目标字符串所需的最小贴纸数量。
-     *
+     * <p>
      * 示例 2：
      * 输入：
      * ["notice", "possible"], "basicbasic"
@@ -119,6 +135,7 @@ public class _691SixHundredOne {
      * -1
      * 解释：
      * 我们不能通过剪切给定贴纸的字母来形成目标“basicbasic”。
+     *
      * @param stickers
      * @param target
      * @return
@@ -140,9 +157,9 @@ public class _691SixHundredOne {
         }
 
         //筛选出有用的贴纸
-        for (int i=0; i<length; ++i) {
+        for (int i = 0; i < length; ++i) {
             tmpChars = stickers[i].toCharArray();
-            for (int j=0; j<tmpChars.length; ++j) {
+            for (int j = 0; j < tmpChars.length; ++j) {
                 stickersToChars[validLength][tmpChars[j] - 'a']++;
                 materialSet.add(tmpChars[j]);
                 if (targetToChars[tmpChars[j] - 'a'] != 0) {
@@ -165,19 +182,6 @@ public class _691SixHundredOne {
         search(0, 0);
         return minSize;
     }
-
-    /**
-     * ["major","love","help","weight","flow","energy","year","it","done","duck","fear","soon","yes","best","little","afraid","eye","tire","mix","rather","broad","support","father","cent","continent","field","rich","basic","several","happy","draw","north","string","leg","syllable","never","quite","game","lay","exact","throw","arrange","bat","we","camp","cover","together","ocean","radio","top"]
-     * "speakcry"
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _691SixHundredOne().minStickers(
-                new String[]{"major","love","help","weight","flow","energy","year","it","done","duck","fear","soon","yes","best","little","afraid","eye","tire","mix","rather","broad","support","father","cent","continent","field","rich","basic","several","happy","draw","north","string","leg","syllable","never","quite","game","lay","exact","throw","arrange","bat","we","camp","cover","together","ocean","radio","top"},
-                "speakcry"
-        ));
-    }
-
 
 
 }

@@ -19,45 +19,46 @@ public class _107OneHundredSeven {
     /**
      * 例如：
      * 给定二叉树 [3,9,20,null,null,15,7],
-     *     3
-     *    / \
-     *   9  20
-     *     /  \
-     *    15   7
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
      * 返回其自底向上的层次遍历为：
      * [
-     *   [15,7],
-     *   [9,20],
-     *   [3]
+     * [15,7],
+     * [9,20],
+     * [3]
      * ]
-     *
+     * <p>
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/binary-tree-level-order-traversal-ii
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param root
      * @return
      */
     public static List<List<Integer>> levelOrderBottom(TreeNode root) {
         lists = new ArrayList<List<Integer>>();
-        levelOrderBottom(root,1);
+        levelOrderBottom(root, 1);
         List<List<Integer>> tmp = new ArrayList<List<Integer>>();
-        for(int i = lists.size()-1; i > -1; --i){
+        for (int i = lists.size() - 1; i > -1; --i) {
             tmp.add(lists.get(i));
         }
         return tmp;
     }
 
-    public static  void levelOrderBottom(TreeNode root, int n) {
+    public static void levelOrderBottom(TreeNode root, int n) {
         if (root != null) {
-            if(lists.size()<n){
+            if (lists.size() < n) {
                 ArrayList<Integer> integers = new ArrayList<>();
                 integers.add(root.val);
                 lists.add(integers);
-            }else{
-                lists.get(n-1).add(root.val);
+            } else {
+                lists.get(n - 1).add(root.val);
             }
-            levelOrderBottom(root.left,n+1);
-            levelOrderBottom(root.right,n+1);
+            levelOrderBottom(root.left, n + 1);
+            levelOrderBottom(root.right, n + 1);
         }
     }
 

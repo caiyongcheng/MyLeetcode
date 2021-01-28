@@ -18,55 +18,56 @@ public class _34ThirtyFour {
      * 示例 1:
      * 输入: nums = [5,7,7,8,8,10], target = 8
      * 输出: [3,4]
-     *
+     * <p>
      * 示例 2:
      * 输入: nums = [5,7,7,8,8,10], target = 6
      * 输出: [-1,-1]
+     *
      * @param nums
      * @param target
      * @return
      */
     public static int[] searchRange(int[] nums, int target) {
         if ((nums == null) || (nums.length < 1)) {
-            return new int[]{-1,-1};
+            return new int[]{-1, -1};
         }
         if (nums.length == 1) {
-            return nums[0] == target ? new int[]{0,0} : new int[]{-1,-1};
+            return nums[0] == target ? new int[]{0, 0} : new int[]{-1, -1};
         }
         int[] result = new int[]{-1, -1};
         int left = 0;
         int right = nums.length - 1;
         int mid = 0;
-        while (left <= right){
-            mid = (left + right)/2;
+        while (left <= right) {
+            mid = (left + right) / 2;
             if (nums[mid] == target) {
                 break;
-            }else if (nums[mid] > target){
+            } else if (nums[mid] > target) {
                 right = mid - 1;
-            }else{
+            } else {
                 left = mid + 1;
             }
         }
-        if (nums[mid] == target){
+        if (nums[mid] == target) {
             int midl = mid;
             int midr = mid;
             left = 0;
             right = nums.length - 1;
-            while (left < midl){
-                if (nums[left] == target && left != mid){
+            while (left < midl) {
+                if (nums[left] == target && left != mid) {
                     result[0] = left;
                     midl = left;
                     left = 0;
-                }else {
+                } else {
                     left += (midl - left + 1) / 2;
                 }
             }
-            while (midr < right){
-                if (nums[right] == target && right != mid){
+            while (midr < right) {
+                if (nums[right] == target && right != mid) {
                     result[1] = right;
                     midr = right;
                     right = nums.length - 1;
-                }else {
+                } else {
                     right -= (right - midr + 1) / 2;
                 }
             }
@@ -81,13 +82,9 @@ public class _34ThirtyFour {
     }
 
     public static void main(String[] args) {
-        int[] ints = new int[]{1,3};
-        System.out.println(Arrays.toString(searchRange(ints,1)));
+        int[] ints = new int[]{1, 3};
+        System.out.println(Arrays.toString(searchRange(ints, 1)));
     }
-
-
-
-
 
 
 }

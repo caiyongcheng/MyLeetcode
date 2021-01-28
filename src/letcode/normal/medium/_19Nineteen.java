@@ -21,22 +21,22 @@ public class _19Nineteen {
      * @return
      */
     public static ListNode removeNthFromEnd(ListNode head, int n) {
-        if(n<1 || head == null) return head;
+        if (n < 1 || head == null) return head;
         ListNode first = new ListNode(1);
         first.next = head;
         ListNode tail = first;
         head = first;
         int i = 0;
-        while (i++ < n){
+        while (i++ < n) {
             tail = tail.next;
-            if(tail==null) return null;
+            if (tail == null) return null;
         }
 
-        while (tail.next != null){
+        while (tail.next != null) {
             tail = tail.next;
             first = first.next;
         }
-        first.next = first.next == null?null:first.next.next;
+        first.next = first.next == null ? null : first.next.next;
         return head.next;
     }
 

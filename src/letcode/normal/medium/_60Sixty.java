@@ -29,27 +29,28 @@ public class _60Sixty {
      * 示例 1:
      * 输入: n = 3, k = 3
      * 输出: "213"
-     *
+     * <p>
      * 示例 2:
      * 输入: n = 4, k = 9
      * 输出: "2314"
+     *
      * @param n
      * @param k
      * @return
      */
-    public static String getPermutation(int n,  int k) {
+    public static String getPermutation(int n, int k) {
         int[] permutationList = new int[]{1, 1, 1, 2, 6, 24, 120, 720, 5040, 40320};
         ArrayList<Integer> integers = new ArrayList<>();
-        for (int i =0; i<n; ++i){
-            integers.add(i+1);
+        for (int i = 0; i < n; ++i) {
+            integers.add(i + 1);
         }
         StringBuilder stringBuilder = new StringBuilder();
-        while (n > 0){
+        while (n > 0) {
             int div = k / permutationList[n];
             k = k % permutationList[n];
-            if (k == 0){
-                 k = permutationList[n];
-                 --div;
+            if (k == 0) {
+                k = permutationList[n];
+                --div;
             }
             stringBuilder.append(integers.get(div));
             integers.remove(div);

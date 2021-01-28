@@ -1,7 +1,5 @@
 package normal.easy;
 
-import letcode.medium._39ThirtyNine;
-
 /**
  * @program: Leetcode
  * @description: 给定两个字符串 s 和 t，它们只包含小写字母。
@@ -10,16 +8,6 @@ import letcode.medium._39ThirtyNine;
  * @create: 2020-12-18 14:44
  */
 public class _389ThreeHundredEightyNine {
-
-    public char findTheDifference(String s, String t) {
-        int sumS= 0;
-        for (int index = 0; index < s.length(); index++) {
-            sumS += s.charAt(index);
-            sumS -= t.charAt(index);
-        }
-        sumS -= t.charAt(t.length()-1);
-        return (char) -sumS;
-    }
 
     /**
      * 示例 1：
@@ -38,6 +26,7 @@ public class _389ThreeHundredEightyNine {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/find-the-difference
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -45,6 +34,16 @@ public class _389ThreeHundredEightyNine {
                 "ae",
                 "aea"
         ));
+    }
+
+    public char findTheDifference(String s, String t) {
+        int sumS = 0;
+        for (int index = 0; index < s.length(); index++) {
+            sumS += s.charAt(index);
+            sumS -= t.charAt(index);
+        }
+        sumS -= t.charAt(t.length() - 1);
+        return (char) -sumS;
     }
 
 }

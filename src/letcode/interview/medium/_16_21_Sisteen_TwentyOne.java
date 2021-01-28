@@ -15,6 +15,13 @@ import java.util.Arrays;
 public class _16_21_Sisteen_TwentyOne {
 
 
+    public static void main(String[] args) {
+        int[] arr1 = {1, 2, 3};
+        int[] arr2 = {4, 5, 6};
+        int[] swapValues = new _16_21_Sisteen_TwentyOne().findSwapValues(arr1, arr2);
+        System.out.println(Arrays.toString(swapValues));
+    }
+
     public int getArrayElementSum(int[] array) {
         int elementSum = 0;
         for (int element : array) {
@@ -33,6 +40,7 @@ public class _16_21_Sisteen_TwentyOne {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/sum-swap-lcci
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param array1
      * @param array2
      * @return
@@ -69,14 +77,6 @@ public class _16_21_Sisteen_TwentyOne {
             }
         }
         return new int[0];
-    }
-
-
-    public static void main(String[] args) {
-        int[] arr1 = {1,2,3};
-        int[] arr2 = {4,5,6};
-        int[] swapValues = new _16_21_Sisteen_TwentyOne().findSwapValues(arr1, arr2);
-        System.out.println(Arrays.toString(swapValues));
     }
 
 }

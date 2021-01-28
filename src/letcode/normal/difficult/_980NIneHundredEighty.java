@@ -1,7 +1,6 @@
 package letcode.difficult;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 /**
  * Leetcode
@@ -34,10 +33,10 @@ public class _980NIneHundredEighty {
     private static int[][] cache;
     private static int count = 0;
 
-    private static boolean canArrive(int y, int x){
+    private static boolean canArrive(int y, int x) {
         if ((y < 0) || (y >= y_length)
                 || (x < 0) || (x >= x_length)
-                || (data[y][x] == -1) || (isUse[y][x])){
+                || (data[y][x] == -1) || (isUse[y][x])) {
             return false;
         }
         return true;
@@ -47,46 +46,46 @@ public class _980NIneHundredEighty {
      * 1. (0,0),(0,1),(0,2),(0,3),(1,3),(1,2),(1,1),(1,0),(2,0),(2,1),(2,2)
      * 2. (0,0),(1,0),(2,0),(2,1),(1,1),(0,1),(0,2),(0,3),(1,3),(1,2),(2,2)
      */
-    private static int dfs(int y, int x, int nowCount){
-        if (y == end_y && x == end_x){
+    private static int dfs(int y, int x, int nowCount) {
+        if (y == end_y && x == end_x) {
             return count == nowCount ? 1 : 0;
         }
-        if (cache[y][x] != 0){
+        if (cache[y][x] != 0) {
             return cache[y][x];
         }
-        if (canArrive(y-1, x)){
-            isUse[y-1][x] = true;
-            cache[y][x] += dfs(y-1, x, nowCount+1);
-            isUse[y-1][x] = false;
+        if (canArrive(y - 1, x)) {
+            isUse[y - 1][x] = true;
+            cache[y][x] += dfs(y - 1, x, nowCount + 1);
+            isUse[y - 1][x] = false;
         }
-        if (canArrive(y+1, x)){
-            isUse[y+1][x] = true;
-            cache[y][x] += dfs(y+1, x, nowCount+1);
-            isUse[y+1][x] = false;
+        if (canArrive(y + 1, x)) {
+            isUse[y + 1][x] = true;
+            cache[y][x] += dfs(y + 1, x, nowCount + 1);
+            isUse[y + 1][x] = false;
         }
-        if (canArrive(y, x+1)){
+        if (canArrive(y, x + 1)) {
             isUse[y][x] = true;
-            cache[y][x] += dfs(y, x+1, nowCount+1);
+            cache[y][x] += dfs(y, x + 1, nowCount + 1);
             isUse[y][x] = false;
         }
-        if (canArrive(y, x-1)){
-            isUse[y][x-1] = true;
-            cache[y][x] += dfs(y, x-1, nowCount+1);
-            isUse[y][x-1] = false;
+        if (canArrive(y, x - 1)) {
+            isUse[y][x - 1] = true;
+            cache[y][x] += dfs(y, x - 1, nowCount + 1);
+            isUse[y][x - 1] = false;
         }
         return cache[y][x];
     }
 
     /**
      * 示例 1：
-     *
+     * <p>
      * 输入：[[1,0,0,0],[0,0,0,0],[0,0,2,-1]]
      * 输出：2
      * 解释：我们有以下两条路径：
      * 1. (0,0),(0,1),(0,2),(0,3),(1,3),(1,2),(1,1),(1,0),(2,0),(2,1),(2,2)
      * 2. (0,0),(1,0),(2,0),(2,1),(1,1),(0,1),(0,2),(0,3),(1,3),(1,2),(2,2)
      * 示例 2：
-     *
+     * <p>
      * 输入：[[1,0,0,0],[0,0,0,0],[0,0,0,2]]
      * 输出：4
      * 解释：我们有以下四条路径：
@@ -95,12 +94,13 @@ public class _980NIneHundredEighty {
      * 3. (0,0),(1,0),(2,0),(2,1),(2,2),(1,2),(1,1),(0,1),(0,2),(0,3),(1,3),(2,3)
      * 4. (0,0),(1,0),(2,0),(2,1),(1,1),(0,1),(0,2),(0,3),(1,3),(1,2),(2,2),(2,3)
      * 示例 3：
-     *
+     * <p>
      * 输入：[[0,1],[2,0]]
      * 输出：0
      * 解释：
      * 没有一条路能完全穿过每一个空的方格一次。
      * 请注意，起始和结束方格可以位于网格中的任意位置。
+     *
      * @param grid
      * @return
      */
@@ -110,15 +110,15 @@ public class _980NIneHundredEighty {
         isUse = new boolean[y_length][x_length];
         cache = new int[y_length][x_length];
         data = grid;
-        for (int i=0; i<y_length; ++i){
-            for (int j=0; j<x_length; ++j){
-                if (grid[i][j] == 1){
+        for (int i = 0; i < y_length; ++i) {
+            for (int j = 0; j < x_length; ++j) {
+                if (grid[i][j] == 1) {
                     start_y = i;
                     start_x = j;
-                }else if (grid[i][j] == 2){
+                } else if (grid[i][j] == 2) {
                     end_y = i;
                     end_x = j;
-                }else if (grid[i][j] == 0){
+                } else if (grid[i][j] == 0) {
                     ++count;
                 }
             }
@@ -156,20 +156,20 @@ public class _980NIneHundredEighty {
             }
         }*/
 
-        int n = (int) (Math.random()*11);
+        int n = (int) (Math.random() * 11);
         int[] arr = new int[n];
-        for (int i=0; i<n; ++i){
-            arr[i] = (int) (Math.random()*30);
+        for (int i = 0; i < n; ++i) {
+            arr[i] = (int) (Math.random() * 30);
         }
         System.out.println(Arrays.toString(arr));
         boolean flag = true;
-        for (int i=0; i<n-1&&flag; ++i){
+        for (int i = 0; i < n - 1 && flag; ++i) {
             flag = false;
-            for (int j=0; j<n-i-1; ++j){
-                if (arr[j] > arr[j+1]){
+            for (int j = 0; j < n - i - 1; ++j) {
+                if (arr[j] > arr[j + 1]) {
                     int temp = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = temp;
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
                     flag = true;
                 }
             }

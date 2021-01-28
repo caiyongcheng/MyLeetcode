@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.HashMap;
 
@@ -23,30 +23,35 @@ public class _1642OneThousandSixHundredFortyTwo {
     private HashMap<String, Integer> cache;
     private int[] heights;
 
+    public static void main(String[] args) {
+        System.out.println(new _1642OneThousandSixHundredFortyTwo()
+                .furthestBuilding(new int[]{4, 2, 7, 6, 9, 14, 12}, 5, 1));
+    }
+
     private int dp(int nowIndex, int remainBricks, int remainLadders) {
-        while (nowIndex < heights.length-1 && heights[nowIndex] >= heights[nowIndex+1]) {
+        while (nowIndex < heights.length - 1 && heights[nowIndex] >= heights[nowIndex + 1]) {
             ++nowIndex;
         }
         if (nowIndex >= heights.length - 1) {
             return heights.length - 1;
         }
-        String cacheKey = nowIndex+"_"+remainBricks+"_"+remainLadders;
+        String cacheKey = nowIndex + "_" + remainBricks + "_" + remainLadders;
         if (cache.containsKey(cacheKey)) {
             return cache.get(cacheKey);
         }
         int cacheValue = nowIndex;
-        if (heights[nowIndex+1] - heights[nowIndex] <= remainBricks) {
+        if (heights[nowIndex + 1] - heights[nowIndex] <= remainBricks) {
             cacheValue = Math.max(cacheValue, dp(
-               nowIndex+1,
-               remainBricks - (heights[nowIndex+1] - heights[nowIndex]),
-               remainLadders
+                    nowIndex + 1,
+                    remainBricks - (heights[nowIndex + 1] - heights[nowIndex]),
+                    remainLadders
             ));
         }
         if (remainLadders > 0) {
             cacheValue = Math.max(cacheValue, dp(
-                    nowIndex+1,
+                    nowIndex + 1,
                     remainBricks,
-                    remainLadders-1
+                    remainLadders - 1
             ));
         }
         cache.put(cacheKey, cacheValue);
@@ -62,15 +67,15 @@ public class _1642OneThousandSixHundredFortyTwo {
      * - 不使用砖块或梯子到达建筑物 3 ，因为 7 >= 6
      * - 使用唯一的梯子到达建筑物 4 。你必须使用砖块或梯子，因为 6 < 9
      * 无法越过建筑物 4 ，因为没有更多砖块或梯子。
-     *
+     * <p>
      * 示例 2：
      * 输入：heights = [4,12,2,7,3,18,20,3,19], bricks = 10, ladders = 2
      * 输出：7
-     *
+     * <p>
      * 示例 3：
      * 输入：heights = [14,3,19,3], bricks = 17, ladders = 0
      * 输出：3
-     *
+     * <p>
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/furthest-building-you-can-reach
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
@@ -79,11 +84,6 @@ public class _1642OneThousandSixHundredFortyTwo {
         cache = new HashMap<>(heights.length);
         this.heights = heights;
         return dp(0, bricks, ladders);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new _1642OneThousandSixHundredFortyTwo()
-                .furthestBuilding(new int[]{4,2,7,6,9,14,12}, 5, 1));
     }
 
 }

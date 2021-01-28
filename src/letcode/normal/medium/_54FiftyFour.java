@@ -17,20 +17,21 @@ public class _54FiftyFour {
      * 示例 1:
      * 输入:
      * [
-     *  [ 1, 2, 3 ],
-     *  [ 4, 5, 6 ],
-     *  [ 7, 8, 9 ]
+     * [ 1, 2, 3 ],
+     * [ 4, 5, 6 ],
+     * [ 7, 8, 9 ]
      * ]
      * 输出: [1,2,3,6,9,8,7,4,5]
-     *
+     * <p>
      * 示例 2:
      * 输入:
      * [
-     *   [1, 2, 3, 4],
-     *   [5, 6, 7, 8],
-     *   [9,10,11,12]
+     * [1, 2, 3, 4],
+     * [5, 6, 7, 8],
+     * [9,10,11,12]
      * ]
      * 输出: [1,2,3,4,8,12,11,10,9,5,6,7]
+     *
      * @param matrix
      * @return
      */
@@ -40,26 +41,26 @@ public class _54FiftyFour {
         int col = 0;
         int rowSize = matrix.length;
         int colSize = matrix[0].length;
-        int circleSize = Math.max((rowSize + 1) / 2, (colSize + 1) /2 );
-        for (int i=0; i<circleSize; ++i){
+        int circleSize = Math.max((rowSize + 1) / 2, (colSize + 1) / 2);
+        for (int i = 0; i < circleSize; ++i) {
             row = i;
             col = i;
-            for (; col<colSize-i; ++col){
+            for (; col < colSize - i; ++col) {
                 list.add(matrix[row][col]);
             }
             --col;
             ++row;
-            for (; row<rowSize-i; ++row){
+            for (; row < rowSize - i; ++row) {
                 list.add(matrix[row][col]);
             }
             --row;
             --col;
-            for (; col>i; --col){
+            for (; col > i; --col) {
                 list.add(matrix[row][col]);
             }
-            for (; row>i; --row){
+            for (; row > i; --row) {
                 list.add(matrix[row][col]);
-                System.out.print(matrix[row][col]+" ");
+                System.out.print(matrix[row][col] + " ");
             }
         }
 
@@ -68,16 +69,16 @@ public class _54FiftyFour {
 
     public static void main(String[] args) {
         int[][] ints = new int[][]{
-                {1,2,3,4},
-                {5,6,7,8},
-                {9,10,11,12},
-                {13,14,15,16}
+                {1, 2, 3, 4},
+                {5, 6, 7, 8},
+                {9, 10, 11, 12},
+                {13, 14, 15, 16}
         };
         int[][] ints1 = {
-            {1,2,3},
-            {4,5,6},
-            {7,8,9},
-            {10,11,12}
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9},
+                {10, 11, 12}
         };
         /*
         1 1 1 1 1

@@ -10,10 +10,17 @@ import java.util.Stack;
  * @author: 蔡永程
  * @create: 2020-10-19 23:18
  */
-public class _844EightHundredFortyFour {   
+public class _844EightHundredFortyFour {
+
+    public static void main(String[] args) {
+        System.out.println(new _844EightHundredFortyFour().backspaceCompare(
+                "ab#c", "ad#c"
+        ));
+    }
 
     /**
      * 计算输入到空白的文本编辑器后的结果
+     *
      * @param str
      * @return
      */
@@ -42,21 +49,22 @@ public class _844EightHundredFortyFour {
      * 输入：S = "ab#c", T = "ad#c"
      * 输出：true
      * 解释：S 和 T 都会变成 “ac”。
-     *
+     * <p>
      * 示例 2：
      * 输入：S = "ab##", T = "c#d#"
      * 输出：true
      * 解释：S 和 T 都会变成 “”。
-     *
+     * <p>
      * 示例 3：
      * 输入：S = "a##c", T = "#a#c"
      * 输出：true
      * 解释：S 和 T 都会变成 “c”。
-     *
+     * <p>
      * 示例 4：
      * 输入：S = "a#c", T = "b"
      * 输出：false
      * 解释：S 会变成 “c”，但 T 仍然是 “b”。
+     *
      * @param S
      * @param T
      * @return
@@ -71,11 +79,5 @@ public class _844EightHundredFortyFour {
             return false;
         }
         return strS.equals(strT);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new _844EightHundredFortyFour().backspaceCompare(
-                "ab#c", "ad#c"
-        ));
     }
 }

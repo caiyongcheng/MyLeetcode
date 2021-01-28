@@ -9,6 +9,11 @@ package interview.medium;
  */
 public class _8_5_Eight_Five {
 
+    public static void main(String[] args) {
+        System.out.println(new _8_5_Eight_Five().multiply(1000, 10));
+        //System.out.println(1000 & 1);
+    }
+
     public int multiplyPrivate(int A, int B) {
         if (A == 0) {
             return 0;
@@ -16,7 +21,7 @@ public class _8_5_Eight_Five {
         if (A == 1) {
             return B;
         }
-        int mid = multiplyPrivate(A>>1, B);
+        int mid = multiplyPrivate(A >> 1, B);
         return mid + mid + ((A & 1) == 1 ? B : 0);
     }
 
@@ -33,10 +38,5 @@ public class _8_5_Eight_Five {
             A = tmp;
         }
         return multiplyPrivate(A, B);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new _8_5_Eight_Five().multiply(1000, 10));
-        //System.out.println(1000 & 1);
     }
 }

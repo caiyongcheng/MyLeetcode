@@ -11,6 +11,12 @@ package normal.easy;
  */
 public class _169OneHundredSixtyNine {
 
+    public static void main(String[] args) {
+        System.out.println(new _169OneHundredSixtyNine().majorityElement(
+                new int[]{1, 1, 4, 1, 4, 5, 1}
+        ));
+    }
+
     public int majorityElement(int[] nums) {
         int count = 1;
         int res = nums[0];
@@ -23,12 +29,6 @@ public class _169OneHundredSixtyNine {
             }
         }
         return res;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new _169OneHundredSixtyNine().majorityElement(
-                new int[]{1,1,4,1,4,5,1}
-        ));
     }
 
 }

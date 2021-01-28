@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.Arrays;
 
@@ -17,13 +17,44 @@ import java.util.Arrays;
 public class _406FourHundredSix {
 
 
+    /**
+     * 示例 1：
+     * <p>
+     * 输入：people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
+     * 输出：[[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
+     * 解释：
+     * 编号为 0 的人身高为 5 ，没有身高更高或者相同的人排在他前面。
+     * 编号为 1 的人身高为 7 ，没有身高更高或者相同的人排在他前面。
+     * 编号为 2 的人身高为 5 ，有 2 个身高更高或者相同的人排在他前面，即编号为 0 和 1 的人。
+     * 编号为 3 的人身高为 6 ，有 1 个身高更高或者相同的人排在他前面，即编号为 1 的人。
+     * 编号为 4 的人身高为 4 ，有 4 个身高更高或者相同的人排在他前面，即编号为 0、1、2、3 的人。
+     * 编号为 5 的人身高为 7 ，有 1 个身高更高或者相同的人排在他前面，即编号为 1 的人。
+     * 因此 [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]] 是重新构造后的队列。
+     * 示例 2：
+     * 输入：people = [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]
+     * 输出：[[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/queue-reconstruction-by-height
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        //{7, 0}, {4, 4}, {7, 1}, {5, 0}, {6, 1}, {5, 2}
+        int[][] ints1 = {{8, 2}, {4, 2}, {4, 5}, {2, 0}, {7, 2}, {1, 4}, {9, 1}, {3, 1}, {9, 0}, {1, 0}};
+        int[][] ints = new _406FourHundredSix().reconstructQueue(ints1);
+        for (int[] anInt : ints) {
+            System.out.println(Arrays.toString(anInt));
+        }
+    }
+
     private void quickArraySortFor2Dimension(int[][] array, int lo, int hi) {
         if (lo >= hi) {
             return;
         }
         int arrOne = 0;
         int arrTwo = 0;
-        if (lo == hi-1) {
+        if (lo == hi - 1) {
             if (array[lo][0] > array[hi][0] || (array[lo][0] == array[hi][0] && array[lo][1] > array[hi][1])) {
                 arrOne = array[lo][0];
                 arrTwo = array[lo][1];
@@ -42,13 +73,13 @@ public class _406FourHundredSix {
         arrOne = array[le][0];
         arrTwo = array[le][1];
         while (ri > le) {
-            for(; ri > le && array[ri][0] >= limitValueOne; --ri);
+            for (; ri > le && array[ri][0] >= limitValueOne; --ri) ;
             if (ri >= le && (array[ri][0] < limitValueOne || (array[ri][0] == limitValueOne && array[ri][1] > limitValueTow))) {
                 array[le][0] = array[ri][0];
                 array[le][1] = array[ri][1];
                 ++le;
             }
-            for(; ri > le && array[le][0] < limitValueOne; ++le);
+            for (; ri > le && array[le][0] < limitValueOne; ++le) ;
             if (ri > le && (array[le][0] >= limitValueOne || ((array[ri][0] == limitValueOne && array[ri][1] <= limitValueTow)))) {
                 array[ri][0] = array[le][0];
                 array[ri][1] = array[le][1];
@@ -57,61 +88,31 @@ public class _406FourHundredSix {
         }
         array[ri][0] = arrOne;
         array[ri][1] = arrTwo;
-        quickArraySortFor2Dimension(array, lo, ri-1);
-        quickArraySortFor2Dimension(array, ri+1, hi);
+        quickArraySortFor2Dimension(array, lo, ri - 1);
+        quickArraySortFor2Dimension(array, ri + 1, hi);
     }
 
     public int[][] reconstructQueue(int[][] people) {
         int[][] result = new int[people.length][people[0].length];
         boolean[] isFall = new boolean[people.length];
-        quickArraySortFor2Dimension(people, 0, people.length-1);
+        quickArraySortFor2Dimension(people, 0, people.length - 1);
         for (int nowNum = 0; nowNum < people.length; nowNum++) {
             int nowIndex = 0;
             int fallNum = 0;
             for (; nowIndex < people.length; ++nowIndex) {
-                if (!isFall[nowIndex] || result[nowIndex][0] == people[nowNum][0]){
+                if (!isFall[nowIndex] || result[nowIndex][0] == people[nowNum][0]) {
                     ++fallNum;
                 }
                 if (people[nowNum][1] + 1 == fallNum) {
                     break;
                 }
             }
-            if (nowIndex < people.length){
+            if (nowIndex < people.length) {
                 result[nowIndex][0] = people[nowNum][0];
                 result[nowIndex][1] = people[nowNum][1];
                 isFall[nowIndex] = true;
             }
         }
         return result;
-    }
-
-    /**
-     * 示例 1：
-     *
-     * 输入：people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
-     * 输出：[[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
-     * 解释：
-     * 编号为 0 的人身高为 5 ，没有身高更高或者相同的人排在他前面。
-     * 编号为 1 的人身高为 7 ，没有身高更高或者相同的人排在他前面。
-     * 编号为 2 的人身高为 5 ，有 2 个身高更高或者相同的人排在他前面，即编号为 0 和 1 的人。
-     * 编号为 3 的人身高为 6 ，有 1 个身高更高或者相同的人排在他前面，即编号为 1 的人。
-     * 编号为 4 的人身高为 4 ，有 4 个身高更高或者相同的人排在他前面，即编号为 0、1、2、3 的人。
-     * 编号为 5 的人身高为 7 ，有 1 个身高更高或者相同的人排在他前面，即编号为 1 的人。
-     * 因此 [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]] 是重新构造后的队列。
-     * 示例 2：
-     * 输入：people = [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]
-     * 输出：[[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/queue-reconstruction-by-height
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        //{7, 0}, {4, 4}, {7, 1}, {5, 0}, {6, 1}, {5, 2}
-        int[][] ints1 = {{8,2},{4,2},{4,5},{2,0},{7,2},{1,4},{9,1},{3,1},{9,0},{1,0}};
-        int[][] ints = new _406FourHundredSix().reconstructQueue(ints1);
-        for (int[] anInt : ints) {
-            System.out.println(Arrays.toString(anInt));
-        }
     }
 }

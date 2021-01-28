@@ -10,6 +10,6 @@ package utils;
 public class RandomQuestion {
 
     public static void main(String[] args) {
-        System.out.println((int)(Math.random()*1900));
+        System.out.println((int) (Math.random() * 1900));
     }
 }

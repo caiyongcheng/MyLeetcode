@@ -16,20 +16,21 @@ public class _83EightyThree {
      * 示例 1:
      * 输入: 1->1->2
      * 输出: 1->2
-     *
+     * <p>
      * 示例 2:
      * 输入: 1->1->2->3->3
      * 输出: 1->2->3
+     *
      * @param head
      * @return
      */
     public static ListNode deleteDuplicates(ListNode head) {
         ListNode p = head;
         ListNode pnext = null;
-        while (p!=null && p.next!=null){
-            if(p.val == p.next.val){
+        while (p != null && p.next != null) {
+            if (p.val == p.next.val) {
                 p.next = p.next.next;
-            }else {
+            } else {
                 p = p.next;
             }
         }
@@ -37,7 +38,7 @@ public class _83EightyThree {
     }
 
     public static void main(String[] args) {
-        ListNode listNode = new ListNode(new int[]{1, 1, 2,3,3});
+        ListNode listNode = new ListNode(new int[]{1, 1, 2, 3, 3});
         listNode.display();
         deleteDuplicates(listNode).display();
     }

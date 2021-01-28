@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.List;
 
@@ -24,7 +24,6 @@ public class N_721SevenHundredTwentyOne {
         }
         return null;
     }
-
 
 
 }

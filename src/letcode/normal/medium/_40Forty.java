@@ -1,6 +1,9 @@
 package letcode.medium;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Leetcode
@@ -23,13 +26,14 @@ public class _40Forty {
 
     public static int goal;
 
-    public static HashMap<Integer,Integer> numSize = new HashMap<Integer, Integer>();
+    public static HashMap<Integer, Integer> numSize = new HashMap<Integer, Integer>();
 
-    public static List<Integer> list = new ArrayList<Integer>();;
+    public static List<Integer> list = new ArrayList<Integer>();
+    ;
 
     public static List<List<Integer>> lists = new ArrayList<List<Integer>>();
 
-    public static void search(int index, int sum){
+    public static void search(int index, int sum) {
         if (sum == goal) {
             ArrayList<Integer> arrayList = new ArrayList<>();
             for (Integer integer : list) {
@@ -38,33 +42,33 @@ public class _40Forty {
             lists.add(arrayList);
             return;
         }
-        if (index >= datasLength){
+        if (index >= datasLength) {
             return;
         }
-        search(index+1, sum);
+        search(index + 1, sum);
         int size = numSize.get(datas[index]) + 1;
         int i = 1;
-        for (; i < size && datas[index]*i + sum <= goal; ++i){
+        for (; i < size && datas[index] * i + sum <= goal; ++i) {
             list.add(datas[index]);
-            search(index+1, sum + datas[index]*i);
+            search(index + 1, sum + datas[index] * i);
         }
-        for (int j = 1; j < i; ++j){
-            list.remove(list.size()-1);
+        for (int j = 1; j < i; ++j) {
+            list.remove(list.size() - 1);
         }
     }
 
     /**
      * 示例 1:
-     *
+     * <p>
      * 输入: candidates = [10,1,2,7,6,1,5], target = 8,
      * 所求解集为:
      * [
-     *   [1, 7],
-     *   [1, 2, 5],
-     *   [2, 6],
-     *   [1, 1, 6]
+     * [1, 7],
+     * [1, 2, 5],
+     * [2, 6],
+     * [1, 1, 6]
      * ]
-     *
+     * <p>
      * 示例 2:
      * 输入: candidates = [2,5,2,1,2], target = 5,
      * 所求解集为:
@@ -72,6 +76,7 @@ public class _40Forty {
      *   [1,2,2],
      *   [5]
      * ]
+     *
      * @param candidates
      * @param target
      * @return
@@ -79,11 +84,12 @@ public class _40Forty {
     public static List<List<Integer>> combinationSum2(int[] candidates, int target) {
         goal = target;
         Arrays.sort(candidates);
-        datas= new int[candidates.length];
-        for (int i=0, j=0; i < candidates.length && candidates[i] <= target;){
+        datas = new int[candidates.length];
+        for (int i = 0, j = 0; i < candidates.length && candidates[i] <= target; ) {
             for (j = i;
                  j < candidates.length && candidates[i] == candidates[j];
-                 ++j);
+                 ++j)
+                ;
             datas[datasLength++] = candidates[i];
             numSize.put(candidates[i], j - i);
             i = j;
@@ -93,7 +99,7 @@ public class _40Forty {
     }
 
     public static void main(String[] args) {
-        combinationSum2(new int[]{2,5,2,1,2}, 5);
+        combinationSum2(new int[]{2, 5, 2, 1, 2}, 5);
         for (List<Integer> integers : lists) {
             System.out.println(integers);
         }

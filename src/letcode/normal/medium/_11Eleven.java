@@ -8,39 +8,39 @@ package letcode.medium;
  * 说明：你不能倾斜容器，且 n 的值至少为 2。
  * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/container-with-most-water
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ *
  * @author : CaiYongcheng
  * @date : 2020-06-22 11:16
  **/
 public class _11Eleven {
 
 
-
-
     /**
      * 输入：[1,8,6,2,5,4,8,3,7]
      * 输出：49
+     *
      * @param height
      * @return
      */
     public static int maxArea(int[] height) {
         int left = 0;
-        int right = height.length-1;
-        int marea = (right-left)*Math.min(height[left],height[right]);
-        while (left < right){
-            if(height[left] < height[right]){
+        int right = height.length - 1;
+        int marea = (right - left) * Math.min(height[left], height[right]);
+        while (left < right) {
+            if (height[left] < height[right]) {
                 left++;
-            }else {
+            } else {
                 right--;
             }
-            marea = Math.max(marea,(right-left)*Math.min(height[left],height[right]));
+            marea = Math.max(marea, (right - left) * Math.min(height[left], height[right]));
         }
-        marea = Math.max(marea,(right-left)*Math.min(height[left],height[right]));
+        marea = Math.max(marea, (right - left) * Math.min(height[left], height[right]));
         return marea;
     }
 
     //[10,14,10,4,10,2,6,1,6,12]
     public static void main(String[] args) {
-        int[] ints = new int[]{10,14,10,4,10,2,6,1,6,12};
+        int[] ints = new int[]{10, 14, 10, 4, 10, 2, 6, 1, 6, 12};
         System.out.println(maxArea(ints));
     }
 

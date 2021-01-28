@@ -17,11 +17,12 @@ public class _29TwentyNine {
      * 输入: dividend = 10, divisor = 3
      * 输出: 3
      * 解释: 10/3 = truncate(3.33333..) = truncate(3) = 3
-     *
+     * <p>
      * 示例 2:
      * 输入: dividend = 7, divisor = -3
      * 输出: -2
      * 解释: 7/-3 = truncate(-2.33333..) = -2
+     *
      * @param dividend
      * @param divisor
      * @return
@@ -41,14 +42,14 @@ public class _29TwentyNine {
         long doubleDivisor = divisorl;
         long exp = 1;
         long div = 0;
-        while (true){
-            if (doubleDivisor <= dividendl){
+        while (true) {
+            if (doubleDivisor <= dividendl) {
                 dividendl -= doubleDivisor;
                 div += exp;
                 doubleDivisor = doubleDivisor << 1;
                 exp = exp << 1;
-            }else{
-                if (dividendl < divisorl){
+            } else {
+                if (dividendl < divisorl) {
                     break;
                 }
                 doubleDivisor = doubleDivisor >> 1;
@@ -60,7 +61,7 @@ public class _29TwentyNine {
     }
 
     public static void main(String[] args) {
-        System.out.println(divide(-2147483648 ,-1));
+        System.out.println(divide(-2147483648, -1));
     }
 
 }

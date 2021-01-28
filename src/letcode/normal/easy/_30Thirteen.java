@@ -31,92 +31,93 @@ public class _30Thirteen {
      * 示例 1:
      * 输入: "III"
      * 输出: 3
-     *
+     * <p>
      * 示例 2:
      * 输入: "IV"
      * 输出: 4
-     *
+     * <p>
      * 示例 3:
      * 输入: "IX"
      * 输出: 9
-     *
+     * <p>
      * 示例 4:
      * 输入: "LVIII"
      * 输出: 58
      * 解释: L = 50, V= 5, III = 3.
-     *
+     * <p>
      * 示例 5:
      * 输入: "MCMXCIV"
      * 输出: 1994
      * 解释: M = 1000, CM = 900, XC = 90, IV = 4.
+     *
      * @param s
      * @return
      */
     public static int romanToInt(String s) {
         int res = 0;
         int n = s.length();
-        for(int i=0; i<n; ++i){
+        for (int i = 0; i < n; ++i) {
             char ch = s.charAt(i);
-            switch (ch){
+            switch (ch) {
                 case 'I':
-                    if(i+1 < n){
-                        char ch2 = s.charAt(i+1);
-                        if(ch2 == 'V'){
-                            res+=4;
+                    if (i + 1 < n) {
+                        char ch2 = s.charAt(i + 1);
+                        if (ch2 == 'V') {
+                            res += 4;
                             ++i;
-                        }else if(ch2 == 'X'){
-                            res+=9;
+                        } else if (ch2 == 'X') {
+                            res += 9;
                             ++i;
-                        }else {
-                            res+=1;
+                        } else {
+                            res += 1;
                         }
-                    }else {
-                        res+=1;
+                    } else {
+                        res += 1;
                     }
                     break;
                 case 'V':
-                    res+=5;
+                    res += 5;
                     break;
                 case 'X':
-                    if(i+1 < n){
-                        char ch2 = s.charAt(i+1);
-                        if(ch2 == 'L'){
-                            res+=40;
+                    if (i + 1 < n) {
+                        char ch2 = s.charAt(i + 1);
+                        if (ch2 == 'L') {
+                            res += 40;
                             ++i;
-                        }else if(ch2 == 'C'){
-                            res+=90;
+                        } else if (ch2 == 'C') {
+                            res += 90;
                             ++i;
-                        }else{
-                            res+=10;
+                        } else {
+                            res += 10;
                         }
-                    }else{
-                        res+=10;
+                    } else {
+                        res += 10;
                     }
                     break;
                 case 'L':
-                    res+=50;
+                    res += 50;
                     break;
                 case 'C':
-                    if(i+1 < n){
-                        char ch2 = s.charAt(i+1);
-                        if(ch2 == 'D'){
-                            res+=400;
+                    if (i + 1 < n) {
+                        char ch2 = s.charAt(i + 1);
+                        if (ch2 == 'D') {
+                            res += 400;
                             ++i;
-                        }else if(ch2 == 'M'){
-                            res+=900;
+                        } else if (ch2 == 'M') {
+                            res += 900;
                             ++i;
-                        }else{
-                            res+=100;
+                        } else {
+                            res += 100;
                         }
-                    }else{
-                        res+=100;
+                    } else {
+                        res += 100;
                     }
                     break;
                 case 'D':
-                    res+=500;
+                    res += 500;
                     break;
                 case 'M':
-                    res+=1000;
+                    res += 1000;
                     break;
             }
         }

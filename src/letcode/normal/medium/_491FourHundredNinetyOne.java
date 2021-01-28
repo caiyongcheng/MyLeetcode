@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +10,6 @@ import java.util.List;
  * @create: 2020-11-27 09:25
  */
 public class _491FourHundredNinetyOne {
-
-    public List<List<Integer>> findSubsequences(int[] nums) {
-        return null;
-    }
 
     public static void main(String[] args) {
         List<List> lists = new ArrayList<>();
@@ -27,6 +23,10 @@ public class _491FourHundredNinetyOne {
                 System.out.println(o.toString());
             }
         }
+    }
+
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        return null;
     }
 
     /**

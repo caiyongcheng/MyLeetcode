@@ -1,6 +1,4 @@
-package normal.medium;
-
-import java.util.Arrays;
+package letcode.normal.medium;
 
 /**
  * @program: Leetcode
@@ -19,6 +17,40 @@ import java.util.Arrays;
  */
 public class _1529OneThousandFiveHundredTwentyNine {
 
+    /**
+     * 示例 1：
+     * 输入：target = "10111"
+     * 输出：3
+     * 解释：初始配置 "00000".
+     * 从第 3 个灯泡（下标为 2）开始翻转 "00000" -> "00111"
+     * 从第 1 个灯泡（下标为 0）开始翻转 "00111" -> "11000"
+     * 从第 2 个灯泡（下标为 1）开始翻转 "11000" -> "10111"
+     * 至少需要翻转 3 次才能达成 target 描述的状态
+     * <p>
+     * 示例 2：
+     * 输入：target = "101"
+     * 输出：3
+     * 解释："000" -> "111" -> "100" -> "101".
+     * <p>
+     * 示例 3：
+     * 输入：target = "00000"
+     * 输出：0
+     * <p>
+     * 示例 4：
+     * 输入：target = "001011101"
+     * 输出：5
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/bulb-switcher-iv
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(new _1529OneThousandFiveHundredTwentyNine().minFlips(
+                "001011101"
+        ));
+    }
+
     public int minFlips(String target) {
         char ch;
         int changeQuantity = 0;
@@ -29,39 +61,6 @@ public class _1529OneThousandFiveHundredTwentyNine {
             }
         }
         return changeQuantity;
-    }
-
-    /**
-     * 示例 1：
-     * 输入：target = "10111"
-     * 输出：3
-     * 解释：初始配置 "00000".
-     * 从第 3 个灯泡（下标为 2）开始翻转 "00000" -> "00111"
-     * 从第 1 个灯泡（下标为 0）开始翻转 "00111" -> "11000"
-     * 从第 2 个灯泡（下标为 1）开始翻转 "11000" -> "10111"
-     * 至少需要翻转 3 次才能达成 target 描述的状态
-     *
-     * 示例 2：
-     * 输入：target = "101"
-     * 输出：3
-     * 解释："000" -> "111" -> "100" -> "101".
-     *
-     * 示例 3：
-     * 输入：target = "00000"
-     * 输出：0
-     *
-     * 示例 4：
-     * 输入：target = "001011101"
-     * 输出：5
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/bulb-switcher-iv
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1529OneThousandFiveHundredTwentyNine().minFlips(
-                "001011101"
-        ));
     }
 
 }

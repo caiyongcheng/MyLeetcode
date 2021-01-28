@@ -18,26 +18,27 @@ public class _74SenvenFour {
      * 示例 1:
      * 输入:
      * matrix = {
-     *   {1,   3,  5,  7},
-     *   {10, 11, 16, 20},
-     *   {23, 30, 34, 50}
+     * {1,   3,  5,  7},
+     * {10, 11, 16, 20},
+     * {23, 30, 34, 50}
      * }
      * target = 3
      * 输出: true
-     *
+     * <p>
      * 示例 2:
      * 输入:
      * matrix = {
-     *   {1,   3,  5,  7},
-     *   {10, 11, 16, 20},
-     *   {23, 30, 34, 50}
+     * {1,   3,  5,  7},
+     * {10, 11, 16, 20},
+     * {23, 30, 34, 50}
      * }
      * target = 13
      * 输出: false
-     *
+     * <p>
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/search-a-2d-matrix
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param matrix
      * @param target
      * @return
@@ -57,28 +58,28 @@ public class _74SenvenFour {
      */
     public static boolean searchMatrix(int[][] matrix, int target) {
         if (null == matrix || matrix.length < 1
-                || null == matrix[0] || matrix[0].length < 1){
+                || null == matrix[0] || matrix[0].length < 1) {
             return false;
         }
         int rowSize = matrix.length;
         int colSize = matrix[0].length;
         int left = 0;
-        int right = rowSize*colSize-1;
+        int right = rowSize * colSize - 1;
         int mid = 0;
         int row = 0;
         int col = 0;
-        if (target < matrix[0][0] || target > matrix[rowSize-1][colSize-1]){
+        if (target < matrix[0][0] || target > matrix[rowSize - 1][colSize - 1]) {
             return false;
         }
-        while (left <= right){
+        while (left <= right) {
             mid = (left + right) / 2;
             row = mid / colSize;
-            col = mid - row*colSize;
-            if (matrix[row][col] == target){
+            col = mid - row * colSize;
+            if (matrix[row][col] == target) {
                 return true;
-            }else if (matrix[row][col] < target){
+            } else if (matrix[row][col] < target) {
                 left = mid + 1;
-            }else{
+            } else {
                 right = mid - 1;
             }
         }
@@ -87,7 +88,7 @@ public class _74SenvenFour {
 
     public static void main(String[] args) {
         System.out.println(searchMatrix(new int[][]{
-                {1,   3,  5,  7},
+                {1, 3, 5, 7},
                 {10, 11, 16, 20},
                 {23, 30, 34, 50}
         }, 13));

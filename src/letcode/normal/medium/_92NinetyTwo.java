@@ -11,17 +11,25 @@ import letcode.utils.ListNode;
  **/
 public class _92NinetyTwo {
 
+    public static void main(String[] args) {
+        ListNode listNode = new ListNode(new int[]{1, 2});
+        listNode.display();
+        ListNode listNode1 = new _92NinetyTwo().reverseBetween(listNode, 1, 2);
+        listNode1.display();
+    }
+
     /**
      * 示例:
      * 输入: 1->2->3->4->5->NULL, m = 2, n = 4
      * 输出: 1->4->3->2->5->NULL
+     *
      * @param head
      * @param m
      * @param n
      * @return
      */
     public ListNode reverseBetween(ListNode head, int m, int n) {
-        if (head == null || m == n){
+        if (head == null || m == n) {
             return head;
         }
         int index = 1;
@@ -35,7 +43,7 @@ public class _92NinetyTwo {
         pre.next = head;
 
         // 找到第一个待交换节点的前节点
-        while (index < m){
+        while (index < m) {
             ++index;
             pre = pre.next;
         }
@@ -50,14 +58,6 @@ public class _92NinetyTwo {
         }
         return t == 1 ? pre.next : head;
     }
-
-    public static void main(String[] args) {
-        ListNode listNode = new ListNode(new int[]{1, 2});
-        listNode.display();
-        ListNode listNode1 = new _92NinetyTwo().reverseBetween(listNode, 1, 2);
-        listNode1.display();
-    }
-
 
 
 }

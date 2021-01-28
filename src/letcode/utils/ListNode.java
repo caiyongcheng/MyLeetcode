@@ -11,12 +11,14 @@ public class ListNode {
 
     public int val;
     public ListNode next;
-    public ListNode(int x) { val = x; }
     public String prefix = "[";
     public String suffix = "\t]";
     public String separator = "\t";
+    public ListNode(int x) {
+        val = x;
+    }
 
-    public ListNode(int[] nums){
+    public ListNode(int[] nums) {
 
         this.val = nums[0];
         for (int i = nums.length - 1; i >= 1; i--) {
@@ -26,14 +28,14 @@ public class ListNode {
         }
     }
 
-    public void display(){
+    public void display() {
         display(prefix, suffix, separator);
     }
 
-    public void display(String prefix, String suffix, String separator){
+    public void display(String prefix, String suffix, String separator) {
         ListNode head = this;
         System.out.print(prefix);
-        while (head != null){
+        while (head != null) {
             System.out.print(separator + head.getVal());
             head = head.next;
         }

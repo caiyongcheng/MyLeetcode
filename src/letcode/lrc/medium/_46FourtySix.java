@@ -13,6 +13,17 @@ package lrc.medium;
  */
 public class _46FourtySix {
 
+    /**
+     * 输入: 12258
+     * 输出: 5
+     * 解释: 12258有5种不同的翻译，分别是"bccfi", "bwfi", "bczi", "mcfi"和"mzi"
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(new _46FourtySix().translateNum(100));
+    }
+
     public int translateNum(int num) {
         if (num < 10) {
             return 1;
@@ -26,7 +37,7 @@ public class _46FourtySix {
         long n;
         int nowNum;
         long precision = 1000;
-        while (num1 >= precision/10) {
+        while (num1 >= precision / 10) {
             n = num1 % precision * 100 / precision;
             nowNum = lLast +
                     (n > 25 || n < 10 ? 0 : rLast);
@@ -35,16 +46,6 @@ public class _46FourtySix {
             precision *= 10;
         }
         return lLast;
-    }
-
-    /**
-     * 输入: 12258
-     * 输出: 5
-     * 解释: 12258有5种不同的翻译，分别是"bccfi", "bwfi", "bczi", "mcfi"和"mzi"
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _46FourtySix().translateNum(100));
     }
 
 }

@@ -16,12 +16,18 @@ public class _84EightyFour {
 
     public int[] datas;
 
+    public static void main(String[] args) {
+        _84EightyFour eightyFour = new _84EightyFour();
+        System.out.println(eightyFour.largestRectangleArea(new int[]{2, 1, 5, 6, 2, 3}));
+
+    }
+
     public int dp(int[] heights) {
         toLeftMinHight = new int[heights.length][heights.length];
         for (int i = 0; i < toLeftMinHight.length; i++) {
             toLeftMinHight[i][i] = heights[i];
-            for (int j = i+1; j < toLeftMinHight.length; j++) {
-                toLeftMinHight[i][j] = Math.min(toLeftMinHight[i][j-1], heights[j]);
+            for (int j = i + 1; j < toLeftMinHight.length; j++) {
+                toLeftMinHight[i][j] = Math.min(toLeftMinHight[i][j - 1], heights[j]);
             }
         }
         int maxArea = 0;
@@ -41,12 +47,12 @@ public class _84EightyFour {
         if (left == right) {
             return datas[left];
         }
-        if (left+1 == right) {
+        if (left + 1 == right) {
             int minHeight = Math.min(datas[left], datas[right]);
-            return Math.max(2*minHeight, Math.max(datas[left], datas[right]));
+            return Math.max(2 * minHeight, Math.max(datas[left], datas[right]));
         }
         int mid = (left + right) >>> 1;
-        int maxArea = Math.max(binary(left, mid-1), binary(mid+1, right));
+        int maxArea = Math.max(binary(left, mid - 1), binary(mid + 1, right));
         int r = mid;
         int l = mid;
         int minHeight = datas[mid];
@@ -57,7 +63,7 @@ public class _84EightyFour {
                     if (datas[l] < minHeight) {
                         minHeight = datas[l];
                     }
-                    maxArea = Math.max(maxArea, (r-l+1)*minHeight);
+                    maxArea = Math.max(maxArea, (r - l + 1) * minHeight);
                     --l;
                 }
                 break;
@@ -67,23 +73,23 @@ public class _84EightyFour {
                     if (datas[r] < minHeight) {
                         minHeight = datas[r];
                     }
-                    maxArea = Math.max(maxArea, (r-l+1)*minHeight);
+                    maxArea = Math.max(maxArea, (r - l + 1) * minHeight);
                     ++r;
                 }
                 break;
             }
-            if (datas[r+1] > datas[l-1]) {
+            if (datas[r + 1] > datas[l - 1]) {
                 ++r;
                 if (datas[r] < minHeight) {
                     minHeight = datas[r];
                 }
-                maxArea = Math.max(maxArea, (r-l+1)*minHeight);
+                maxArea = Math.max(maxArea, (r - l + 1) * minHeight);
             } else {
                 --l;
                 if (datas[l] < minHeight) {
                     minHeight = datas[l];
                 }
-                maxArea = Math.max(maxArea, (r-l+1)*minHeight);
+                maxArea = Math.max(maxArea, (r - l + 1) * minHeight);
             }
         }
         return maxArea;
@@ -92,17 +98,12 @@ public class _84EightyFour {
     /**
      * 输入: [2,1,5,6,2,3]
      * 输出: 10
+     *
      * @param heights
      * @return
      */
     public int largestRectangleArea(int[] heights) {
         datas = heights;
-        return binary(0, heights.length-1);
-    }
-
-    public static void main(String[] args) {
-        _84EightyFour eightyFour = new _84EightyFour();
-        System.out.println(eightyFour.largestRectangleArea(new int[]{2,1,5,6,2,3}));
-
+        return binary(0, heights.length - 1);
     }
 }

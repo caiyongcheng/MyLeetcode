@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.Arrays;
 
@@ -9,25 +9,6 @@ import java.util.Arrays;
  * @create: 2020-12-08 16:16
  */
 public class _503FiveHundredThree {
-
-    public int[] nextGreaterElements(int[] nums) {
-        int[] result = new int[nums.length];
-        boolean flag;
-        for (int index = 0; index < nums.length; index++) {
-            flag = false;
-            for (int size = 1; size < nums.length; ++size) {
-                if (nums[(index+size)%nums.length] > nums[index]){
-                    flag = true;
-                    result[index] = nums[(index+size)%nums.length];
-                    break;
-                }
-            }
-            if (!flag) {
-                result[index] = -1;
-            }
-        }
-        return result;
-    }
 
     /**
      * 输入: [1,2,1]
@@ -43,6 +24,25 @@ public class _503FiveHundredThree {
         int[] nums = {1, 2, 1};
         System.out.println(Arrays.toString(
                 new _503FiveHundredThree().nextGreaterElements(nums)));
+    }
+
+    public int[] nextGreaterElements(int[] nums) {
+        int[] result = new int[nums.length];
+        boolean flag;
+        for (int index = 0; index < nums.length; index++) {
+            flag = false;
+            for (int size = 1; size < nums.length; ++size) {
+                if (nums[(index + size) % nums.length] > nums[index]) {
+                    flag = true;
+                    result[index] = nums[(index + size) % nums.length];
+                    break;
+                }
+            }
+            if (!flag) {
+                result[index] = -1;
+            }
+        }
+        return result;
     }
 
 }

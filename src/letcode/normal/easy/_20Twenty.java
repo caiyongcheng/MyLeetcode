@@ -16,19 +16,19 @@ public class _20Twenty {
      * 示例 1:
      * 输入: "()"
      * 输出: true
-     *
+     * <p>
      * 示例 2:
      * 输入: "()[]{}"
      * 输出: true
-     *
+     * <p>
      * 示例 3:
      * 输入: "(]"
      * 输出: false
-     *
+     * <p>
      * 示例 4:
      * 输入: "([)]"
      * 输出: false
-     *
+     * <p>
      * 示例 5:
      * 输入: "{[]}"
      * 输出: true
@@ -39,35 +39,35 @@ public class _20Twenty {
         int n = s.length();
         char ch;
         int l;
-        for (int i = 0; i < n; ++i){
+        for (int i = 0; i < n; ++i) {
             ch = s.charAt(i);
-            if(ch == '(' || ch == '[' || ch == '{'){
+            if (ch == '(' || ch == '[' || ch == '{') {
                 characters.add(ch);
-            }else{
+            } else {
                 l = characters.size();
-                if (l<=0) {
+                if (l <= 0) {
                     return false;
-                }else if(ch == ')'){
-                    if (characters.get(l-1) != '(') {
+                } else if (ch == ')') {
+                    if (characters.get(l - 1) != '(') {
                         return false;
                     }
-                    characters.remove(l-1);
-                }else if(ch == ']'){
-                    if (characters.get(l-1) != '[') {
+                    characters.remove(l - 1);
+                } else if (ch == ']') {
+                    if (characters.get(l - 1) != '[') {
                         return false;
                     }
-                    characters.remove(l-1);
-                }else if(ch == '}'){
-                    if (characters.get(l-1) != '{') {
+                    characters.remove(l - 1);
+                } else if (ch == '}') {
+                    if (characters.get(l - 1) != '{') {
                         return false;
                     }
-                    characters.remove(l-1);
-                }else{
+                    characters.remove(l - 1);
+                } else {
                     return false;
                 }
             }
         }
-        return characters.size()==0;
+        return characters.size() == 0;
     }
 
     public static void main(String[] args) {

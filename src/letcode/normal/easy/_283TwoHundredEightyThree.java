@@ -11,6 +11,12 @@ import java.util.Arrays;
 public class _283TwoHundredEightyThree {
 
 
+    public static void main(String[] args) {
+        int[] ints = {1, 1, 1};
+        new _283TwoHundredEightyThree().moveZeroes(ints);
+        System.out.println(Arrays.toString(ints));
+    }
+
     /**
      * 示例:
      * 输入: [0,1,0,3,12]
@@ -18,6 +24,7 @@ public class _283TwoHundredEightyThree {
      * 说明:
      * 必须在原数组上操作，不能拷贝额外的数组。
      * 尽量减少操作次数。
+     *
      * @param nums
      */
     public void moveZeroes(int[] nums) {
@@ -33,11 +40,5 @@ public class _283TwoHundredEightyThree {
         for (int i = count; i < nums.length; i++) {
             nums[i] = 0;
         }
-    }
-
-    public static void main(String[] args) {
-        int[] ints = {1,1,1};
-        new _283TwoHundredEightyThree().moveZeroes(ints);
-        System.out.println(Arrays.toString(ints));
     }
 }

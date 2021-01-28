@@ -10,25 +10,25 @@ package letcode.medium;
 public class _63SixtyThree {
 
     private static int[][] cache;
-    
+
     private static int[][] data;
-    
-    private static int dfs(int y, int x){
-        if (cache[y][x] != 0){
+
+    private static int dfs(int y, int x) {
+        if (cache[y][x] != 0) {
             return cache[y][x];
         }
-        if ((y < cache.length-1)&&(data[y+1][x] != 1)){
-            cache[y][x] += dfs(y+1, x);
+        if ((y < cache.length - 1) && (data[y + 1][x] != 1)) {
+            cache[y][x] += dfs(y + 1, x);
         }
-        if ((x < cache[0].length-1)&&(data[y][x+1] != 1)){
-            cache[y][x] += dfs(y, x+1);
+        if ((x < cache[0].length - 1) && (data[y][x + 1] != 1)) {
+            cache[y][x] += dfs(y, x + 1);
         }
         return cache[y][x];
     }
 
     /**
      * 示例 1:
-     *
+     * <p>
      * 输入:
      * [
      *   [0,0,0],
@@ -41,17 +41,18 @@ public class _63SixtyThree {
      * 从左上角到右下角一共有 2 条不同的路径：
      * 1. 向右 -> 向右 -> 向下 -> 向下
      * 2. 向下 -> 向下 -> 向右 -> 向右
+     *
      * @param obstacleGrid
      * @return
      */
     public static int uniquePathsWithObstacles(int[][] obstacleGrid) {
         if (obstacleGrid[0][0] == 1 ||
-        obstacleGrid[obstacleGrid.length-1][obstacleGrid[0].length-1] == 1){
+                obstacleGrid[obstacleGrid.length - 1][obstacleGrid[0].length - 1] == 1) {
             return 0;
         }
         data = obstacleGrid;
         cache = new int[obstacleGrid.length][obstacleGrid[0].length];
-        cache[obstacleGrid.length-1][obstacleGrid[0].length-1] = 1;
+        cache[obstacleGrid.length - 1][obstacleGrid[0].length - 1] = 1;
         return dfs(0, 0);
     }
 

@@ -1,7 +1,6 @@
 package letcode.medium;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,22 +15,23 @@ import java.util.List;
  * 7 pqrs
  * 8 tuv
  * 9 wxyz
+ *
  * @author : CaiYongcheng
  * @date : 2020-06-27 14:42
  **/
 public class _17Seventeen {
 
-    static char[][] mapper =  {
-        {},
-        {},
-        {'a','b','c'},
-        {'d','e','f'},
-        {'g','h','i'},
-        {'j','k','l'},
-        {'m','n','o'},
-        {'p','q','r','s'},
-        {'t','u','v'},
-        {'w','x','y','z'}
+    static char[][] mapper = {
+            {},
+            {},
+            {'a', 'b', 'c'},
+            {'d', 'e', 'f'},
+            {'g', 'h', 'i'},
+            {'j', 'k', 'l'},
+            {'m', 'n', 'o'},
+            {'p', 'q', 'r', 's'},
+            {'t', 'u', 'v'},
+            {'w', 'x', 'y', 'z'}
     };
 
     static char[] dig;
@@ -39,15 +39,15 @@ public class _17Seventeen {
     static List<String> list = new ArrayList<String>();
 
     public static List<String> letterCombinations(int n) {
-        if(n == dig.length){
+        if (n == dig.length) {
             list.add(stringBuilder.toString());
             return null;
         }
         int index = dig[n] - '0';
-        for(int i=0; i<mapper[index].length; ++i){
+        for (int i = 0; i < mapper[index].length; ++i) {
             stringBuilder.append(mapper[index][i]);
-            letterCombinations(n+1);
-            stringBuilder.deleteCharAt(stringBuilder.length()-1);
+            letterCombinations(n + 1);
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
         return list;
     }
@@ -55,12 +55,13 @@ public class _17Seventeen {
     /**
      * 输入："23"
      * 输出：["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+     *
      * @param digits
      * @return
      */
     public static List<String> letterCombinations(String digits) {
         dig = digits.toCharArray();
-        if(digits==null || digits.length() == 0){
+        if (digits.length() == 0) {
             list.add("");
             return list;
         }

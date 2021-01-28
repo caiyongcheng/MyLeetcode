@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 /**
  * @program: Leetcode
@@ -9,9 +9,9 @@ package normal.medium;
 public class N_1201OneThousandTwoHundredOne {
 
 
+    public static void main(String[] args) {
 
-
-
+    }
 
     public int calculateGCD(int x, int y) {
         if (x < y) {
@@ -26,25 +26,19 @@ public class N_1201OneThousandTwoHundredOne {
         return y;
     }
 
-    public int calculateLCM(long x,  long y) {
-        return (int) (x * y / calculateGCD((int)x, (int)y));
-    }
-
     //public int getTargetAmount(int )
 
+    public int calculateLCM(long x, long y) {
+        return (int) (x * y / calculateGCD((int) x, (int) y));
+    }
 
     public int nthUglyNumber(int n, int a, int b, int c) {
-        int lo = Math.min(Math.min(a,b), c);
+        int lo = Math.min(Math.min(a, b), c);
         int hi = lo * n;
 /*        while (lo <= hi) {
 
         }*/
         return 0;
-    }
-
-
-    public static void main(String[] args) {
-
     }
 
 }

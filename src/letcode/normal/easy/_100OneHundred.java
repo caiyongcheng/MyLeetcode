@@ -8,6 +8,7 @@ import letcode.utils.TreeNode;
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/same-tree
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ *
  * @author : CaiYongcheng
  * @date : 2020-06-28 20:47
  **/
@@ -16,37 +17,38 @@ public class _100OneHundred {
     /**
      * 示例 1:
      * 输入:       1         1
-     *           / \       / \
-     *          2   3     2   3
-     *
-     *         [1,2,3],   [1,2,3]
-     *
+     * / \       / \
+     * 2   3     2   3
+     * <p>
+     * [1,2,3],   [1,2,3]
+     * <p>
      * 输出: true
-     *
+     * <p>
      * 示例 2:
      * 输入:      1          1
-     *           /           \
-     *          2             2
-     *
-     *         [1,2],     [1,null,2]
-     *
+     * /           \
+     * 2             2
+     * <p>
+     * [1,2],     [1,null,2]
+     * <p>
      * 输出: false
-     *
+     * <p>
      * 示例 3:
      * 输入:       1         1
-     *           / \       / \
-     *          2   1     1   2
-     *
-     *         [1,2,1],   [1,1,2]
+     * / \       / \
+     * 2   1     1   2
+     * <p>
+     * [1,2,1],   [1,1,2]
      * 输出: false
+     *
      * @param p
      * @param q
      * @return
      */
     public static boolean isSameTree(TreeNode p, TreeNode q) {
-        return p == null || q == null? p==q: p.val == q.val &&
-                isSameTree(p.left,q.left) &&
-                isSameTree(p.right,q.right);
+        return p == null || q == null ? p == q : p.val == q.val &&
+                isSameTree(p.left, q.left) &&
+                isSameTree(p.right, q.right);
     }
 
     public static void main(String[] args) {
@@ -54,7 +56,7 @@ public class _100OneHundred {
         p.left = new TreeNode(2);
         TreeNode q = new TreeNode(1);
         q.right = new TreeNode(2);
-        System.out.println(isSameTree(p,q));
+        System.out.println(isSameTree(p, q));
     }
 
 }

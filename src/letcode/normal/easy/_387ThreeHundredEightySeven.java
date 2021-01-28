@@ -9,33 +9,34 @@ package normal.easy;
 public class _387ThreeHundredEightySeven {
 
 
+    /**
+     * s = "leetcode"
+     * 返回 0
+     * s = "loveleetcode"
+     * 返回 2
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(new _387ThreeHundredEightySeven().firstUniqChar(""));
+    }
+
     public int firstUniqChar(String s) {
         int[][] ints = new int[26][2];
         char[] chars = s.toCharArray();
         int minIndex = Integer.MAX_VALUE;
         for (int index = 0; index < chars.length; index++) {
-            if (ints[chars[index]-'a'][0] == 0) {
-                ints[chars[index]-'a'][0] = index + 1;
+            if (ints[chars[index] - 'a'][0] == 0) {
+                ints[chars[index] - 'a'][0] = index + 1;
             }
-            ints[chars[index]-'a'][1]++;
+            ints[chars[index] - 'a'][1]++;
         }
         for (int index = 0; index < ints.length; index++) {
             if (ints[index][1] == 1 && ints[index][0] < minIndex) {
                 minIndex = ints[index][0];
             }
         }
-        return minIndex != Integer.MAX_VALUE ? minIndex-1 : -1;
-    }
-
-    /**
-     * s = "leetcode"
-     * 返回 0
-     * s = "loveleetcode"
-     * 返回 2
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _387ThreeHundredEightySeven().firstUniqChar(""));
+        return minIndex != Integer.MAX_VALUE ? minIndex - 1 : -1;
     }
 
 }

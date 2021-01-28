@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.Arrays;
 
@@ -17,19 +17,6 @@ import java.util.Arrays;
 public class _274TwoHundredSeventyFour {
 
 
-    public int hIndex(int[] citations) {
-        Arrays.sort(citations);
-        int maxHValue = 0;
-        final int length = citations.length;
-        int index = citations.length-1;
-        for (; index > -1; index--) {
-            if (length-index <= citations[index]) {
-                maxHValue = length-index;
-            }
-        }
-        return maxHValue;
-    }
-
     /**
      * 输入：citations = [3,0,6,1,5]
      * 输出：3
@@ -38,11 +25,25 @@ public class _274TwoHundredSeventyFour {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/h-index
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param args
      */
     public static void main(String[] args) {
         System.out.println(new _274TwoHundredSeventyFour().hIndex(
-                new int[]{3,0,6,1,5}
+                new int[]{3, 0, 6, 1, 5}
         ));
+    }
+
+    public int hIndex(int[] citations) {
+        Arrays.sort(citations);
+        int maxHValue = 0;
+        final int length = citations.length;
+        int index = citations.length - 1;
+        for (; index > -1; index--) {
+            if (length - index <= citations[index]) {
+                maxHValue = length - index;
+            }
+        }
+        return maxHValue;
     }
 }

@@ -1,6 +1,5 @@
 package letcode.medium;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -18,6 +17,7 @@ public class _31ThirtyOne {
      * 1,2,3 → 1,3,2
      * 3,2,1 → 1,2,3
      * 1,1,5 → 1,5,1
+     *
      * @param nums
      */
     // 1 7 9 8 6 4
@@ -32,8 +32,8 @@ public class _31ThirtyOne {
         if (nums == null || nums.length == 0 || nums.length == 1) {
             return;
         }
-        int i = nums.length-1;
-        for(; i > 0 && nums[i] <= nums[i-1]; --i);
+        int i = nums.length - 1;
+        for (; i > 0 && nums[i] <= nums[i - 1]; --i) ;
         if (i == 0) {
             Arrays.sort(nums);
             return;
@@ -42,23 +42,23 @@ public class _31ThirtyOne {
         int j = i;
         int k = j;
         int dif = Integer.MAX_VALUE;
-        for(; j < nums.length; ++j){
+        for (; j < nums.length; ++j) {
             // nums[j] - nums[i-1] <= dif 不需要 <=，因为最后还要重排序
-            if (nums[j] > nums[i-1] && nums[j] - nums[i-1] < dif){
+            if (nums[j] > nums[i - 1] && nums[j] - nums[i - 1] < dif) {
                 k = j;
-                dif = nums[j] - nums[i-1];
+                dif = nums[j] - nums[i - 1];
             }
         }
         // 交换
-        int p = nums[i-1];
-        nums[i-1] = nums[k];
+        int p = nums[i - 1];
+        nums[i - 1] = nums[k];
         nums[k] = p;
         //对nums[i..n]做升序排列
         Arrays.sort(nums, i, nums.length);
     }
 
     public static void main(String[] args) {
-        int[] ints = new int[]{1,7,9,8,6,4};
+        int[] ints = new int[]{1, 7, 9, 8, 6, 4};
         nextPermutation(ints);
         System.out.println(Arrays.toString(ints));
     }

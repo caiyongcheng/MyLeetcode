@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 /**
  * @program: Leetcode
@@ -15,12 +15,17 @@ public class _777SevenHundredSeventySeven {
     private char[] endArray;
     private int limitIndex = 0;
 
+    public static void main(String[] args) {
+        System.out.println(new _777SevenHundredSeventySeven().canTransform("RXXLRXRXL", "XRLXXRRLX"));
+    }
+
     /**
      * 检查是否匹配
+     *
      * @return true:匹配 false：不匹配
      */
     private boolean check() {
-        for (int i=0; i<startArray.length; ++i) {
+        for (int i = 0; i < startArray.length; ++i) {
             if (startArray[i] != endArray[i]) {
                 return false;
             }
@@ -30,11 +35,11 @@ public class _777SevenHundredSeventySeven {
 
     private boolean dfs(int index) {
         boolean isCheck = false;
-        for(; index<limitIndex; ++index) {
-            if (startArray[index] == 'L' && startArray[index+1] == 'X') {
+        for (; index < limitIndex; ++index) {
+            if (startArray[index] == 'L' && startArray[index + 1] == 'X') {
                 break;
             }
-            if (startArray[index] == 'X' && startArray[index+1] == 'R') {
+            if (startArray[index] == 'X' && startArray[index + 1] == 'R') {
                 break;
             }
         }
@@ -43,29 +48,28 @@ public class _777SevenHundredSeventySeven {
         }
         if (startArray[index] == 'L') {
             startArray[index] = 'X';
-            startArray[index+1] = 'L';
+            startArray[index + 1] = 'L';
             if (check()) {
                 return true;
             }
             isCheck = dfs(index + 1);
             startArray[index] = 'L';
-            startArray[index+1] = 'X';
-        }else {
+            startArray[index + 1] = 'X';
+        } else {
             startArray[index] = 'R';
-            startArray[index+1] = 'X';
+            startArray[index + 1] = 'X';
             if (check()) {
                 return true;
             }
-            isCheck = dfs(index+1);
+            isCheck = dfs(index + 1);
             startArray[index] = 'X';
-            startArray[index+1] = 'R';
+            startArray[index + 1] = 'R';
         }
         if (isCheck) {
             return true;
         }
-        return dfs(index+1);
+        return dfs(index + 1);
     }
-
 
     /**
      * 示例 :
@@ -81,6 +85,7 @@ public class _777SevenHundredSeventySeven {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/swap-adjacent-in-lr-string
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param start
      * @param end
      * @return
@@ -98,13 +103,9 @@ public class _777SevenHundredSeventySeven {
         if (start.equals(end)) {
             return true;
         }
-        limitIndex = start.length()-1;
+        limitIndex = start.length() - 1;
         startArray = start.toCharArray();
         endArray = end.toCharArray();
         return dfs(0);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new _777SevenHundredSeventySeven().canTransform("RXXLRXRXL", "XRLXXRRLX"));
     }
 }

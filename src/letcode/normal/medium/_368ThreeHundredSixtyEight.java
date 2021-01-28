@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +17,23 @@ import java.util.List;
 public class _368ThreeHundredSixtyEight {
 
 
-
+    /**
+     * 示例 1:
+     * 输入: [1,2,3]
+     * 输出: [1,2] (当然, [1,3] 也正确)
+     * 示例 2:
+     * 输入: [1,2,4,8]
+     * 输出: [1,2,4,8]
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        _368ThreeHundredSixtyEight threeHundredSixtyEight = new _368ThreeHundredSixtyEight();
+        List<Integer> integers = threeHundredSixtyEight.largestDivisibleSubset(new int[]{1, 2, 4, 8, 3, 9, 27, 81});
+        for (Integer integer : integers) {
+            System.out.print(integer + "、");
+        }
+    }
 
     public List<Integer> largestDivisibleSubset(int[] nums) {
         if (nums == null || nums.length == 0) {
@@ -33,7 +49,7 @@ public class _368ThreeHundredSixtyEight {
         int tmpLength;
         for (int index = nums.length - 1; index >= 0; index--) {
             tmpLength = 0;
-            for (int rIndex = index+1; rIndex < nums.length; ++rIndex) {
+            for (int rIndex = index + 1; rIndex < nums.length; ++rIndex) {
                 if (nums[rIndex] % nums[index] == 0 && lengthArr[rIndex] > tmpLength) {
                     tmpLength = lengthArr[rIndex];
                 }
@@ -46,7 +62,7 @@ public class _368ThreeHundredSixtyEight {
         }
         --maxLength;
         result.add(nums[maxLengthIndex]);
-        nowIndex = maxLengthIndex+1;
+        nowIndex = maxLengthIndex + 1;
         while (maxLength > 0 && nowIndex < nums.length) {
             if (nums[nowIndex] % nums[maxLengthIndex] == 0
                     && lengthArr[nowIndex] == maxLength) {
@@ -57,22 +73,5 @@ public class _368ThreeHundredSixtyEight {
             ++nowIndex;
         }
         return result;
-    }
-
-    /**
-     * 示例 1:
-     * 输入: [1,2,3]
-     * 输出: [1,2] (当然, [1,3] 也正确)
-     * 示例 2:
-     * 输入: [1,2,4,8]
-     * 输出: [1,2,4,8]
-     * @param args
-     */
-    public static void main(String[] args) {
-        _368ThreeHundredSixtyEight threeHundredSixtyEight = new _368ThreeHundredSixtyEight();
-        List<Integer> integers = threeHundredSixtyEight.largestDivisibleSubset(new int[]{1,2,4,8,3,9,27,81});
-        for (Integer integer : integers) {
-            System.out.print(integer+"、");
-        }
     }
 }

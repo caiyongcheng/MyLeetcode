@@ -10,55 +10,56 @@ public class _35ThirtyFive {
      * 示例 1:
      * 输入: [1,3,5,6], 5
      * 输出: 2
-     *
+     * <p>
      * 示例 2:
      * 输入: [1,3,5,6], 2
      * 输出: 1
-     *
+     * <p>
      * 示例 3:
      * 输入: [1,3,5,6], 7
      * 输出: 4
-     *
+     * <p>
      * 示例 4:
      * 输入: [1,3,5,6], 0
      * 输出: 0
+     *
      * @param nums
      * @param target
      * @return
      */
     public static int searchInsert(int[] nums, int target) {
 
-        if(nums == null || nums.length == 0 || target <= nums[0]) {
+        if (nums == null || nums.length == 0 || target <= nums[0]) {
             return 0;
         }
 
-        if (target > nums[nums.length-1]) {
+        if (target > nums[nums.length - 1]) {
             return nums.length;
         }
-        if (target == nums[nums.length-1]) {
-            return nums.length-1;
+        if (target == nums[nums.length - 1]) {
+            return nums.length - 1;
         }
 
         int left = 0;
         int right = nums.length - 1;
         int mid = 0;
-        while (left < right){
-            mid = (left + right)/2;
-            if(mid == left) return right;
-            if(nums[mid] == target){
+        while (left < right) {
+            mid = (left + right) / 2;
+            if (mid == left) return right;
+            if (nums[mid] == target) {
                 return mid;
-            }else if(nums[mid] > target){
+            } else if (nums[mid] > target) {
                 right = mid;
-            }else{
+            } else {
                 left = mid;
             }
         }
-        return target > nums[left]? left+1: left;
+        return target > nums[left] ? left + 1 : left;
     }
 
     public static void main(String[] args) {
-        int[] ints = new int[]{1,3,5};
-        System.out.println(searchInsert(ints,3));
+        int[] ints = new int[]{1, 3, 5};
+        System.out.println(searchInsert(ints, 3));
     }
 
 }

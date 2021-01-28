@@ -27,39 +27,43 @@ public class _LRC_23TwentyThree {
     private int[] evenArray;
     private int[] target;
 
+    public static void main(String[] args) {
+        int[] ints = {2, 4, 3, 1, 5};
+        _LRC_23TwentyThree lrc_23TwentyThree = new _LRC_23TwentyThree();
+        System.out.println(lrc_23TwentyThree.isMagic(ints));
+    }
+
     /**
      * 下标奇数的数据放在偶数下标之前
      */
-    private void cover(int low, int hight, int[] array){
+    private void cover(int low, int hight, int[] array) {
         int unevenIndex = 0;
         int evenIndex = 0;
-        for (int i = low; i < hight; i+=2) {
+        for (int i = low; i < hight; i += 2) {
             unevenArray[unevenIndex++] = array[i];
         }
-        for (int i = low+1; i < hight; i+=2) {
+        for (int i = low + 1; i < hight; i += 2) {
             evenArray[evenIndex++] = array[i];
         }
         for (int i = 0; i < evenIndex; i++) {
-            array[i+low] = evenArray[i];
+            array[i + low] = evenArray[i];
         }
         for (int i = 0; i < unevenIndex; i++) {
-            array[i+evenIndex+low] = unevenArray[i];
+            array[i + evenIndex + low] = unevenArray[i];
         }
     }
-
-
 
     public boolean magic(int k, int low, int[] array) {
         int hight = array.length;
         while (low < hight) {
             cover(low, hight, array);
-            int limit = Math.min(hight, low+k);
+            int limit = Math.min(hight, low + k);
             for (int i = low; i < limit; i++) {
                 if (target[i] != array[i]) {
                     return false;
                 }
             }
-            low+=k;
+            low += k;
         }
         return true;
     }
@@ -67,10 +71,10 @@ public class _LRC_23TwentyThree {
     public boolean isMagic(int[] target) {
         this.target = target;
         int[] ints = new int[target.length];
-        unevenArray = new int[target.length/2+1];
-        evenArray = new int[target.length/2+1];
+        unevenArray = new int[target.length / 2 + 1];
+        evenArray = new int[target.length / 2 + 1];
         for (int i = 0; i < ints.length; i++) {
-            ints[i] = i+1;
+            ints[i] = i + 1;
         }
         int[] array = Arrays.copyOf(ints, ints.length);
         cover(0, target.length, array);
@@ -84,15 +88,6 @@ public class _LRC_23TwentyThree {
         }
         return false;
     }
-
-
-
-    public static void main(String[] args) {
-        int[] ints = {2,4,3,1,5};
-        _LRC_23TwentyThree lrc_23TwentyThree = new _LRC_23TwentyThree();
-        System.out.println(lrc_23TwentyThree.isMagic(ints));
-    }
-
 
 
 }

@@ -15,11 +15,12 @@ public class _64SixtyFour {
     /**
      * 输入:
      * [
-     *   [1,3,1],
-     *   [1,5,1],
-     *   [4,2,1]
+     * [1,3,1],
+     * [1,5,1],
+     * [4,2,1]
      * ]
      * 输出: 7
+     *
      * @param grid
      * @return
      */
@@ -27,16 +28,16 @@ public class _64SixtyFour {
         int y_length = grid.length;
         int x_length = grid[0].length;
         int minN = Integer.MAX_VALUE;
-        for (int y=0; y<y_length; ++y){
-            for (int x=0; x<x_length; ++x){
+        for (int y = 0; y < y_length; ++y) {
+            for (int x = 0; x < x_length; ++x) {
                 minN = Integer.MAX_VALUE;
-                if (y-1 > -1&&grid[y-1][x] < minN){
-                    minN = grid[y-1][x];
+                if (y - 1 > -1 && grid[y - 1][x] < minN) {
+                    minN = grid[y - 1][x];
                 }
-                if (x-1 > -1&&grid[y][x-1] < minN){
-                    minN = grid[y][x-1];
+                if (x - 1 > -1 && grid[y][x - 1] < minN) {
+                    minN = grid[y][x - 1];
                 }
-                if (minN != Integer.MAX_VALUE){
+                if (minN != Integer.MAX_VALUE) {
                     grid[y][x] += minN;
                 }
             }
@@ -44,7 +45,7 @@ public class _64SixtyFour {
         for (int[] ints : grid) {
             System.out.println(Arrays.toString(ints));
         }
-        return grid[y_length-1][x_length-1];
+        return grid[y_length - 1][x_length - 1];
     }
 
     /*
@@ -56,8 +57,8 @@ public class _64SixtyFour {
      */
     public static void main(String[] args) {
         System.out.println(minPathSum(new int[][]{
-                {1,2,5},
-                {1,3,1},
+                {1, 2, 5},
+                {1, 3, 1},
         }));
     }
 

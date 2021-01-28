@@ -1,4 +1,4 @@
-package normal.medium;
+package letcode.normal.medium;
 
 /**
  * @program: Leetcode
@@ -22,7 +22,7 @@ public class _1616OneThousandOneHundredSixteen {
             return true;
         }
         int lindex = 0;
-        int rindex = str.length()-1;
+        int rindex = str.length() - 1;
         while (lindex <= rindex) {
             if (str.charAt(lindex) != str.charAt(rindex)) {
                 return false;
@@ -36,7 +36,7 @@ public class _1616OneThousandOneHundredSixteen {
     private static boolean isPlalindromeMergeStr(String preStr, String lastStr) {
         int lindex = 0;
         int rindex = preStr.length() - 1;
-        while (lindex <= rindex);
+        while (lindex <= rindex) ;
         return true;
     }
 
