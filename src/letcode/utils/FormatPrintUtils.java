@@ -2,6 +2,7 @@ package letcode.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -11,7 +12,7 @@ import java.util.regex.Pattern;
  * @author : CaiYongcheng
  * @date : 2020-07-15 11:09
  **/
-public class MyString {
+public class FormatPrintUtils {
 
     private static Integer[] string2Int(String[] strs) {
         ArrayList<Integer> list = new ArrayList<>();
@@ -46,7 +47,33 @@ public class MyString {
         return strings.length;
     }
 
-    public static void main(String[] args) {
+    /**
+     * list对象的格式化toString
+     * @param list 需要获取的list对象
+     * @param prefix 格式化字符串前缀
+     * @param suffix 格式化字符串后缀
+     * @param separator 格式化字符串分隔符
+     * @param <T> list类型
+     * @return prefix list.get(0).toString() separator list.get(0).toString() suffix
+     */
+    public static<T> String formatList(List<T> list, String prefix, String suffix, String separator) {
+        final StringBuilder formatStr = new StringBuilder(prefix);
+        for (int i = 0; i < list.size()-1; i++) {
+            formatStr.append(list.get(i).toString()).append(separator);
+        }
+        formatStr.append(list.get(list.size()-1).toString());
+        return formatStr.append(suffix).toString();
+    }
+
+    /**
+     * list对象的格式化toString 使用[与]作为前后缀，,作为分隔符
+     * @param list
+     * @param <T>
+     * @return [list.get(0).toString(),list.get(0).toString()]
+     */
+    public static<T> String formatList(List<T> list) {
+        return formatList(list, "[", "]", ",");
+
     }
 
 }
