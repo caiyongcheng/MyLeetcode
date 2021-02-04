@@ -41,7 +41,7 @@ public class _397ThreeHundredNinetySeven {
     }
 
     public static void main(String[] args) {
-        System.out.println(new _397ThreeHundredNinetySeven().integerReplacement(3));
+        System.out.println(Integer.MAX_VALUE + Integer.MAX_VALUE);
     }
 
 }

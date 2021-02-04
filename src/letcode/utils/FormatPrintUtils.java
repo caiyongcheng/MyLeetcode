@@ -54,7 +54,7 @@ public class FormatPrintUtils {
      * @param suffix 格式化字符串后缀
      * @param separator 格式化字符串分隔符
      * @param <T> list类型
-     * @return prefix list.get(0).toString() separator list.get(0).toString() suffix
+     * @return prefix list.get(0).toString() separator list.get(1).toString() suffix
      */
     public static<T> String formatList(List<T> list, String prefix, String suffix, String separator) {
         final StringBuilder formatStr = new StringBuilder(prefix);
@@ -69,11 +69,67 @@ public class FormatPrintUtils {
      * list对象的格式化toString 使用[与]作为前后缀，,作为分隔符
      * @param list
      * @param <T>
-     * @return [list.get(0).toString(),list.get(0).toString()]
+     * @return [list.get(0).toString(),list.get(1).toString()...]
      */
     public static<T> String formatList(List<T> list) {
         return formatList(list, "[", "]", ",");
 
     }
+
+    /**
+     * array
+     * @param array 需要获取的array对象
+     * @param prefix 格式化字符串前缀
+     * @param suffix 格式化字符串后缀
+     * @param separator 格式化字符串分隔符
+     * @param <T> array类型
+     * @return prefix array[0].toString() separator array[1].toString() suffix
+     */
+    public static<T> String formatArray(T[] array, String prefix, String suffix, String separator) {
+        final StringBuilder formatStr = new StringBuilder(prefix);
+        for (int i = 0; i < array.length-1; i++) {
+            formatStr.append(array[i].toString()).append(separator);
+        }
+        formatStr.append(array[array.length-1].toString());
+        return formatStr.append(suffix).toString();
+    }
+
+    /**
+     * array 使用[与]作为前后缀，,作为分隔符
+     * @param array 需要获取的array对象
+     * @param <T> array类型
+     * @return [array[0].toString(),array[1].toString()...]
+     */
+    public static<T> String formatArray(T[] array) {
+        return formatArray(array, "[", "]", ",");
+    }
+
+    /**
+     * array
+     * @param array 需要获取的array对象
+     * @param prefix 格式化字符串前缀
+     * @param suffix 格式化字符串后缀
+     * @param separator 格式化字符串分隔符
+     * @return prefix array[0].toString() separator array[1].toString() suffix
+     */
+    public static String formatArray(int[] array, String prefix, String suffix, String separator) {
+        final StringBuilder formatStr = new StringBuilder(prefix);
+        for (int i = 0; i < array.length-1; i++) {
+            formatStr.append(array[i]).append(separator);
+        }
+        formatStr.append(array[array.length-1]);
+        return formatStr.append(suffix).toString();
+    }
+
+    /**
+     * array 使用[与]作为前后缀，,作为分隔符
+     * @param array 需要获取的array对象
+     * @return [array[0].toString(),array[1].toString()...]
+     */
+    public static String formatArray(int[] array ) {
+        return formatArray(array, "[", "]", ",");
+    }
+
+
 
 }
