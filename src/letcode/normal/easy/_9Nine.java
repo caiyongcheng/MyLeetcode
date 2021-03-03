@@ -30,7 +30,9 @@ public class _9Nine {
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      */
     public static boolean isPalindrome(int x) {
-        if (x < 0 || x > 9 && x % 10 == 0) return false;
+        if (x < 0 || x > 9 && x % 10 == 0) {
+            return false;
+        }
         int y = x;
         int z = 0;
         while (y > 0) {
