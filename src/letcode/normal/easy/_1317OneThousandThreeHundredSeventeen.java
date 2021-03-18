@@ -17,7 +17,6 @@ public class _1317OneThousandThreeHundredSeventeen {
 
 
     public int[] getNoZeroIntegers(int n) {
-
         int[] ans = new int[2];
         int exp = 1;
         int modolNum = 0;
@@ -29,14 +28,14 @@ public class _1317OneThousandThreeHundredSeventeen {
                 ans[0] += 2 * exp;
                 ans[1] += (modolNum-2) * exp;
             }else {
-                ans[0] += 1 * exp;
+                ans[0] += exp;
                 ans[1] += (modolNum-1) * exp;
             }
             exp *= 10;
             n /= 10;
         }
         if (n > 0) {
-            ans[0] += 1 * exp;
+            ans[0] += exp;
             ans[1] += (n-1) * exp;
         }
         return ans;

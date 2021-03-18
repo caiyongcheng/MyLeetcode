@@ -43,25 +43,7 @@ public class _54FiftyFour {
         int colSize = matrix[0].length;
         int circleSize = Math.max((rowSize + 1) / 2, (colSize + 1) / 2);
         for (int i = 0; i < circleSize; ++i) {
-            row = i;
-            col = i;
-            for (; col < colSize - i; ++col) {
-                list.add(matrix[row][col]);
-            }
-            --col;
-            ++row;
-            for (; row < rowSize - i; ++row) {
-                list.add(matrix[row][col]);
-            }
-            --row;
-            --col;
-            for (; col > i; --col) {
-                list.add(matrix[row][col]);
-            }
-            for (; row > i; --row) {
-                list.add(matrix[row][col]);
-                System.out.print(matrix[row][col] + " ");
-            }
+
         }
 
         return list;
