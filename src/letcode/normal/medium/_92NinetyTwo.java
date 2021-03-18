@@ -20,20 +20,20 @@ public class _92NinetyTwo {
 
     /**
      * 示例:
-     * 输入: 1->2->3->4->5->NULL, m = 2, n = 4
+     * 输入: 1->2->3->4->5->NULL, left = 2, right = 4
      * 输出: 1->4->3->2->5->NULL
      *
      * @param head
-     * @param m
-     * @param n
+     * @param left
+     * @param right
      * @return
      */
-    public ListNode reverseBetween(ListNode head, int m, int n) {
-        if (head == null || m == n) {
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (head == null || left == right) {
             return head;
         }
         int index = 1;
-        int t = m;
+        int t = left;
         // 找到第一个待交换节点的前节点
         ListNode pre = new ListNode(1);
         // 用于交换时临时保存的节点
@@ -43,12 +43,12 @@ public class _92NinetyTwo {
         pre.next = head;
 
         // 找到第一个待交换节点的前节点
-        while (index < m) {
+        while (index < left) {
             ++index;
             pre = pre.next;
         }
         tail = pre.next;
-        for (; m < n; ++m) {
+        for (; left < right; ++left) {
             if (tail != null && tail.next != null) {
                 tmp = tail.next;
                 tail.next = tmp.next;
