@@ -7,22 +7,22 @@ package datastructure.node;
  * @author: 6JSh5rC456iL
  * @date: 2021-03-15 17:21
  **/
-public class BinaryTreeNode<T extends Comparable<T>> {
+public class BTreeNode<T extends Comparable<T>> {
 
     T value;
 
-    BinaryTreeNode<T> leftChild;
+    BTreeNode<T> leftChild;
 
-    BinaryTreeNode<T> rightChile;
+    BTreeNode<T> rightChile;
 
-    public BinaryTreeNode() {
+    public BTreeNode() {
     }
 
-    public BinaryTreeNode(T value) {
+    public BTreeNode(T value) {
         this.value = value;
     }
 
-    public BinaryTreeNode(T value, BinaryTreeNode<T> leftChild, BinaryTreeNode<T> rightChile) {
+    public BTreeNode(T value, BTreeNode<T> leftChild, BTreeNode<T> rightChile) {
         this.value = value;
         this.leftChild = leftChild;
         this.rightChile = rightChile;
@@ -36,19 +36,19 @@ public class BinaryTreeNode<T extends Comparable<T>> {
         this.value = value;
     }
 
-    public BinaryTreeNode<T> getLeftChild() {
+    public BTreeNode<T> getLeftChild() {
         return leftChild;
     }
 
-    public void setLeftChild(BinaryTreeNode<T> leftChild) {
+    public void setLeftChild(BTreeNode<T> leftChild) {
         this.leftChild = leftChild;
     }
 
-    public BinaryTreeNode<T> getRightChile() {
+    public BTreeNode<T> getRightChile() {
         return rightChile;
     }
 
-    public void setRightChile(BinaryTreeNode<T> rightChile) {
+    public void setRightChile(BTreeNode<T> rightChile) {
         this.rightChile = rightChile;
     }
 }

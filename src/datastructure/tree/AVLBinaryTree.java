@@ -1,6 +1,7 @@
 package datastructure.tree;
-import datastructure.node.BinaryTreeNode;
-import datastructure.utils.BinaryTreeUtil;
+import datastructure.node.AVLBTreeNode;
+import datastructure.node.BTreeNode;
+import datastructure.stack.BaseStack;
 
 /**
  * @program: MyLeetcode
@@ -11,10 +12,10 @@ import datastructure.utils.BinaryTreeUtil;
  **/
 public class AVLBinaryTree<T extends Comparable<T>>{
 
-    private BinaryTreeNode<T> root;
+    private AVLBTreeNode<T> root;
 
 
-    public BinaryTreeNode<T> getRoot() {
+    public AVLBTreeNode<T> getRoot() {
         return root;
     }
 
@@ -28,7 +29,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
         if (value == null) {
             return false;
         }
-        root = root == null ? new BinaryTreeNode<>(value) : addData(root, value);
+        root = root == null ? new AVLBTreeNode<>(value) : addData(root, value);
         return true;
     }
 
@@ -76,12 +77,14 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      * @param <T> 数据类型 需要实现comparable接口
      * @return 给定二叉树的最小值
      */
-    private static<T extends Comparable<T>> T minValue(BinaryTreeNode<T> root) {
-        return root == null ?
-                null :
-                root.getLeftChild() == null ?
-                        root.getValue() :
-                        minValue(root.getLeftChild());
+    private static<T extends Comparable<T>> T minValue(BTreeNode<T> root) {
+        if (root == null) {
+            return null;
+        }
+        while (null != root.getLeftChild()) {
+            root = root.getLeftChild();
+        }
+        return root.getValue();
     }
 
 
@@ -91,12 +94,14 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      * @param <T> 数据类型 需要实现comparable接口
      * @return 给定二叉树的最大值
      */
-    private static<T extends Comparable<T>> T maxValue(BinaryTreeNode<T> root) {
-        return root == null ?
-                null :
-                root.getRightChile() == null ?
-                        root.getValue() :
-                        maxValue(root.getRightChile());
+    private static<T extends Comparable<T>> T maxValue(BTreeNode<T> root) {
+        if (root == null) {
+            return null;
+        }
+        while (null != root.getRightChile()) {
+            root = root.getRightChile();
+        }
+        return root.getValue();
     }
 
 
@@ -107,16 +112,22 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      * @param <T> 数据类型 需要实现comparable接口
      * @return true：存在 false 不存在
      */
-    private static<T extends Comparable<T>> boolean exist(BinaryTreeNode<T> root, T data) {
+    private static<T extends Comparable<T>> boolean exist(BTreeNode<T> root, T data) {
         if (root == null) {
             return false;
         }
-        int compareRes = root.getValue().compareTo(data);
-        return compareRes == 0 || (
-                compareRes < 0 ?
-                        exist(root.getLeftChild(), data) :
-                        exist(root.getRightChile(), data)
-                );
+        int compareRes;
+        while (root != null) {
+            compareRes = root.getValue().compareTo(data);
+            if (compareRes == 0) {
+                return true;
+            } else if (compareRes < 0) {
+                root = root.getLeftChild();
+            } else {
+                root = root.getRightChile();
+            }
+        }
+        return false;
     }
 
 
@@ -127,16 +138,41 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      * @param <T> 数据类型 需要实现comparable接口
      * @return 暂定
      */
-    private static<T extends Comparable<T>> BinaryTreeNode<T> addData(BinaryTreeNode<T> root, T data) {
+    private static<T extends Comparable<T>> AVLBTreeNode<T> addData(AVLBTreeNode<T> root, T data) {
         if (root == null) {
-            return new BinaryTreeNode<>(data);
+            return new AVLBTreeNode<>(data);
         }
-        if (data.compareTo(root.getValue()) >= 0) {
-            root.setRightChile(addData(root.getRightChile(), data));
-        } else {
-            root.setLeftChild(addData(root.getLeftChild(), data));
+        //原来使用递归操作，后发现容易栈溢出，改为用栈实现
+        BaseStack<AVLBTreeNode<T>> nodeBaseStack = new BaseStack<>();
+        BaseStack<Integer> operatorStack = new BaseStack<>();
+        AVLBTreeNode<T> tail = root;
+        while (tail != null) {
+            nodeBaseStack.push(tail);
+            if (data.compareTo(tail.getValue()) >= 0) {
+                tail = (AVLBTreeNode<T>) tail.getRightChile();
+                operatorStack.push(1);
+            } else {
+                tail = (AVLBTreeNode<T>) tail.getLeftChild();
+                operatorStack.push(-1);
+            }
         }
-        return doBalance(root);
+        tail = new AVLBTreeNode<>(data);
+        while (!operatorStack.isEmpty()) {
+            AVLBTreeNode<T> parent = nodeBaseStack.pop();
+            if (operatorStack.pop() > 0) {
+                parent.setRightChile(tail);
+            } else {
+                parent .setLeftChild(tail);
+            }
+            if (tail.getHeight() + 1 > parent.getHeight()) {
+                parent.setHeight(tail.getHeight()+1);
+                tail = doBalance(parent);
+            } else {
+                tail = parent;
+            }
+        }
+
+        return tail;
     }
 
 
@@ -146,7 +182,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      * @param <T> 数据类型 需要实现comparable接口
      * @return 根节点
      */
-    private static<T extends Comparable<T>> BinaryTreeNode<T> doBalance(BinaryTreeNode<T> root) {
+    private static<T extends Comparable<T>> AVLBTreeNode<T> doBalance(AVLBTreeNode<T> root) {
         int balanceDegree = getTreeBalanceDegree(root);
         if (balanceDegree > 1) {
             if (getTreeBalanceDegree(root.getLeftChild()) > 0) {
@@ -170,8 +206,9 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      * @param <T> 数据类型 需要实现comparable接口
      * @return 该二叉树树平衡值
      */
-    private static<T extends Comparable<T>> int getTreeBalanceDegree(BinaryTreeNode<T> root) {
-        return root == null ? 0 : getTreeHeight(root.getLeftChild()) - getTreeHeight(root.getRightChile());
+    private static<T extends Comparable<T>> int getTreeBalanceDegree(BTreeNode<T> root) {
+        return null == root ? 0 :
+                getTreeHeight(root.getLeftChild()) - getTreeHeight(root.getRightChile());
     }
 
 
@@ -181,74 +218,119 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      * @param <T> 数据类型 需要实现comparable接口
      * @return 树高
      */
-    private static<T extends Comparable<T>> int getTreeHeight(BinaryTreeNode<T> root) {
-        return root == null ? 0 : Math.max(getTreeHeight(root.getLeftChild()), getTreeHeight(root.getRightChile())) + 1;
+    private static<T extends Comparable<T>> int getTreeHeight(BTreeNode<T> root) {
+        return root == null ? 0 : ((AVLBTreeNode<T>)root).getHeight();
     }
 
 
     /**
      * RR旋转
-     * @param unBlanceNode 不平衡节点
+     * @param unBalanceNode 不平衡节点
      * @param <T> 数据类型 需要实现comparable接口
      * @return 根节点
      */
-    private static<T extends Comparable<T>> BinaryTreeNode<T> rSpin(BinaryTreeNode<T> unBlanceNode) {
-        BinaryTreeNode<T> leftChild = unBlanceNode.getLeftChild();
-        unBlanceNode.setLeftChild(leftChild.getRightChile());
-        leftChild.setRightChile(unBlanceNode);
+    private static<T extends Comparable<T>> AVLBTreeNode<T> rSpin(AVLBTreeNode<T> unBalanceNode) {
+        AVLBTreeNode<T> leftChild = (AVLBTreeNode<T>) unBalanceNode.getLeftChild();
+        unBalanceNode.setLeftChild(leftChild.getRightChile());
+        leftChild.setRightChile(unBalanceNode);
+        updateTreeHeight(unBalanceNode);
+        updateTreeHeight(leftChild);
         return leftChild;
     }
 
 
     /**
      * LL旋转
-     * @param unBlanceNode 不平衡节点
+     * @param unBalanceNode 不平衡节点
      * @param <T> 数据类型 需要实现comparable接口
      * @return 根节点
      */
-    private static<T extends Comparable<T>> BinaryTreeNode<T> lSpin(BinaryTreeNode<T> unBlanceNode) {
-        BinaryTreeNode<T> rightChile = unBlanceNode.getRightChile();
-        unBlanceNode.setRightChile(rightChile.getLeftChild());
-        rightChile.setLeftChild(unBlanceNode);
+    private static<T extends Comparable<T>> AVLBTreeNode<T> lSpin(AVLBTreeNode<T> unBalanceNode) {
+        AVLBTreeNode<T> rightChile = (AVLBTreeNode<T>) unBalanceNode.getRightChile();
+        unBalanceNode.setRightChile(rightChile.getLeftChild());
+        rightChile.setLeftChild(unBalanceNode);
+        updateTreeHeight(unBalanceNode);
+        updateTreeHeight(rightChile);
         return rightChile;
     }
 
 
     /**
      * RL旋转
-     * @param unBlanceNode 不平衡节点
+     * @param unBalanceNode 不平衡节点
      * @param <T> 数据类型 需要实现comparable接口
      * @return 根节点
      */
-    private static<T extends Comparable<T>> BinaryTreeNode<T> rlSpin(BinaryTreeNode<T> unBlanceNode) {
-        //先右旋，变成LL形式
-        BinaryTreeNode<T> rightChile = unBlanceNode.getRightChile();
-        rightChile.getLeftChild().setRightChile(rightChile);
-        unBlanceNode.setRightChile(rightChile.getLeftChild());
-        return lSpin(unBlanceNode);
+    private static<T extends Comparable<T>> AVLBTreeNode<T> rlSpin(AVLBTreeNode<T> unBalanceNode) {
+        BTreeNode<T> newRoot = unBalanceNode.getRightChile().getLeftChild();
+        BTreeNode<T> rightChile = unBalanceNode.getRightChile();
+        if (newRoot.getLeftChild() != null) {
+            unBalanceNode.setRightChile(newRoot.getLeftChild());
+            rightChile.setLeftChild(null);
+        } else if(newRoot.getRightChile() != null) {
+            rightChile.setLeftChild(newRoot.getRightChile());
+            unBalanceNode.setRightChile(null);
+        } else {
+            unBalanceNode.setRightChile(null);
+            rightChile.setLeftChild(null);
+        }
+        newRoot.setLeftChild(unBalanceNode);
+        newRoot.setRightChile(rightChile);
+        updateTreeHeight(newRoot.getLeftChild());
+        updateTreeHeight(newRoot.getRightChile());
+        updateTreeHeight(newRoot);
+        return (AVLBTreeNode<T>) newRoot;
     }
 
 
     /**
      * LR旋转
-     * @param unBlanceNode 不平衡节点
+     * @param unBalanceNode 不平衡节点
      * @param <T> 数据类型 需要实现comparable接口
      * @return 根节点
      */
-    private static<T extends Comparable<T>> BinaryTreeNode<T> lrSpin(BinaryTreeNode<T> unBlanceNode) {
-        BinaryTreeNode<T> leftChild = unBlanceNode.getLeftChild();
-        leftChild.getRightChile().setLeftChild(leftChild);
-        unBlanceNode.setLeftChild(leftChild.getRightChile());
-        return rSpin(unBlanceNode);
+    private static<T extends Comparable<T>> AVLBTreeNode<T> lrSpin(AVLBTreeNode<T> unBalanceNode) {
+        BTreeNode<T> newRoot = unBalanceNode.getLeftChild().getRightChile();
+        BTreeNode<T> leftChild = unBalanceNode.getLeftChild();
+        if (newRoot.getLeftChild() != null) {
+            leftChild.setRightChile(newRoot.getLeftChild());
+            unBalanceNode.setLeftChild(null);
+        } else if(newRoot.getRightChile() != null) {
+            unBalanceNode.setLeftChild(newRoot.getRightChile());
+            leftChild.setRightChile(null);
+        } else {
+            unBalanceNode.setLeftChild(null);
+            leftChild.setRightChile(null);
+        }
+        newRoot.setRightChile(unBalanceNode);
+        newRoot.setLeftChild(leftChild);
+        updateTreeHeight(unBalanceNode);
+        updateTreeHeight(leftChild);
+        updateTreeHeight(newRoot);
+        return (AVLBTreeNode<T>) newRoot;
+    }
+
+
+    /**
+     * 调整树节点高度值
+     * @param root 树节点
+     * @param <T> 数据类型 需要实现comparable接口
+     */
+    private static<T extends Comparable<T>>  void updateTreeHeight(BTreeNode<T> root) {
+        if (root == null) {
+            return;
+        }
+        ((AVLBTreeNode<T>)root).setHeight(1 + Math.max(getTreeHeight(root.getLeftChild()), getTreeHeight(root.getRightChile())));
     }
 
 
     public static void main(String[] args) {
         AVLBinaryTree<Integer> avlBinaryTree = new AVLBinaryTree<>();
-        for (int i=0; i<16; ++i) {
-            avlBinaryTree.addData((int) (Math.random()*10));
-        }
-        System.out.println(BinaryTreeUtil.console(avlBinaryTree.root));
+        int[] ints = new int[100];
+        System.out.println(System.currentTimeMillis());
+
+        System.out.println(System.currentTimeMillis());
+        //System.out.println(BinaryTreeUtil.console(avlBinaryTree.root));
     }
 
 }

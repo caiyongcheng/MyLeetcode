@@ -1,6 +1,6 @@
 package datastructure.utils;
 
-import datastructure.node.BinaryTreeNode;
+import datastructure.node.BTreeNode;
 
 import java.util.Arrays;
 
@@ -27,7 +27,7 @@ public class BinaryTreeUtil {
      * @param <T> 数据类型 需要实现comparable接口
      * @return 树的可视化显示
      */
-    public static<T extends Comparable<T>> String console(BinaryTreeNode<T> root) {
+    public static<T extends Comparable<T>> String console(BTreeNode<T> root) {
         int treeHeight = getTreeHeight(root);
         String[] savaStrArr = new String[(1 << treeHeight) + 1];
         Arrays.fill(savaStrArr, "*");
@@ -58,7 +58,7 @@ public class BinaryTreeUtil {
      * @param <T> 数据类型 需要实现comparable接口
      * @return 给定二叉树的高度
      */
-    public static<T extends Comparable<T>> int getTreeHeight(BinaryTreeNode<T> root) {
+    public static<T extends Comparable<T>> int getTreeHeight(BTreeNode<T> root) {
         return root == null ?
                 0 :
                 1 + Math.max(getTreeHeight(root.getRightChile()), getTreeHeight(root.getLeftChild()));
@@ -71,7 +71,7 @@ public class BinaryTreeUtil {
      * @param saveStrArr 保存数组
      * @param <T> 数据类型 需要实现comparable接口
      */
-    private static<T extends Comparable<T>> void inorderTraversalSave(BinaryTreeNode<T> root, int index, String[] saveStrArr) {
+    private static<T extends Comparable<T>> void inorderTraversalSave(BTreeNode<T> root, int index, String[] saveStrArr) {
         saveStrArr[index] = root == null ? " " : root.getValue().toString();
         index = index << 1;
         if (index == 0) {
