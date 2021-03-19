@@ -18,6 +18,10 @@ public class BinaryTreeNode<T extends Comparable<T>> {
     public BinaryTreeNode() {
     }
 
+    public BinaryTreeNode(T value) {
+        this.value = value;
+    }
+
     public BinaryTreeNode(T value, BinaryTreeNode<T> leftChild, BinaryTreeNode<T> rightChile) {
         this.value = value;
         this.leftChild = leftChild;

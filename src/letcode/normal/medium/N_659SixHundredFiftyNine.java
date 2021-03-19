@@ -12,7 +12,7 @@ package letcode.normal.medium;
  * @author: 6JSh5rC456iL
  * @date: 2021-03-17 16:13
  **/
-public class _659SixHundredFiftyNine {
+public class N_659SixHundredFiftyNine {
 
     static class record{
         int start;

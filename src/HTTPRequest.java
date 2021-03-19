@@ -2,6 +2,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,7 +44,7 @@ public class HTTPRequest {
             );
 
 
-            String htmlPath = "F:\\360MoveData\\Users\\Hercules\\Desktop\\baidu.html";
+            String htmlPath = "C:\\Users\\10761\\Desktop\\baidu.html";
             File file = new File(htmlPath);
             if (!file.exists()) {
                 file.createNewFile();
@@ -59,7 +60,7 @@ public class HTTPRequest {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String lineData = "";
             while ((lineData = bufferedReader.readLine()) != null) {
-                bufferedWriter.write(new String(lineData.getBytes(), "gb2312"));
+                bufferedWriter.write(new String(lineData.getBytes(), StandardCharsets.UTF_8));
             }
             inputStream.close();
             bufferedReader.close();
