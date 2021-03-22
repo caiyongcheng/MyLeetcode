@@ -2,6 +2,9 @@ package datastructure.stack;
 
 import datastructure.node.Node;
 
+import java.util.List;
+import java.util.Stack;
+
 /**
  * @program: MyLeetcode
  * @description: 基本栈实现
@@ -25,6 +28,31 @@ public class BaseStack<T> {
         Node<T> top = new Node<>(data);
         top.setNext(head.getNext());
         head.setNext(top);
+    }
+
+    /**
+     * 入栈
+     * @param dataList 入栈列表
+     */
+    public void push(List<T> dataList) {
+        for (T t : dataList) {
+            push(t);
+        }
+    }
+
+    /**
+     * 将给定栈合并到栈上 如当前栈入栈顺序 6，5，4；给定栈入栈顺序是3，2，1；
+     * 则合并后的当前栈等价于入栈顺序为 6，5，4，3，2，1的栈
+     * @param stack 给定栈
+     */
+    public void mergeStack(Stack<T> stack) {
+        Stack<T> tmpStack = new Stack<>();
+        while (!stack.empty()) {
+            tmpStack.push(tmpStack.pop());
+        }
+        while (!tmpStack.empty()) {
+            push(tmpStack.pop());
+        }
     }
 
     /**
@@ -59,5 +87,7 @@ public class BaseStack<T> {
         }
         return top.getData();
     }
+
+
 
 }

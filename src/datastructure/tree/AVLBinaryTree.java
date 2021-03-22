@@ -2,6 +2,7 @@ package datastructure.tree;
 import datastructure.node.AVLBTreeNode;
 import datastructure.node.BTreeNode;
 import datastructure.stack.BaseStack;
+import datastructure.utils.BinaryTreeUtil;
 
 /**
  * @program: MyLeetcode
@@ -33,6 +34,23 @@ public class AVLBinaryTree<T extends Comparable<T>>{
         return true;
     }
 
+
+    /**
+     * 从树中删除给定值
+     * @param value 需要删除的给定值
+     * @return true 删除成功 false 树为空或删除值不存在与树中
+     */
+    public boolean removeData(T value) {
+        if (root == null) {
+            return false;
+        }
+        AVLBTreeNode<T> newRoot = removeData(root, value);
+        if (newRoot == null) {
+            return false;
+        }
+        root = newRoot;
+        return true;
+    }
 
     /**
      * 获取当前二叉树最小值
@@ -136,7 +154,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      * @param root 二叉树根节点
      * @param data 插入数据
      * @param <T> 数据类型 需要实现comparable接口
-     * @return 暂定
+     * @return 平衡后的根节点
      */
     private static<T extends Comparable<T>> AVLBTreeNode<T> addData(AVLBTreeNode<T> root, T data) {
         if (root == null) {
@@ -171,8 +189,97 @@ public class AVLBinaryTree<T extends Comparable<T>>{
                 tail = parent;
             }
         }
-
         return tail;
+    }
+
+
+    /**
+     * 从给定二叉树中删除给定值
+     * @param root 二叉树根节点
+     * @param data 需要删除的给定值
+     * @param <T> 数据类型 需要实现comparable接口
+     * @return 平衡后的根节点 null表示树是空的或找不到删除值
+     */
+    private static<T extends Comparable<T>> AVLBTreeNode<T> removeData(AVLBTreeNode<T> root, T data) {
+        if (root == null) {
+            return null;
+        }
+        BaseStack<AVLBTreeNode<T>> nodeBaseStack = new BaseStack<>();
+        BaseStack<Integer> operatorStack = new BaseStack<>();
+        AVLBTreeNode<T> tail = root;
+        while (tail != null) {
+            nodeBaseStack.push(tail);
+            if (data.compareTo(tail.getValue()) > 0) {
+                tail = (AVLBTreeNode<T>) tail.getRightChile();
+                operatorStack.push(1);
+            } else if (data.compareTo(tail.getValue()) < 0){
+                tail = (AVLBTreeNode<T>) tail.getLeftChild();
+                operatorStack.push(-1);
+            } else {
+                break;
+            }
+        }
+        if (tail == null) {
+            return null;
+        }
+        if (tail.getRightChile() == null && tail.getLeftChild() == null) {
+            nodeBaseStack.pop();
+            if (operatorStack.top() == 1) {
+                nodeBaseStack.top().setRightChile(null);
+            } else {
+                nodeBaseStack.top().setLeftChild(null);
+            }
+        } else if (tail.getRightChile() != null &&
+                (tail.getLeftChild() == null ||
+                        ((AVLBTreeNode<T>)tail.getLeftChild()).getHeight() < ((AVLBTreeNode<T>)tail.getRightChile()).getHeight()) ) {
+            BTreeNode<T> rightChile = tail;
+            T newVal;
+            operatorStack.push(1);
+            while (rightChile.getRightChile() != null) {
+                nodeBaseStack.push((AVLBTreeNode<T>) rightChile.getRightChile());
+                operatorStack.push(1);
+                rightChile = rightChile.getRightChile();
+            }
+            nodeBaseStack.pop();
+            newVal = rightChile.getValue();
+            nodeBaseStack.top().setRightChile(rightChile.getLeftChild());
+            tail.setValue(newVal);
+        } else {
+            BTreeNode<T> leftChild = tail;
+            T newVal;
+            while (leftChild.getLeftChild() != null) {
+                nodeBaseStack.push((AVLBTreeNode<T>) leftChild.getLeftChild());
+                operatorStack.push(-1);
+                leftChild = leftChild.getLeftChild();
+            }
+            nodeBaseStack.pop();
+            newVal = leftChild.getValue();
+            nodeBaseStack.top().setLeftChild(leftChild.getRightChile());
+            tail.setValue(newVal);
+        }
+        AVLBTreeNode<T> child = nodeBaseStack.pop();
+        int oldHeight = child.getHeight();
+        updateTreeHeight(child);
+        if (child.getHeight() == oldHeight) {
+            return root;
+        }
+        child = doBalance(child);
+        operatorStack.pop();
+        while (!nodeBaseStack.isEmpty()) {
+            AVLBTreeNode<T> parent = nodeBaseStack.pop();
+            if (operatorStack.pop() == 1) {
+                parent.setRightChile(child);
+            } else {
+                parent.setLeftChild(child);
+            }
+            oldHeight = parent.getHeight();
+            updateTreeHeight(parent);
+            if (parent.getHeight() == oldHeight) {
+                return root;
+            }
+            child = doBalance(parent);
+        }
+        return child;
     }
 
 
@@ -324,12 +431,23 @@ public class AVLBinaryTree<T extends Comparable<T>>{
     }
 
 
+
     public static void main(String[] args) {
         AVLBinaryTree<Integer> avlBinaryTree = new AVLBinaryTree<>();
-        int[] ints = new int[100];
-        System.out.println(System.currentTimeMillis());
-
-        System.out.println(System.currentTimeMillis());
+        int[] ints = new int[18];
+        for (int i = 0; i < ints.length; i++) {
+            ints[i] = (int) (Math.random()*100);
+        }
+        for (int i = 0; i < 18; i++) {
+            avlBinaryTree.addData(ints[i]);
+        }
+        System.out.println(BinaryTreeUtil.console(avlBinaryTree.root));
+        for (int i = 0; i < 18; i++) {
+            avlBinaryTree.removeData(ints[i]);
+            System.out.println("-------------------" + ints[i] + "--------------");
+            System.out.println(BinaryTreeUtil.console(avlBinaryTree.root));
+            System.out.println("------------------------------------------------");
+        }
         //System.out.println(BinaryTreeUtil.console(avlBinaryTree.root));
     }
 

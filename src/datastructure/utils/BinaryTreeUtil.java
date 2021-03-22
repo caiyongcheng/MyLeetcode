@@ -1,8 +1,10 @@
 package datastructure.utils;
 
+import datastructure.node.AVLBTreeNode;
 import datastructure.node.BTreeNode;
-
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @program: MyLeetcode
@@ -30,24 +32,33 @@ public class BinaryTreeUtil {
     public static<T extends Comparable<T>> String console(BTreeNode<T> root) {
         int treeHeight = getTreeHeight(root);
         String[] savaStrArr = new String[(1 << treeHeight) + 1];
-        Arrays.fill(savaStrArr, "*");
-        inorderTraversalSave(root, 1,  savaStrArr);
+        inorderTraversalSave(root, savaStrArr);
+        int maxLength = formatStrArr(savaStrArr) + 2;
+        StringBuilder oneSeparator = new StringBuilder();
+        for (int i = 0; i < maxLength; i++) {
+            oneSeparator.append(" ");
+        }
+        String oneSeparatorStr = oneSeparator.toString();
         StringBuilder consoleFormat = new StringBuilder();
-        for (int i = 0; i < treeHeight; i++) {
-            //1 添加开头空白
-            for (int j = 0; j < (int) (Math.pow(2, treeHeight-i-1)); ++ j) {
-                consoleFormat.append(' ');
+        StringBuilder separator = new StringBuilder(oneSeparatorStr);
+        StringBuilder headFill = new StringBuilder(oneSeparatorStr);
+        int i, j, length;
+        for (i = treeHeight - 1; i > -1; i--) {
+            StringBuilder oneLine = new StringBuilder(headFill);
+            headFill.append(headFill);
+            if (i < treeHeight - 1) {
+                length = separator.toString().length();
+                int l = (length / maxLength - 1) / 2 * 2 + 2;
+                for (j = 0; j < l; j++) {
+                    separator.append(oneSeparatorStr);
+                }
             }
-            //2 计算间隔
-            StringBuilder separator = new StringBuilder();
-            for (int j = 0; j < (int) (Math.pow(2, treeHeight-i))-1; ++ j) {
-                separator.append(' ');
+            length = (1 << (i+1)) - 1;
+            for (j = 1 << i; j < length; j++) {
+                oneLine.append(savaStrArr[j]).append(separator);
             }
-            //输出每层数据
-            for (int j = (int) (Math.pow(2, i)); j < (int) (Math.pow(2, i+1)); ++j) {
-                consoleFormat.append(savaStrArr[j]).append(separator);
-            }
-            consoleFormat.append('\n');
+            oneLine.append(savaStrArr[length]).append('\n');
+            consoleFormat = oneLine.append(consoleFormat);
         }
         return consoleFormat.toString();
     }
@@ -61,28 +72,27 @@ public class BinaryTreeUtil {
     public static<T extends Comparable<T>> int getTreeHeight(BTreeNode<T> root) {
         return root == null ?
                 0 :
-                1 + Math.max(getTreeHeight(root.getRightChile()), getTreeHeight(root.getLeftChild()));
+                root instanceof AVLBTreeNode ?
+                        ((AVLBTreeNode<T>)root).getHeight() :
+                        1 + Math.max(getTreeHeight(root.getRightChile()), getTreeHeight(root.getLeftChild()));
     }
 
     /**
      * 将二叉树的节点toString()以层序遍历方式保存到给定数组中
      * @param root 二叉树根节点
-     * @param index 对应保存数组的下标
      * @param saveStrArr 保存数组
      * @param <T> 数据类型 需要实现comparable接口
      */
-    private static<T extends Comparable<T>> void inorderTraversalSave(BTreeNode<T> root, int index, String[] saveStrArr) {
-        saveStrArr[index] = root == null ? " " : root.getValue().toString();
-        index = index << 1;
-        if (index == 0) {
-            index = 1;
+    private static<T extends Comparable<T>> void inorderTraversalSave(BTreeNode<T> root, String[] saveStrArr) {
+        BTreeNode<T>[] bTreeNodes = new BTreeNode[saveStrArr.length];
+        bTreeNodes[1] = root;
+        for (int i = 2, j = 4; i < saveStrArr.length; j = j << 1) {
+            for (; i<j && i < saveStrArr.length; ++i) {
+                bTreeNodes[i] = bTreeNodes[i>>1] == null ? null : (i & 1) == 1 ? bTreeNodes[i>>1].getRightChile() : bTreeNodes[i>>1].getLeftChild();
+            }
         }
-        if (root.getLeftChild() != null) {
-            inorderTraversalSave(root.getLeftChild(), index, saveStrArr);
-        }
-        if (root.getRightChile() != null) {
-            inorderTraversalSave(root.getRightChile(), index + 1, saveStrArr);
-        }
+        List<String> collect = Arrays.stream(bTreeNodes).map(tbTreeNode -> tbTreeNode == null ? "" : tbTreeNode.getValue().toString()).collect(Collectors.toList());
+        collect.toArray(saveStrArr);
     }
 
     /**
@@ -92,15 +102,28 @@ public class BinaryTreeUtil {
      * 【“ 1”，“ 2”，“33”，“ 4”】
      * @param strArr
      */
-    private void formatIntStrArr(String[] strArr) {
+    private static Integer formatStrArr(String[] strArr) {
         int length = Arrays.stream(strArr).max(
                 (s1, s2) -> {
                     return Integer.compareUnsigned(s1.length(), s2.length());
                 }
         ).get().length();
-/*        strArr = Arrays.stream(strArr).map(s -> {
-            //return
-        })*/
+        for (int i = 0; i < strArr.length; i++) {
+            int sLength = strArr[i].length();
+            int leftFill = (length - sLength) >> 1;
+            int rightFill = length - sLength - leftFill;
+            StringBuilder stringBuilder = new StringBuilder("[");
+            for (int j = 0; j < leftFill; j++) {
+                stringBuilder.append(" ");
+            }
+            stringBuilder.append(strArr[i]);
+            for (int j = 0; j < rightFill; j++) {
+                stringBuilder.append(" ");
+            }
+            stringBuilder.append("]");
+            strArr[i] = stringBuilder.toString();
+        }
+        return length;
     }
 
 
