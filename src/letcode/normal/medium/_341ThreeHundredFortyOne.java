@@ -105,9 +105,6 @@ public class _341ThreeHundredFortyOne implements Iterator<Integer> {
             return head.next == null;
         }
 
-        public InnerNode top() {
-            return head.next;
-        }
     }
 
     private InnerStack innerStack;
