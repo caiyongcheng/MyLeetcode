@@ -1,4 +1,4 @@
-package offer.medium;
+package letcode.offer.medium;
 
 /**
  * @program: Leetcode

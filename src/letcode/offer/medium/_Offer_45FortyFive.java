@@ -1,4 +1,4 @@
-package offer.medium;
+package letcode.offer.medium;
 
 import java.util.Arrays;
 
