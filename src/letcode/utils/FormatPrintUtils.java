@@ -14,11 +14,11 @@ import java.util.regex.Pattern;
  **/
 public class FormatPrintUtils {
 
-    private static Integer[] string2Int(String[] strs) {
+    private static Integer[] string2Int(String[] strArr) {
         ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < strs.length; ++i) {
-            if (Pattern.matches("^[\\-|\\+]?[0-9]+$", strs[i])) {
-                list.add(Integer.valueOf(strs[i]));
+        for (String str : strArr) {
+            if (Pattern.matches("^[\\-|+]?[0-9]+$", str)) {
+                list.add(Integer.valueOf(str));
             }
         }
         Integer[] integers = new Integer[list.size()];
@@ -27,24 +27,10 @@ public class FormatPrintUtils {
     }
 
     public static Integer[] compareString(String str) {
-        String[] strings = str.split("[^0-9\\-\\+]+");
-        //System.out.println(Arrays.toString(strings));
+        String[] strings = str.split("[^0-9\\-+]+");
         Integer[] integers = string2Int(strings);
         Arrays.sort(integers);
         return integers;
-    }
-
-    public static Integer countWords(String str) {
-        str = str.toLowerCase();
-        str = str.trim();
-        if (null == str || str.length() < 1) {
-            return 0;
-        }
-        String[] strings = str.split("[^0-9a-z]+");
-        if (null == strings || strings.length == 0) {
-            return 0;
-        }
-        return strings.length;
     }
 
     /**
@@ -128,6 +114,35 @@ public class FormatPrintUtils {
      */
     public static String formatArray(int[] array ) {
         return formatArray(array, "[", "]", ",");
+    }
+
+
+    /**
+     * node-list
+     * @param node 头节点
+     * @param prefix 格式化字符串前缀
+     * @param suffix 格式化字符串后缀
+     * @param separator 格式化字符串分隔符
+     * @return prefix array[0].toString() separator array[1].toString() suffix
+     */
+    public static String formatNodeLists(ListNode node, String prefix, String suffix, String separator) {
+        final StringBuilder formatStr = new StringBuilder(prefix);
+        while (node.next != null) {
+            formatStr.append(node.val).append(separator);
+        }
+        formatStr.delete(formatStr.length()-separator.length(), formatStr.length());
+        return formatStr.append(suffix).toString();
+    }
+
+
+    /**
+     * node-list
+     * node-list 使用[与]作为前后缀，,作为分隔符
+     * @param node 头节点
+     * @return [array[0].toString(),array[1].toString()...]
+     */
+    public static String formatNodeLists(ListNode node) {
+        return formatNodeLists(node, "[", "]", ",");
     }
 
 
