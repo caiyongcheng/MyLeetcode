@@ -4,6 +4,7 @@ import datastructure.node.AVLBTreeNode;
 import datastructure.node.BTreeNode;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -103,11 +104,15 @@ public class BinaryTreeUtil {
      * @param strArr
      */
     private static Integer formatStrArr(String[] strArr) {
-        int length = Arrays.stream(strArr).max(
+        int length = 0;
+        Optional<String> max = Arrays.stream(strArr).max(
                 (s1, s2) -> {
                     return Integer.compareUnsigned(s1.length(), s2.length());
                 }
-        ).get().length();
+        );
+        if (max.isPresent()) {
+            length = max.get().length();
+        }
         for (int i = 0; i < strArr.length; i++) {
             int sLength = strArr[i].length();
             int leftFill = (length - sLength) >> 1;

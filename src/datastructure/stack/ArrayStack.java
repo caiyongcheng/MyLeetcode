@@ -23,7 +23,7 @@ public class ArrayStack<T> implements Stack<T>{
     private int top;
 
 
-    private int slotSize;
+    private final int slotSize;
 
 
     private int slotAmount;

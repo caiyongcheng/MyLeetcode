@@ -1,9 +1,9 @@
-package datastructure.Queue;
+package datastructure.queue;
 
 /**
  * @program: MyLeetcode
  * @description: 基本队列接口
- * @packagename: datastructure.Queue
+ * @packagename: datastructure.queue
  * @author: 6JSh5rC456iL
  * @date: 2021-03-24 10:52
  **/
