@@ -207,6 +207,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
         LinkedStack<AVLBTreeNode<T>> nodeLinkedStack = new LinkedStack<>();
         LinkedStack<Integer> operatorStack = new LinkedStack<>();
         AVLBTreeNode<T> tail = root;
+        //找到待删除节点
         while (tail != null) {
             nodeLinkedStack.push(tail);
             if (data.compareTo(tail.getValue()) > 0) {
@@ -219,67 +220,130 @@ public class AVLBinaryTree<T extends Comparable<T>>{
                 break;
             }
         }
+        //不存在待删除节点
         if (tail == null) {
             return null;
         }
-        if (tail.getRightChile() == null && tail.getLeftChild() == null) {
-            nodeLinkedStack.pop();
-            if (operatorStack.top() == 1) {
-                nodeLinkedStack.top().setRightChile(null);
-            } else {
-                nodeLinkedStack.top().setLeftChild(null);
-            }
-        } else if (tail.getRightChile() != null &&
-                (tail.getLeftChild() == null ||
-                        ((AVLBTreeNode<T>)tail.getLeftChild()).getHeight() < ((AVLBTreeNode<T>)tail.getRightChile()).getHeight()) ) {
-            BTreeNode<T> rightChile = tail;
-            T newVal;
-            operatorStack.push(1);
-            while (rightChile.getRightChile() != null) {
-                nodeLinkedStack.push((AVLBTreeNode<T>) rightChile.getRightChile());
-                operatorStack.push(1);
-                rightChile = rightChile.getRightChile();
-            }
-            nodeLinkedStack.pop();
-            newVal = rightChile.getValue();
-            nodeLinkedStack.top().setRightChile(rightChile.getLeftChild());
-            tail.setValue(newVal);
+        if (tail.getRightChile() != null && tail.getLeftChild() != null) {
+            return removeBothChild(nodeLinkedStack, operatorStack);
+        }
+        return removeNotBothChild(nodeLinkedStack, operatorStack);
+    }
+
+
+    /**
+     * 当删除节点是叶子节,或只有单子节点
+     * @param nodeLinkedStack 给定结点栈 栈顶是要被删除的叶子节点
+     * @param operatorStack 表示节点关系的操作数栈
+     * @param <T> 数据类型 需要实现comparable接口
+     * @return 平衡后的根节点
+     */
+    private static<T extends Comparable<T>> AVLBTreeNode<T> removeNotBothChild(LinkedStack<AVLBTreeNode<T>> nodeLinkedStack,
+                                                                       LinkedStack<Integer> operatorStack) {
+        AVLBTreeNode<T> childNode = nodeLinkedStack.pop();
+        BTreeNode<T> rightChile = childNode.getRightChile();
+        if (operatorStack.pop() == 1) {
+            nodeLinkedStack.top().setRightChile(rightChile == null ? childNode.getLeftChild() : rightChile);
         } else {
-            BTreeNode<T> leftChild = tail;
-            T newVal;
-            while (leftChild.getLeftChild() != null) {
-                nodeLinkedStack.push((AVLBTreeNode<T>) leftChild.getLeftChild());
+            nodeLinkedStack.top().setLeftChild(rightChile == null ? childNode.getLeftChild() : rightChile);
+        }
+        return doBalance(nodeLinkedStack, operatorStack);
+    }
+
+    /**
+     * 当删除节点左右节点都有
+     * @param nodeLinkedStack 给定结点栈 栈顶是要被删除的叶子节点
+     * @param operatorStack 表示节点关系的操作数栈
+     * @param <T> 数据类型 需要实现comparable接口
+     * @return 平衡后的根节点
+     */
+    private static<T extends Comparable<T>> AVLBTreeNode<T> removeBothChild(LinkedStack<AVLBTreeNode<T>> nodeLinkedStack,
+                                                                               LinkedStack<Integer> operatorStack) {
+        AVLBTreeNode<T> childNode = nodeLinkedStack.top();
+        if (((AVLBTreeNode<T>)childNode.getLeftChild()).getHeight() <
+                ((AVLBTreeNode<T>)childNode.getRightChile()).getHeight()) {
+            //找到替换节点
+            BTreeNode<T> endChild = childNode.getRightChile();
+            operatorStack.push(1);
+            nodeLinkedStack.push((AVLBTreeNode<T>) endChild);
+            endChild = endChild.getLeftChild();
+            while (endChild != null) {
                 operatorStack.push(-1);
-                leftChild = leftChild.getLeftChild();
+                nodeLinkedStack.push((AVLBTreeNode<T>) endChild);
+                endChild = endChild.getLeftChild();
             }
-            nodeLinkedStack.pop();
-            newVal = leftChild.getValue();
-            nodeLinkedStack.top().setLeftChild(leftChild.getRightChile());
-            tail.setValue(newVal);
-        }
-        AVLBTreeNode<T> child = nodeLinkedStack.pop();
-        int oldHeight = child.getHeight();
-        updateTreeHeight(child);
-        if (child.getHeight() == oldHeight) {
-            return root;
-        }
-        child = doBalance(child);
-        operatorStack.pop();
-        while (!nodeLinkedStack.empty()) {
-            AVLBTreeNode<T> parent = nodeLinkedStack.pop();
-            if (operatorStack.pop() == 1) {
-                parent.setRightChile(child);
+            endChild = nodeLinkedStack.pop();
+            //替换节点是删除节点的右子树最小节点
+            if (operatorStack.pop() == -1) {
+                nodeLinkedStack.top().setLeftChild(null);
+                childNode.setValue(endChild.getValue());
             } else {
-                parent.setLeftChild(child);
+                //替换节点是删除节点的右子树根节点
+                endChild.setLeftChild(childNode.getLeftChild());
+                if (!operatorStack.empty()) {
+                    nodeLinkedStack.pop();
+                    operatorStack.pop();
+                    if (operatorStack.top() == 1) {
+                        nodeLinkedStack.top().setRightChile(endChild);
+                    } else {
+                        nodeLinkedStack.top().setLeftChild(endChild);
+                    }
+                }
             }
-            oldHeight = parent.getHeight();
-            updateTreeHeight(parent);
-            if (parent.getHeight() == oldHeight) {
-                return root;
+        } else {
+            BTreeNode<T> endChild = childNode.getLeftChild();
+            operatorStack.push(-1);
+            nodeLinkedStack.push((AVLBTreeNode<T>) endChild);
+            endChild = endChild.getRightChile();
+            while (endChild != null) {
+                operatorStack.push(1);
+                nodeLinkedStack.push((AVLBTreeNode<T>) endChild);
+                endChild = endChild.getRightChile();
             }
-            child = doBalance(parent);
+            endChild = nodeLinkedStack.pop();
+            if (operatorStack.pop() == 1) {
+                nodeLinkedStack.top().setRightChile(null);
+                childNode.setValue(endChild.getValue());
+            } else {
+                endChild.setRightChile(childNode.getRightChile());
+                if (!operatorStack.empty()) {
+                    nodeLinkedStack.pop();
+                    operatorStack.pop();
+                    if (operatorStack.top() == 1) {
+                        nodeLinkedStack.top().setRightChile(endChild);
+                    } else {
+                        nodeLinkedStack.top().setLeftChild(endChild);
+                    }
+                }
+            }
         }
-        return child;
+        return doBalance(nodeLinkedStack, operatorStack);
+    }
+
+    /**
+     * 平衡给定节点列表
+     * @param nodeLinkedStack 给定结点栈
+     * @param operatorStack 表示节点关系的操作数栈
+     * @param <T> 数据类型 需要实现comparable接口
+     * @return 平衡后的根节点
+     */
+    private static<T extends Comparable<T>> AVLBTreeNode<T> doBalance(LinkedStack<AVLBTreeNode<T>> nodeLinkedStack,
+                                                                      LinkedStack<Integer> operatorStack) {
+        AVLBTreeNode<T> childNode = nodeLinkedStack.pop();
+        updateTreeHeight(childNode);
+        childNode = doBalance(childNode);
+        AVLBTreeNode<T> parentNode;
+        while (!nodeLinkedStack.empty()) {
+            parentNode = nodeLinkedStack.pop();
+            if (operatorStack.pop() == 1) {
+                parentNode.setRightChile(childNode);
+            } else {
+                parentNode.setLeftChild(childNode);
+            }
+            updateTreeHeight(parentNode);
+            childNode = doBalance(parentNode);
+        }
+        return childNode;
     }
 
 
