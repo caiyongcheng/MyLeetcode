@@ -50,8 +50,7 @@ public class _80Eighty {
             if (nums[startIndex] == nums[startIndex + 2]) {
                 for (; startIndex > 0 && nums[startIndex - 1] == nums[startIndex]; --startIndex) ;
                 for (endIndex = startIndex + 2; endIndex < length
-                        && nums[endIndex] == nums[startIndex]; ++endIndex)
-                    ;
+                        && nums[endIndex] == nums[startIndex]; ++endIndex);
                 coverLength = endIndex - startIndex - 2;
                 for (; endIndex < length; ++endIndex) {
                     nums[endIndex - coverLength] = nums[endIndex];
