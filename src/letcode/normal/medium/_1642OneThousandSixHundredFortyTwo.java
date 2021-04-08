@@ -20,43 +20,30 @@ import java.util.HashMap;
  */
 public class _1642OneThousandSixHundredFortyTwo {
 
-    private HashMap<String, Integer> cache;
-    private int[] heights;
 
-    public static void main(String[] args) {
-        System.out.println(new _1642OneThousandSixHundredFortyTwo()
-                .furthestBuilding(new int[]{4, 2, 7, 6, 9, 14, 12}, 5, 1));
+    private int tableSizeFor(int cap) {
+        int n = cap - 1;
+        n |= n >>> 1;
+        n |= n >>> 2;
+        n |= n >>> 4;
+        n |= n >>> 8;
+        n |= n >>> 16;
+        return n + 1;
     }
 
-    private int dp(int nowIndex, int remainBricks, int remainLadders) {
-        while (nowIndex < heights.length - 1 && heights[nowIndex] >= heights[nowIndex + 1]) {
-            ++nowIndex;
-        }
-        if (nowIndex >= heights.length - 1) {
-            return heights.length - 1;
-        }
-        String cacheKey = nowIndex + "_" + remainBricks + "_" + remainLadders;
-        if (cache.containsKey(cacheKey)) {
-            return cache.get(cacheKey);
-        }
-        int cacheValue = nowIndex;
-        if (heights[nowIndex + 1] - heights[nowIndex] <= remainBricks) {
-            cacheValue = Math.max(cacheValue, dp(
-                    nowIndex + 1,
-                    remainBricks - (heights[nowIndex + 1] - heights[nowIndex]),
-                    remainLadders
-            ));
-        }
-        if (remainLadders > 0) {
-            cacheValue = Math.max(cacheValue, dp(
-                    nowIndex + 1,
-                    remainBricks,
-                    remainLadders - 1
-            ));
-        }
-        cache.put(cacheKey, cacheValue);
-        return cacheValue;
+    public int furthestBuilding(int[] heights, int bricks, int ladders) {
+        // 贪心：梯子尽量在落差大的地方使用
+        // 从这个角度考虑 计算出上升的高度差数组
+        // 按顺序将上升数组 放入
+        // 8 5 15 2 16
+        int[] heap = new int[tableSizeFor(heights.length - 1)];
+        return 0;
     }
+
+
+
+
+
 
     /**
      * 输入：heights = [4,2,7,6,9,14,12], bricks = 5, ladders = 1
@@ -80,10 +67,11 @@ public class _1642OneThousandSixHundredFortyTwo {
      * 链接：https://leetcode-cn.com/problems/furthest-building-you-can-reach
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      */
-    public int furthestBuilding(int[] heights, int bricks, int ladders) {
-        cache = new HashMap<>(heights.length);
-        this.heights = heights;
-        return dp(0, bricks, ladders);
+    public static void main(String[] args) {
+        System.out.println(new _1642OneThousandSixHundredFortyTwo()
+                .furthestBuilding(new int[]{4, 2, 7, 6, 9, 14, 12}, 5, 1));
     }
+
+
 
 }
