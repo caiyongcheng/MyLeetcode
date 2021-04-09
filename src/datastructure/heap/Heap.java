@@ -35,6 +35,13 @@ public interface Heap<T extends Comparable<T>> {
 
 
     /**
+     * 获取堆顶元素
+     * @return 堆顶元素
+     */
+    T top();
+
+
+    /**
      * 获取堆中元素数量
      * @return 堆中元素数量
      */

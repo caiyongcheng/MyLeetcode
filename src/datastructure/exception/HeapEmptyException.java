@@ -2,15 +2,16 @@ package datastructure.exception;
 
 /**
  * @program: MyLeetcode
- * @description: 堆溢出异常
+ * @description: 堆空异常
  * @packagename: datastructure.exception
  * @author: 6JSh5rC456iL
- * @date: 2021-04-08 14:58
+ * @date: 2021-04-09 09:51
  **/
-public class HeapOverFlowException extends RuntimeException{
+public class HeapEmptyException extends RuntimeException {
 
 
-    public static final HeapOverFlowException HEAP_OVER_FLOW_EXCEPTION = new HeapOverFlowException("heap already over flow");
+    public static final HeapEmptyException HEAP_EMPTY_EXCEPTION = new HeapEmptyException("heap is empty");
+
 
     /**
      * Constructs a new runtime exception with the specified detail message.
@@ -20,7 +21,7 @@ public class HeapOverFlowException extends RuntimeException{
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public HeapOverFlowException(String message) {
+    public HeapEmptyException(String message) {
         super(message);
     }
 }
