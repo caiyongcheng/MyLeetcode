@@ -14,7 +14,7 @@ public class _179OneHundredSeventyNine {
 
     public static void main(String[] args) {
         System.out.println(new _179OneHundredSeventyNine().largestNumber(new int[]{
-                3, 30, 34, 5, 9
+                0
         }));
     }
 
@@ -47,20 +47,20 @@ public class _179OneHundredSeventyNine {
             if (o1.intValue() == o2.intValue()) {
                 return 0;
             }
-            String astr = o1 + "";
-            String bstr = o2 + "";
-            int index = 0;
-            int minLength = Math.min(astr.length(), bstr.length());
-            while (index < minLength) {
-                if (astr.charAt(index) > bstr.charAt(index)) {
-                    return -1;
-                } else if (astr.charAt(index) < bstr.charAt(index)) {
-                    return 1;
-                }
-                ++index;
+            int o1Grade = 10;
+            int o2Grade = 10;
+            while (o1Grade <= o1) {
+                o1Grade *= 10;
             }
-            return index >= astr.length() ? -1 : 1;
+            while (o2Grade <= o2) {
+                o2Grade *= 10;
+            }
+            return o2*o1Grade + o1 - o1*o2Grade - o2;
+
         });
+        if (nums1[0] == 0) {
+            return "0";
+        }
         final StringBuilder stringBuilder = new StringBuilder();
         for (Integer integer : nums1) {
             stringBuilder.append(integer);
