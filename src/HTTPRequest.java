@@ -67,8 +67,6 @@ public class HTTPRequest {
             bufferedWriter.close();
 
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

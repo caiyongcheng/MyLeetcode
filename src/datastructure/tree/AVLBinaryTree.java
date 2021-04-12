@@ -116,8 +116,8 @@ public class AVLBinaryTree<T extends Comparable<T>>{
         if (root == null) {
             return null;
         }
-        while (null != root.getRightChile()) {
-            root = root.getRightChile();
+        while (null != root.getRightChild()) {
+            root = root.getRightChild();
         }
         return root.getValue();
     }
@@ -142,7 +142,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
             } else if (compareRes < 0) {
                 root = root.getLeftChild();
             } else {
-                root = root.getRightChile();
+                root = root.getRightChild();
             }
         }
         return false;
@@ -167,7 +167,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
         while (tail != null) {
             nodeLinkedStack.push(tail);
             if (data.compareTo(tail.getValue()) >= 0) {
-                tail = (AVLBTreeNode<T>) tail.getRightChile();
+                tail = (AVLBTreeNode<T>) tail.getRightChild();
                 operatorStack.push(1);
             } else {
                 tail = (AVLBTreeNode<T>) tail.getLeftChild();
@@ -178,7 +178,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
         while (!operatorStack.empty()) {
             AVLBTreeNode<T> parent = nodeLinkedStack.pop();
             if (operatorStack.pop() > 0) {
-                parent.setRightChile(tail);
+                parent.setRightChild(tail);
             } else {
                 parent .setLeftChild(tail);
             }
@@ -211,7 +211,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
         while (tail != null) {
             nodeLinkedStack.push(tail);
             if (data.compareTo(tail.getValue()) > 0) {
-                tail = (AVLBTreeNode<T>) tail.getRightChile();
+                tail = (AVLBTreeNode<T>) tail.getRightChild();
                 operatorStack.push(1);
             } else if (data.compareTo(tail.getValue()) < 0){
                 tail = (AVLBTreeNode<T>) tail.getLeftChild();
@@ -224,7 +224,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
         if (tail == null) {
             return null;
         }
-        if (tail.getRightChile() != null && tail.getLeftChild() != null) {
+        if (tail.getRightChild() != null && tail.getLeftChild() != null) {
             return removeBothChild(nodeLinkedStack, operatorStack);
         }
         return removeNotBothChild(nodeLinkedStack, operatorStack);
@@ -241,9 +241,9 @@ public class AVLBinaryTree<T extends Comparable<T>>{
     private static<T extends Comparable<T>> AVLBTreeNode<T> removeNotBothChild(LinkedStack<AVLBTreeNode<T>> nodeLinkedStack,
                                                                        LinkedStack<Integer> operatorStack) {
         AVLBTreeNode<T> childNode = nodeLinkedStack.pop();
-        BTreeNode<T> rightChile = childNode.getRightChile();
+        BTreeNode<T> rightChile = childNode.getRightChild();
         if (operatorStack.pop() == 1) {
-            nodeLinkedStack.top().setRightChile(rightChile == null ? childNode.getLeftChild() : rightChile);
+            nodeLinkedStack.top().setRightChild(rightChile == null ? childNode.getLeftChild() : rightChile);
         } else {
             nodeLinkedStack.top().setLeftChild(rightChile == null ? childNode.getLeftChild() : rightChile);
         }
@@ -261,9 +261,9 @@ public class AVLBinaryTree<T extends Comparable<T>>{
                                                                                LinkedStack<Integer> operatorStack) {
         AVLBTreeNode<T> childNode = nodeLinkedStack.top();
         if (((AVLBTreeNode<T>)childNode.getLeftChild()).getHeight() <
-                ((AVLBTreeNode<T>)childNode.getRightChile()).getHeight()) {
+                ((AVLBTreeNode<T>)childNode.getRightChild()).getHeight()) {
             //找到替换节点
-            BTreeNode<T> endChild = childNode.getRightChile();
+            BTreeNode<T> endChild = childNode.getRightChild();
             operatorStack.push(1);
             nodeLinkedStack.push((AVLBTreeNode<T>) endChild);
             endChild = endChild.getLeftChild();
@@ -284,7 +284,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
                     nodeLinkedStack.pop();
                     operatorStack.pop();
                     if (operatorStack.top() == 1) {
-                        nodeLinkedStack.top().setRightChile(endChild);
+                        nodeLinkedStack.top().setRightChild(endChild);
                     } else {
                         nodeLinkedStack.top().setLeftChild(endChild);
                     }
@@ -294,23 +294,23 @@ public class AVLBinaryTree<T extends Comparable<T>>{
             BTreeNode<T> endChild = childNode.getLeftChild();
             operatorStack.push(-1);
             nodeLinkedStack.push((AVLBTreeNode<T>) endChild);
-            endChild = endChild.getRightChile();
+            endChild = endChild.getRightChild();
             while (endChild != null) {
                 operatorStack.push(1);
                 nodeLinkedStack.push((AVLBTreeNode<T>) endChild);
-                endChild = endChild.getRightChile();
+                endChild = endChild.getRightChild();
             }
             endChild = nodeLinkedStack.pop();
             if (operatorStack.pop() == 1) {
-                nodeLinkedStack.top().setRightChile(null);
+                nodeLinkedStack.top().setRightChild(null);
                 childNode.setValue(endChild.getValue());
             } else {
-                endChild.setRightChile(childNode.getRightChile());
+                endChild.setRightChild(childNode.getRightChild());
                 if (!operatorStack.empty()) {
                     nodeLinkedStack.pop();
                     operatorStack.pop();
                     if (operatorStack.top() == 1) {
-                        nodeLinkedStack.top().setRightChile(endChild);
+                        nodeLinkedStack.top().setRightChild(endChild);
                     } else {
                         nodeLinkedStack.top().setLeftChild(endChild);
                     }
@@ -336,7 +336,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
         while (!nodeLinkedStack.empty()) {
             parentNode = nodeLinkedStack.pop();
             if (operatorStack.pop() == 1) {
-                parentNode.setRightChile(childNode);
+                parentNode.setRightChild(childNode);
             } else {
                 parentNode.setLeftChild(childNode);
             }
@@ -362,7 +362,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
             return lrSpin(root);
         }
         if (balanceDegree < -1) {
-            if (getTreeBalanceDegree(root.getRightChile()) < 0) {
+            if (getTreeBalanceDegree(root.getRightChild()) < 0) {
                 return lSpin(root);
             }
             return rlSpin(root);
@@ -379,7 +379,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      */
     private static<T extends Comparable<T>> int getTreeBalanceDegree(BTreeNode<T> root) {
         return null == root ? 0 :
-                getTreeHeight(root.getLeftChild()) - getTreeHeight(root.getRightChile());
+                getTreeHeight(root.getLeftChild()) - getTreeHeight(root.getRightChild());
     }
 
 
@@ -402,8 +402,8 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      */
     private static<T extends Comparable<T>> AVLBTreeNode<T> rSpin(AVLBTreeNode<T> unBalanceNode) {
         AVLBTreeNode<T> leftChild = (AVLBTreeNode<T>) unBalanceNode.getLeftChild();
-        unBalanceNode.setLeftChild(leftChild.getRightChile());
-        leftChild.setRightChile(unBalanceNode);
+        unBalanceNode.setLeftChild(leftChild.getRightChild() == null ? leftChild.getLeftChild() : leftChild.getRightChild());
+        leftChild.setRightChild(unBalanceNode);
         updateTreeHeight(unBalanceNode);
         updateTreeHeight(leftChild);
         return leftChild;
@@ -417,8 +417,8 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      * @return 根节点
      */
     private static<T extends Comparable<T>> AVLBTreeNode<T> lSpin(AVLBTreeNode<T> unBalanceNode) {
-        AVLBTreeNode<T> rightChile = (AVLBTreeNode<T>) unBalanceNode.getRightChile();
-        unBalanceNode.setRightChile(rightChile.getLeftChild());
+        AVLBTreeNode<T> rightChile = (AVLBTreeNode<T>) unBalanceNode.getRightChild();
+        unBalanceNode.setRightChild(rightChile.getLeftChild() == null ? rightChile.getRightChild() : rightChile.getLeftChild());
         rightChile.setLeftChild(unBalanceNode);
         updateTreeHeight(unBalanceNode);
         updateTreeHeight(rightChile);
@@ -433,22 +433,22 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      * @return 根节点
      */
     private static<T extends Comparable<T>> AVLBTreeNode<T> rlSpin(AVLBTreeNode<T> unBalanceNode) {
-        BTreeNode<T> newRoot = unBalanceNode.getRightChile().getLeftChild();
-        BTreeNode<T> rightChile = unBalanceNode.getRightChile();
+        BTreeNode<T> newRoot = unBalanceNode.getRightChild().getLeftChild();
+        BTreeNode<T> rightChile = unBalanceNode.getRightChild();
         if (newRoot.getLeftChild() != null) {
-            unBalanceNode.setRightChile(newRoot.getLeftChild());
+            unBalanceNode.setRightChild(newRoot.getLeftChild());
             rightChile.setLeftChild(null);
-        } else if(newRoot.getRightChile() != null) {
-            rightChile.setLeftChild(newRoot.getRightChile());
-            unBalanceNode.setRightChile(null);
+        } else if(newRoot.getRightChild() != null) {
+            rightChile.setLeftChild(newRoot.getRightChild());
+            unBalanceNode.setRightChild(null);
         } else {
-            unBalanceNode.setRightChile(null);
+            unBalanceNode.setRightChild(null);
             rightChile.setLeftChild(null);
         }
         newRoot.setLeftChild(unBalanceNode);
-        newRoot.setRightChile(rightChile);
+        newRoot.setRightChild(rightChile);
         updateTreeHeight(newRoot.getLeftChild());
-        updateTreeHeight(newRoot.getRightChile());
+        updateTreeHeight(newRoot.getRightChild());
         updateTreeHeight(newRoot);
         return (AVLBTreeNode<T>) newRoot;
     }
@@ -461,19 +461,19 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      * @return 根节点
      */
     private static<T extends Comparable<T>> AVLBTreeNode<T> lrSpin(AVLBTreeNode<T> unBalanceNode) {
-        BTreeNode<T> newRoot = unBalanceNode.getLeftChild().getRightChile();
+        BTreeNode<T> newRoot = unBalanceNode.getLeftChild().getRightChild();
         BTreeNode<T> leftChild = unBalanceNode.getLeftChild();
         if (newRoot.getLeftChild() != null) {
-            leftChild.setRightChile(newRoot.getLeftChild());
+            leftChild.setRightChild(newRoot.getLeftChild());
             unBalanceNode.setLeftChild(null);
-        } else if(newRoot.getRightChile() != null) {
-            unBalanceNode.setLeftChild(newRoot.getRightChile());
-            leftChild.setRightChile(null);
+        } else if(newRoot.getRightChild() != null) {
+            unBalanceNode.setLeftChild(newRoot.getRightChild());
+            leftChild.setRightChild(null);
         } else {
             unBalanceNode.setLeftChild(null);
-            leftChild.setRightChile(null);
+            leftChild.setRightChild(null);
         }
-        newRoot.setRightChile(unBalanceNode);
+        newRoot.setRightChild(unBalanceNode);
         newRoot.setLeftChild(leftChild);
         updateTreeHeight(unBalanceNode);
         updateTreeHeight(leftChild);
@@ -491,7 +491,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
         if (root == null) {
             return;
         }
-        ((AVLBTreeNode<T>)root).setHeight(1 + Math.max(getTreeHeight(root.getLeftChild()), getTreeHeight(root.getRightChile())));
+        ((AVLBTreeNode<T>)root).setHeight(1 + Math.max(getTreeHeight(root.getLeftChild()), getTreeHeight(root.getRightChild())));
     }
 
 

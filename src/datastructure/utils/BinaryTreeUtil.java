@@ -75,7 +75,7 @@ public class BinaryTreeUtil {
                 0 :
                 root instanceof AVLBTreeNode ?
                         ((AVLBTreeNode<T>)root).getHeight() :
-                        1 + Math.max(getTreeHeight(root.getRightChile()), getTreeHeight(root.getLeftChild()));
+                        1 + Math.max(getTreeHeight(root.getRightChild()), getTreeHeight(root.getLeftChild()));
     }
 
     /**
@@ -89,7 +89,7 @@ public class BinaryTreeUtil {
         bTreeNodes[1] = root;
         for (int i = 2, j = 4; i < saveStrArr.length; j = j << 1) {
             for (; i<j && i < saveStrArr.length; ++i) {
-                bTreeNodes[i] = bTreeNodes[i>>1] == null ? null : (i & 1) == 1 ? bTreeNodes[i>>1].getRightChile() : bTreeNodes[i>>1].getLeftChild();
+                bTreeNodes[i] = bTreeNodes[i>>1] == null ? null : (i & 1) == 1 ? bTreeNodes[i>>1].getRightChild() : bTreeNodes[i>>1].getLeftChild();
             }
         }
         List<String> collect = Arrays.stream(bTreeNodes).map(tbTreeNode -> tbTreeNode == null ? "" : tbTreeNode.getValue().toString()).collect(Collectors.toList());
@@ -106,9 +106,7 @@ public class BinaryTreeUtil {
     private static Integer formatStrArr(String[] strArr) {
         int length = 0;
         Optional<String> max = Arrays.stream(strArr).max(
-                (s1, s2) -> {
-                    return Integer.compareUnsigned(s1.length(), s2.length());
-                }
+                (s1, s2) -> Integer.compareUnsigned(s1.length(), s2.length())
         );
         if (max.isPresent()) {
             length = max.get().length();

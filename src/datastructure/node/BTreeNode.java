@@ -13,7 +13,7 @@ public class BTreeNode<T extends Comparable<T>> {
 
     BTreeNode<T> leftChild;
 
-    BTreeNode<T> rightChile;
+    BTreeNode<T> rightChild;
 
     public BTreeNode() {
     }
@@ -22,10 +22,10 @@ public class BTreeNode<T extends Comparable<T>> {
         this.value = value;
     }
 
-    public BTreeNode(T value, BTreeNode<T> leftChild, BTreeNode<T> rightChile) {
+    public BTreeNode(T value, BTreeNode<T> leftChild, BTreeNode<T> rightChild) {
         this.value = value;
         this.leftChild = leftChild;
-        this.rightChile = rightChile;
+        this.rightChild = rightChild;
     }
 
     public T getValue() {
@@ -44,11 +44,11 @@ public class BTreeNode<T extends Comparable<T>> {
         this.leftChild = leftChild;
     }
 
-    public BTreeNode<T> getRightChile() {
-        return rightChile;
+    public BTreeNode<T> getRightChild() {
+        return rightChild;
     }
 
-    public void setRightChile(BTreeNode<T> rightChile) {
-        this.rightChile = rightChile;
+    public void setRightChild(BTreeNode<T> rightChild) {
+        this.rightChild = rightChild;
     }
 }

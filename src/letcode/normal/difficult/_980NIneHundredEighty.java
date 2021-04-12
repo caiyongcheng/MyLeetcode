@@ -128,33 +128,6 @@ public class _980NIneHundredEighty {
     }
 
     public static void main(String[] args) {
-/*        String str = "";
-        int x = 298;
-        while (x > 0){
-            str = x%2 + str;
-            x = x >>> 1;
-        }
-        System.out.println(str);
-        System.out.println(1*2+1*8+1*32);
-
- */
-        //System.out.println(uniquePathsIII(new int[][]{{1,0,0,0},{0,0,0,0},{0,0,2,-1}}));
-
-/*      int num = (int) (Math.random()*100);
-        int inNum = 0;
-        System.out.println("输入1-100的数");
-        Scanner sc = new Scanner(System.in);
-        while (true){
-            inNum = sc.nextInt();
-            if (inNum == num){
-                System.out.println("对了，就是"+num);
-                break;
-            }else if (inNum > num){
-                System.out.println("大了");
-            }else{
-                System.out.println("小了");
-            }
-        }*/
 
         int n = (int) (Math.random() * 11);
         int[] arr = new int[n];
