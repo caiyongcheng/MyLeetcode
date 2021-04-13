@@ -152,6 +152,7 @@ public class RBTree<T extends Comparable<T>> {
         }
         if (root == null) {
             root = new RBTreeNode<T>(data, NIL, NIL, RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
+            root.setParent(null);
             return root;
         }
         //正常的BST插入
@@ -165,16 +166,41 @@ public class RBTree<T extends Comparable<T>> {
                 child = (RBTreeNode<T>)parent.getRightChild();
             }
         }
+        child = new RBTreeNode<>(data, RBTreeNode.RBTREE_NOTE_COLOR_RED, parent);
         if (data.compareTo(parent.getValue()) < 0) {
-            parent.setLeftChild(new RBTreeNode<>(data, RBTreeNode.RBTREE_NOTE_COLOR_RED, parent));
+            parent.setLeftChild(child);
         } else {
-            parent.setRightChild(new RBTreeNode<>(data, RBTreeNode.RBTREE_NOTE_COLOR_RED ,parent));
+            parent.setRightChild(child);
         }
         //染色修复
         if (parent.getColor() == RBTreeNode.RBTREE_NOTE_COLOR_BLACK) {
             return parent;
         }
         return parent;
+    }
+
+
+    /**
+     * 新增后的颜色修复
+     * @param current 需要修复的当前节点
+     * @param <T> 数据类型 需要实现comparable接口
+     * @return 自底向上修复的祖节点
+     */
+    private static<T extends Comparable<T>> RBTreeNode<T> repairColor(RBTreeNode<T> current) {
+        //父节点是黑色节点 无需修复
+        RBTreeNode<T> parent = current.getParent();
+        if (parent == null || parent.getColor() == RBTreeNode.RBTREE_NOTE_COLOR_BLACK) {
+            return current;
+        }
+        //红色节点一定不是root节点 一定有parent
+        RBTreeNode<T> grandpa = parent.getParent();
+        RBTreeNode<T> uncle = (RBTreeNode<T>) (parent.getLeftChild() == parent ? parent.getRightChild() : parent.getLeftChild());
+        //叔叔节点为空
+        if (null == uncle || NIL == uncle && uncle.getColor() == RBTreeNode.RBTREE_NOTE_COLOR_BLACK) {
+
+        }
+        if (null != uncle || NIL == uncle && uncle.getColor() == RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
+        return null;
     }
 
 
@@ -186,7 +212,7 @@ public class RBTree<T extends Comparable<T>> {
      */
     private static<T extends Comparable<T>> RBTreeNode<T> LSpin(RBTreeNode<T> root) {
         BTreeNode<T> rightChild = root.getRightChild();
-        root.setRightChild(rightChild.getRightChild() == null ? rightChild.getLeftChild() : rightChild.getRightChild());
+        root.setRightChild(rightChild.getLeftChild());
         rightChild.setLeftChild(root);
         return (RBTreeNode<T>) rightChild;
     }
@@ -200,9 +226,19 @@ public class RBTree<T extends Comparable<T>> {
      */
     private static<T extends Comparable<T>> RBTreeNode<T> RSpin(RBTreeNode<T> root) {
         BTreeNode<T> leftChild = root.getLeftChild();
-        root.setLeftChild(leftChild.getLeftChild() == null ? leftChild.getRightChild() : leftChild.getLeftChild());
+        root.setLeftChild(leftChild.getRightChild());
         leftChild.setRightChild(root);
         return (RBTreeNode<T>) leftChild;
+    }
+
+    /**
+     * 检查该节点是不是红色节点
+     * @param node 需要检查的节点
+     * @param <T> 数据类型 需要实现comparable接口
+     * @return true 红色节点
+     */
+    private static<T extends Comparable<T>> boolean isRedRBTNote(RBTreeNode<T> node) {
+        return null != node && NIL != node && RBTreeNode.RBTREE_NOTE_COLOR_RED == node.getColor();
     }
 
 }

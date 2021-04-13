@@ -402,7 +402,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      */
     private static<T extends Comparable<T>> AVLBTreeNode<T> rSpin(AVLBTreeNode<T> unBalanceNode) {
         AVLBTreeNode<T> leftChild = (AVLBTreeNode<T>) unBalanceNode.getLeftChild();
-        unBalanceNode.setLeftChild(leftChild.getRightChild() == null ? leftChild.getLeftChild() : leftChild.getRightChild());
+        unBalanceNode.setLeftChild(leftChild.getRightChild());
         leftChild.setRightChild(unBalanceNode);
         updateTreeHeight(unBalanceNode);
         updateTreeHeight(leftChild);
@@ -418,7 +418,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      */
     private static<T extends Comparable<T>> AVLBTreeNode<T> lSpin(AVLBTreeNode<T> unBalanceNode) {
         AVLBTreeNode<T> rightChile = (AVLBTreeNode<T>) unBalanceNode.getRightChild();
-        unBalanceNode.setRightChild(rightChile.getLeftChild() == null ? rightChile.getRightChild() : rightChile.getLeftChild());
+        unBalanceNode.setRightChild(rightChile.getLeftChild());
         rightChile.setLeftChild(unBalanceNode);
         updateTreeHeight(unBalanceNode);
         updateTreeHeight(rightChile);
