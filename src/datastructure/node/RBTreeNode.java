@@ -12,6 +12,10 @@ public class RBTreeNode<T extends Comparable<T>> extends BTreeNode<T> {
     public static final int RBTREE_NOTE_COLOR_RED = 1;
     public static final int RBTREE_NOTE_COLOR_BLACK = 0;
 
+    public static final int LEFT_CHILD = -1;
+    public static final int RIGHT_CHILD = 1;
+    public static final int NOTHING = 0;
+
     private int color;
 
     private RBTreeNode<T> parent;

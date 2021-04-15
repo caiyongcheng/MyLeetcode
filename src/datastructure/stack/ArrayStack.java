@@ -37,7 +37,7 @@ public class ArrayStack<T> implements Stack<T>{
         this.slotSize = slotSize;
         head = new Node<>();
         actualHead = new Node<>();
-        actualHead.setData((T[]) new Comparable[slotSize]);
+        actualHead.setData((T[]) new Object[slotSize]);
         head.setNext(actualHead);
         top = slotSize;
         slotAmount = 1;
@@ -55,7 +55,7 @@ public class ArrayStack<T> implements Stack<T>{
             throw new NullPointerException("element is null");
         }
         if (top <= 0) {
-            T[] tArray = (T[]) new Comparable[slotSize];
+            T[] tArray = (T[]) new Object[slotSize];
             tArray[slotSize - 1] = data;
             Node<T[]> node = new Node<>(tArray, actualHead);
             head.setNext(node);

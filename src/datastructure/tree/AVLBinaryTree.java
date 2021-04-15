@@ -498,20 +498,22 @@ public class AVLBinaryTree<T extends Comparable<T>>{
 
     public static void main(String[] args) {
         AVLBinaryTree<Integer> avlBinaryTree = new AVLBinaryTree<>();
-        int[] ints = new int[18];
+        int[] ints = new int[32];
         for (int i = 0; i < ints.length; i++) {
             ints[i] = (int) (Math.random()*100);
         }
-        for (int i = 0; i < 18; i++) {
+        for (int i = 0; i < ints.length; i++) {
+            System.out.println(avlBinaryTree.height());
             avlBinaryTree.addData(ints[i]);
         }
-        System.out.println(BinaryTreeUtil.console(avlBinaryTree.root));
+
+/*        System.out.println(BinaryTreeUtil.console(avlBinaryTree.root));
         for (int i = 0; i < 18; i++) {
             avlBinaryTree.removeData(ints[i]);
             System.out.println("-------------------" + ints[i] + "--------------");
             System.out.println(BinaryTreeUtil.console(avlBinaryTree.root));
             System.out.println("------------------------------------------------");
-        }
+        }*/
         //System.out.println(BinaryTreeUtil.console(avlBinaryTree.root));
     }
 

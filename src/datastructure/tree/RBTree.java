@@ -4,6 +4,7 @@ import datastructure.node.BTreeNode;
 import datastructure.node.RBTreeNode;
 import datastructure.stack.ArrayStack;
 import datastructure.stack.Stack;
+import datastructure.utils.FormatPrintUtils;
 
 /**
  * @program: MyLeetcode
@@ -16,7 +17,7 @@ public class RBTree<T extends Comparable<T>> {
 
     private RBTreeNode<T> root;
 
-    private static final RBTreeNode NIL = new RBTreeNode<>(null, RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
+    private final RBTreeNode<T> NIL = new RBTreeNode<T>(null, RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
 
 
     public RBTree() {
@@ -35,7 +36,11 @@ public class RBTree<T extends Comparable<T>> {
      * @return 暂定
      */
     public boolean addData(T value) {
-
+        RBTreeNode<T> newRoot = add(root, value, NIL);
+        if (!isNotNull(newRoot, NIL)) {
+            return false;
+        }
+        root = newRoot;
         return true;
     }
 
@@ -55,9 +60,12 @@ public class RBTree<T extends Comparable<T>> {
      * @return 当前二叉树最小值
      */
     public T minValue() {
-        BTreeNode<T> parent = this.root;
-        while (parent.getLeftChild() != null) {
-            parent = parent.getLeftChild();
+        if (!isNotNull(root, NIL)) {
+            return null;
+        }
+        RBTreeNode<T> parent = root;
+        while (isNotNull((RBTreeNode<T>)parent.getLeftChild(), NIL)) {
+            parent = (RBTreeNode<T>) parent.getLeftChild();
         }
         return parent.getValue();
     }
@@ -68,9 +76,12 @@ public class RBTree<T extends Comparable<T>> {
      * @return 当前二叉树最大值
      */
     public T maxValue() {
-        BTreeNode<T> parent = this.root;
-        while (parent.getRightChild() != null) {
-            parent = parent.getRightChild();
+        if (!isNotNull(root, NIL)) {
+            return null;
+        }
+        RBTreeNode<T> parent = root;
+        while (isNotNull((RBTreeNode<T>)parent.getRightChild(), NIL)) {
+            parent = (RBTreeNode<T>) parent.getRightChild();
         }
         return parent.getValue();
     }
@@ -111,6 +122,9 @@ public class RBTree<T extends Comparable<T>> {
      * @return 当前二叉树高度
      */
     public int height() {
+        if (!isNotNull(root, NIL)) {
+            return 0;
+        }
         Stack<BTreeNode<T>> treeNodeStack = new ArrayStack<>(20);
         ArrayStack<Integer> heightArrayStack = new ArrayStack<Integer>(20);
         BTreeNode<T> current;
@@ -121,18 +135,16 @@ public class RBTree<T extends Comparable<T>> {
         while (!treeNodeStack.empty()) {
             current = treeNodeStack.pop();
             currentHeight = heightArrayStack.pop();
-            if (current.getLeftChild() != null) {
+            if (treeHeight < currentHeight) {
+                treeHeight = currentHeight;
+            }
+            if (isNotNull((RBTreeNode<T>) current.getLeftChild(), NIL)) {
                 treeNodeStack.push(current.getLeftChild());
                 heightArrayStack.push(currentHeight + 1);
             }
-            if (current.getRightChild() != null) {
+            if (isNotNull((RBTreeNode<T>) current.getRightChild(), NIL)) {
                 treeNodeStack.push(current.getRightChild());
                 heightArrayStack.push(currentHeight + 1);
-            }
-        }
-        while (!heightArrayStack.empty()) {
-            if (treeHeight < heightArrayStack.top()) {
-                treeHeight = heightArrayStack.pop();
             }
         }
         return treeHeight;
@@ -143,22 +155,23 @@ public class RBTree<T extends Comparable<T>> {
      * 向指定树插入值
      * @param root 树的根节点
      * @param data 要插入的值
+     * @param NIL 该树使用的NIL节点
      * @param <T> 数据类型 需要实现comparable接口
-     * @return 插入后的新节点
+     * @return 新的根节点
      */
-    private static<T extends Comparable<T>> RBTreeNode<T> add(RBTreeNode<T> root, T data) {
+    private static<T extends Comparable<T>> RBTreeNode<T> add(RBTreeNode<T> root, T data, final RBTreeNode<T> NIL) {
         if (data == null) {
             throw new NullPointerException();
         }
         if (root == null) {
-            root = new RBTreeNode<T>(data, NIL, NIL, RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
+            root = new RBTreeNode<>(data, NIL, NIL, RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
             root.setParent(null);
             return root;
         }
         //正常的BST插入
         RBTreeNode<T> parent = root;
         RBTreeNode<T> child = root;
-        while (child != null) {
+        while (isNotNull(child, NIL)) {
             parent = child;
             if (data.compareTo(parent.getValue()) < 0) {
                 child = (RBTreeNode<T>)parent.getLeftChild();
@@ -174,34 +187,54 @@ public class RBTree<T extends Comparable<T>> {
         }
         //染色修复
         if (parent.getColor() == RBTreeNode.RBTREE_NOTE_COLOR_BLACK) {
-            return parent;
+            return repairColor(parent, NIL);
         }
-        return parent;
+        return root;
     }
 
 
     /**
      * 新增后的颜色修复
      * @param current 需要修复的当前节点
+     * @param NIL 该树使用的NIL节点
      * @param <T> 数据类型 需要实现comparable接口
-     * @return 自底向上修复的祖节点
+     * @return 新的根节点
      */
-    private static<T extends Comparable<T>> RBTreeNode<T> repairColor(RBTreeNode<T> current) {
+    private static<T extends Comparable<T>> RBTreeNode<T> repairColor(RBTreeNode<T> current, final RBTreeNode<T> NIL) {
         //父节点是黑色节点 无需修复
         RBTreeNode<T> parent = current.getParent();
-        if (parent == null || parent.getColor() == RBTreeNode.RBTREE_NOTE_COLOR_BLACK) {
-            return current;
+        RBTreeNode<T> uncle;
+        int parentPosition;
+        int selfPosition;
+        while (isRedNote(parent, NIL)) {
+            uncle = getBroNode(parent);
+            //叔叔节点存在
+            if (isRedNote(uncle, NIL)) {
+                parent.setColor(RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
+                uncle.setColor(RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
+                parent.getParent().setColor(RBTreeNode.RBTREE_NOTE_COLOR_RED);
+                parent = parent.getParent();
+                continue;
+            }
+            //需要旋转来维持平衡
+            selfPosition = getChildPosition(current);
+            parentPosition = getChildPosition(parent);
+            parent = selfPosition == parentPosition
+                        ? selfPosition == RBTreeNode.LEFT_CHILD
+                            ? RSpin(parent.getParent()).getParent()
+                            : LSpin(parent.getParent()).getParent()
+                        : selfPosition == RBTreeNode.LEFT_CHILD
+                            ? RSpin(LSpin(parent).getParent()).getParent()
+                            : LSpin(RSpin(parent).getParent()).getParent();
         }
-        //红色节点一定不是root节点 一定有parent
-        RBTreeNode<T> grandpa = parent.getParent();
-        RBTreeNode<T> uncle = (RBTreeNode<T>) (parent.getLeftChild() == parent ? parent.getRightChild() : parent.getLeftChild());
-        //叔叔节点为空
-        if (null == uncle || NIL == uncle && uncle.getColor() == RBTreeNode.RBTREE_NOTE_COLOR_BLACK) {
-
+        while (isNotNull(parent, NIL) && isNotNull(parent.getParent(), NIL)) {
+            parent = parent.getParent();
         }
-        if (null != uncle || NIL == uncle && uncle.getColor() == RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
-        return null;
+        return parent;
     }
+
+
+
 
 
     /**
@@ -211,10 +244,17 @@ public class RBTree<T extends Comparable<T>> {
      * @return 旋转后的根节点
      */
     private static<T extends Comparable<T>> RBTreeNode<T> LSpin(RBTreeNode<T> root) {
-        BTreeNode<T> rightChild = root.getRightChild();
-        root.setRightChild(rightChild.getLeftChild());
+        RBTreeNode<T> rightChild = (RBTreeNode<T>) root.getRightChild();
+        rightChild.setParent(root.getParent());
+        if (rightChild.getLeftChild() != null) {
+            root.setRightChild(rightChild.getLeftChild());
+            ((RBTreeNode<T>)rightChild.getLeftChild()).setParent(root);
+        }
         rightChild.setLeftChild(root);
-        return (RBTreeNode<T>) rightChild;
+        root.setParent(rightChild);
+        rightChild.setColor(RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
+        root.setColor(RBTreeNode.RBTREE_NOTE_COLOR_RED);
+        return rightChild;
     }
 
 
@@ -225,20 +265,81 @@ public class RBTree<T extends Comparable<T>> {
      * @return 旋转后的根节点
      */
     private static<T extends Comparable<T>> RBTreeNode<T> RSpin(RBTreeNode<T> root) {
-        BTreeNode<T> leftChild = root.getLeftChild();
-        root.setLeftChild(leftChild.getRightChild());
+        RBTreeNode<T> leftChild = (RBTreeNode<T>) root.getLeftChild();
+        leftChild.setParent(root.getParent());
+        if (leftChild.getRightChild() != null) {
+            root.setLeftChild(leftChild.getRightChild());
+            ((RBTreeNode<T>)leftChild.getRightChild()).setParent(root);
+        }
         leftChild.setRightChild(root);
-        return (RBTreeNode<T>) leftChild;
+        root.setParent(leftChild);
+        leftChild.setColor(RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
+        root.setColor(RBTreeNode.RBTREE_NOTE_COLOR_RED);
+        return leftChild;
     }
+
+
 
     /**
      * 检查该节点是不是红色节点
      * @param node 需要检查的节点
+     * @param NIL 该树使用的NIL节点
      * @param <T> 数据类型 需要实现comparable接口
      * @return true 红色节点
      */
-    private static<T extends Comparable<T>> boolean isRedRBTNote(RBTreeNode<T> node) {
-        return null != node && NIL != node && RBTreeNode.RBTREE_NOTE_COLOR_RED == node.getColor();
+    private static<T extends Comparable<T>> boolean isRedNote(RBTreeNode<T> node, final RBTreeNode<T> NIL) {
+        return isNotNull(node, NIL) && RBTreeNode.RBTREE_NOTE_COLOR_RED == node.getColor();
+    }
+
+    /**
+     * 检查该节点是不是非空
+     * @param node 需要检查的节点
+     * @param NIL 该树使用的NIL节点
+     * @param <T> 数据类型 需要实现comparable接口
+     * @return true 非空
+     */
+    private static<T extends Comparable<T>> boolean isNotNull(RBTreeNode<T> node, final RBTreeNode<T> NIL) {
+        return null != node && NIL != node;
+    }
+
+    /**
+     * 获取目标节点的兄弟节点
+     * @param node 目标节点
+     * @param <T> 数据类型 需要实现comparable接口
+     * @return 目标节点的兄弟节点
+     */
+    private static<T extends Comparable<T>> RBTreeNode<T> getBroNode(RBTreeNode<T> node) {
+        RBTreeNode<T> parent = node.getParent();
+        return null == parent ? null :
+                (RBTreeNode<T>) (node == parent.getLeftChild() ? parent.getRightChild() : parent.getLeftChild());
+    }
+
+
+    /**
+     * 获取目标节点是父节点的左子节点还是右子节点
+     * @param child 目标节点
+     * @param <T> 数据类型 需要实现comparable接口
+     * @return 目标节点是父节点的左子节点还是右子节点
+     */
+    private static<T extends Comparable<T>> Integer getChildPosition(RBTreeNode<T> child) {
+        RBTreeNode<T> parent = child.getParent();
+        return null == parent ? RBTreeNode.NOTHING : child == parent.getLeftChild() ? RBTreeNode.LEFT_CHILD : RBTreeNode.RIGHT_CHILD;
+    }
+
+    public static void main(String[] args) {
+        RBTree<Integer> rbTree = new RBTree<Integer>();
+        Integer[] ints = new Integer[32];
+        for (int i = 0; i < ints.length; i++) {
+            ints[i] = (int) (Math.random() * 32);
+        }
+        System.out.println(FormatPrintUtils.formatArray(ints));
+        for (int anInt : ints) {
+            System.out.println("==================================================");
+            System.out.println(rbTree.height());
+            System.out.println(rbTree.addData(anInt));
+            System.out.println(rbTree.exist(anInt));
+            System.out.println(rbTree.maxValue() + "      " + rbTree.minValue());
+        }
     }
 
 }
