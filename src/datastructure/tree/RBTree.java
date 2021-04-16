@@ -9,18 +9,18 @@ import datastructure.utils.FormatPrintUtils;
 /**
  * @program: MyLeetcode
  * @description: 红黑树实现
- * @packagename: datastructure.tree
  * @author: 6JSh5rC456iL
- * @date: 2021-04-12 14:45
+ * @date 2021-04-12 14:45
  **/
 public class RBTree<T extends Comparable<T>> {
 
     private RBTreeNode<T> root;
 
-    private final RBTreeNode<T> NIL = new RBTreeNode<T>(null, RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
+    private final RBTreeNode<T> NIL = new RBTreeNode<>(null, RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
 
 
     public RBTree() {
+        root = NIL;
     }
 
     public RBTree(T data) {
@@ -96,17 +96,17 @@ public class RBTree<T extends Comparable<T>> {
         if (data == null) {
             return false;
         }
-        BTreeNode<T> parent = this.root;
+        RBTreeNode<T> parent = this.root;
         int compareRes;
-        while (parent != null) {
+        while (!isNotNull(parent, NIL)) {
             compareRes = data.compareTo(parent.getValue());
             if (compareRes == 0) {
                 return true;
             }
             if (compareRes == 1) {
-                parent = parent.getRightChild();
+                parent = (RBTreeNode<T>) parent.getRightChild();
             } else {
-                parent = parent.getLeftChild();
+                parent = (RBTreeNode<T>) parent.getLeftChild();
             }
         }
         return false;
@@ -126,7 +126,7 @@ public class RBTree<T extends Comparable<T>> {
             return 0;
         }
         Stack<BTreeNode<T>> treeNodeStack = new ArrayStack<>(20);
-        ArrayStack<Integer> heightArrayStack = new ArrayStack<Integer>(20);
+        ArrayStack<Integer> heightArrayStack = new ArrayStack<>(20);
         BTreeNode<T> current;
         int currentHeight;
         int treeHeight = 0;
@@ -151,6 +151,8 @@ public class RBTree<T extends Comparable<T>> {
     }
 
 
+
+
     /**
      * 向指定树插入值
      * @param root 树的根节点
@@ -163,7 +165,7 @@ public class RBTree<T extends Comparable<T>> {
         if (data == null) {
             throw new NullPointerException();
         }
-        if (root == null) {
+        if (!isNotNull(root, NIL)) {
             root = new RBTreeNode<>(data, NIL, NIL, RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
             root.setParent(null);
             return root;
@@ -194,6 +196,86 @@ public class RBTree<T extends Comparable<T>> {
 
 
     /**
+     * 从指定树删除指定值
+     * @param root 树的根节点
+     * @param data 要插入的值
+     * @param NIL 该树使用的NIL节点
+     * @param <T> 数据类型 需要实现comparable接口
+     * @return 新的根节点
+     */
+    private static<T extends Comparable<T>> RBTreeNode<T> remove(RBTreeNode<T> root, T data, final RBTreeNode<T> NIL) {
+        if (data == null || root == null) {
+            throw new NullPointerException();
+
+        }
+        RBTreeNode<T> current = root;
+        int position;
+        //搜索待删除节点
+        while (isNotNull(current, NIL)) {
+            position = data.compareTo(current.getValue());
+            if (position == 0) {
+                break;
+            } else if (position > 0) {
+                current = (RBTreeNode<T>) current.getRightChild();
+            } else {
+                current = (RBTreeNode<T>) current.getLeftChild();
+            }
+        }
+        if (!isNotNull(current, NIL)) {
+            throw new NullPointerException();
+        }
+        RBTreeNode<T> parent = current.getParent();
+        //叶子节点直接删除
+        if (!isNotNull((RBTreeNode<T>)current.getLeftChild(), NIL) && !isNotNull((RBTreeNode<T>)current.getLeftChild(), NIL)) {
+            if (parent.getLeftChild() == current) {
+                parent.setLeftChild(NIL);
+            } else {
+                parent.setRightChild(NIL);
+            }
+            current.setParent(null);
+            return root;
+        }
+        RBTreeNode<T> realRemoveNode;
+        //待删除节点是左子节点
+        position = getChildPosition(current);
+        if (position == RBTreeNode.LEFT_CHILD) {
+            //找到最小的大于待删除节点的节点（父节点的右子树的最小值）
+            if (!isNotNull((RBTreeNode<T>)parent.getRightChild(), NIL)) {
+                realRemoveNode = parent;
+            } else {
+                realRemoveNode = (RBTreeNode<T>) parent.getRightChild();
+                while (!isNotNull((RBTreeNode<T>)realRemoveNode.getLeftChild(), NIL)) {
+                    realRemoveNode = (RBTreeNode<T>) realRemoveNode.getLeftChild();
+                }
+            }
+        } else {
+            if (!isNotNull((RBTreeNode<T>)parent.getLeftChild(), NIL)) {
+                realRemoveNode = parent;
+            } else {
+                realRemoveNode = (RBTreeNode<T>) parent.getLeftChild();
+                while (!isNotNull((RBTreeNode<T>)realRemoveNode.getRightChild(), NIL)) {
+                    realRemoveNode = (RBTreeNode<T>) realRemoveNode.getRightChild();
+                }
+            }
+        }
+        //实际删除节点是父节点 将子节点值赋给父节点 将实际删除节点表示为子节点
+        if (realRemoveNode == current.getParent()) {
+            realRemoveNode.setValue(data);
+            if (position == RBTreeNode.LEFT_CHILD) {
+                parent.setLeftChild(NIL);
+            } else {
+                parent.setRightChild(NIL);
+            }
+            realRemoveNode = current;
+        } else {
+            current.setValue(data);
+        }
+        // TODO: 2021/4/15 下一步完成删除后的颜色修复开发
+        return null;
+    }
+
+
+    /**
      * 新增后的颜色修复
      * @param current 需要修复的当前节点
      * @param NIL 该树使用的NIL节点
@@ -208,9 +290,10 @@ public class RBTree<T extends Comparable<T>> {
         int selfPosition;
         while (isRedNote(parent, NIL)) {
             uncle = getBroNode(parent);
-            //叔叔节点存在
+            //叔叔节点存在，必定是红色节点
             if (isRedNote(uncle, NIL)) {
                 parent.setColor(RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
+                assert uncle != null;
                 uncle.setColor(RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
                 parent.getParent().setColor(RBTreeNode.RBTREE_NOTE_COLOR_RED);
                 parent = parent.getParent();
@@ -232,8 +315,6 @@ public class RBTree<T extends Comparable<T>> {
         }
         return parent;
     }
-
-
 
 
 
@@ -327,7 +408,7 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     public static void main(String[] args) {
-        RBTree<Integer> rbTree = new RBTree<Integer>();
+        RBTree<Integer> rbTree = new RBTree<>();
         Integer[] ints = new Integer[32];
         for (int i = 0; i < ints.length; i++) {
             ints[i] = (int) (Math.random() * 32);

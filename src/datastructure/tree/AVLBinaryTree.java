@@ -2,14 +2,13 @@ package datastructure.tree;
 import datastructure.node.AVLBTreeNode;
 import datastructure.node.BTreeNode;
 import datastructure.stack.LinkedStack;
-import datastructure.utils.BinaryTreeUtil;
+
 
 /**
  * @program: MyLeetcode
  * @description: AVL平衡树
- * @packagename: datastructure.node
  * @author: 6JSh5rC456iL
- * @date: 2021-03-15 17:26
+ * @date 2021-03-15 17:26
  **/
 public class AVLBinaryTree<T extends Comparable<T>>{
 
