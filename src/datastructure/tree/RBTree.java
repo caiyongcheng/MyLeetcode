@@ -295,7 +295,9 @@ public class RBTree<T extends Comparable<T>> {
                 parent.setColor(RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
                 assert uncle != null;
                 uncle.setColor(RBTreeNode.RBTREE_NOTE_COLOR_BLACK);
-                parent.getParent().setColor(RBTreeNode.RBTREE_NOTE_COLOR_RED);
+                if (isNotNull(parent.getParent().getParent(), NIL)) {
+                    parent.getParent().setColor(RBTreeNode.RBTREE_NOTE_COLOR_RED);
+                }
                 parent = parent.getParent();
                 continue;
             }

@@ -7,7 +7,7 @@ package letcode.difficult;
  * @author : CaiYongcheng
  * @date : 2020-08-02 08:58
  **/
-public class _85EightyFive {
+public class N_85EightyFive {
 
     public int maximalRectangle(char[][] matrix) {
         return 0;

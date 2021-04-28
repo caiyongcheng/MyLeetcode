@@ -1,11 +1,13 @@
+
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 /**
  * @program: StudyHTTP
@@ -74,8 +76,56 @@ public class HTTPRequest {
 
     }
 
+    static class Text {
+        Integer s;
+        Integer e;
+
+        @Override
+        public String toString() {
+            return new StringJoiner(", ", Text.class.getSimpleName() + "[", "]")
+                    .add("s=" + s)
+                    .add("e=" + e)
+                    .toString();
+        }
+    }
+
     public static void main(String[] args) {
-        requestFromGet("http://www.4399.com");
+        //requestFromGet("http://www.4399.com");
+/*        ArrayList<Text> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Text text = new Text();
+            text.s = i;
+            for (int j = 0; j < 10; j++) {
+                text.e = j;
+                list.add(text);
+            }
+        }
+        for (Text text : list) {
+            System.out.println(text);
+        }*/
+        try {
+
+            byte[] bytes = Files.readAllBytes(Paths.get("C:\\Users\\10761\\Desktop\\123.pdf"));
+            System.out.println(new String(bytes));
+            String string = Base64.getEncoder().encodeToString(bytes);
+            /*System.out.print("'");
+            for (int i = 0; i < string.length(); i++) {
+                System.out.print(string.charAt(i));
+                if (i % 200 == 0) {
+                    System.out.println("'");
+                    System.out.print("+'");
+                }
+            }*/
+            //bufferedWriter.write(Base64.getEncoder().encodeToString(stringBuilder.toString().getBytes(StandardCharsets.UTF_8)));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 
 
