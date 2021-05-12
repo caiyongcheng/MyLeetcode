@@ -2,8 +2,6 @@ package letcode.normal.medium;
 
 import letcode.utils.FormatPrintUtils;
 
-import java.util.Arrays;
-
 /**
  * @program: MyLeetCode
  * @description: 给你一个整数数组perm，它是前n个正整数的排列，且n是个 奇数。
@@ -13,7 +11,7 @@ import java.util.Arrays;
  * @author: 蔡永程
  * @create: 2021-02-05 10:00
  */
-public class N_1734OneThousandSevenHundredThirtyFour {
+public class _1734OneThousandSevenHundredThirtyFour {
 
 
     public int[] decode(int[] encoded) {
@@ -50,7 +48,7 @@ public class N_1734OneThousandSevenHundredThirtyFour {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new N_1734OneThousandSevenHundredThirtyFour().decode(new int[]{6,5,4,6})));
+        System.out.println(FormatPrintUtils.formatArray(new _1734OneThousandSevenHundredThirtyFour().decode(new int[]{6,5,4,6})));
     }
     
 
