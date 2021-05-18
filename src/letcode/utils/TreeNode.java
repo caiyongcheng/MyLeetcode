@@ -26,6 +26,12 @@ public class TreeNode {
 
     public TreeNode(Integer[] arr) {createChildTreeNode(arr, 0, this);}
 
+    public TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+
     public static void display(TreeNode root) {
         if (root != null) {
             System.out.print(root.val + " ");
