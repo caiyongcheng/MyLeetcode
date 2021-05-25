@@ -11,7 +11,7 @@ import letcode.utils.FormatPrintUtils;
  * @author CaiYongcheng
  * @date 2021-05-12 09:03
  **/
-public class _1330OneThousandThreeHundredThirty {
+public class _1310OneThousandThreeHundredTen {
 
 
     public int[] xorQueries(int[] arr, int[][] queries) {
@@ -53,7 +53,7 @@ public class _1330OneThousandThreeHundredThirty {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _1330OneThousandThreeHundredThirty().xorQueries(
+        System.out.println(FormatPrintUtils.formatArray(new _1310OneThousandThreeHundredTen().xorQueries(
                 new int[]{4,8,2,10},
                 new int[][]{{2,3},{1,3},{0,0},{0,3}}
         )));
