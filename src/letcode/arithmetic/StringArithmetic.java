@@ -142,8 +142,15 @@ public class StringArithmetic {
 
 
     public static void main(String[] args) {
-        for (int j = 0; j < 30000; j++) {
-            int length = (int) (Math.random() * 10000);
+        int avgJDK = 0;
+        int avgSunday = 0;
+        int avgKmp = 0;
+        int indexJDK;
+        int indexSunday;
+        int indexKmp;
+        long startTime;
+        for (int j = 0; j < 300; j++) {
+            int length = (int) (Math.random() * 1000000);
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < length; i++) {
                 char ch = (char) (Math.random() * 26 + 'a');
@@ -153,14 +160,30 @@ public class StringArithmetic {
             int start = (int) (length * Math.random());
             int end = (int) (start + (length - start) * Math.random());
             String substring = string.substring(start, end);
-            int index = string.indexOf(substring);
-            if (index != searchByKmp(string, substring)) {
+
+            startTime = System.nanoTime();
+            indexJDK = string.indexOf(substring);
+            avgJDK += System.nanoTime() - startTime;
+
+            startTime = System.nanoTime();
+            indexKmp = searchByKmp(string, substring);
+            avgKmp += System.nanoTime() - startTime;
+
+            startTime = System.nanoTime();
+            indexSunday = searchBySunday(string, substring);
+            avgSunday += System.nanoTime() - startTime;
+
+
+            if (indexJDK != indexKmp) {
                 System.out.println("no:" + j + ":searchByKmp is error");
             }
-            if (index != searchBySunday(string, substring)) {
+            if (indexJDK != indexSunday) {
                 System.out.println("no:" + j + ":searchBySunday is error");
             }
         }
+        System.out.println(avgJDK/300.0);
+        System.out.println(avgKmp/300.0);
+        System.out.println(avgSunday/300.0);
     }
 
 
