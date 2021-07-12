@@ -1,13 +1,12 @@
 package letcode.utils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.math.BigDecimal;
+
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @program: MyLeetcode
@@ -36,7 +35,26 @@ public class CastUtils {
     }
 
 
-
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("C:\\Users\\10761\\Desktop\\1.txt")));
+        Scanner scanner = new Scanner(System.in);
+        StringBuilder stringBuilder = new StringBuilder();
+        String lineStr ;
+        int index = 0;
+        while (true) {
+            scanner.next();
+            for (int i = 0; i < 1000; i++) {
+                lineStr = bufferedReader.readLine();
+                if (lineStr != null && lineStr.length() > 0) {
+                    stringBuilder.append(lineStr);
+                }
+            }
+            ++index;
+            System.out.println(stringBuilder);
+            System.out.println("=================" + index + "===========");
+            stringBuilder.delete(0, stringBuilder.length());
+        }
+    }
 
 
 
