@@ -3,7 +3,6 @@ package letcode.normal.medium;
 import letcode.utils.FormatPrintUtils;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * 在一个仓库里，有一排条形码，其中第 i 个条形码为barcodes[i]。  

@@ -2,9 +2,7 @@ package letcode.normal.medium;
 
 import letcode.utils.FormatPrintUtils;
 
-import java.util.Arrays;
 import java.util.Stack;
-import java.util.TreeSet;
 
 /**
  * @program: Leetcode
