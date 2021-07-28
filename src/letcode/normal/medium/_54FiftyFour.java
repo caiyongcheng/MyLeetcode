@@ -14,7 +14,7 @@ import java.util.List;
 public class _54FiftyFour {
 
     /**
-     * 示例 1:
+     * 示例1:
      * 输入:
      * [
      * [ 1, 2, 3 ],
@@ -23,7 +23,7 @@ public class _54FiftyFour {
      * ]
      * 输出: [1,2,3,6,9,8,7,4,5]
      * <p>
-     * 示例 2:
+     * 示例2:
      * 输入:
      * [
      * [1, 2, 3, 4],

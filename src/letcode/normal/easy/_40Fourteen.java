@@ -10,11 +10,11 @@ package letcode.easy;
 public class _40Fourteen {
 
     /**
-     * 示例 1:
+     * 示例1:
      * <p>
      * 输入: ["flower","flow","flight"]
      * 输出: "fl"
-     * 示例 2:
+     * 示例2:
      * <p>
      * 输入: ["dog","racecar","car"]
      * 输出: ""

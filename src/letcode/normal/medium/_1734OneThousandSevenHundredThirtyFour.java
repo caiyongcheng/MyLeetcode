@@ -41,7 +41,7 @@ public class _1734OneThousandSevenHundredThirtyFour {
      * 示例 2：
      * 输入：encoded = [6,5,4,6]
      * 输出：[2,4,1,5,3]
-     *  
+     * 
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/decode-xored-permutation
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。

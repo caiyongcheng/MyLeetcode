@@ -14,7 +14,7 @@ public class _9Nine {
      * <p>
      * 输入: 121
      * 输出: true
-     * 示例 2:
+     * 示例2:
      * <p>
      * 输入: -121
      * 输出: false

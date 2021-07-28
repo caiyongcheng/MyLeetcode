@@ -15,7 +15,7 @@ import letcode.utils.TreeNode;
 public class _100OneHundred {
 
     /**
-     * 示例 1:
+     * 示例1:
      * 输入:       1         1
      * / \       / \
      * 2   3     2   3
@@ -33,7 +33,7 @@ public class _100OneHundred {
      * <p>
      * 输出: false
      * <p>
-     * 示例 3:
+     * 示例3:
      * 输入:       1         1
      * / \       / \
      * 2   1     1   2

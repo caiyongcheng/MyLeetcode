@@ -34,7 +34,7 @@ public class _77SeventySeven {
 
     /**
      * 示例:
-     * 输入: n = 4, k = 2
+     * 输入:n = 4, k = 2
      * 输出:
      * [
      * [2,4],

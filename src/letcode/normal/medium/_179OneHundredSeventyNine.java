@@ -23,7 +23,7 @@ public class _179OneHundredSeventyNine {
      * 输入：nums = [10,2]
      * 输出："210"
      * <p>
-     * 示例 2：
+     * 示例2：
      * 输入：nums = [3,30,34,5,9]
      * 输出："9534330"
      * <p>

@@ -6,7 +6,7 @@ import java.util.HashSet;
 /**
  * @program: MyLeetcode
  * @description: 返回所有长度为 n 且满足其每两个连续位上的数字之间的差的绝对值为 k 的 非负整数 。  请注意，除了 数字 0 本身之外，答案中的每个数字都 不能 有前导零。
- * 例如，01 有一个前导零，所以是无效的；但 0 是有效的。  你可以按 任何顺序 返回答案。
+ * 例如，01 有一个前导零，所以是无效的；但 0是有效的。  你可以按 任何顺序 返回答案。
  * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/numbers-with-same-consecutive-differences 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  * @author: 蔡永程
  * @create: 2021-01-25 14:49

@@ -33,7 +33,7 @@ public class _692SixHundredNinetyTwo {
      * 输出: {"i", "love"}
      * 解析: "i" 和 "love" 为出现次数最多的两个单词，均为2次。
      *     注意，按字母顺序 "i" 在 "love" 之前。
-     *  
+     * 
      *
      * 示例 2：
      * 输入: {"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"}, k = 4
