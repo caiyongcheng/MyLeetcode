@@ -25,73 +25,82 @@
  */
 
 package letcode.normal.medium;
+
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
- * 给定平面上n 对 互不相同 的点points ，其中 points[i] = [xi, yi] 。回旋镖 是由点(i, j, k) 表示的元组 ，其中i和j之间的距离和i和k之间的距离相等（需要考虑元组的顺序）。  返回平面上所有回旋镖的数量。  来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/number-of-boomerangs 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ * 给你一个字符串 s 和一个字符串数组 dictionary 作为字典，找出并返回字典中最长的字符串，该字符串可以通过删除 s 中的某些字符得到。
+ * 如果答案不止一个，返回长度最长且字典序最小的字符串。如果答案不存在，则返回空字符串。
+ * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @date 2021-09-13 10:05
+ * @date 2021-09-14 09:03
  **/
-public class _447FourHundredFortySeven {
+public class _524FiveHundredTwentyFour {
 
-    public int numberOfBoomerangs(int[][] points) {
-        int ans = 0;
-        long[][] distance = new long[points.length][points.length];
-        for (int start = 0; start < distance.length; start++) {
-            for (int end = 0; end < distance[start].length; end++) {
-                distance[start][end] = start > end
-                        ? distance[end][start]
-                        : start == end
-                        ? 0
-                        : computeDistance(points[start], points[end]);
-            }
-        }
-        for (long[] dist : distance) {
-            Arrays.sort(dist);
-        }
-        for (long[] longs : distance) {
-            for (int i = 0; i < longs.length; ) {
-                int j = i;
-                for (; j < longs.length && longs[i] == longs[j]; j++) {
+    public String findLongestWord(String s, List<String> dictionary) {
+        char[] chars = s.toCharArray();
+        String ans = "";
+        for (int i = 0; i < dictionary.size(); i++) {
+            String ns = dictionary.get(i);
+            char[] comparable = ns.toCharArray();
+            int index = 0;
+            int cIndex = 0;
+            while (cIndex < comparable.length) {
+                while (index < chars.length) {
+                    if (chars[index] == comparable[cIndex]) {
+                        ++index;
+                        ++cIndex;
+                        break;
+                    }
+                    ++index;
                 }
-                ans += (j - i) * (j - i - 1);
-                i = j;
+                if (index >= chars.length) {
+                    break;
+                }
+            }
+            if (cIndex >= comparable.length) {
+                if (comparable.length > ans.length()) {
+                    ans = ns;
+                } else if (comparable.length == ans.length() && ans.compareTo(ns) > 0) {
+                    ans = ns;
+                }
             }
         }
         return ans;
     }
 
-    public long computeDistance(int[] start, int[] end) {
-        long xDist = start[0] - end[0];
-        long yDist = start[1] - end[1];
-        return xDist * xDist + yDist * yDist;
-    }
 
     /**
      * 示例 1：
-     * 输入：points = {{0,0},{1,0},{2,0}}
-     * 输出：2
-     * 解释：两个回旋镖为 {{1,0},{0,0},{2,0}} 和 {{1,0},{2,0},{0,0}}
      * <p>
+     * 输入：s = "abpcplea", dictionary = ["ale","apple","monkey","plea"]
+     * 输出："apple"
      * 示例 2：
-     * 输入：points = {{1,1},{2,2},{3,3}}
-     * 输出：2
      * <p>
-     * 示例 3：
-     * 输入：points = {{1,1}}
-     * 输出：0
+     * 输入：s = "abpcplea", dictionary = ["a","b","c"]
+     * 输出："a"
+     * <p>
+     * "abpcplea"
+     * ["ale","apple","monkey","plea", "abpcplaaa","abpcllllll","abccclllpppeeaaaa"]
+     * <p>
+     * "aaa"
+     * ["aaa","aa","a"]
      * <p>
      * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/number-of-boomerangs
+     * 链接：https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      *
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(new _447FourHundredFortySeven().numberOfBoomerangs(
-                new int[][]{{1, 1}}
+        System.out.println(new _524FiveHundredTwentyFour().findLongestWord(
+                "abpcplea",
+                Arrays.asList("ale", "apple", "monkey", "plea")
         ));
     }
+
 
 }

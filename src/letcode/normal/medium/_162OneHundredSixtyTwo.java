@@ -25,73 +25,86 @@
  */
 
 package letcode.normal.medium;
-import java.util.Arrays;
 
 /**
- * 给定平面上n 对 互不相同 的点points ，其中 points[i] = [xi, yi] 。回旋镖 是由点(i, j, k) 表示的元组 ，其中i和j之间的距离和i和k之间的距离相等（需要考虑元组的顺序）。  返回平面上所有回旋镖的数量。  来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/number-of-boomerangs 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ * 峰值元素是指其值严格大于左右相邻值的元素。  给你一个整数数组nums，找到峰值元素并返回其索引。数组可能包含多个峰值，在这种情况下，返回 任何一个峰值 所在位置即可。
+ * 你可以假设nums[-1] = nums[n] = -∞ 。  你必须实现时间复杂度为 O(log n) 的算法来解决此问题。
+ * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/find-peak-element 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ * nums[i] != nums[i + 1]
  *
  * @author CaiYongcheng
- * @date 2021-09-13 10:05
+ * @date 2021-09-15 10:40
  **/
-public class _447FourHundredFortySeven {
+public class _162OneHundredSixtyTwo {
 
-    public int numberOfBoomerangs(int[][] points) {
-        int ans = 0;
-        long[][] distance = new long[points.length][points.length];
-        for (int start = 0; start < distance.length; start++) {
-            for (int end = 0; end < distance[start].length; end++) {
-                distance[start][end] = start > end
-                        ? distance[end][start]
-                        : start == end
-                        ? 0
-                        : computeDistance(points[start], points[end]);
-            }
-        }
-        for (long[] dist : distance) {
-            Arrays.sort(dist);
-        }
-        for (long[] longs : distance) {
-            for (int i = 0; i < longs.length; ) {
-                int j = i;
-                for (; j < longs.length && longs[i] == longs[j]; j++) {
+    private int[] arr;
+
+    public int findPeakElement(int[] nums) {
+        /*
+         * 分析：
+         * nums[-1] = nums[n] = -∞ 意味着 nums[0] > nums[1]  nums[n-1] > nums[n]
+         * nums[i] != nums[i + 1] 意味着相邻元素不会相等
+         * O(log n) 的算法 要求 每次迭代都要减少 查询范围
+         * 如果 nums[index] 大于 nums[index-1] 说明 [index, end]区域一定存在峰值
+         * 如果 nums[index] 小于 nums[index-1] 说明 [0, index-1]区域一定有峰值
+         * 不断压缩区域即可
+         */
+        arr = nums;
+        int left = 0;
+        int right = nums.length;
+        int mid;
+        while (right - left >= 2) {
+            mid = (left + right) >> 1;
+            if (greater(mid, mid - 1)) {
+                if (greater(mid, mid + 1)) {
+                    return mid;
                 }
-                ans += (j - i) * (j - i - 1);
-                i = j;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
-        return ans;
+        return greater(left, right) ? left : right;
     }
 
-    public long computeDistance(int[] start, int[] end) {
-        long xDist = start[0] - end[0];
-        long yDist = start[1] - end[1];
-        return xDist * xDist + yDist * yDist;
+    public boolean greater(int i, int j) {
+        if (i == -1 || i == arr.length) {
+            return false;
+        }
+        if (j == -1 || j == arr.length) {
+            return true;
+        }
+        return arr[i] > arr[j];
     }
 
     /**
      * 示例 1：
-     * 输入：points = {{0,0},{1,0},{2,0}}
+     * 输入：nums = [1,2,3,1]
      * 输出：2
-     * 解释：两个回旋镖为 {{1,0},{0,0},{2,0}} 和 {{1,0},{2,0},{0,0}}
+     * 解释：3 是峰值元素，你的函数应该返回其索引 2。
      * <p>
-     * 示例 2：
-     * 输入：points = {{1,1},{2,2},{3,3}}
-     * 输出：2
+     * 示例2：
+     * 输入：nums = [1,2,1,3,5,6,4]
+     * 输出：1 或 5
+     * 解释：你的函数可以返回索引 1，其峰值元素为 2；
+     * 或者返回索引 5， 其峰值元素为 6。
      * <p>
-     * 示例 3：
-     * 输入：points = {{1,1}}
-     * 输出：0
+     * <p>
+     * 提示：
+     * <p>
+     * 1 <= nums.length <= 1000
+     * -231 <= nums[i] <= 231 - 1
+     * 对于所有有效的 i 都有 nums[i] != nums[i + 1]
      * <p>
      * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/number-of-boomerangs
+     * 链接：https://leetcode-cn.com/problems/find-peak-element
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      *
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(new _447FourHundredFortySeven().numberOfBoomerangs(
-                new int[][]{{1, 1}}
-        ));
+        System.out.println(new _162OneHundredSixtyTwo().findPeakElement(new int[]{1, 2, 1, 3, 5, 6, 4}));
     }
+
 
 }
