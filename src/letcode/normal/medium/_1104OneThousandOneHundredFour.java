@@ -26,9 +26,8 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -83,7 +82,7 @@ public class _1104OneThousandOneHundredFour {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatList(new _1104OneThousandOneHundredFour().pathInZigZagTree(26)));
+        System.out.println(FormatUtils.formatList(new _1104OneThousandOneHundredFour().pathInZigZagTree(26)));
     }
 
 }

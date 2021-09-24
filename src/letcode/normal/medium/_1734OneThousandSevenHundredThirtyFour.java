@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 /**
  * @program: MyLeetCode
@@ -74,7 +74,7 @@ public class _1734OneThousandSevenHundredThirtyFour {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _1734OneThousandSevenHundredThirtyFour().decode(new int[]{6,5,4,6})));
+        System.out.println(FormatUtils.formatArray(new _1734OneThousandSevenHundredThirtyFour().decode(new int[]{6, 5, 4, 6})));
     }
     
 

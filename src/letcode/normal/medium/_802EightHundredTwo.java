@@ -26,10 +26,9 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -113,8 +112,8 @@ public class _802EightHundredTwo {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatList(new _802EightHundredTwo().eventualSafeNodes(
-                new int[][]{{},{0,2,3,4},{3},{4},{}}
+        System.out.println(FormatUtils.formatList(new _802EightHundredTwo().eventualSafeNodes(
+                new int[][]{{}, {0, 2, 3, 4}, {3}, {4}, {}}
         )));
     }
 

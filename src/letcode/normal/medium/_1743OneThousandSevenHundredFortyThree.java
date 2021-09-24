@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 import java.util.*;
 
@@ -111,8 +111,8 @@ public class  _1743OneThousandSevenHundredFortyThree {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _1743OneThousandSevenHundredFortyThree().restoreArray(
-                new int[][]{{100000,-100000}}
+        System.out.println(FormatUtils.formatArray(new _1743OneThousandSevenHundredFortyThree().restoreArray(
+                new int[][]{{100000, -100000}}
         )));
     }
 

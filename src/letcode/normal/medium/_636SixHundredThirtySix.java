@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -100,7 +100,7 @@ public class _636SixHundredThirtySix {
                 "1:end:5",
                 "0:end:6"
         }).collect(Collectors.toList());
-        System.out.println(FormatPrintUtils.formatArray(new _636SixHundredThirtySix().exclusiveTime(2, collect)));
+        System.out.println(FormatUtils.formatArray(new _636SixHundredThirtySix().exclusiveTime(2, collect)));
     }
 
 }

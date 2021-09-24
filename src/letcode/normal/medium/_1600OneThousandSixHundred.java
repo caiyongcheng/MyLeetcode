@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 import java.util.*;
 
@@ -154,9 +154,9 @@ public class _1600OneThousandSixHundred {
         test.birth("andy", "matthew");
         test.birth("bob", "alex");
         test.birth("bob", "asha");
-        System.out.println(FormatPrintUtils.formatList(test.getInheritanceOrder()));
+        System.out.println(FormatUtils.formatList(test.getInheritanceOrder()));
         test.death("bob");
-        System.out.println(FormatPrintUtils.formatList(test.getInheritanceOrder()));
+        System.out.println(FormatUtils.formatList(test.getInheritanceOrder()));
 
     }
 

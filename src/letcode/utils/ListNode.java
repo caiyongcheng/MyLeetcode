@@ -37,9 +37,10 @@ public class ListNode {
 
     public int val;
     public ListNode next;
-    public String prefix = "[";
-    public String suffix = "\t]";
-    public String separator = "\t";
+    static private final String PREFIX = "[";
+    static private final String SUFFIX = "]";
+    static private final String SEPARATOR = "\t";
+
     public ListNode(int x) {
         val = x;
     }
@@ -55,7 +56,7 @@ public class ListNode {
     }
 
     public void display() {
-        display(prefix, suffix, separator);
+        display(PREFIX, SUFFIX, SEPARATOR);
     }
 
     public void display(String prefix, String suffix, String separator) {
@@ -66,22 +67,6 @@ public class ListNode {
             head = head.next;
         }
         System.out.println(suffix);
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public String getSuffix() {
-        return suffix;
-    }
-
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
     }
 
     public int getVal() {
@@ -98,5 +83,17 @@ public class ListNode {
 
     public void setNext(ListNode next) {
         this.next = next;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder(PREFIX);
+        ListNode head = this;
+        while (head != null) {
+            stringBuilder.append(head.val).append(SEPARATOR);
+            head = head.next;
+        }
+        stringBuilder.append(SUFFIX);
+        return stringBuilder.toString();
     }
 }

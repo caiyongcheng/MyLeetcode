@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 /**
  * @program: MyLeetCode
@@ -57,7 +57,7 @@ public class _338ThreeHundredThirtyEight {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _338ThreeHundredThirtyEight().countBits(0)));
+        System.out.println(FormatUtils.formatArray(new _338ThreeHundredThirtyEight().countBits(0)));
     }
 
 }

@@ -25,12 +25,11 @@
  */
 
 package letcode.normal.medium;
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 import letcode.utils.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 /**
  * 给定一个二叉树（具有根结点root），一个目标结点target，和一个整数值 K 。
@@ -108,7 +107,7 @@ public class _863EightHundredSixtyThree {
         treeNode.right = new TreeNode(1);
         treeNode.right.left = new TreeNode(0);
         treeNode.right.right = new TreeNode(8);
-        System.out.println(FormatPrintUtils.formatList(new _863EightHundredSixtyThree().distanceK(treeNode, treeNode.right.left, 3)));
+        System.out.println(FormatUtils.formatList(new _863EightHundredSixtyThree().distanceK(treeNode, treeNode.right.left, 3)));
     }
 
 

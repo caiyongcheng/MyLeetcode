@@ -26,6 +26,10 @@
 
 package letcode.utils;
 
+import datastructure.stack.LinkedStack;
+
+import java.util.LinkedList;
+import java.util.List;
 import java.util.StringJoiner;
 
 /**
@@ -66,6 +70,96 @@ public class TreeNode {
         }
     }
 
+    public static List<Integer> preOrder(TreeNode node) {
+        assert node != null;
+        LinkedStack<TreeNode> treeNodes = new LinkedStack<>();
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        treeNodes.push(node);
+        while (!treeNodes.empty()) {
+            node = treeNodes.pop();
+            linkedList.add(node.val);
+            if (node.right != null) {
+                treeNodes.push(node.right);
+            }
+            if (node.left != null) {
+                treeNodes.push(node.left);
+            }
+        }
+        return linkedList;
+    }
+
+
+    public static List<Integer> inOrder(TreeNode node) {
+        assert node != null;
+        LinkedStack<TreeNode> treeNodes = new LinkedStack<>();
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        treeNodes.push(node);
+        while (!treeNodes.empty()) {
+            while (treeNodes.top().left != null) {
+                treeNodes.push(treeNodes.top().left);
+            }
+            while (!treeNodes.empty()) {
+                node = treeNodes.pop();
+                linkedList.add(node.val);
+                if (node.right != null) {
+                    treeNodes.push(node.right);
+                    break;
+                }
+            }
+        }
+        return linkedList;
+    }
+
+
+    public static List<Integer> postOrder(TreeNode node) {
+        assert node != null;
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        postOrder(node, linkedList);
+        return linkedList;
+    }
+
+
+    private static void postOrder(TreeNode node, List<Integer> list) {
+        if (node.left != null) {
+            postOrder(node.left, list);
+        }
+        if (node.right != null) {
+            postOrder(node.right, list);
+        }
+        list.add(node.val);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof TreeNode)) {
+            return false;
+        }
+        TreeNode treeNode = (TreeNode) obj;
+        if (this.val != treeNode.val) {
+            return false;
+        }
+        if (this.left != null) {
+            if (treeNode.left == null) {
+                return false;
+            }
+            if (!this.left.equals(treeNode.left)) {
+                return false;
+            }
+        } else if (treeNode.left != null) {
+            return false;
+        }
+        if (this.right != null) {
+            if (treeNode.right == null) {
+                return false;
+            }
+            return this.right.equals(treeNode.right);
+        }
+        return treeNode.right == null;
+    }
+
     private void createChildTreeNode(int[] arr, int index, TreeNode me) {
         if (index >= arr.length) {
             return;
@@ -95,6 +189,7 @@ public class TreeNode {
             createChildTreeNode(arr, index * 2 + 2, me.right);
         }
     }
+
 
     @Override
     public String toString() {

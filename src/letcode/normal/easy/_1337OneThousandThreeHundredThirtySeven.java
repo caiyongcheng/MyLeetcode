@@ -26,12 +26,9 @@
 
 package letcode.normal.easy;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * 给你一个大小为 m * n 的矩阵 mat，矩阵由若干军人和平民组成，分别用 1 和 0 表示。
@@ -108,11 +105,11 @@ public class _1337OneThousandThreeHundredThirtySeven {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _1337OneThousandThreeHundredThirtySeven().kWeakestRows(
-                new int[][] {{1,0,0,0},
-                        {1,1,1,1},
-                {1,0,0,0},
-                {1,0,0,0}},
+        System.out.println(FormatUtils.formatArray(new _1337OneThousandThreeHundredThirtySeven().kWeakestRows(
+                new int[][]{{1, 0, 0, 0},
+                        {1, 1, 1, 1},
+                        {1, 0, 0, 0},
+                        {1, 0, 0, 0}},
                 2
         )));
     }

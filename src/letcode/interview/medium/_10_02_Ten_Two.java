@@ -26,7 +26,7 @@
 
 package letcode.interview.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,7 +68,7 @@ public class _10_02_Ten_Two {
     public static void main(String[] args) {
         List<List<String>> lists = new _10_02_Ten_Two().groupAnagrams(new String[]{"eat", "tea", "tan", "ate", "nat", "bat"});
         for (List<String> list : lists) {
-            System.out.println(FormatPrintUtils.formatList(list));
+            System.out.println(FormatUtils.formatList(list));
         }
     }
 

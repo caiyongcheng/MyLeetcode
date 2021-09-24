@@ -26,6 +26,8 @@
 
 package letcode.normal.medium;
 
+import letcode.utils.Node;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,22 +45,12 @@ import java.util.Map;
  * @author CaiYongcheng
  * @date 2021-07-22 11:13
  **/
-class Node {
-    int val;
-    Node next;
-    Node random;
 
-    public Node(int val) {
-        this.val = val;
-        this.next = null;
-        this.random = null;
-    }
-}
 public class _138OneHundredThirtyEight {
 
 
     public Node copyRandomList(Node head) {
-        /**
+        /*
          * 重要的是保存随机指针的指向
          * 采用map + 数组的方式处理
          */

@@ -26,55 +26,23 @@
 
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
-
 /**
- * 集合 s 包含从 1 到 n 的整数。不幸的是，因为数据错误，导致集合里面某一个数字复制了成了集合里面的另外一个数字的值，导致集合 丢失了一个数字 并且 有一个数字重复 。
- * 给定一个数组 nums 代表了集合 S 发生错误后的结果。  请你找出重复出现的整数，再找到丢失的整数，将它们以数组的形式返回。
- * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/set-mismatch 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ * 你和你的朋友，两个人一起玩Nim 游戏：  桌子上有一堆石头。 你们轮流进行自己的回合，你作为先手。
+ * 每一回合，轮到的人拿掉1 - 3 块石头。 拿掉最后一块石头的人就是获胜者。
+ * 假设你们每一步都是最优解。请编写一个函数，来判断你是否可以在给定石头数量为 n 的情况下赢得游戏。如果可以赢，返回 true；否则，返回 false 。
+ * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/nim-game 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @date 2021-07-30 16:11
+ * @date 2021-09-18 09:10
  **/
-public class _645SixHundredFortyFive {
+public class _292TwoHundredNinetyTwo {
 
-    public int[] findErrorNums(int[] nums) {
-        int[] countSort = new int[10001];
-        int[] ans = new int[2];
-        int max = 0;
-        for (int num : nums) {
-            countSort[num]++;
-            max = Math.max(max, num);
-        }
-        ++max;
-        for (int i = 0; i < max; i++) {
-            if (countSort[i] == 2) {
-                ans[0] = i;
-            }
-            if (countSort[i] == 0) {
-                ans[1] = i;
-            }
-        }
-        if (ans[1] == 0) {
-            ans[1] = max;
-        }
-        return ans;
-    }
-
-
-    /**
-     * 示例 1：
-     *
-     * 输入：nums = [1,2,2,4]
-     * 输出：[2,3]
-     *
-     * 示例 2：
-     * 输入：nums = [1,1]
-     * 输出：[1,2]
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _645SixHundredFortyFive().findErrorNums(new int[]{1, 1})));
+    public boolean canWinNim(int n) {
+        /*
+        两个连续拿 后手的人可以保证 一回合内 两个人拿的石子总数 = 每次拿的最少的 + 每次拿的最多的 = 1 + 3 = 4
+        所以一开始先拿走 n%4块石头，剩下的每次凑成4个即可 如果n%4==0 则另一边赢
+         */
+        return n % 4 != 0;
     }
 
 }

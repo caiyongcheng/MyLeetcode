@@ -38,7 +38,9 @@ import java.util.regex.Pattern;
  * @author : CaiYongcheng
  * @date : 2020-07-15 11:09
  **/
-public class FormatPrintUtils {
+public class FormatUtils {
+
+    private static final String NULL_STRING = "!null object!";
 
     private static Integer[] string2Int(String[] strArr) {
         ArrayList<Integer> list = new ArrayList<>();
@@ -71,9 +73,9 @@ public class FormatPrintUtils {
     public static<T> String formatList(List<T> list, String prefix, String suffix, String separator) {
         final StringBuilder formatStr = new StringBuilder(prefix);
         for (int i = 0; i < list.size()-1; i++) {
-            formatStr.append(list.get(i).toString()).append(separator);
+            formatStr.append(list.get(i) == null ? NULL_STRING : list.get(i).toString()).append(separator);
         }
-        formatStr.append(list.get(list.size()-1).toString());
+        formatStr.append(list.get(list.size() - 1) == null ? NULL_STRING : list.get(list.size() - 1).toString());
         return formatStr.append(suffix).toString();
     }
 
@@ -100,9 +102,9 @@ public class FormatPrintUtils {
     public static<T> String formatArray(T[] array, String prefix, String suffix, String separator) {
         final StringBuilder formatStr = new StringBuilder(prefix);
         for (int i = 0; i < array.length-1; i++) {
-            formatStr.append(array[i].toString()).append(separator);
+            formatStr.append(array[i] == null ? NULL_STRING : array[i].toString()).append(separator);
         }
-        formatStr.append(array[array.length-1].toString());
+        formatStr.append(array[array.length - 1] == null ? NULL_STRING : array[array.length - 1].toString());
         return formatStr.append(suffix).toString();
     }
 

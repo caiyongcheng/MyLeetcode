@@ -26,7 +26,7 @@
 
 package letcode.normal.easy;
 
-import letcode.utils.Node;
+import letcode.utils.extraordinary.Node;
 
 import java.util.Stack;
 

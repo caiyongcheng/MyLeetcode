@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 import java.util.Stack;
 
@@ -81,8 +81,8 @@ public class _1673OneThousandSixHundredSeventyThree {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _1673OneThousandSixHundredSeventyThree().mostCompetitive(
-                new int[]{2,4,3,3,5,4,9,6},
+        System.out.println(FormatUtils.formatArray(new _1673OneThousandSixHundredSeventyThree().mostCompetitive(
+                new int[]{2, 4, 3, 3, 5, 4, 9, 6},
                 4
         )));
     }

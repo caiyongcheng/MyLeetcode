@@ -26,11 +26,9 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 /**
  * 这里有n个航班，它们分别从 1 到 n 进行编号。  
@@ -134,9 +132,9 @@ public class _1109OneThousandOneHundredNine {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(
+        System.out.println(FormatUtils.formatArray(
                 new _1109OneThousandOneHundredNine().corpFlightBookings2(
-                        new int[][]{{1,2,10},{2,3,20},{2,5,25}},
+                        new int[][]{{1, 2, 10}, {2, 3, 20}, {2, 5, 25}},
                         5
                 )
         ));

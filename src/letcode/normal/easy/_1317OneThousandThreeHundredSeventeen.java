@@ -26,7 +26,7 @@
 
 package letcode.normal.easy;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 /**
  * @program: MyLeetcode
@@ -95,7 +95,7 @@ public class _1317OneThousandThreeHundredSeventeen {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _1317OneThousandThreeHundredSeventeen().getNoZeroIntegers(1501)));
+        System.out.println(FormatUtils.formatArray(new _1317OneThousandThreeHundredSeventeen().getNoZeroIntegers(1501)));
     }
 
 }

@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 import java.util.Stack;
 
@@ -75,7 +75,7 @@ public class _739SevenHundredThirtyNine {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _739SevenHundredThirtyNine().dailyTemperatures(new int[]{73, 74, 75, 71, 69, 72, 76, 73})));
+        System.out.println(FormatUtils.formatArray(new _739SevenHundredThirtyNine().dailyTemperatures(new int[]{73, 74, 75, 71, 69, 72, 76, 73})));
     }
 
 }

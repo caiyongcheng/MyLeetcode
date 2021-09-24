@@ -26,7 +26,7 @@
 
 package letcode.interview.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 import java.util.HashSet;
 
@@ -77,7 +77,7 @@ public class _8_8_eight_eight {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _8_8_eight_eight().permutation(
+        System.out.println(FormatUtils.formatArray(new _8_8_eight_eight().permutation(
                 "ab"
         )));
     }

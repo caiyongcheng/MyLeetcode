@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,7 +121,7 @@ public class _658SixHundredFiftyEight {
                 1,
                 2
         );
-        System.out.println(FormatPrintUtils.formatList(closestElements));
+        System.out.println(FormatUtils.formatList(closestElements));
     }
 
 }

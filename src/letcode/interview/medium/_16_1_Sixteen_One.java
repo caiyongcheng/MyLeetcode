@@ -26,7 +26,7 @@
 
 package letcode.interview.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 /**
  * @program: MyLeetCode
@@ -51,7 +51,7 @@ public class _16_1_Sixteen_One {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _16_1_Sixteen_One().swapNumbers(new int[]{1,2})));
+        System.out.println(FormatUtils.formatArray(new _16_1_Sixteen_One().swapNumbers(new int[]{1, 2})));
     }
 
 }

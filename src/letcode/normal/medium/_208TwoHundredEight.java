@@ -46,41 +46,41 @@ package letcode.normal.medium;
 public class _208TwoHundredEight {
 
 
-    class Node {
+    class CharNode {
         char ch;
-        Node[] nexts = new Node[27];
+        CharNode[] nexts = new CharNode[27];
 
-        public Node(char ch) {
+        public CharNode(char ch) {
             this.ch = ch;
         }
     }
 
 
-    private Node root;
+    private final CharNode root;
 
 
     /** Initialize your data structure here. */
     public _208TwoHundredEight() {
-        root = new Node('-');
+        root = new CharNode('-');
     }
 
     /** Inserts a word into the trie. */
     public void insert(String word) {
         char[] chars = word.toCharArray();
-        Node current = root;
+        CharNode current = root;
         for (char aChar : chars) {
             if (current.nexts[aChar - 'a'] == null) {
-                current.nexts[aChar - 'a'] = new Node(aChar);
+                current.nexts[aChar - 'a'] = new CharNode(aChar);
             }
             current = current.nexts[aChar - 'a'];
         }
-        current.nexts[26] = new Node('/');
+        current.nexts[26] = new CharNode('/');
     }
 
     /** Returns if the word is in the trie. */
     public boolean search(String word) {
         char[] chars = word.toCharArray();
-        Node current = root;
+        CharNode current = root;
         for (char aChar : chars) {
             if (current.nexts[aChar - 'a'] == null) {
                 return false;
@@ -93,7 +93,7 @@ public class _208TwoHundredEight {
     /** Returns if there is any word in the trie that starts with the given prefix. */
     public boolean startsWith(String prefix) {
         char[] chars = prefix.toCharArray();
-        Node current = root;
+        CharNode current = root;
         for (char aChar : chars) {
             if (current.nexts[aChar - 'a'] == null) {
                 return false;

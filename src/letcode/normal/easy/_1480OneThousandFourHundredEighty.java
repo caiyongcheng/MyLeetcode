@@ -26,7 +26,7 @@
 
 package letcode.normal.easy;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 /**
  * 给你一个数组 nums 。数组「动态和」的计算公式为：runningSum[i] = sum(nums[0]…nums[i]) 。 
@@ -71,8 +71,8 @@ public class _1480OneThousandFourHundredEighty {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _1480OneThousandFourHundredEighty().runningSum(
-           new int[]{3,1,2,10,1}
+        System.out.println(FormatUtils.formatArray(new _1480OneThousandFourHundredEighty().runningSum(
+                new int[]{3, 1, 2, 10, 1}
         )));
     }
 

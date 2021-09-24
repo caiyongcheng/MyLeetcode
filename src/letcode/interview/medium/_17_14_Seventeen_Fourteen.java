@@ -26,7 +26,7 @@
 
 package letcode.interview.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 import java.util.Arrays;
 
@@ -82,8 +82,8 @@ public class _17_14_Seventeen_Fourteen {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _17_14_Seventeen_Fourteen().smallestK(
-                new int[]{1,3,5,7,2,4,6,8,0,-1},
+        System.out.println(FormatUtils.formatArray(new _17_14_Seventeen_Fourteen().smallestK(
+                new int[]{1, 3, 5, 7, 2, 4, 6, 8, 0, -1},
                 4
         )));
     }

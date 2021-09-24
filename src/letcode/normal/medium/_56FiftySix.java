@@ -28,57 +28,61 @@ package letcode.normal.medium;
 
 import letcode.utils.FormatUtils;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedList;
 
 /**
- * 给一非空的单词列表，返回前 k 个出现次数最多的单词。  返回的答案应该按单词出现频率由高到低排序。如果不同的单词有相同出现频率，按字母顺序排序。
+ * 以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。请你合并所有重叠的区间，
+ * 并返回一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间。
+ * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/merge-intervals 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @date 2021-05-20 17:30
+ * @date 2021-09-17 14:11
  **/
-public class _692SixHundredNinetyTwo {
+public class _56FiftySix {
 
-    public List<String> topKFrequent(String[] words, int k) {
-        HashMap<String, Integer> hashMap = new HashMap<>(words.length);
-        for (String word : words) {
-            hashMap.put(word, hashMap.getOrDefault(word, 0) + 1);
+    public int[][] merge(int[][] intervals) {
+        //按起始点，终点排序即可,一次合并即可
+        Arrays.sort(intervals, Comparator.comparingInt(arr -> arr[0]));
+        LinkedList<int[]> list = new LinkedList<>();
+        int[] lastInterval;
+        list.add(intervals[0]);
+        for (int index = 1; index < intervals.length; index++) {
+            lastInterval = list.getLast();
+            if (lastInterval[1] >= intervals[index][0]) {
+                lastInterval[1] = Math.max(lastInterval[1], intervals[index][1]);
+            } else {
+                list.add(intervals[index]);
+            }
         }
-        ArrayList<Map.Entry<String, Integer>> list = new ArrayList<>(hashMap.entrySet());
-        return list.stream().sorted(
-                (o1, o2) ->
-                        o1.getValue() > o2.getValue()
-                                ? -1 : o1.getValue() < o2.getValue()
-                                ? 1 : o1.getKey().compareTo(o2.getKey())
-        ).limit(k).map(Map.Entry::getKey).collect(Collectors.toList());
+        return list.toArray(new int[0][0]);
     }
 
     /**
      * 示例 1：
-     * 输入: {"i", "love", "leetcode", "i", "love", "coding"}, k = 2
-     * 输出: {"i", "love"}
-     * 解析: "i" 和 "love" 为出现次数最多的两个单词，均为2次。
-     *     注意，按字母顺序 "i" 在 "love" 之前。
-     * 
-     *
-     * 示例 2：
-     * 输入: {"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"}, k = 4
-     * 输出: {"the", "is", "sunny", "day"}
-     * 解析: "the", "is", "sunny" 和 "day" 是出现次数最多的四个单词，
-     *     出现次数依次为 4, 3, 2 和 1 次。
-     *
+     * 输入：intervals = {{1,3},{2,6},{8,10},{15,18}}
+     * 输出：{{1,6},{8,10},{15,18}}
+     * 解释：区间 {1,3} 和 {2,6} 重叠, 将它们合并为 {1,6}.
+     * <p>
+     * 示例2：
+     * 输入：intervals = {{1,4},{4,5}}
+     * 输出：{{1,5}}
+     * 解释：区间 {1,4} 和 {4,5} 可被视为重叠区间。
+     * <p>
      * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/top-k-frequent-words
+     * 链接：https://leetcode-cn.com/problems/merge-intervals
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatList(new _692SixHundredNinetyTwo().topKFrequent(
-                new String[]{"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"},
-                4
-        )));
+        int[][] merge = new _56FiftySix().merge(
+                new int[][]{{1, 4}, {4, 5}}
+        );
+        for (int[] ints : merge) {
+            System.out.println(FormatUtils.formatArray(ints));
+        }
     }
-
-
 
 }

@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatPrintUtils;
+import letcode.utils.FormatUtils;
 
 import java.util.Arrays;
 
@@ -129,7 +129,7 @@ public class _347ThreeHundredFortySeven {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _347ThreeHundredFortySeven().topKFrequent(
+        System.out.println(FormatUtils.formatArray(new _347ThreeHundredFortySeven().topKFrequent(
                 new int[]{1},
                 1
         )));

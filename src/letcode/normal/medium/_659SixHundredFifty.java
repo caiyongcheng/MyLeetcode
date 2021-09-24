@@ -26,59 +26,78 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
-
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
 
 /**
- * 给一非空的单词列表，返回前 k 个出现次数最多的单词。  返回的答案应该按单词出现频率由高到低排序。如果不同的单词有相同出现频率，按字母顺序排序。
+ * 最初记事本上只有一个字符 'A' 。你每次可以对这个记事本进行两种操作：
+ * Copy All（复制全部）：复制这个记事本中的所有字符（不允许仅复制部分字符）。
+ * Paste（粘贴）：粘贴 上一次 复制的字符。 给你一个数字n ，你需要使用最少的操作次数，在记事本上输出 恰好n个 'A'
+ * 。返回能够打印出n个 'A' 的最少操作次数。
+ * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/2-keys-keyboard 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @date 2021-05-20 17:30
+ * @date 2021-09-19 00:15
  **/
-public class _692SixHundredNinetyTwo {
+public class _659SixHundredFifty {
 
-    public List<String> topKFrequent(String[] words, int k) {
-        HashMap<String, Integer> hashMap = new HashMap<>(words.length);
-        for (String word : words) {
-            hashMap.put(word, hashMap.getOrDefault(word, 0) + 1);
+    public int minSteps(int n) {
+        /*
+         * 很容易往 分治去想，也就是每次都*2
+         * 但是题目要求  Copy All（复制全部）：复制这个记事本中的所有字符（不允许仅复制部分字符）。
+         * 所以这种做法不符合要求
+         * n个字符，假设最后由s个字符复制p次组成，那么 n = （s）p, 而s由可以由别的字符复制p1次而成
+         * 依次类推。等价于将n分解质因数。
+         * 用欧拉筛求出1-1000的质数
+         */
+        int ans = 0;
+        int[] primes = new int[1001];
+        Arrays.fill(primes, 1);
+        for (int index = 2; index < primes.length; index++) {
+            if (primes[index] == 0) {
+                continue;
+            }
+            for (int multiple = 2; index * multiple <= 1000; ++multiple) {
+                primes[multiple * index] = 0;
+            }
         }
-        ArrayList<Map.Entry<String, Integer>> list = new ArrayList<>(hashMap.entrySet());
-        return list.stream().sorted(
-                (o1, o2) ->
-                        o1.getValue() > o2.getValue()
-                                ? -1 : o1.getValue() < o2.getValue()
-                                ? 1 : o1.getKey().compareTo(o2.getKey())
-        ).limit(k).map(Map.Entry::getKey).collect(Collectors.toList());
+        for (int index = 2; index < primes.length; index++) {
+            if (primes[index] != 0) {
+                while (n % index == 0) {
+                    ans += index;
+                    n /= index;
+                }
+                if (n == 1) {
+                    break;
+                }
+            }
+        }
+        return ans;
     }
 
     /**
      * 示例 1：
-     * 输入: {"i", "love", "leetcode", "i", "love", "coding"}, k = 2
-     * 输出: {"i", "love"}
-     * 解析: "i" 和 "love" 为出现次数最多的两个单词，均为2次。
-     *     注意，按字母顺序 "i" 在 "love" 之前。
-     * 
-     *
+     * 输入：3
+     * 输出：3
+     * 解释：
+     * 最初, 只有一个字符 'A'。
+     * 第 1 步, 使用 Copy All 操作。
+     * 第 2 步, 使用 Paste 操作来获得 'AA'。
+     * 第 3 步, 使用 Paste 操作来获得 'AAA'。
+     * <p>
      * 示例 2：
-     * 输入: {"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"}, k = 4
-     * 输出: {"the", "is", "sunny", "day"}
-     * 解析: "the", "is", "sunny" 和 "day" 是出现次数最多的四个单词，
-     *     出现次数依次为 4, 3, 2 和 1 次。
-     *
+     * 输入：n = 1
+     * 输出：0
+     * <p>
      * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/top-k-frequent-words
+     * 链接：https://leetcode-cn.com/problems/2-keys-keyboard
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatList(new _692SixHundredNinetyTwo().topKFrequent(
-                new String[]{"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"},
-                4
-        )));
+        System.out.println(new _659SixHundredFifty().minSteps(
+                333
+        ));
     }
-
-
 
 }
