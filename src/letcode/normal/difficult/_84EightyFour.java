@@ -24,7 +24,7 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package letcode.difficult;
+package letcode.normal.difficult;
 
 /**
  * Leetcode
@@ -45,7 +45,6 @@ public class _84EightyFour {
     public static void main(String[] args) {
         _84EightyFour eightyFour = new _84EightyFour();
         System.out.println(eightyFour.largestRectangleArea(new int[]{2, 1, 5, 6, 2, 3}));
-
     }
 
     public int dp(int[] heights) {

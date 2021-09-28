@@ -41,7 +41,7 @@ import java.util.Arrays;
 public class _1846OneThousandEightHundredFortySix {
 
     public int maximumElementAfterDecrementingAndRearranging(int[] arr) {
-        /**
+        /*
          * 按照题目要求 arr 尽可能大 且可以任意重排序 也就意味着
          * 按升序排列的情况下，改数列是非递减数列。那么最大值=Math.min(数列长度，数列最小值)
          * 可以用计数排序
