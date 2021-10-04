@@ -55,7 +55,7 @@ public class _794SevenHundredNinetyFour {
      * 解释: 玩家应该是轮流放置的。
      * <p>
      * 示例 3:
-     * 输入: board = ["XXX", "   ", "OOO"]
+     * 输入: board = ["X XX", "   ", "O OO"]
      * 输出: false
      * <p>
      * 示例 4:
