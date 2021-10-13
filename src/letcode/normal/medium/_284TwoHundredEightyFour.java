@@ -26,68 +26,61 @@
 
 package letcode.normal.medium;
 
-/**
- * Leetcode
- * 给定两个整数，被除数dividend和除数divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
- * 返回被除数dividend除以除数divisor得到的商。
- * 整数除法的结果应当截去（truncate）其小数部分，例如：truncate(8.345) = 8 以及 truncate(-2.7335) = -2
- * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/divide-two-integers 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- *
- * @author : CaiYongcheng
- * @date : 2020-06-30 21:02
- **/
-public class _29TwentyNine {
+import java.util.Iterator;
 
-    /**
-     * 示例1:
-     * 输入: dividend = 10, divisor = 3
-     * 输出: 3
-     * 解释: 10/3 = truncate(3.33333..) = truncate(3) = 3
-     * <p>
-     * 示例2:
-     * 输入: dividend = 7, divisor = -3
-     * 输出: -2
-     * 解释: 7/-3 = truncate(-2.33333..) = -2
-     *
-     * @param dividend
-     * @param divisor
-     * @return
-     */
-    public static int divide(int dividend, int divisor) {
-        boolean sign = (dividend < 0 && divisor < 0) || (dividend > 0 && divisor > 0);
-        long dividendl = dividend;
-        long divisorl = divisor;
-        dividendl = Math.abs(dividendl);
-        divisorl = Math.abs(divisorl);
-        if (divisorl > dividendl) {
-            return 0;
-        }
-        if (divisorl == dividendl) {
-            return sign ? 1 : -1;
-        }
-        long doubleDivisor = divisorl;
-        long exp = 1;
-        long div = 0;
-        while (true) {
-            if (doubleDivisor <= dividendl) {
-                dividendl -= doubleDivisor;
-                div += exp;
-                doubleDivisor = doubleDivisor << 1;
-                exp = exp << 1;
-            } else {
-                if (dividendl < divisorl) {
-                    break;
-                }
-                doubleDivisor = doubleDivisor >> 1;
-                exp = exp >> 1;
-            }
-        }
-        return (int) (sign ? (div > Integer.MAX_VALUE ? Integer.MAX_VALUE : div)
-                : (-div < Integer.MIN_VALUE ? Integer.MAX_VALUE : -div));
+/**
+ * 请你设计一个迭代器，除了支持 hasNext 和 next 操作外，还支持 peek 操作。
+ * 实现 PeekingIterator 类：
+ * PeekingIterator(int[] nums) 使用指定整数数组 nums 初始化迭代器。
+ * int next() 返回数组中的下一个元素，并将指针移动到下个元素处。
+ * bool hasNext() 如果数组中存在下一个元素，返回 true ；否则，返回 false 。
+ * int peek() 返回数组中的下一个元素，但 不 移动指针。
+ * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/peeking-iterator 著作权归领扣网络所有。
+ * 商业转载请联系官方授权，非商业转载请注明出处。
+ *
+ * @author CaiYongcheng
+ * @date 2021-10-05 23:35
+ **/
+public class _284TwoHundredEightyFour implements Iterator<Integer> {
+
+    class _284Node {
+        int val;
+        _284Node next;
     }
 
-    public static void main(String[] args) {
-        System.out.println(divide(-2147483648, -1));
+    private _284Node root;
+
+    public _284TwoHundredEightyFour(Iterator<Integer> iterator) {
+        // initialize any member here.
+        if (iterator.hasNext()) {
+            root = new _284Node();
+            root.val = iterator.next();
+            _284Node now = root;
+            while (iterator.hasNext()) {
+                now.next = new _284Node();
+                now.next.val = iterator.next();
+                now = now.next;
+            }
+        }
+    }
+
+    // Returns the next element in the iteration without advancing the iterator.
+    public Integer peek() {
+        return root == null ? null : root.val;
+    }
+
+    // hasNext() and next() should behave the same as in the Iterator interface.
+    // Override them if needed.
+    @Override
+    public Integer next() {
+        int val = root.val;
+        root = root.next;
+        return val;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return root != null;
     }
 
 }

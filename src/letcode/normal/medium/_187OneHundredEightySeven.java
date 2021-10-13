@@ -26,68 +26,62 @@
 
 package letcode.normal.medium;
 
-/**
- * Leetcode
- * 给定两个整数，被除数dividend和除数divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
- * 返回被除数dividend除以除数divisor得到的商。
- * 整数除法的结果应当截去（truncate）其小数部分，例如：truncate(8.345) = 8 以及 truncate(-2.7335) = -2
- * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/divide-two-integers 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- *
- * @author : CaiYongcheng
- * @date : 2020-06-30 21:02
- **/
-public class _29TwentyNine {
+import java.util.*;
 
-    /**
-     * 示例1:
-     * 输入: dividend = 10, divisor = 3
-     * 输出: 3
-     * 解释: 10/3 = truncate(3.33333..) = truncate(3) = 3
-     * <p>
-     * 示例2:
-     * 输入: dividend = 7, divisor = -3
-     * 输出: -2
-     * 解释: 7/-3 = truncate(-2.33333..) = -2
-     *
-     * @param dividend
-     * @param divisor
-     * @return
-     */
-    public static int divide(int dividend, int divisor) {
-        boolean sign = (dividend < 0 && divisor < 0) || (dividend > 0 && divisor > 0);
-        long dividendl = dividend;
-        long divisorl = divisor;
-        dividendl = Math.abs(dividendl);
-        divisorl = Math.abs(divisorl);
-        if (divisorl > dividendl) {
-            return 0;
+/**
+ * 所有 DNA 都由一系列缩写为 'A'，'C'，'G' 和 'T' 的核苷酸组成，例如："ACGAATTCCG"。在研究 DNA 时，识别 DNA 中的重复序列有时会对研究非常有帮助。
+ * 编写一个函数来找出所有目标子串，目标子串的长度为 10，且在 DNA 字符串 s 中出现次数超过一次。
+ * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/repeated-dna-sequences 著作权归领扣网络所有。
+ * 商业转载请联系官方授权，非商业转载请注明出处。
+ *
+ * @author CaiYongcheng
+ * @date 2021-10-08 10:30
+ **/
+public class _187OneHundredEightySeven {
+
+    public List<String> findRepeatedDnaSequences(String s) {
+        if (s.length() < 10) {
+            return new ArrayList<>();
         }
-        if (divisorl == dividendl) {
-            return sign ? 1 : -1;
-        }
-        long doubleDivisor = divisorl;
-        long exp = 1;
-        long div = 0;
-        while (true) {
-            if (doubleDivisor <= dividendl) {
-                dividendl -= doubleDivisor;
-                div += exp;
-                doubleDivisor = doubleDivisor << 1;
-                exp = exp << 1;
-            } else {
-                if (dividendl < divisorl) {
-                    break;
-                }
-                doubleDivisor = doubleDivisor >> 1;
-                exp = exp >> 1;
+        char[] chars = new char[10];
+        char[] strArr = s.toCharArray();
+        LinkedList<String> ans = new LinkedList<>();
+        HashMap<String, Integer> hashMap = new HashMap<>();
+        String nowStr;
+        int count;
+        for (int index = 0; index + 9 < strArr.length; index++) {
+            System.arraycopy(strArr, index, chars, 0, 10);
+            nowStr = new String(chars);
+            count = hashMap.getOrDefault(nowStr, 0);
+            if (count == 1) {
+                ans.add(nowStr);
             }
+            hashMap.put(nowStr, count + 1);
         }
-        return (int) (sign ? (div > Integer.MAX_VALUE ? Integer.MAX_VALUE : div)
-                : (-div < Integer.MIN_VALUE ? Integer.MAX_VALUE : -div));
+        return ans;
     }
 
+
+    /**
+     * 示例 1：
+     * <p>
+     * 输入：s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
+     * 输出：["AAAAACCCCC","CCCCCAAAAA"]
+     * 示例 2：
+     * <p>
+     * 输入：s = "AAAAAAAAAAAAA"
+     * 输出：["AAAAAAAAAA"]
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/repeated-dna-sequences
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param args
+     */
     public static void main(String[] args) {
-        System.out.println(divide(-2147483648, -1));
+        System.out.println(new _187OneHundredEightySeven().findRepeatedDnaSequences(
+                "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
+        ));
     }
 
 }
