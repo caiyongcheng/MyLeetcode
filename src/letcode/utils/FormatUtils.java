@@ -71,8 +71,11 @@ public class FormatUtils {
      * @return prefix list.get(0).toString() separator list.get(1).toString() suffix
      */
     public static<T> String formatList(List<T> list, String prefix, String suffix, String separator) {
+        if (list == null || list.isEmpty()) {
+            return new StringBuilder(prefix).append(suffix).toString();
+        }
         final StringBuilder formatStr = new StringBuilder(prefix);
-        for (int i = 0; i < list.size()-1; i++) {
+        for (int i = 0; i < list.size() - 1; i++) {
             formatStr.append(list.get(i) == null ? NULL_STRING : list.get(i).toString()).append(separator);
         }
         formatStr.append(list.get(list.size() - 1) == null ? NULL_STRING : list.get(list.size() - 1).toString());
@@ -100,8 +103,11 @@ public class FormatUtils {
      * @return prefix array[0].toString() separator array[1].toString() suffix
      */
     public static<T> String formatArray(T[] array, String prefix, String suffix, String separator) {
+        if (array == null || array.length == 0) {
+            return new StringBuilder(prefix).append(suffix).toString();
+        }
         final StringBuilder formatStr = new StringBuilder(prefix);
-        for (int i = 0; i < array.length-1; i++) {
+        for (int i = 0; i < array.length - 1; i++) {
             formatStr.append(array[i] == null ? NULL_STRING : array[i].toString()).append(separator);
         }
         formatStr.append(array[array.length - 1] == null ? NULL_STRING : array[array.length - 1].toString());
