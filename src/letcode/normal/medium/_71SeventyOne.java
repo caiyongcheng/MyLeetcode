@@ -27,6 +27,8 @@
 package letcode.normal.medium;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * @program: Leetcode
@@ -43,37 +45,77 @@ import java.util.ArrayList;
  */
 public class _71SeventyOne {
 
-
-    public static void main(String[] args) {
-        ArrayList<Integer> integers = new ArrayList<>();
-        ArrayList<String> strings = new ArrayList<>();
-        integers.add(1);
-        strings.add("1");
-        System.out.println(integers.get(0).getClass());
-        System.out.println(strings.get(0).getClass());
+    public String simplifyPath(String path) {
+        /*
+         * 分割路径 遇到.就省略,遇到..就删除上一个已添加的路径
+         */
+        path = path + "/";
+        List<String> pathList = new ArrayList<>();
+        StringBuilder builder = new StringBuilder();
+        pathList.add("");
+        int length = path.length();
+        char ch;
+        for (int index = 1; index < length; index++) {
+            ch = path.charAt(index);
+            if (ch == '/') {
+                if (path.charAt(index - 1) != '/') {
+                    if ("..".equals(builder.toString())) {
+                        if (pathList.size() != 1) {
+                            pathList.remove(pathList.size() - 1);
+                        }
+                    } else if (!".".equals(builder.toString())) {
+                        pathList.add(builder.toString());
+                    }
+                    builder = new StringBuilder();
+                }
+            } else {
+                builder.append(ch);
+            }
+        }
+        if (path.charAt(length - 1) != '/') {
+            pathList.add(builder.toString());
+        }
+        builder = new StringBuilder();
+        for (String pathItem : pathList) {
+            builder.append(pathItem).append("/");
+        }
+        if (builder.length() > 1) {
+            builder.deleteCharAt(builder.length() - 1);
+        }
+        return builder.toString();
     }
+
 
     /**
-     * 格式化路径
+     * 示例 1：
+     * <p>
+     * 输入：path = "/home/"
+     * 输出："/home"
+     * 解释：注意，最后一个目录名后面没有斜杠。
+     * 示例 2：
+     * <p>
+     * 输入：path = "/../"
+     * 输出："/"
+     * 解释：从根目录向上一级是不可行的，因为根目录是你可以到达的最高级。
+     * 示例 3：
+     * <p>
+     * 输入：path = "/home//foo/"
+     * 输出："/home/foo"
+     * 解释：在规范路径中，多个连续斜杠需要用一个斜杠替换。
+     * 示例 4：
+     * <p>
+     * 输入：path = "/a/./b/../../c/"
+     * 输出："/c"
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/simplify-path
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      *
-     * @param path
-     * @return
+     * @param args
      */
-    private String caculatePath(String path) {
-        //替换 ////// 和 .........
-        path = path.replaceAll("/{2,}", "/").replaceAll(".{2,}", "..");
-
-        // 除去收尾/ 再使用正则表达式分割
-        int length = path.length();
-        if (path.charAt(0) == '/') {
-            path = path.substring(1);
-        }
-        if (path.charAt(length - 1) == '/') {
-            path = path.substring(0, length - 1);
-        }
-        String[] split = path.split("/");
-        return null;
-
+    public static void main(String[] args) {
+        System.out.println(new _71SeventyOne().simplifyPath("/../"));
     }
+
 
 }

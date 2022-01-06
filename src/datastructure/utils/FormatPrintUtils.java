@@ -42,6 +42,8 @@ import java.util.regex.Pattern;
  **/
 public class FormatPrintUtils {
 
+    private static final String EMPTY_ARR_FORMAT = "[]";
+
     private static Integer[] string2Int(String[] strArr) {
         ArrayList<Integer> list = new ArrayList<>();
         for (String str : strArr) {
@@ -71,11 +73,14 @@ public class FormatPrintUtils {
      * @return prefix list.get(0).toString() separator list.get(1).toString() suffix
      */
     public static<T> String formatList(List<T> list, String prefix, String suffix, String separator) {
+        if (list == null || list.isEmpty()) {
+            return EMPTY_ARR_FORMAT;
+        }
         final StringBuilder formatStr = new StringBuilder(prefix);
-        for (int i = 0; i < list.size()-1; i++) {
+        for (int i = 0; i < list.size() - 1; i++) {
             formatStr.append(list.get(i).toString()).append(separator);
         }
-        formatStr.append(list.get(list.size()-1).toString());
+        formatStr.append(list.get(list.size() - 1).toString());
         return formatStr.append(suffix).toString();
     }
 
@@ -127,11 +132,14 @@ public class FormatPrintUtils {
      * @return prefix array[0].toString() separator array[1].toString() suffix
      */
     public static String formatArray(int[] array, String prefix, String suffix, String separator) {
+        if (array == null || array.length == 0) {
+            return EMPTY_ARR_FORMAT;
+        }
         final StringBuilder formatStr = new StringBuilder(prefix);
-        for (int i = 0; i < array.length-1; i++) {
+        for (int i = 0; i < array.length - 1; i++) {
             formatStr.append(array[i]).append(separator);
         }
-        formatStr.append(array[array.length-1]);
+        formatStr.append(array[array.length - 1]);
         return formatStr.append(suffix).toString();
     }
 
