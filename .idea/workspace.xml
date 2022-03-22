@@ -8,12 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98300b4b-6074-476e-bee3-f601b66d2c5c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/letcode/normal/difficult/_798SevenHundredNinetyEight.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/letcode/normal/easy/_504FiveHundredFour.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/letcode/normal/easy/_521FiveHundredTwentyOne.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/letcode/normal/easy/_720SevenHundredTwenty.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/letcode/normal/medium/N_2104TwoThousandOneHundredFour.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/letcode/normal/medium/_2100TwoThousandOneHundred.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/letcode/normal/medium/_2038TwoThousandThirtyEight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +144,7 @@
       <recent name="letcode.normal.medium" />
     </key>
   </component>
-  <component name="RunManager" selected="Application._798SevenHundredNinetyEight">
+  <component name="RunManager" selected="Application._2038TwoThousandThirtyEight">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -160,8 +156,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="_2100TwoThousandOneHundred" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="letcode.normal.medium._2100TwoThousandOneHundred" />
+    <configuration name="_2038TwoThousandThirtyEight" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="letcode.normal.medium._2038TwoThousandThirtyEight" />
       <module name="MyLeetcode" />
       <extension name="coverage">
         <pattern>
@@ -173,12 +169,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="_432FourHundredThirtyTwo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="letcode.normal.difficult._432FourHundredThirtyTwo" />
+    <configuration name="_2100TwoThousandOneHundred" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="letcode.normal.medium._2100TwoThousandOneHundred" />
       <module name="MyLeetcode" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="letcode.normal.difficult.*" />
+          <option name="PATTERN" value="letcode.normal.medium.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -227,11 +223,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application._2038TwoThousandThirtyEight" />
         <item itemvalue="Application._798SevenHundredNinetyEight" />
         <item itemvalue="Application._504FiveHundredFour" />
         <item itemvalue="Application._2100TwoThousandOneHundred" />
         <item itemvalue="Application._720SevenHundredTwenty" />
-        <item itemvalue="Application._432FourHundredThirtyTwo" />
       </list>
     </recent_temporary>
   </component>
@@ -584,6 +580,7 @@
       <workItem from="1647306503855" duration="5987000" />
       <workItem from="1647391830979" duration="13064000" />
       <workItem from="1647478606298" duration="17317000" />
+      <workItem from="1647911146081" duration="1105000" />
     </task>
     <task id="LOCAL-00042" summary="leetcode提交">
       <created>1618825661239</created>
