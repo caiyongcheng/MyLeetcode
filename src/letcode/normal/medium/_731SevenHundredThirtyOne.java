@@ -43,11 +43,11 @@ import java.util.List;
  * @author CaiYongcheng
  * @date 2022-07-19 08:51
  **/
-public class _SevenHundredThirtyOne {
+public class _731SevenHundredThirtyOne {
 
     List<int[]> calenderList;
 
-    public _SevenHundredThirtyOne() {
+    public _731SevenHundredThirtyOne() {
         calenderList = new ArrayList<>(1024);
     }
 
@@ -126,7 +126,7 @@ public class _SevenHundredThirtyOne {
      * @param args
      */
     public static void main(String[] args) {
-        _SevenHundredThirtyOne MyCalendar = new _SevenHundredThirtyOne();
+        _731SevenHundredThirtyOne MyCalendar = new _731SevenHundredThirtyOne();
         System.out.println(MyCalendar.book(10, 20));
         System.out.println(MyCalendar.book(50, 60));
         System.out.println(MyCalendar.book(10, 40));

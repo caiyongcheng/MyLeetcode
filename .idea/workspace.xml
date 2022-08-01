@@ -8,7 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98300b4b-6074-476e-bee3-f601b66d2c5c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/letcode/normal/medium/_2038TwoThousandThirtyEight.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,15 +53,37 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/letcode/normal/difficult/_591FiveHundredNinetyOne.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/letcode/normal/easy/_1486OneThousandFourHundredEightySix.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/letcode/normal/difficult/N_1723OneThousandSevenHundredTwentyThree.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/letcode/normal/easy/_1221OneThousandTwoHundredTwentyOne.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/letcode/normal/medium/_1093OneThousandNinetyThree.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://D:/JDK/JDK8/src.zip!/java/util/PriorityQueue.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://D:/JDK/JDK8/src.zip!/java/util/Comparator.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/letcode/normal/easy/_1486OneThousandFourHundredEightySix.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/letcode/utils/extraordinary/Node.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://D:/JDK/OpenJDK11U-jdk_x64/jdk-11.0.11+9/lib/src.zip!/java.base/java/nio/charset/StandardCharsets.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://D:/JDK/OpenJDK11U-jdk_x64/jdk-11.0.11+9/lib/src.zip!/java.base/java/io/FileReader.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://D:/JDK/OpenJDK11U-jdk_x64/jdk-11.0.11+9/lib/src.zip!/java.base/java/util/Spliterator.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/letcode/normal/easy/_704SevenHundredFour.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://D:/JDK/OpenJDK11U-jdk_x64/jdk-11.0.11+9/lib/src.zip!/java.base/java/util/AbstractList.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/letcode/normal/easy/_559FiveHundredFiftyNine.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://D:/JDK/JDK8/src.zip!/java/util/Queue.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/letcode/normal/easy/_1221OneThousandTwoHundredTwentyOne.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://D:/JDK/OpenJDK11U-jdk_x64/jdk-11.0.11+9/lib/src.zip!/java.base/java/util/concurrent/CountedCompleter.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://D:/JDK/OpenJDK11U-jdk_x64/jdk-11.0.11+9/lib/src.zip!/java.base/java/util/Arrays.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://D:/JDK/JDK8/src.zip!/java/lang/AbstractStringBuilder.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-tx/5.3.5/spring-tx-5.3.5.jar!/org/springframework/transaction/TransactionExecution.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://D:/JDK/OpenJDK11U-jdk_x64/jdk-11.0.11+9/lib/src.zip!/java.base/java/lang/StringCoding.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-tx/5.3.5/spring-tx-5.3.5.jar!/org/springframework/transaction/reactive/GenericReactiveTransaction.class" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/letcode/normal/medium/_1093OneThousandNinetyThree.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://D:/JDK/JDK8/src.zip!/java/util/HashMap.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://D:/JDK/JDK8/src.zip!/java/lang/StringBuffer.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://D:/JDK/JDK8/src.zip!/java/util/DualPivotQuicksort.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://D:/JDK/OpenJDK11U-jdk_x64/jdk-11.0.11+9/lib/src.zip!/java.base/java/lang/StringBuilder.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/letcode/normal/difficult/_591FiveHundredNinetyOne.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://D:/JDK/JDK8/src.zip!/java/lang/Math.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://D:/JDK/OpenJDK11U-jdk_x64/jdk-11.0.11+9/lib/src.zip!/java.base/java/io/BufferedReader.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://D:/JDK/OpenJDK11U-jdk_x64/jdk-11.0.11+9/lib/src.zip!/java.base/java/util/ArrayList.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/letcode/normal/medium/_470FourHundredSeventy.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://D:/JDK/OpenJDK11U-jdk_x64/jdk-11.0.11+9/lib/src.zip!/java.base/java/lang/String.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://D:/JDK/OpenJDK11U-jdk_x64/jdk-11.0.11+9/lib/src.zip!/java.base/java/util/HashMap.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="JupyterTrust" id="2fca7d0f-ab09-4651-a2f2-ef730c10f1d3" />
   <component name="MarkdownSettingsMigration">
@@ -106,10 +128,10 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/src/letcode/normal/medium/N_1631OneThousandSixHundredThirtyOne.java" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -954,7 +976,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -983,12 +1004,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="日常提交" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="516" y="389" key="SettingsEditor" timestamp="1657616812744">
-      <screen x="260" y="384" width="1536" height="864" />
-    </state>
-    <state x="516" y="389" key="SettingsEditor/260.384.1536.864@260.384.1536.864" timestamp="1657616812744" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1047,10 +1062,10 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/MyLeetcode$_880EightHundredEighty.ic" NAME="_880EightHundredEighty Coverage Results" MODIFIED="1617076292567" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/MyLeetcode$_49FourtyNine.ic" NAME="_49FourtyNine Coverage Results" MODIFIED="1617086479837" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>letcode.normal.medium.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/MyLeetcode$_49FourtyNine.ic" NAME="_49FourtyNine Coverage Results" MODIFIED="1617086479837" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/MyLeetcode$_880EightHundredEighty.ic" NAME="_880EightHundredEighty Coverage Results" MODIFIED="1617076292567" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>letcode.normal.medium.*</FILTER>
     </SUITE>
   </component>
