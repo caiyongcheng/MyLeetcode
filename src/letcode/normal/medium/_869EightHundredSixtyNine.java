@@ -26,14 +26,9 @@
 
 package letcode.normal.medium;
 
-import jdk.nashorn.internal.ir.CallNode;
-
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * 给定正整数 N，我们按任何顺序（包括原始顺序）将数字重新排序，注意其前导数字不能为零。
