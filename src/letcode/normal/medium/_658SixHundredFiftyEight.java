@@ -41,85 +41,94 @@ import java.util.List;
  */
 public class _658SixHundredFiftyEight {
 
-
-
-    public List<Integer> copyFromArray(int[] arr, int copyStartIndex, int copyLenth) {
-        int endIndex = copyStartIndex + copyLenth;
-        final ArrayList<Integer> copyList = new ArrayList<>(copyLenth);
-        while (copyStartIndex < endIndex) {
-            copyList.add(arr[copyStartIndex++]);
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        int startIndex = binarySearch(arr, x, k);
+        List<Integer> rst = new ArrayList<>(k);
+        for (int i = 0; i < k; i++) {
+            rst.add(arr[startIndex + i]);
         }
-        return copyList;
+        return rst;
     }
 
 
-    
-    public List<Integer> findClosestElements(int[] arr, int k, int x) {
-        if (arr[0] >= x) {
-            return copyFromArray(arr, 0, k);
+    public int binarySearch(int[] arr, int x, int k) {
+        int left = 0;
+        if (arr[left] >= x) {
+            return 0;
         }
-        if (arr[arr.length-1] <= x) {
-            return copyFromArray(arr, arr.length-k, k);
+        int right = arr.length - 1;
+        if (arr[right] <= x) {
+            return arr.length - k;
         }
-        int lo = 0;
-        int hi = arr.length-1;
-        int mid = 0;
-        while (lo < hi) {
-            mid = (lo + hi) >> 1;
-            if (arr[mid] > x) {
-                hi = mid-1;
-            }else if(arr[mid] < x) {
-                lo = mid+1;
-            }else{
-                hi = mid;
+        int mid;
+        while (true) {
+            mid = (left + right) >> 1;
+            if (mid == left) {
+                mid = Math.abs(arr[right] - x) < Math.abs(arr[left] - x) ? right : left;
                 break;
             }
-        }
-        if (k == 1) {
-            return copyFromArray(arr, Math.abs(arr[hi]-x) >= Math.abs(arr[hi-1]-x)?hi-1:hi,1);
-        }
-        int rlndex = hi+1;
-        int lindex = hi-1;
-        int length = k-1;
-        while (length > 0 && rlndex < arr.length && lindex > -1) {
-            if (Math.abs(arr[rlndex]-x) >= Math.abs(arr[lindex]-x)) {
-                --lindex;
-            }else {
-                ++rlndex;
+            if (arr[mid] == x) {
+                while (mid > -1 && arr[mid] == x) {
+                    --mid;
+                }
+                ++mid;
+                break;
             }
-            --length;
+            if (arr[mid] > x) {
+                right = mid;
+            } else {
+                left = mid;
+            }
         }
-        if (length == 0) {
-            return copyFromArray(arr, lindex+1, k);
-        } else if (rlndex >= arr.length) {
-            return copyFromArray(arr, arr.length-k, k);
-        } else {
-            return copyFromArray(arr, 0, k);
+        left = mid - 1;
+        right = mid + 1;
+        --k;
+        while (k > 0) {
+            if (left < 0) {
+                return 0;
+            }
+            if (right < arr.length && Math.abs(arr[right] - x) < Math.abs(arr[left] - x)) {
+                ++right;
+            } else {
+                --left;
+            }
+            --k;
         }
+        return left + 1;
     }
+
 
     /**
      * 示例 1：
      * 输入：arr = [1,2,3,4,5], k = 4, x = 3
      * 输出：[1,2,3,4]
-     *
+     * <p>
      * 示例 2：
      * 输入：arr = [1,2,3,4,5], k = 4, x = -1
      * 输出：[1,2,3,4]
-     *
+     * <p>
+     * [1,1,1,10,10,10]
+     * 1
+     * 9
+     * <p>
+     * [1,10,15,25,35,45,50,59]
+     * 1
+     * 30
+     * <p>
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/find-k-closest-elements
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param args
      */
     public static void main(String[] args) {
 
         final List<Integer> closestElements = new _658SixHundredFiftyEight().findClosestElements(
                 new int[]{
-                        1,3
+                        1, 10, 15, 25, 35, 45,50,59
                 },
                 1,
-                2
+                30
         );
         System.out.println(FormatUtils.formatList(closestElements));
     }
