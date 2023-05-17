@@ -26,7 +26,6 @@
 
 package letcode.arithmetic;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -38,7 +37,7 @@ import java.util.HashMap;
 public class StringArithmetic {
 
 
-    private static String EMPTY_STRING = "";
+    private static final String EMPTY_STRING = "";
 
     public static int searchCheck(String text, String target) {
         if (null == text || null == target) {
@@ -175,7 +174,7 @@ public class StringArithmetic {
         int indexSunday;
         int indexKmp;
         long startTime;
-        for (int j = 0; j < 300; j++) {
+        for (int j = 0; j < 1000; j++) {
             int length = (int) (Math.random() * 1000000);
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < length; i++) {
@@ -207,9 +206,9 @@ public class StringArithmetic {
                 System.out.println("no:" + j + ":searchBySunday is error");
             }
         }
-        System.out.println(avgJDK/300.0);
-        System.out.println(avgKmp/300.0);
-        System.out.println(avgSunday/300.0);
+        System.out.println(avgJDK / 1000.0);
+        System.out.println(avgKmp / 1000.0);
+        System.out.println(avgSunday / 1000.0);
     }
 
 

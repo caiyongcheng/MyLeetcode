@@ -120,11 +120,11 @@ public class _707SevenHundredSeven {
         Node current = head;
         if (index > len >> 1) {
             int tLen = len;
-            current = tail;
             while (tLen > index) {
                 current = current.pre;
                 --tLen;
             }
+            current = tail;
             return current;
         }
         for (int i = 0; i <= index; i++) {
