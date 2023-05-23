@@ -25,6 +25,9 @@
  */
 
 package datastructure.validate;
+import datastructure.queue.ArrayQueue;
+import datastructure.queue.ImmutableQueue;
+import datastructure.queue.LinkedQueue;
 import datastructure.queue.Queue;
 
 /**
@@ -117,12 +120,12 @@ public class ValidateQueue {
 
 
     public static void main(String[] args) {
-        //ArrayQueue<Integer> integerArrayQueue = new ArrayQueue<>(100);
-        //ImmutableQueue<Integer> objectImmutableQueue = new ImmutableQueue<>(100000000);
-        //LinkedQueue<Integer> integerLinkedQueue = new LinkedQueue<>();
-        //System.out.println(ValidateQueue.testRate(objectImmutableQueue, 10000000));
-        //System.out.println(ValidateQueue.testRate(integerArrayQueue,10000000));
-        //System.out.println(ValidateQueue.testRate(integerLinkedQueue, 10000000));
+        ArrayQueue<Integer> integerArrayQueue = new ArrayQueue<>(100);
+        ImmutableQueue<Integer> objectImmutableQueue = new ImmutableQueue<>(100000000);
+        LinkedQueue<Integer> integerLinkedQueue = new LinkedQueue<>();
+        System.out.println(ValidateQueue.testRate(objectImmutableQueue, 20000000));
+        System.out.println(ValidateQueue.testRate(integerArrayQueue, 20000000));
+        System.out.println(ValidateQueue.testRate(integerLinkedQueue, 20000000));
     }
 
 }
