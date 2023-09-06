@@ -24,77 +24,58 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package normal.difficult;
+package letcode.normal.medium;
 
 /**
- * @program: Leetcode
- * @description: 老师想给孩子们分发糖果，有 N个孩子站成了一条直线，老师会根据每个孩子的表现，
- * 预先给他们评分。你需要按照以下要求，帮助老师给这些孩子分发糖果：  每个孩子至少分配到 1 个糖果。
- * 相邻的孩子中，评分高的孩子必须获得更多的糖果。 那么这样下来，老师至少需要准备多少颗糖果呢？
- * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/candy
- * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- * @author: 蔡永程
- * @create: 2020-12-24 09:36
+ * @author Caiyongcheng
+ * @description 给你一个 n x n 的 方形 整数数组matrix ，请你找出并返回通过 matrix 的下降路径 的 最小和 。
+ * 下降路径 可以从第一行中的任何元素开始，并从每一行中选择一个元素。
+ * 在下一行选择的元素和当前行所选元素最多相隔一列（即位于正下方或者沿对角线向左或者向右的第一个元素）。
+ * 具体来说，位置 (row, col) 的下一个元素应当是 (row + 1, col - 1)、(row + 1, col) 或者 (row + 1, col + 1) 。
+ * 来源：力扣（LeetCode） 链接：https://leetcode.cn/problems/minimum-falling-path-sum 著作权归领扣网络所有。
+ * 商业转载请联系官方授权，非商业转载请注明出处。
+ * @since 2023/7/13 17:02
  */
-public class _135OneHundredThirtyFive {
+public class _931NineHundredThirtyOne {
 
-    public int candy(int[] ratings) {
+    public int minFallingPathSum(int[][] matrix) {
         /*
-        5 4 3 2 1 6 5 4 3 2 8
-        1 2 3 4 5 6 7 5 3 2 1 5 3 1
-        只需要关注 波峰即可
-        如上面的例子 5 6 8 是个波峰
+        经典动态规划
          */
-        int sum = 1;
-        int i = 0;
-        while (true) {
-            int left = i;
-            int top = up(ratings, i);
-            int right = down(ratings, top);
-            int topNum = Math.max(top - left, right - top) + 1;
-            sum = sum + topNum + rangeSum(top - left) + rangeSum(right - top);
-            sum -= 1;
-            while (right < ratings.length - 1 && ratings[right] == ratings[right + 1]) {
-                ++right;
-                sum++;
-            }
-            if (right >= ratings.length - 1) {
-                break;
-            }
-            i = right;
-        }
-        return sum;
-    }
-
-    public int up(int[] ratings, int start) {
-        int i;
-        for (i = start; i < ratings.length - 1; i++) {
-            if (ratings[i + 1] <= ratings[i]) {
-                break;
-            }
-        }
-        return i;
-    }
-
-    public int down(int[] ratings, int start) {
-        int i;
-        for (i = start; i < ratings.length - 1; i++) {
-            if (ratings[i + 1] >= ratings[i]) {
-                break;
-            }
-        }
-        return i;
-    }
-
-    public int rangeSum(int n) {
-        return n * (n + 1) >> 1;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new _135OneHundredThirtyFive().candy(
-                new int[]{
-                        1, 0, 2
+        int min;
+        for (int i = matrix.length - 2; i >= 0; i--) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                min = matrix[i + 1][j];
+                if (j - 1 > -1) {
+                    min = Math.min(min, matrix[i + 1][j - 1]);
                 }
+                if (j + 1 < matrix[i].length) {
+                    min = Math.min(min, matrix[i + 1][j + 1]);
+                }
+                matrix[i][j] += min;
+            }
+        }
+        min = matrix[0][0];
+        for (int i = 0; i < matrix[0].length; i++) {
+            min = Math.min(min, matrix[0][i]);
+        }
+        return min;
+    }
+
+    /**
+     * 输入：matrix = {{2,1,3},{6,5,4},{7,8,9}}
+     * 输出：13
+     * 解释：如图所示，为和最小的两条下降路径
+     * <p>
+     * 输入：matrix = {{-19,57},{-40,-5}}
+     * 输出：-59
+     * 解释：如图所示，为和最小的下降路径
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(new _931NineHundredThirtyOne().minFallingPathSum(
+                new int[][]{{2, 1, 3}, {6, 5, 4}, {7, 8, 9}}
         ));
     }
 

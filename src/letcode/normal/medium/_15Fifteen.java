@@ -73,7 +73,7 @@ public class _15Fifteen {
         }
         for (i = 0; i < n - 1; ++i) {
             for (j = i + 1; j < n; ++j) {
-                key = 0 - nums[i] - nums[j];
+                key = -nums[i] - nums[j];
                 //if(key < 0) break;
                 Integer value = map.get(key);
                 if (value != null && value > j) {
@@ -116,15 +116,23 @@ public class _15Fifteen {
                     arrayList.add(nums[left]);
                     arrayList.add(nums[right]);
                     lists.add(arrayList);
-                    while (left < right && nums[right] == nums[right - 1]) --right;
-                    while (left < right && nums[left] == nums[left + 1]) ++left;
+                    while (left < right && nums[right] == nums[right - 1]) {
+                        --right;
+                    }
+                    while (left < right && nums[left] == nums[left + 1]) {
+                        ++left;
+                    }
                     --right;
                     ++left;
                 } else if (p > 0) {
-                    while (left < right && nums[right] == nums[right - 1]) --right;
+                    while (left < right && nums[right] == nums[right - 1]) {
+                        --right;
+                    }
                     --right;
                 } else {
-                    while (left < right && nums[left] == nums[left + 1]) ++left;
+                    while (left < right && nums[left] == nums[left + 1]) {
+                        ++left;
+                    }
                     ++left;
                 }
             }

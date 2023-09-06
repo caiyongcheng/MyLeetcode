@@ -48,6 +48,12 @@ public class _2Two {
      * 原因：342 + 465 = 807
      */
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        /*
+        0 m             0-m 0-n
+        0 n
+         */
+
+
         ListNode res = new ListNode(0);
         ListNode p = res;
         int i = 0;

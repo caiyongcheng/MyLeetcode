@@ -26,10 +26,13 @@
 
 package letcode.utils;
 
+import datastructure.queue.LinkedQueue;
+import datastructure.queue.Queue;
 import datastructure.stack.LinkedStack;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
@@ -198,5 +201,29 @@ public class TreeNode {
                 .add("left=" + left)
                 .add("right=" + right)
                 .toString();
+    }
+
+
+    public static TreeNode createUseLeetCode(Integer[] data) {
+        int idx = 1;
+        Queue<TreeNode> queue = new LinkedQueue<>();
+        TreeNode root = new TreeNode(data[0]);
+        queue.enQueue(root);
+        while (idx < data.length && !queue.empty()) {
+            TreeNode pop = queue.deQueue();
+            //左节点
+            if (Objects.nonNull(data[idx])) {
+                pop.left = new TreeNode(data[idx]);
+                queue.enQueue(pop.left);
+            }
+            ++idx;
+            //右节点
+            if (idx < data.length && Objects.nonNull(data[idx])) {
+                pop.right = new TreeNode(data[idx]);
+                queue.enQueue(pop.right);
+            }
+            ++idx;
+        }
+        return root;
     }
 }

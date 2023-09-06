@@ -24,77 +24,52 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package normal.difficult;
+package letcode.normal.medium;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @program: Leetcode
- * @description: 老师想给孩子们分发糖果，有 N个孩子站成了一条直线，老师会根据每个孩子的表现，
- * 预先给他们评分。你需要按照以下要求，帮助老师给这些孩子分发糖果：  每个孩子至少分配到 1 个糖果。
- * 相邻的孩子中，评分高的孩子必须获得更多的糖果。 那么这样下来，老师至少需要准备多少颗糖果呢？
- * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/candy
- * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- * @author: 蔡永程
- * @create: 2020-12-24 09:36
+ * @author Caiyongcheng
+ * @version 1.0.0
+ * @since 2023/8/4 17:01
+ * description 给定一个二进制数组 nums 和一个整数 k，如果可以翻转最多 k 个 0 ，则返回 数组中连续 1 的最大个数 。
  */
-public class _135OneHundredThirtyFive {
+public class _1004OneThousandFour {
 
-    public int candy(int[] ratings) {
+    public int longestOnes(int[] nums, int k) {
         /*
-        5 4 3 2 1 6 5 4 3 2 8
-        1 2 3 4 5 6 7 5 3 2 1 5 3 1
-        只需要关注 波峰即可
-        如上面的例子 5 6 8 是个波峰
+        找出所有0的位置 将相邻位置的0变成1即可 计算值
          */
-        int sum = 1;
-        int i = 0;
-        while (true) {
-            int left = i;
-            int top = up(ratings, i);
-            int right = down(ratings, top);
-            int topNum = Math.max(top - left, right - top) + 1;
-            sum = sum + topNum + rangeSum(top - left) + rangeSum(right - top);
-            sum -= 1;
-            while (right < ratings.length - 1 && ratings[right] == ratings[right + 1]) {
-                ++right;
-                sum++;
-            }
-            if (right >= ratings.length - 1) {
-                break;
-            }
-            i = right;
-        }
-        return sum;
-    }
-
-    public int up(int[] ratings, int start) {
-        int i;
-        for (i = start; i < ratings.length - 1; i++) {
-            if (ratings[i + 1] <= ratings[i]) {
-                break;
+        List<Integer> list = new ArrayList<>(k);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) {
+                list.add(i);
             }
         }
-        return i;
-    }
-
-    public int down(int[] ratings, int start) {
-        int i;
-        for (i = start; i < ratings.length - 1; i++) {
-            if (ratings[i + 1] >= ratings[i]) {
-                break;
-            }
+        int size = list.size();
+        if (size <= k) {
+            return nums.length;
         }
-        return i;
-    }
-
-    public int rangeSum(int n) {
-        return n * (n + 1) >> 1;
+        int rst = 0;
+        for (int i = 0; i < size; i++) {
+            int lidx = i - 1 >= 0 ? list.get(i - 1) : -1;
+            int ridx = i + k < size ? list.get(i + k) : nums.length;
+            rst = Math.max(rst, ridx - lidx - 1);
+        }
+        Integer last0 = list.get(size - 1);
+        if (last0 != nums.length) {
+            rst = Math.max(rst, nums.length - last0 - 1);
+        }
+        return rst;
     }
 
     public static void main(String[] args) {
-        System.out.println(new _135OneHundredThirtyFive().candy(
+        System.out.println(new _1004OneThousandFour().longestOnes(
                 new int[]{
-                        1, 0, 2
-                }
+                        1, 1, 1, 1, 1
+                },
+                0
         ));
     }
 

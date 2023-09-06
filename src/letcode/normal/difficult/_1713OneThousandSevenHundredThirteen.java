@@ -58,7 +58,6 @@ public class _1713OneThousandSevenHundredThirteen {
         dp[0][0] = target[0] == arr[0] ? 1 : 0;
         int left = 0;
         int up = 0;
-        int leftUp = 0;
         for (int i = 0; i < dp.length; i++) {
             for (int j = 0; j < dp[i].length; j++) {
                 if (target[i] == arr[j]) {

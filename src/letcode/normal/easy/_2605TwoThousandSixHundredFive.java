@@ -24,78 +24,66 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package normal.difficult;
+package letcode.normal.easy;
 
 /**
- * @program: Leetcode
- * @description: 老师想给孩子们分发糖果，有 N个孩子站成了一条直线，老师会根据每个孩子的表现，
- * 预先给他们评分。你需要按照以下要求，帮助老师给这些孩子分发糖果：  每个孩子至少分配到 1 个糖果。
- * 相邻的孩子中，评分高的孩子必须获得更多的糖果。 那么这样下来，老师至少需要准备多少颗糖果呢？
- * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/candy
- * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- * @author: 蔡永程
- * @create: 2020-12-24 09:36
+ * @author Caiyongcheng
+ * @version 1.0.0
+ * @since 2023/9/5 8:40
+ * description 给你两个只包含 1 到 9 之间数字的数组 nums1 和 nums2 ，每个数组中的元素 互不相同 ，请你返回 最小 的数字，两个数组都 至少 包含这个数字的某个数位。
  */
-public class _135OneHundredThirtyFive {
+public class _2605TwoThousandSixHundredFive {
 
-    public int candy(int[] ratings) {
-        /*
-        5 4 3 2 1 6 5 4 3 2 8
-        1 2 3 4 5 6 7 5 3 2 1 5 3 1
-        只需要关注 波峰即可
-        如上面的例子 5 6 8 是个波峰
-         */
-        int sum = 1;
-        int i = 0;
-        while (true) {
-            int left = i;
-            int top = up(ratings, i);
-            int right = down(ratings, top);
-            int topNum = Math.max(top - left, right - top) + 1;
-            sum = sum + topNum + rangeSum(top - left) + rangeSum(right - top);
-            sum -= 1;
-            while (right < ratings.length - 1 && ratings[right] == ratings[right + 1]) {
-                ++right;
-                sum++;
-            }
-            if (right >= ratings.length - 1) {
-                break;
-            }
-            i = right;
-        }
-        return sum;
-    }
 
-    public int up(int[] ratings, int start) {
-        int i;
-        for (i = start; i < ratings.length - 1; i++) {
-            if (ratings[i + 1] <= ratings[i]) {
-                break;
+    int[] cntSort;
+
+    public int searchMin(int[] num) {
+        int minItem = 10;
+        for (int i : num) {
+            cntSort[i]++;
+            if (i < minItem) {
+                minItem = i;
             }
         }
-        return i;
+        return minItem;
     }
 
-    public int down(int[] ratings, int start) {
-        int i;
-        for (i = start; i < ratings.length - 1; i++) {
-            if (ratings[i + 1] >= ratings[i]) {
-                break;
+    public int minNumber(int[] nums1, int[] nums2) {
+        cntSort = new int[10];
+        int min1 = searchMin(nums1);
+        int min2 = searchMin(nums2);
+        if (min1 == min2) {
+            return min1;
+        }
+        for (int i = 0; i < cntSort.length; i++) {
+            if (cntSort[i] > 1) {
+                return i;
             }
         }
-        return i;
+        return min1 > min2 ? min2 * 10 + min1 : min1 * 10 + min2;
     }
 
-    public int rangeSum(int n) {
-        return n * (n + 1) >> 1;
-    }
 
+    /**
+     * 示例 1：
+     * <p>
+     * 输入：nums1 = [4,1,3], nums2 = [5,7]
+     * 输出：15
+     * 解释：数字 15 的数位 1 在 nums1 中出现，数位 5 在 nums2 中出现。15 是我们能得到的最小数字。
+     * 示例 2：
+     * <p>
+     * 输入：nums1 = [3,5,2,6], nums2 = [3,1,7]
+     * 输出：3
+     * 解释：数字 3 的数位 3 在两个数组中都出现了。
+     *
+     * @param args
+     */
     public static void main(String[] args) {
-        System.out.println(new _135OneHundredThirtyFive().candy(
-                new int[]{
-                        1, 0, 2
-                }
+        System.out.println(new _2605TwoThousandSixHundredFive().minNumber(
+                new int[]{3, 5, 2, 6},
+                new int[]{3, 1, 7}
         ));
     }
+
 
 }

@@ -108,14 +108,13 @@ public class _84EightyFour {
                 if (datas[r] < minHeight) {
                     minHeight = datas[r];
                 }
-                maxArea = Math.max(maxArea, (r - l + 1) * minHeight);
             } else {
                 --l;
                 if (datas[l] < minHeight) {
                     minHeight = datas[l];
                 }
-                maxArea = Math.max(maxArea, (r - l + 1) * minHeight);
             }
+            maxArea = Math.max(maxArea, (r - l + 1) * minHeight);
         }
         return maxArea;
     }
