@@ -26,69 +26,69 @@
 
 package letcode.normal.medium;
 
+import letcode.utils.TreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 /**
- * 给你一个整数 n ，请你返回所有 0 到 1 之间（不包括 0 和 1）满足分母小于等于  n 的 最简 分数 。分数可以以 任意 顺序返回。
- *
- * @author CaiYongcheng
- * @date 2022-02-10 09:05
- **/
-public class _1447OneThousandFourHundredFortySeven {
+ * @author Caiyongcheng
+ * @version 1.0.0
+ * @since 2023/9/18 8:56
+ * description 小偷又发现了一个新的可行窃的地区。这个地区只有一个入口，我们称之为 root 。
+ * 除了 root 之外，每栋房子有且只有一个“父“房子与之相连。一番侦察之后，聪明的小偷意识到“这个地方的所有房屋的排列类似于一棵二叉树”。
+ * 如果 两个直接相连的房子在同一天晚上被打劫 ，房屋将自动报警。  给定二叉树的 root 。返回 在不触动警报的情况下 ，小偷能够盗取的最高金额 。
+ */
+public class _337ThreeHundredThirtySeven {
 
 
-    public List<String> simplifiedFractions(int n) {
-        List<String> ans = new ArrayList<>(n * n >> 1);
-        for (int i = 2; i <= n; i++) {
-            for (int j = 1; j < i; j++) {
-                if (relativelyPrime(i, j)) {
-                    ans.add(j + "/" + i);
-                }
-            }
-        }
-        return ans;
+    public int rob(TreeNode root) {
+        /*
+       每个节点保存选择当前值与不选择当前值的最大值
+         */
+        int[] searchRst = search(root);
+        return Integer.max(searchRst[0], searchRst[1]);
     }
 
-    private boolean relativelyPrime(int x, int y) {
-        if (y == 1) {
-            return true;
+
+    public int[] search(TreeNode root) {
+        if (Objects.isNull(root)) {
+            return new int[]{0, 0};
         }
-        if (x % y == 0) {
-            return false;
+        if (Objects.isNull(root.left) && Objects.isNull(root.right)) {
+            return new int[]{root.val, 0};
         }
-        return relativelyPrime(y, x % y);
+        int[] searchLeftRst = search(root.left);
+        int[] searchRightRst = search(root.right);
+        return new int[]{
+                root.val + searchLeftRst[1] + searchRightRst[1],
+                Integer.max(searchLeftRst[0], searchLeftRst[1]) + Integer.max(searchRightRst[0], searchRightRst[1])
+        };
     }
+
 
     /**
-     * 示例 1：
+     * Input: root = [3,2,3,null,3,null,1]
+     * Output: 7
+     * Explanation: Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.
      * <p>
-     * 输入：n = 2
-     * 输出：["1/2"]
-     * 解释："1/2" 是唯一一个分母小于等于 2 的最简分数。
-     * 示例 2：
+     * Input: root = [3,4,5,1,3,null,1]
+     * Output: 9
+     * Explanation: Maximum amount of money the thief can rob = 4 + 5 = 9.
      * <p>
-     * 输入：n = 3
-     * 输出：["1/2","1/3","2/3"]
-     * 示例 3：
+     * [4,1,null,2,null,3]
+     * 7
      * <p>
-     * 输入：n = 4
-     * 输出：["1/2","1/3","1/4","2/3","3/4"]
-     * 解释："2/4" 不是最简分数，因为它可以化简为 "1/2" 。
-     * 示例 4：
-     * <p>
-     * 输入：n = 1
-     * 输出：[]
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/simplified-fractions
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * [2,1,3,null,4]
+     * 7
      *
      * @param args
      */
     public static void main(String[] args) {
-        //System.out.println(FormatPrintUtils.formatList(new _1447OneThousandFourHundredFortySeven().simplifiedFractions(100)));
+        TreeNode root = TreeNode.createUseLeetCode(new Integer[]{
+                4, 1, null, 2, null, 3
+        });
+        System.out.println(new _337ThreeHundredThirtySeven().rob(root));
     }
+
 
 }

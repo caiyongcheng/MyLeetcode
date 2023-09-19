@@ -115,17 +115,25 @@ public class ValidateQueue {
         validateQueue(queue, (int) (maxCapacity * 0.2));
         validateQueue(queue, (int) (maxCapacity * 0.3));
         validateQueue(queue, (int) (maxCapacity * 0.4));
-        return (int) (System.currentTimeMillis()-startTime);
+        return (int) (System.currentTimeMillis() - startTime);
     }
 
 
-    public static void main(String[] args) {
-        ArrayQueue<Integer> integerArrayQueue = new ArrayQueue<>(100);
+    public static void main(String[] args) throws InterruptedException {
+        ArrayQueue<Integer> integerArrayQueue = new ArrayQueue<>(10000);
         ImmutableQueue<Integer> objectImmutableQueue = new ImmutableQueue<>(100000000);
         LinkedQueue<Integer> integerLinkedQueue = new LinkedQueue<>();
-        System.out.println(ValidateQueue.testRate(objectImmutableQueue, 20000000));
-        System.out.println(ValidateQueue.testRate(integerArrayQueue, 20000000));
-        System.out.println(ValidateQueue.testRate(integerLinkedQueue, 20000000));
+        System.out.println(ValidateQueue.testRate(integerArrayQueue, 200000000));
+        integerArrayQueue = null;
+        System.gc();
+        Thread.sleep(1000);
+        System.gc();
+        System.out.println(ValidateQueue.testRate(objectImmutableQueue, 200000000));
+        objectImmutableQueue = null;
+        System.gc();
+        Thread.sleep(1000);
+        System.gc();
+        System.out.println(ValidateQueue.testRate(integerLinkedQueue, 200000000));
     }
 
 }

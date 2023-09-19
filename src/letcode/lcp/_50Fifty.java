@@ -24,71 +24,59 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package letcode.normal.medium;
-
-
-import java.util.ArrayList;
-import java.util.List;
+package letcode.lcp;
 
 /**
- * 给你一个整数 n ，请你返回所有 0 到 1 之间（不包括 0 和 1）满足分母小于等于  n 的 最简 分数 。分数可以以 任意 顺序返回。
- *
- * @author CaiYongcheng
- * @date 2022-02-10 09:05
- **/
-public class _1447OneThousandFourHundredFortySeven {
+ * @author Caiyongcheng
+ * @version 1.0.0
+ * @since 2023/9/15 8:49
+ * description 欢迎各位勇者来到力扣新手村，在开始试炼之前，请各位勇者先进行「宝石补给」。  每位勇者初始都拥有一些能量宝石，
+ * gem[i] 表示第 i 位勇者的宝石数量。现在这些勇者们进行了一系列的赠送，operations[j] = [x, y] 表示在第 j 次的赠送中
+ * 第 x 位勇者将自己一半的宝石（需向下取整）赠送给第 y 位勇者。  在完成所有的赠送后，请找到拥有最多宝石的勇者和拥有最少宝石的勇者，
+ * 并返回他们二者的宝石数量之差。  注意：  赠送将按顺序逐步进行。
+ */
+public class _50Fifty {
 
-
-    public List<String> simplifiedFractions(int n) {
-        List<String> ans = new ArrayList<>(n * n >> 1);
-        for (int i = 2; i <= n; i++) {
-            for (int j = 1; j < i; j++) {
-                if (relativelyPrime(i, j)) {
-                    ans.add(j + "/" + i);
-                }
+    public int giveGem(int[] gem, int[][] operations) {
+        if (gem.length < 2) {
+            return 0;
+        }
+        int giveCnt = 0;
+        for (int[] operation : operations) {
+            giveCnt = gem[operation[0]] >>> 1;
+            gem[operation[0]] -= giveCnt;
+            gem[operation[1]] += giveCnt;
+        }
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        for (int cnt : gem) {
+            if (max < cnt) {
+                max = cnt;
+            }
+            if (min > cnt) {
+                min = cnt;
             }
         }
-        return ans;
-    }
-
-    private boolean relativelyPrime(int x, int y) {
-        if (y == 1) {
-            return true;
-        }
-        if (x % y == 0) {
-            return false;
-        }
-        return relativelyPrime(y, x % y);
+        return max - min;
     }
 
     /**
-     * 示例 1：
+     * 输入：gem = {3,1,2}, operations = {{0,2},{2,1},{2,0}}
+     * 输出：2
      * <p>
-     * 输入：n = 2
-     * 输出：["1/2"]
-     * 解释："1/2" 是唯一一个分母小于等于 2 的最简分数。
-     * 示例 2：
+     * 输入：gem = {100,0,50,100}, operations = {{0,2},{0,1},{3,0},{3,0}}
+     * 输出：75
      * <p>
-     * 输入：n = 3
-     * 输出：["1/2","1/3","2/3"]
-     * 示例 3：
-     * <p>
-     * 输入：n = 4
-     * 输出：["1/2","1/3","1/4","2/3","3/4"]
-     * 解释："2/4" 不是最简分数，因为它可以化简为 "1/2" 。
-     * 示例 4：
-     * <p>
-     * 输入：n = 1
-     * 输出：[]
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/simplified-fractions
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * 输入：gem = {0,0,0,0}, operations = {{1,2},{3,1},{1,2}}
+     * 输出：0
      *
      * @param args
      */
     public static void main(String[] args) {
-        //System.out.println(FormatPrintUtils.formatList(new _1447OneThousandFourHundredFortySeven().simplifiedFractions(100)));
+        System.out.println(new _50Fifty().giveGem(
+                new int[]{0, 0, 0, 0},
+                new int[][]{{1, 2}, {3, 1}, {1, 2}}
+        ));
     }
 
 }
