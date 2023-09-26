@@ -26,7 +26,6 @@
 
 package letcode.normal.difficult;
 
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -54,14 +53,11 @@ public class _460FourHundredSixty {
 
     int[] dates = new int[1000_00 + 1];
 
-    PriorityQueue<Integer> orderSet = new PriorityQueue<>(1000_00 + 1, new Comparator<Integer>() {
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            if (times[o1] != times[o2]) {
-                return times[o1] - times[o2];
-            }
-            return dates[o1] - dates[o2];
+    PriorityQueue<Integer> orderSet = new PriorityQueue<>(1000_00 + 1, (o1, o2) -> {
+        if (times[o1] != times[o2]) {
+            return times[o1] - times[o2];
         }
+        return dates[o1] - dates[o2];
     });
 
 

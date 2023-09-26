@@ -24,77 +24,22 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package letcode.medium;
-
-import java.util.ArrayList;
-import java.util.List;
+package letcode.normal.easy;
 
 /**
- * 数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
- *
- * @author : CaiYongcheng
- * @date : 2020-06-28 21:10
- * 来源：力扣（LeetCode）
- * 链接：https://leetcode-cn.com/problems/generate-parentheses
- * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- **/
-public class _22TwentyTwo {
+ * @author Caiyongcheng
+ * @version 1.0.0
+ * @since 2023/9/26 9:07
+ * description n 个人站成一排，按从 1 到 n 编号。  最初，排在队首的第一个人拿着一个枕头。每秒钟，拿着枕头的人会将枕头传递给队伍中的下一个人。
+ * 一旦枕头到达队首或队尾，传递方向就会改变，队伍会继续沿相反方向传递枕头。
+ * 例如，当枕头到达第 n 个人时，TA 会将枕头传递给第 n - 1 个人，然后传递给第 n - 2 个人，依此类推。
+ * 给你两个正整数 n 和 time ，返回 time 秒后拿着枕头的人的编号。
+ */
+public class _2582TwoThousandFiveHundredEightyTwo {
 
-    static int limit;
-    static List<String> list;
-    static StringBuilder str;
-
-    public static void generateParenthesis(int left, int right) {
-        if (right > left) {
-            return;
-        }
-        if (left > limit) {
-            return;
-        }
-        if (left == limit) {
-            int r = right;
-            while (r++ < left) {
-                str.append(')');
-            }
-            list.add(str.toString());
-            str.delete(left + right, str.length());
-            return;
-        }
-        str.append('(');
-        generateParenthesis(left + 1, right);
-        str.deleteCharAt(str.length() - 1);
-        if (left > right) {
-            str.append(')');
-            generateParenthesis(left, right + 1);
-            str.deleteCharAt(str.length() - 1);
-        }
+    public int passThePillow(int n, int time) {
+        return ((time / --n) & 1) != 1 ? time % n + 1 : (n + 1) - time % n;
     }
 
-    /**
-     * 输入：n = 3
-     * 输出：[
-     * "((()))",
-     * "(()())",
-     * "(())()",
-     * "()(())",
-     * "()()()"
-     * ]
-     *
-     * @param n
-     * @return
-     */
-    public static List<String> generateParenthesis(int n) {
-        limit = n;
-        list = new ArrayList<String>();
-        str = new StringBuilder();
-        generateParenthesis(0, 0);
-        return list;
-    }
 
-    public static void main(String[] args) {
-        generateParenthesis(3);
-        for (String s : list) {
-            System.out.println(s);
-        }
-    }
 }

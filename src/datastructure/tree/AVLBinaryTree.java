@@ -527,9 +527,9 @@ public class AVLBinaryTree<T extends Comparable<T>>{
         for (int i = 0; i < ints.length; i++) {
             ints[i] = (int) (Math.random()*100);
         }
-        for (int i = 0; i < ints.length; i++) {
+        for (int anInt : ints) {
             System.out.println(avlBinaryTree.height());
-            avlBinaryTree.addData(ints[i]);
+            avlBinaryTree.addData(anInt);
         }
 
 /*        System.out.println(BinaryTreeUtil.console(avlBinaryTree.root));
