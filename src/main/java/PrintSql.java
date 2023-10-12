@@ -24,6 +24,13 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * @author Caiyongcheng
  * @version 1.0.0
@@ -34,6 +41,34 @@ public class PrintSql {
 
     public static String getData() {
         return "";
+/*        try (
+                Workbook workbook = new XSSFWorkbook(
+                        Files.newInputStream(new File("C:\\Users\\10761\\Desktop\\1.xlsx").toPath())
+                );
+        ) {
+            return StreamSupport.stream(
+                    Spliterators.spliteratorUnknownSize(workbook.sheetIterator(), Spliterator.ORDERED),
+                    false
+            ).map(sheet -> StreamSupport.stream(
+                            Spliterators.spliteratorUnknownSize(sheet.rowIterator(), Spliterator.ORDERED),
+                            false
+                    ).filter(row -> !row.getCell(0).getStringCellValue().equals("平川区黄峤镇马饮水村卫生室"))
+                    .map(row -> StreamSupport.stream(
+                                    Spliterators.spliteratorUnknownSize(row.cellIterator(), Spliterator.ORDERED),
+                                    false
+                            ).map(cell -> {
+                                if (cell.getCellType().equals(CellType.NUMERIC)) {
+                                    return String.valueOf(cell.getNumericCellValue());
+                                }
+                                return cell.getStringCellValue();
+                            })
+                            .map(str -> str.trim().replaceAll(((char)160) + "", ""))
+                            .collect(Collectors.joining("\t"))
+                    ).collect(Collectors.joining("\n"))
+            ).collect(Collectors.joining("\n"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }*/
     }
 
     public static String getTemplateHead() {
@@ -55,7 +90,7 @@ public class PrintSql {
         return "select %s,\n" +
                 "       (select JGID from SYS_JGGL where JGMC = '%s'),\n" + //jgmc
                 "       '%s',\n" + //yhxm
-                "       '',\n" +
+                "       '',\n" + //yhpym
                 "       '%s' || 0,\n" + //yhzh
                 "       '$2a$10$SwuqtY9opj3kA7B4P0qXluwf9QVc04ZDXokMQrIrrS/eK.eWLPWHG',\n" +
                 "       '01',\n" +
@@ -68,7 +103,7 @@ public class PrintSql {
                 "       '1',\n" +
                 "       '1',\n" +
                 "       '1',\n" +
-                "       '20231007导入',\n" +
+                "       '20231012导入',\n" +
                 "       '0',\n" +
                 "       current_timestamp,\n" +
                 "       '超级管理员',\n" +
@@ -103,10 +138,46 @@ public class PrintSql {
         return rst.toString();
     }
 
-    public static void main(String[] args) {
+    public static void outSqlString(String sqlString) {
+        try (BufferedWriter bufferedWriter =
+                     new BufferedWriter(new FileWriter(new File("C:\\Users\\10761\\Desktop\\exec.sql")));) {
+            for (String singleSql : sqlString.split("\n")) {
+                bufferedWriter.write(singleSql);
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void outCheckSqlString(String[] dataArr) {
+        String sql = Arrays.stream(dataArr)
+                .map(str -> str.split("\t"))
+                .map(strArr -> strArr[0])
+                .distinct()
+                .map(str -> String.format("select '%s' as jgmc from dual", str))
+                .collect(Collectors.joining(" union all "));
+        System.out.printf("select * from sys_jggl a right join (%s) b on a.jgmc = b.jgmc where a.jgid is null;%n", sql);
+
+    }
+
+    public static void exec() {
         String data = getData();
         String[] dataSplit = data.split("\n");
-        System.out.println(getTemplateHead() + getTemplateFill(dataSplit));
+        outSqlString(getTemplateHead() + getTemplateFill(dataSplit));
+    }
+
+    public static void check() {
+        String data = getData();
+        String[] dataSplit = data.split("\n");
+        outCheckSqlString(dataSplit);
+    }
+
+    public static void main(String[] args) {
+        exec();
+        //check();
     }
 
 
