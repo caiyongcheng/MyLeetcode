@@ -171,7 +171,9 @@ public class FormatUtils {
         for (int i = 0; i < array.length-1; i++) {
             formatStr.append(array[i]).append(separator);
         }
-        formatStr.append(array[array.length-1]);
+        if (array.length > 0) {
+            formatStr.append(array[array.length-1]);
+        }
         return formatStr.append(suffix).toString();
     }
 
