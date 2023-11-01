@@ -60,8 +60,8 @@ public class _2127TwoThousandOneHundredTwentySeven {
             return curLen + visit[nextPoint];
         }
         if (curVisit[nextPoint] == 1) {
-            int len = getCircleLen(map, visit, nextPoint);
-            return curLen + len;
+            getCircleLen(map, visit, nextPoint);
+            return curLen;
         }
         return dfs(map, visit, curVisit, nextPoint, curLen + 1);
 
@@ -116,7 +116,7 @@ public class _2127TwoThousandOneHundredTwentySeven {
      */
     public static void main(String[] args) {
         System.out.println(new _2127TwoThousandOneHundredTwentySeven().maximumInvitations(
-                new int[]{2,2,1,2}
+                new int[]{1,0,0,2,1,4,7,8,9,6,7,10,8}
         ));
     }
 
