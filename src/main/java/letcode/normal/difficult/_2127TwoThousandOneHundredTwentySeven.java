@@ -15,23 +15,18 @@ public class _2127TwoThousandOneHundredTwentySeven {
 
     public int maximumInvitations(int[] favorite) {
         /*
-         * 不是贪心就是动态规划
-         *
          * 员工要参加 那么必须有他喜欢的员工 这就要求这个链能够形成一个环
          * 按员工的喜欢关系能够形成一个图 这个图的出度只有1
-         * 遍历这个图 得到最大的环形长度就是我们要的结果
-         * 现在问题在于 怎么找到这个环
-         * 遍历 如果某个节点再次被访问到 那么就找到了一个环
-         * 因为出度只有1 所以环上的点不会位于其他的环上 同时一个点如果没有出入度 那就不需要考虑
+         * 满足条件的只有两种情况 一种是环形  一种是类似69的结构，不过环的部分是两个相互喜欢的点组成的
          */
         int[] startPoint = getStartPoint(favorite);
-        int[] visit = new int[favorite.length];
+        int[] circle = new int[favorite.length];
         int maxLen = 0;
         for (int i = 0; i < startPoint.length; i++) {
-            if (visit[i] > 0) {
+            if (circle[i] > 0) {
                 continue;
             }
-            maxLen = Integer.max(dfs(favorite, visit, new int[favorite.length], i, 1), maxLen);
+            maxLen = Integer.max(dfs(favorite, circle, new int[favorite.length],  i, 1), maxLen);
         }
         return maxLen;
     }
@@ -53,34 +48,35 @@ public class _2127TwoThousandOneHundredTwentySeven {
     }
 
 
-    private static int dfs(int[] map, int[] visit, int[] curVisit, int curPoint, int curLen) {
+    private static int dfs(int[] map, int[] circle, int[] curVisit, int curPoint, int curLen) {
         curVisit[curPoint] = 1;
         int nextPoint = map[curPoint];
-        if (visit[nextPoint] > 0) {
-            return curLen + visit[nextPoint];
+        if (circle[nextPoint] != 1) {
+            return 0;
         }
         if (curVisit[nextPoint] == 1) {
-            getCircleLen(map, visit, nextPoint);
-            return curLen;
+            // 满足条件的只有两种情况 69的情况
+            if (map[nextPoint] == curPoint) {
+                circle[nextPoint] = 1;
+                circle[curPoint] = 1;
+                return curLen;
+            }
+            // 环的情况
+            return getCircleLen(map, circle, nextPoint);
         }
-        return dfs(map, visit, curVisit, nextPoint, curLen + 1);
-
+        return dfs(map, circle, curVisit, nextPoint, curLen + 1);
     }
 
 
-    private static int getCircleLen(int[] map, int[] visit,  int startPoint) {
+    private static int getCircleLen(int[] map, int[] circle, int startPoint) {
+        circle[startPoint] = 1;
         int len = 1;
         int nextPoint = map[startPoint];
         while (nextPoint != startPoint) {
+            circle[nextPoint] = 1;
             ++len;
             nextPoint = map[nextPoint];
         }
-        nextPoint = map[startPoint];
-        while (nextPoint != startPoint) {
-            visit[nextPoint] = len;
-            nextPoint = map[nextPoint];
-        }
-        visit[startPoint] = len;
         return len;
     }
 
@@ -111,6 +107,11 @@ public class _2127TwoThousandOneHundredTwentySeven {
      * 员工 2 无法参加，因为他喜欢的员工 0 旁边的座位已经被占领了。
      * 所以公司只能不邀请员工 2 。
      * 参加会议的最多员工数目为 4 。
+     * 0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10,11 ,12
+     * 1 ,0 ,0 ,2 ,1 ,4 ,7 ,8 ,9 ,6 ,7 ,10 ,8
+     *
+     *
+     *
      *
      * @param args
      */

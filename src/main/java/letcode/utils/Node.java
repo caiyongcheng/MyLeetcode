@@ -40,6 +40,9 @@ public class Node {
     public Node random;
     public Node child;
 
+    public Node left;
+    public Node right;
+
     public Node(int val) {
         this.val = val;
     }
