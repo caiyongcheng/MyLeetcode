@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseInputUtils;
+import letcode.utils.TestCaseUtils;
 
 import java.util.*;
 
@@ -96,10 +96,12 @@ public class _2008TwoThousandEight {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(new _2008TwoThousandEight().maxTaxiEarnings2(
+/*        System.out.println(new _2008TwoThousandEight().maxTaxiEarnings2(
                 20,
-                TestCaseInputUtils.get2DArr("[[1,6,1],[3,10,2],[10,12,3],[11,12,2],[12,15,2],[13,18,1]]")
-        ));
+                TestCaseUtils.get2DIntArr("[[1,6,1],[3,10,2],[10,12,3],[11,12,2],[12,15,2],[13,18,1]]")
+        ));*/
+        int[][] dIntArr = TestCaseUtils.get2DIntArr("[[1,6,1],[3,10,2],[10,12,3],[11,12,2],[12,15,2],[13,18,1]]");
+        System.out.println(dIntArr);
     }
 
 }
