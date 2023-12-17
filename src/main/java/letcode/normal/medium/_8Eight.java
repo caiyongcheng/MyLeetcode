@@ -91,7 +91,9 @@ public class _8Eight {
         char ch = 'a';
         while (i < length) {
             ch = str.charAt(i);
-            if (ch != ' ') break;
+            if (ch != ' ') {
+                break;
+            }
             ++i;
         }
         if (i >= length) {
@@ -111,7 +113,9 @@ public class _8Eight {
         int p = Integer.MAX_VALUE / 10;
         while (i < length) {
             ch = str.charAt(i);
-            if (ch < '0' || ch > '9') break;
+            if (ch < '0' || ch > '9') {
+                break;
+            }
             if (res == p) {
                 if (ch - '0' > 7 && flag == 1) {
                     return Integer.MAX_VALUE;
