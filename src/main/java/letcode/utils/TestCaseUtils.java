@@ -3,6 +3,7 @@ package letcode.utils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -43,6 +44,19 @@ public class TestCaseUtils {
                 strArr -> Arrays.stream(strArr.split(separator)).peek(String::trim).collect(Collectors.toList()).toArray(new String[0]),
                 new String[0][0]
         );
+    }
+
+    /**
+     * 将字符串转为对应的二维List
+     * @param inputStr 输入字符串 类似 [[...],[...],[...]]
+     * @param separator 字符串中分割数组的分隔符
+     * @param mapFun 一维数组字符串到一维数组实例的转化器
+     * @return 字符串对应的二维数组
+     * @param <T> 数组类型[]
+     */
+    public static<T> List<List<T>> get2DList(String inputStr, String separator, Function<String, T> mapFun) {
+        inputStr = inputStr.substring(1, inputStr.length() - 1).replaceAll("[\\[|\\]]", " ");
+        return Arrays.stream(inputStr.split(" " + separator + " ")).map(mapFun).map(Arrays::asList).collect(Collectors.toList());
     }
 
 
@@ -87,6 +101,22 @@ public class TestCaseUtils {
      */
     public static Integer[] getIntegerArr(String inputStr) {
         return getArr(inputStr, ",", str -> Integer.parseInt(str.replaceAll("\"", "").trim()), new Integer[0]);
+    }
+
+    /**
+     * 将输入数组字符串转为List
+     * @param inputStr 数组字符串 例如 "["1", "2", 3]"
+     * @return Integer数组 [1,2,3]
+     */
+    public static List<Integer> getIntegerList(String inputStr) {
+        return Arrays.asList(
+                getArr(
+                        inputStr,
+                        ",",
+                        str -> Integer.parseInt(str.replaceAll("\"", "").trim()),
+                        new Integer[0]
+                )
+        );
     }
 
     /**
