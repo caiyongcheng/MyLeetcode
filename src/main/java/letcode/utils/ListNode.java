@@ -41,6 +41,9 @@ public class ListNode {
     static private final String SUFFIX = "]";
     static private final String SEPARATOR = "\t";
 
+    public ListNode() {
+    }
+
     public ListNode(int x) {
         val = x;
     }
