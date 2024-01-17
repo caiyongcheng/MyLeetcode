@@ -81,7 +81,7 @@ public class TestCaseUtils {
      * @return 字符串数组 例如 ["\"SmallestInfiniteSet\""...]
      */
     public static String[] getArr(String inputStr) {
-        return getArr(inputStr, ",", String::trim, new String[0]);
+        return getArr(inputStr, ",", s -> s.replaceAll("\"", "").trim(), new String[0]);
     }
 
     /**

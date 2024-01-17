@@ -283,7 +283,7 @@ public class AVLBinaryTree<T extends Comparable<T>>{
      * @return 平衡后的根节点
      */
     private static<T extends Comparable<T>> AVLBTreeNode<T> removeBothChild(LinkedStack<AVLBTreeNode<T>> nodeLinkedStack,
-                                                                               LinkedStack<Integer> operatorStack) {
+                                                                            LinkedStack<Integer> operatorStack) {
         AVLBTreeNode<T> childNode = nodeLinkedStack.top();
         if (((AVLBTreeNode<T>)childNode.getLeftChild()).getHeight() <
                 ((AVLBTreeNode<T>)childNode.getRightChild()).getHeight()) {
