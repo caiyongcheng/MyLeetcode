@@ -1,5 +1,6 @@
 package letcode.utils;
 
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -217,6 +218,24 @@ public class TestCaseUtils {
             throw new RuntimeException(e);
         }
         return Arrays.toString(ans);
+    }
+
+    public static String getStringFromFile(String fileName) {
+        try (FileReader fileReader = new FileReader(fileName);
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+            StringBuilder str = new StringBuilder();
+            String lineStr;
+            while (true) {
+                lineStr = bufferedReader.readLine();
+                if (lineStr == null || lineStr.length() == 0) {
+                    break;
+                }
+                str.append(lineStr);
+            }
+            return str.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
