@@ -205,6 +205,9 @@ public class TreeNode {
 
 
     public static TreeNode createUseLeetCode(Integer[] data) {
+        if (Objects.isNull(data) || data.length == 0) {
+            return null;
+        }
         int idx = 1;
         Queue<TreeNode> queue = new LinkedQueue<>();
         TreeNode root = new TreeNode(data[0]);

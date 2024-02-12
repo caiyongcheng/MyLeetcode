@@ -111,7 +111,17 @@ public class TestCaseUtils {
      * @return Integer数组 [1,2,3]
      */
     public static Integer[] getIntegerArr(String inputStr) {
-        return getArr(inputStr, ",", str -> Integer.parseInt(str.replaceAll("\"", "").trim()), new Integer[0]);
+        return getArr(
+                inputStr,
+                ",",
+                str -> {
+                    if ("NULL".equalsIgnoreCase(str)) {
+                        return null;
+                    }
+                    return Integer.parseInt(str.replaceAll("\"", "").trim());
+                },
+                new Integer[0]
+        );
     }
 
     /**
@@ -159,6 +169,9 @@ public class TestCaseUtils {
         }
         if (inputStr.endsWith("]")) {
             inputStr = inputStr.substring(0, inputStr.length() - 1);
+        }
+        if (inputStr.trim().length() == 0) {
+            return arr;
         }
         return Arrays.stream(inputStr.split(separator)).map(mapFun).collect(Collectors.toList()).toArray(arr);
     }
