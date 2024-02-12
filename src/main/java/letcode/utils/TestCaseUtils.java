@@ -86,6 +86,16 @@ public class TestCaseUtils {
     }
 
     /**
+     * 将输入数组字符串转为字符串List，保留输入中的"
+     * @param inputStr 数组字符串 例如 "[\"SmallestInfiniteSet\", \"addBack\", \"popSmallest\", \"popSmallest\",
+     *                \"popSmallest\", \"addBack\", \"popSmallest\", \"popSmallest\", \"popSmallest\"]"
+     * @return 字符串数组 例如 ["\"SmallestInfiniteSet\""...]
+     */
+    public static List<String> getList(String inputStr) {
+        return Arrays.stream(getArr(inputStr, ",", s -> s.replaceAll("\"", "").trim(), new String[0])).collect(Collectors.toList());
+    }
+
+    /**
      * 将输入数组字符串转为字符串数组，不保留输入中的"
      * @param inputStr 数组字符串 例如 "[\"SmallestInfiniteSet\", \"addBack\", \"popSmallest\", \"popSmallest\",
      *                 \"popSmallest\", \"addBack\", \"popSmallest\", \"popSmallest\", \"popSmallest\"]"
