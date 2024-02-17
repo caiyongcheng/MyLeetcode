@@ -26,6 +26,8 @@
 
 package letcode.utils;
 
+import java.util.List;
+
 /**
  * 通用Node
  *
@@ -42,6 +44,8 @@ public class Node {
 
     public Node left;
     public Node right;
+
+    public List<Node> children;
 
     public Node(int val) {
         this.val = val;
@@ -117,6 +121,30 @@ public class Node {
 
     public void setChild(Node child) {
         this.child = child;
+    }
+
+    public Node getLeft() {
+        return left;
+    }
+
+    public void setLeft(Node left) {
+        this.left = left;
+    }
+
+    public Node getRight() {
+        return right;
+    }
+
+    public void setRight(Node right) {
+        this.right = right;
+    }
+
+    public List<Node> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Node> children) {
+        this.children = children;
     }
 
     @Override
