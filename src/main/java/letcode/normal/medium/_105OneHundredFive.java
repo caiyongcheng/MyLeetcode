@@ -65,6 +65,7 @@ public class _105OneHundredFive {
                 parent = child;
                 continue;
             }
+            // 表明child 不是 parent的子节点 需要从root节点开始找父节点
             parent = root;
             while (parent != child) {
                 if (valToIndex[child.val + 3000] < valToIndex[parent.val + 3000]) {
