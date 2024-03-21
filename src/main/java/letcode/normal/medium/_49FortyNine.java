@@ -53,7 +53,6 @@ public class _49FortyNine {
      * @return
      */
     public static List<List<String>> groupAnagrams(String[] strs) {
-        ArrayList<List<String>> lists = new ArrayList<>();
         for (String str : strs) {
             byte[] bytes = str.getBytes();
             Arrays.sort((bytes));
@@ -68,10 +67,7 @@ public class _49FortyNine {
             }
         }
         Collection<List<String>> values = map.values();
-        for (List<String> value : values) {
-            lists.add(value);
-        }
-        return lists;
+        return new ArrayList<>(values);
     }
 
     public static void main(String[] args) {

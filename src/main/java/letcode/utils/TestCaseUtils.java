@@ -212,15 +212,15 @@ public class TestCaseUtils {
         return params;
     }
 
-
     /**
      * 让指定的对象，执行给定的操作
      * @param obj 执行的对象
      * @param operationStr 操作列表 方法数组字符串
      * @param paramsStr 对应的参数列表 参数数组字符串
+     * @param debug 是否打印调试语句
      * @return 操作结果数组字符串
      */
-    public static String operation(Object obj, String operationStr, String paramsStr) {
+    public static String operation(Object obj, String operationStr, String paramsStr, boolean debug) {
         Method[] methodArr = obj.getClass().getDeclaredMethods();
         Map<String, Method> methodName2Method =
                 Arrays.stream(methodArr).collect(Collectors.toMap(Method::getName, Function.identity()));
@@ -235,12 +235,27 @@ public class TestCaseUtils {
                     ans[i] = null;
                     continue;
                 }
-                ans[i] = String.valueOf(method.invoke(obj, getParams(method.getParameterTypes(), paramsArr[i])));
+                Object[] params = getParams(method.getParameterTypes(), paramsArr[i]);
+                ans[i] = String.valueOf(method.invoke(obj, params));
+                if (debug) {
+                    System.out.printf("method: %s, params: %s%n", method.getName(), Arrays.toString(params));
+                }
             }
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
         return Arrays.toString(ans);
+    }
+
+    /**
+     * 让指定的对象，执行给定的操作
+     * @param obj 执行的对象
+     * @param operationStr 操作列表 方法数组字符串
+     * @param paramsStr 对应的参数列表 参数数组字符串
+     * @return 操作结果数组字符串
+     */
+    public static String operation(Object obj, String operationStr, String paramsStr) {
+        return operation(obj, operationStr, paramsStr, false);
     }
 
     public static String getStringFromFile(String fileName) {
