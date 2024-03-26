@@ -35,7 +35,7 @@ public class _322ThreeHundredTwentyTwo {
                 if (coin <= i) {
                     dp[i] = Integer.min(dp[i], 1 + dp[i - coin]);
                 }
-                // 这里不需要判断几枚硬币 因为 cnt + dp[i - cnt * coin] <= 1 + dp[i - coin]
+                // 这里不需要判断几枚硬币 因为 cnt + dp[i - cnt * coin] >= 1 + dp[i - coin]
 /*                for (int cnt = 0; cnt * coin <= i; cnt++) {
                     dp[i] = Integer.min(dp[i], cnt + dp[i - cnt * coin]);
                 }*/
