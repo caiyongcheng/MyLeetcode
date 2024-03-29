@@ -30,6 +30,25 @@ public class _2908TwoThousandNineHundredEight {
         return ans == 2501 ? -1 : ans;
     }
 
+    public int minimumSum2(int[] nums) {
+        int ans = 2501;
+        int[] leftMin = new int[nums.length];
+        leftMin[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            leftMin[i] = Math.min(nums[i], leftMin[i - 1]);
+        }
+        int rightMin = nums[nums.length - 1];
+        for (int i = nums.length - 2; i > 0; i--) {
+            if (nums[i] > leftMin[i - 1] && nums[i] > rightMin) {
+                ans = Integer.min(ans, nums[i] + rightMin + leftMin[i - 1]);
+            }
+            if (nums[i] < rightMin) {
+                rightMin = nums[i];
+            }
+        }
+        return ans == 2501 ? -1 : ans;
+    }
+
 
     /**
      * 示例 1：
