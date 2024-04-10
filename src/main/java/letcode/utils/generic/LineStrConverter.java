@@ -53,8 +53,8 @@ public class LineStrConverter {
         nameMap.put("voConverter语句", TableInfoParser.getVOConverter(downFirstWordHumpName + "VO", downFirstWordHumpName));
         nameMap.put("dto2domain语句", TableInfoParser.getDTO2DomainConverter(downFirstWordHumpName + "DTO", downFirstWordHumpName));
         nameMap.put("mergeNewAndOld语句", TableInfoParser.getMergeConverter("old" + tableHumpName, "new" + tableHumpName));
-        nameMap.put("do2domain语句", TableInfoParser.getMergeConverter(tableHumpName + "DO", tableHumpName));
-        nameMap.put("domain2do语句", TableInfoParser.getMergeConverter(tableHumpName, tableHumpName + "DO" ));
+        nameMap.put("domain2do语句", TableInfoParser.getMergeConverter(downFirstWordHumpName + "DO", downFirstWordHumpName));
+        nameMap.put("do2domain语句", TableInfoParser.getMergeConverter(downFirstWordHumpName, downFirstWordHumpName + "DO" ));
         nameMap.put("当前时间", LocalDateTime.now().format(dateTimeFormatter));
     }
 

@@ -106,7 +106,7 @@ public class TableInfoParser {
     }
 
     public static String getDTO2DomainConverter(String dtoObj, String domainObj) {
-        return tableColumnInfo.stream().map(tableColumn -> getSetStr(tableColumn, dtoObj, domainObj)).collect(Collectors.joining("\n"));
+        return tableColumnInfo.stream().map(tableColumn -> getSetStr(tableColumn, domainObj, dtoObj)).collect(Collectors.joining("\n"));
     }
 
     public static String getMergeConverter(String oldObj, String newObj) {
