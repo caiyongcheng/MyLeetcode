@@ -15,28 +15,20 @@ public class GenericCodeUtil {
 
     public static void init() {
         LineStrConverter.init(
-                "sys_test",
-                "测试信息",
-                "office_id|id|bigint(8)|not null\n" +
-                        "office_name|科室名称|nvarchar(8000)|not null\n" +
-                        "query_code|科室名称检索码|nvarchar(8000)|null\n" +
-                        "office_code|科室代码|nvarchar(8000)|not null\n" +
-                        "sort|排序 [默认为0]|int(4)|null\n" +
-                        "create_time|创建时间|datetime(8)|null\n" +
-                        "update_time|更新时间|datetime(8)|null\n" +
-                        "del_flag|是否删除 0：正常   1：已删除|bigint(8)|not null\n" +
-                        "create_by|创建人|nvarchar(8000)|null\n" +
-                        "update_by|更新人|nvarchar(8000)|null\n" +
-                        "office_type|科室分类|nvarchar(8000)|null\n" +
-                        "phone|科室联系电话|nvarchar(8000)|null\n" +
-                        "person_in_charge|科室负责人|nvarchar(8000)|null\n" +
-                        "person_in_charge_phone|科室负责人联系电话|nvarchar(8000)|null\n" +
-                        "address|科室地址(大楼、楼层)|nvarchar(8000)|null\n" +
-                        "comment|备注|nvarchar(8000)|null\n" +
-                        "status|是否启用，0：启用，1：禁用|int(4)|not null\n" +
-                        "introduce|科室介绍|nvarchar(8000)|null\n" +
-                        "org_id|机构id|bigint(8)|null\n" +
-                        "org_name|机构名称|varchar(8000)|null\n");
+                "lab_sample_detail",
+                "标本登记收费项目信息",
+                "sampleDate|sampledate|标本日期|datetime(8)|not null\n" +
+                        "insId|insid|仪器ID|int(4)|not null\n" +
+                        "sampleNo|sampleno|标本号|int(4)|not null\n" +
+                        "chaitemCode|chaitemcode|收费项目代码|nvarchar(8000)|not null\n" +
+                        "chaitemName|chaitemname|收费项目名称|nvarchar(8000)|null\n" +
+                        "price|price|单价|decimal(17)|null\n" +
+                        "xNumber|xnumber|数量|decimal(17)|null\n" +
+                        "applyId|applyid|无说明|nvarchar(8000)|null\n" +
+                        "otherCode|othercode|无说明|nvarchar(8000)|null\n" +
+                        "sampleDetailId|sample_detail_id|明细id|bigint(8)|not null\n" +
+                        "sampleInfoId|sample_info_id|sample_info表的id|bigint(8)|null\n"
+        );
     }
 
     public static void main(String[] args) {

@@ -48,6 +48,7 @@ public class LineStrConverter {
         nameMap.put("表说明", tableComment);
         nameMap.put("dto字段说明", TableInfoParser.getDTOColumnStr());
         nameMap.put("vo字段说明", TableInfoParser.getVOColumnStr());
+        nameMap.put("do字段说明", TableInfoParser.getDoColumnStr());
         nameMap.put("domain字段说明", TableInfoParser.getDomainColumnStr());
         nameMap.put("voConverter语句", TableInfoParser.getVOConverter(downFirstWordHumpName + "VO", downFirstWordHumpName));
         nameMap.put("dto2domain语句", TableInfoParser.getDTO2DomainConverter(downFirstWordHumpName + "DTO", downFirstWordHumpName));
@@ -60,13 +61,17 @@ public class LineStrConverter {
     public static String getTableHumpName(String tableName) {
         StringBuilder sb = new StringBuilder(tableName);
         int len = tableName.length();
-        sb.setCharAt(0, (char) (sb.charAt(0) - 'a' + 'A'));
+        if (sb.charAt(0) >= 'a' && sb.charAt(0) <= 'z') {
+            sb.setCharAt(0, (char) (sb.charAt(0) - 'a' + 'A'));
+        }
         for (int i = 0; i < len; i++) {
             if (sb.charAt(i) != '_') {
                 continue;
             }
             sb.deleteCharAt(i);
-            sb.setCharAt(i, (char) (sb.charAt(i) - 'a' + 'A'));
+            if (sb.charAt(i) >= 'a' && sb.charAt(i) <= 'z') {
+                sb.setCharAt(i, (char) (sb.charAt(i) - 'a' + 'A'));
+            }
             --len;
         }
         return sb.toString();
