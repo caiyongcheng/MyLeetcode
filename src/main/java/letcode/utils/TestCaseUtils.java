@@ -42,7 +42,7 @@ public class TestCaseUtils {
         return get2DArr(
                 inputStr,
                 separator,
-                strArr -> Arrays.stream(strArr.split(separator)).peek(String::trim).collect(Collectors.toList()).toArray(new String[0]),
+                strArr -> Arrays.stream(strArr.split(separator)).map(String::trim).collect(Collectors.toList()).toArray(new String[0]),
                 new String[0][0]
         );
     }
@@ -170,7 +170,7 @@ public class TestCaseUtils {
         if (inputStr.endsWith("]")) {
             inputStr = inputStr.substring(0, inputStr.length() - 1);
         }
-        if (inputStr.trim().length() == 0) {
+        if (inputStr.trim().isEmpty()) {
             return arr;
         }
         return Arrays.stream(inputStr.split(separator)).map(mapFun).collect(Collectors.toList()).toArray(arr);
@@ -188,7 +188,7 @@ public class TestCaseUtils {
             return new Object[0];
         }
         if (typeArr.length != paramStrArr.length) {
-            throw new IllegalArgumentException(String.format("typeArr's length[%d] not equal paramStrArr's length[%d]",
+            throw new IllegalArgumentException(String.format("type array's length[%d] not equal paramStr array's length[%d]",
                     typeArr.length, paramStrArr.length));
         }
         Object[] params = new Object[typeArr.length];
@@ -238,11 +238,14 @@ public class TestCaseUtils {
                 Object[] params = getParams(method.getParameterTypes(), paramsArr[i]);
                 ans[i] = String.valueOf(method.invoke(obj, params));
                 if (debug) {
-                    System.out.printf("method: %s, params: %s%n", method.getName(), Arrays.toString(params));
+                    System.out.printf(
+                            "method: %s, params: %s, call result: %s. \n",
+                            method.getName(), Arrays.toString(params), ans[i]
+                    );
                 }
             }
         } catch (InvocationTargetException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+            System.err.printf("operation method has error: %s \n", e.getMessage());
         }
         return Arrays.toString(ans);
     }
@@ -265,7 +268,7 @@ public class TestCaseUtils {
             String lineStr;
             while (true) {
                 lineStr = bufferedReader.readLine();
-                if (lineStr == null || lineStr.length() == 0) {
+                if (lineStr == null || lineStr.isEmpty()) {
                     break;
                 }
                 str.append(lineStr);
