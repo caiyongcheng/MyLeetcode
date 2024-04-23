@@ -92,7 +92,7 @@ public class FormatUtils {
      * @param <T>       list类型
      * @return prefix list.get(0).toString() separator list.get(1).toString() suffix
      */
-    public static <T> String formatNextList(List<? extends List<T>> list, String prefix, String suffix, String separator) {
+    public static <T> String formatNestList(List<? extends List<T>> list, String prefix, String suffix, String separator) {
         if (list == null || list.isEmpty()) {
             return prefix + suffix;
         }
@@ -123,8 +123,8 @@ public class FormatUtils {
      * @param <T>  list类型
      * @return prefix list.get(0).toString() separator list.get(1).toString() suffix
      */
-    public static <T> String formatNextList(List<? extends List<T>> list) {
-        return formatNextList(list, "[", "]", ",");
+    public static <T> String formatNestList(List<? extends List<T>> list) {
+        return formatNestList(list, "[", "]", ",");
     }
 
     /**

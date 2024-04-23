@@ -63,6 +63,12 @@ public class _377ThreeHundredSeventySeven {
     }
 
     public int combinationSum4(int[] nums, int target) {
+        /*
+        targets[num] 表示num的组合方式
+        那么 target[num+1]的组合 可以由 nums中的数与target[1]到target[num]组合
+        nums中的数num只选一次 因为如果选了多次num*k
+        那么相对应的target[target+1-num*k] 在计算num和target[num+1-num]时会被重复计算
+         */
         Arrays.sort(nums);
         int[] targets = new int[target + 1];
         for (int num : nums) {
