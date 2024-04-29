@@ -1,9 +1,9 @@
-package letcode.utils.generic;
+package work.generic;
 
 import java.io.*;
 
-import static letcode.utils.generic.GenericCodeUtil.PROJECT_PATH;
-import static letcode.utils.generic.GenericCodeUtil.TEMP_PATH;
+import static work.generic.GenericCodeUtil.PROJECT_PATH;
+import static work.generic.GenericCodeUtil.TEMP_PATH;
 
 /**
  * Enhance生成类

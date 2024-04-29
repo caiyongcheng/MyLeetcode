@@ -1,8 +1,8 @@
-package letcode.utils.generic;
+package work.generic;
 
 import java.io.*;
 
-import static letcode.utils.generic.GenericCodeUtil.*;
+import static work.generic.GenericCodeUtil.*;
 
 /**
  * 生成各种实体的Util

@@ -1,4 +1,4 @@
-package letcode.utils.generic;
+package work.generic;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
