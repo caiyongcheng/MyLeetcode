@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Leetcode
@@ -182,8 +183,28 @@ public class FormatUtils {
      * @param array 需要获取的array对象
      * @return [array[0].toString(),array[1].toString()...]
      */
-    public static String formatArray(int[] array ) {
+    public static String formatArray(int[] array) {
         return formatArray(array, "[", "]", ",");
+    }
+
+    /**
+     * array 使用[与]作为前后缀，,作为分隔符
+     * @param array 需要获取的array对象
+     * @return [array[0].toString(),array[1].toString()...]
+     */
+    public static String format2DArray(int[][] array, String prefix, String suffix, String separator) {
+        return prefix
+                + Arrays.stream(array).map(FormatUtils::formatArray).collect(Collectors.joining(separator))
+                + suffix;
+    }
+
+    /**
+     * array 使用[与]作为前后缀，,作为分隔符
+     * @param array 需要获取的array对象
+     * @return [array[0].toString(),array[1].toString()...]
+     */
+    public static String format2DArray(int[][] array) {
+        return format2DArray(array, "[", "]", ",");
     }
 
 
