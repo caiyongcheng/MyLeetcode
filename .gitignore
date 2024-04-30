@@ -34,3 +34,5 @@ hs_err_pid*
 
 
 /out/
+/.idea/
+!/src/main/java/work/Note.java
