@@ -1,4 +1,4 @@
-package letcode.utils.generic;
+package work.generic;
 
 /**
  * 主入口
