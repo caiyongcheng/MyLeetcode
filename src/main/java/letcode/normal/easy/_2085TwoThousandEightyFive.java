@@ -2,14 +2,8 @@ package letcode.normal.easy;
 
 import letcode.utils.TestCaseUtils;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 /**
  * 给你两个字符串数组 words1 和 words2 ，请你返回在两个字符串数组中 都恰好出现一次 的字符串的数目。
@@ -21,9 +15,6 @@ import java.util.stream.Collectors;
 public class _2085TwoThousandEightyFive {
 
     public int countWords(String[] words1, String[] words2) {
-        Arrays.stream(words1).collect(Collectors.groupingBy(String::length));
-
-
         Set<String> set1 = getAppearOnceStrSet(words1);
         Set<String> set2 = getAppearOnceStrSet(words2);
         int ans = 0;
