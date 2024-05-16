@@ -24,7 +24,7 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package letcode.medium;
+package letcode.normal.medium;
 
 /**
  * @program: StudyHTTP
