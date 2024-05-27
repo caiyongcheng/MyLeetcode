@@ -116,7 +116,7 @@ public class TestCaseUtils {
      */
     public static Integer[] getIntegerArr(String inputStr) {
         return getArr(
-                inputStr,
+                inputStr.trim(),
                 ",",
                 str -> {
                     if ("NULL".equalsIgnoreCase(str)) {
