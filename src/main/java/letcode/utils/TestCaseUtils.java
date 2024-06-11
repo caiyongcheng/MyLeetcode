@@ -129,6 +129,25 @@ public class TestCaseUtils {
     }
 
     /**
+     * 将输入数组字符串转为Character数组
+     * @param inputStr 数组字符串 例如 "["1", "2", 3]"
+     * @return Integer数组 ['1','2','3']
+     */
+    public static Character[] getCharacterArr(String inputStr) {
+        return getArr(
+                inputStr.trim(),
+                ",",
+                str -> {
+                    if ("NULL".equalsIgnoreCase(str)) {
+                        return null;
+                    }
+                    return str.replaceAll("\"", "").trim().charAt(0);
+                },
+                new Character[0]
+        );
+    }
+
+    /**
      * 将输入数组字符串转为List
      * @param inputStr 数组字符串 例如 "["1", "2", 3]"
      * @return Integer数组 [1,2,3]
@@ -156,6 +175,20 @@ public class TestCaseUtils {
             intArr[i] = integerArr[i];
         }
         return intArr;
+    }
+
+    /**
+     * 将输入数组字符串转为int数组
+     * @param inputStr 数组字符串 例如 "["1", "2", 3]"
+     * @return Integer数组 [1,2,3]
+     */
+    public static char[] getCharArr(String inputStr) {
+        Character[] characterArr = getCharacterArr(inputStr);
+        char[] charArr = new char[characterArr.length];
+        for (int i = 0; i < characterArr.length; i++) {
+            charArr[i] = characterArr[i];
+        }
+        return charArr;
     }
 
     /**

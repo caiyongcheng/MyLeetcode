@@ -61,6 +61,18 @@ public class _881EightHundredEightyOne {
         if (people[left] > limit + 1 >> 1) {
             return people.length;
         }
+        /*
+        可以这样去写 每次迭代表示一艘船要运几个人
+        while (left < right) {
+            if (people[left] + people[right] <= limit) {
+                 ++ans;
+                 ++left;
+            }
+            --right;
+        }
+        return ans;
+         */
+        // 这种做法表示求双人船的数量
         while (left < right) {
             if (people[left] + people[right] <= limit) {
                 ++doubleBoats;
