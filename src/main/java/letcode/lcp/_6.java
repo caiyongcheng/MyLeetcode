@@ -24,63 +24,45 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package letcode.normal.medium;
-
-import java.util.Iterator;
+package letcode.lcp;
 
 /**
- * 请你设计一个迭代器，除了支持 hasNext 和 next 操作外，还支持 peek 操作。
- * 实现 PeekingIterator 类：
- * PeekingIterator(int[] nums) 使用指定整数数组 nums 初始化迭代器。
- * int next() 返回数组中的下一个元素，并将指针移动到下个元素处。
- * bool hasNext() 如果数组中存在下一个元素，返回 true ；否则，返回 false 。
- * int peek() 返回数组中的下一个元素，但 不 移动指针。
- * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/peeking-iterator 著作权归领扣网络所有。
- * 商业转载请联系官方授权，非商业转载请注明出处。
- *
- * @author CaiYongcheng
- * @date 2021-10-05 23:35
- **/
-public class _284 implements Iterator<Integer> {
+ * @author Caiyongcheng
+ * @version 1.0.0
+ * @since 2023/9/20 9:00
+ * description 桌上有 n 堆力扣币，每堆的数量保存在数组 coins 中。我们每次可以选择任意一堆，拿走其中的一枚或者两枚，求拿完所有力扣币的最少次数。
+ */
+public class _6 {
 
-    class _284 {
-        int val;
-        _284 next;
-    }
-
-    private _284 root;
-
-    public _284(Iterator<Integer> iterator) {
-        // initialize any member here.
-        if (iterator.hasNext()) {
-            root = new _284();
-            root.val = iterator.next();
-            _284 now = root;
-            while (iterator.hasNext()) {
-                now.next = new _284();
-                now.next.val = iterator.next();
-                now = now.next;
-            }
+    public int minCount(int[] coins) {
+        int ans = 0;
+        for (int coin : coins) {
+            ans += (coin + 1) >>> 1;
         }
+        return ans;
+        //上面的方法更快
+        //return Arrays.stream(coins).map(coin -> (coin + 1) >>> 1).sum();
     }
 
-    // Returns the next element in the iteration without advancing the iterator.
-    public Integer peek() {
-        return root == null ? null : root.val;
-    }
-
-    // hasNext() and next() should behave the same as in the Iterator interface.
-    // Override them if needed.
-    @Override
-    public Integer next() {
-        int val = root.val;
-        root = root.next;
-        return val;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return root != null;
+    /**
+     * 示例 1：
+     * <p>
+     * 输入：[4,2,1]
+     * <p>
+     * 输出：4
+     * <p>
+     * 解释：第一堆力扣币最少需要拿 2 次，第二堆最少需要拿 1 次，第三堆最少需要拿 1 次，总共 4 次即可拿完。
+     * <p>
+     * 示例 2：
+     * <p>
+     * 输入：[2,3,10]
+     * <p>
+     * 输出：8
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(new _6().minCount(new int[]{2, 3, 10}));
     }
 
 }

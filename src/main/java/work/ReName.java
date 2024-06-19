@@ -16,8 +16,8 @@ import java.util.Objects;
 public class ReName {
 
     public static void main(String[] args) {
-         File directory = new File("F:\\code-repository\\my-code\\MyLeetcode\\src\\main\\java");
-         rename(directory);
+        File directory = new File("F:\\code-repository\\my-code\\MyLeetcode\\src\\main\\java");
+        rename(directory);
     }
 
     public static void rename(File file) {
@@ -43,9 +43,9 @@ public class ReName {
         BufferedWriter bufferedWriter = null;
         try  {
             bufferedReader = new BufferedReader(new FileReader(file));
-            File reNameFile = new File(replace(file.getName()));
+            File reNameFile = new File(replace(file.getPath()));
             reNameFile.createNewFile();
-            System.out.println(file.getName() + "处理成功");
+            System.out.println(file.getName() + "，处理成功，" + reNameFile.getName());
             String lineStr;
             List<String> writeLineStrList = new ArrayList<>();
             while (true) {

@@ -44,40 +44,40 @@ import java.util.LinkedList;
  **/
 public class _352 {
 
-    class _352 {
+    class _352Node {
         int[] val;
-        _352 next;
+        _352Node next;
 
-        public _352(int val) {
+        public _352Node(int val) {
             this.val = new int[]{val, val};
         }
     }
 
 
     int size;
-    _352 head;
-    _352 tail;
+    _352Node head;
+    _352Node tail;
 
     public _352() {
         size = 0;
-        head = new _352(1);
+        head = new _352Node(1);
     }
 
     public void addNum(int val) {
         if (tail == null) {
-            tail = new _352(val);
+            tail = new _352Node(val);
             head.next = tail;
             size = 1;
         }
         //找到左边最接近区间
-        _352 left = search(val);
+        _352Node left = search(val);
         //最小 位于开头
         if (null == left) {
             if (val + 1 >= head.next.val[0]) {
                 head.next.val[0] = val;
                 return;
             }
-            _352 node = new _352(val);
+            _352Node node = new _352Node(val);
             node.next = head.next;
             head.next = node;
             ++size;
@@ -89,7 +89,7 @@ public class _352 {
         if (left.val[1] + 1 == val) {
             left.val[1] = val;
         } else {
-            _352 node = new _352(val);
+            _352Node node = new _352Node(val);
             node.next = left.next;
             left.next = node;
             ++size;
@@ -107,7 +107,7 @@ public class _352 {
 
     public int[][] getIntervals() {
         int[][] ans = new int[size][];
-        _352 iter = head.next;
+        _352Node iter = head.next;
         for (int index = 0; index < ans.length; index++) {
             ans[index] = iter.val;
             iter = iter.next;
@@ -115,9 +115,9 @@ public class _352 {
         return ans;
     }
 
-    private _352 search(int val) {
-        _352 right = head.next;
-        _352 left = null;
+    private _352Node search(int val) {
+        _352Node right = head.next;
+        _352Node left = null;
         while (right != null && right.val[0] <= val) {
             left = right;
             right = right.next;
