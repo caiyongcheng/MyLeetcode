@@ -26,10 +26,8 @@
 
 package letcode.normal.easy;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.BinaryOperator;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * 给定一个偶数长度的数组，其中不同的数字代表着不同种类的糖果，每一个数字代表一个糖果。你需要把这些糖果平均分给一个弟弟和一个妹妹。
@@ -42,15 +40,7 @@ import java.util.function.BinaryOperator;
 public class _575FiveHundredSeventyFive {
 
     public int distributeCandies(int[] candyType) {
-        HashMap<Integer, Integer> count = new HashMap<>();
-        for (int candy : candyType) {
-            count.put(candy, count.getOrDefault(candy, 0) + 1);
-        }
-        Set<Map.Entry<Integer, Integer>> entrySet = count.entrySet();
-        int candyTypeCount = entrySet.size();
-        Integer candyCount
-                = entrySet.stream().map(Map.Entry::getValue).reduce(Integer::sum).orElse(0);
-        return candyTypeCount << 1 > candyCount ? candyCount >> 1 : candyTypeCount;
+        return Math.min(Arrays.stream(candyType).boxed().collect(Collectors.toSet()).size(), candyType.length >> 1);
     }
 
     /**

@@ -48,10 +48,10 @@ public class _1673OneThousandSixHundredSeventyThree {
         Stack<Integer> stack = new Stack<>();
         int[] ans = new int[k];
         for (int i = 0; i < nums.length; i++) {
-            if (nums.length-i+stack.size() <= k) {
+            if (nums.length - i + stack.size() <= k) {
                 stack.push(nums[i]);
             } else {
-                while (!stack.empty() && nums.length-i+stack.size() > k && stack.peek() > nums[i]) {
+                while (!stack.empty() && nums.length - i + stack.size() > k && stack.peek() > nums[i]) {
                     stack.pop();
                 }
                 if (stack.size() < k) {
@@ -61,6 +61,20 @@ public class _1673OneThousandSixHundredSeventyThree {
         }
         while (!stack.empty()) {
             ans[--k] = stack.pop();
+        }
+        return ans;
+    }
+
+    public int[] mostCompetitiveOptimize(int[] nums, int k) {
+        int curCnt = 0;
+        int[] ans = new int[k];
+        for (int i = 0; i < nums.length; i++) {
+            while (curCnt > 0 && nums.length - i + curCnt > k && ans[curCnt - 1] > nums[i]) {
+                --curCnt;
+            }
+            if (curCnt < k) {
+                ans[curCnt++] = nums[i];
+            }
         }
         return ans;
     }
@@ -82,8 +96,8 @@ public class _1673OneThousandSixHundredSeventyThree {
      */
     public static void main(String[] args) {
         System.out.println(FormatUtils.formatArray(new _1673OneThousandSixHundredSeventyThree().mostCompetitive(
-                new int[]{2, 4, 3, 3, 5, 4, 9, 6},
-                4
+                new int[]{3,5,2,6},
+                2
         )));
     }
 

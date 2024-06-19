@@ -1,8 +1,12 @@
 package letcode.utils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -112,7 +116,7 @@ public class TestCaseUtils {
      */
     public static Integer[] getIntegerArr(String inputStr) {
         return getArr(
-                inputStr,
+                inputStr.trim(),
                 ",",
                 str -> {
                     if ("NULL".equalsIgnoreCase(str)) {
@@ -121,6 +125,25 @@ public class TestCaseUtils {
                     return Integer.parseInt(str.replaceAll("\"", "").trim());
                 },
                 new Integer[0]
+        );
+    }
+
+    /**
+     * 将输入数组字符串转为Character数组
+     * @param inputStr 数组字符串 例如 "["1", "2", 3]"
+     * @return Integer数组 ['1','2','3']
+     */
+    public static Character[] getCharacterArr(String inputStr) {
+        return getArr(
+                inputStr.trim(),
+                ",",
+                str -> {
+                    if ("NULL".equalsIgnoreCase(str)) {
+                        return null;
+                    }
+                    return str.replaceAll("\"", "").trim().charAt(0);
+                },
+                new Character[0]
         );
     }
 
@@ -152,6 +175,20 @@ public class TestCaseUtils {
             intArr[i] = integerArr[i];
         }
         return intArr;
+    }
+
+    /**
+     * 将输入数组字符串转为int数组
+     * @param inputStr 数组字符串 例如 "["1", "2", 3]"
+     * @return Integer数组 [1,2,3]
+     */
+    public static char[] getCharArr(String inputStr) {
+        Character[] characterArr = getCharacterArr(inputStr);
+        char[] charArr = new char[characterArr.length];
+        for (int i = 0; i < characterArr.length; i++) {
+            charArr[i] = characterArr[i];
+        }
+        return charArr;
     }
 
     /**
@@ -280,6 +317,30 @@ public class TestCaseUtils {
     }
 
 
+    public static int[] createRandomIntArr(int arrLength, int floor, int ceil) {
+        int[] randomArr = new int[arrLength];
+        int dist = ceil - floor;
+        try {
+            for (int i = 0; i < randomArr.length; i++) {
+                randomArr[i] = (int) (SecureRandom.getInstanceStrong().nextDouble() * dist) + floor;
+            }
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        return randomArr;
+    }
+
+    public static int[] createRandomIntArr(int arrLength) {
+        int[] randomArr = new int[arrLength];
+        try {
+            for (int i = 0; i < randomArr.length; i++) {
+                randomArr[i] = SecureRandom.getInstanceStrong().nextInt(Integer.MAX_VALUE);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        return randomArr;
+    }
 
 
 

@@ -15,13 +15,25 @@ public class GenericCodeUtil {
 
     public static void init() {
         LineStrConverter.init(
-                "sys_administrative_division",
-                "新增区划表",
-                "division_code|division_code|行政区划代码|nvarchar(8000)|not null\n" +
-                        "division_name|division_name|行政区划名称|nvarchar(8000)|not null\n" +
-                        "division_level|division_level|等级(省1市县2乡3村4)|int(4)|not null\n" +
-                        "parent_code|parent_code|上级行政区划代码|nvarchar(8000)|not null\n" +
-                        "parent_name|parent_name|上级行政区划名称|nvarchar(8000)|not null\n"
+                "lab_alarm_info",
+                "检验结果危急值信息表",
+                "exam_result_id|exam_result_id|检验结果表主键|bigint(8)|not null\n" +
+                        "sample_detail_id|sample_detail_id|检验申请明细主键|bigint(8)|null\n" +
+                        "sample_info_id|sample_info_id|申请单表主键|bigint(8)|not null\n" +
+                        "ins_id|ins_id|仪器主键|bigint(8)|not null\n" +
+                        "sample_date|sample_date|申请日期|datetime(8)|not null\n" +
+                        "operate_time|operate_time|结果填写日期|datetime(8)|null\n" +
+                        "sample_no|sample_no|申请编号|bigint(8)|not null\n" +
+                        "ad_number|ad_number|门诊、住院、病历号|nvarchar(8000)|not null\n" +
+                        "card_no|card_no|卡号|nvarchar(8000)|null\n" +
+                        "pat_name|pat_name|病人姓名|nvarchar(8000)|not null\n" +
+                        "pat_sex|pat_sex|病人性别|int(4)|null\n" +
+                        "dept_name|dept_name|科室名称|nvarchar(8000)|null\n" +
+                        "item_name|item_name|检验项目名称|nvarchar(8000)|null\n" +
+                        "item_value|item_value|检验值|nvarchar(8000)|null\n" +
+                        "origin_value|origin_value|原始值|nvarchar(8000)|null\n" +
+                        "adjust_value|adjust_value|调整值|nvarchar(8000)|null\n" +
+                        "lab_alarm_info_id|lab_alarm_info_id|id主键|bigint(8)|not null\n"
         );
     }
 
