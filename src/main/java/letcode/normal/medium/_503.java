@@ -26,7 +26,12 @@
 
 package letcode.normal.medium;
 
+import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseUtils;
+
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
 
 /**
  * @program: Leetcode
@@ -36,21 +41,6 @@ import java.util.Arrays;
  */
 public class _503 {
 
-    /**
-     * 输入: [1,2,1]
-     * 输出: [2,-1,2]
-     * 解释: 第一个 1 的下一个更大的数是 2；
-     * 数字 2 找不到下一个更大的数；
-     * 第二个 1 的下一个最大的数需要循环搜索，结果也是 2
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/next-greater-element-ii
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     */
-    public static void main(String[] args) {
-        int[] nums = {1, 2, 1};
-        System.out.println(Arrays.toString(
-                new _503().nextGreaterElements(nums)));
-    }
 
     public int[] nextGreaterElements(int[] nums) {
         int[] result = new int[nums.length];
@@ -69,6 +59,50 @@ public class _503 {
             }
         }
         return result;
+    }
+
+
+    public int[] nextGreaterElements2(int[] nums) {
+        /**
+         * 维护一个单调栈即可
+         */
+        int[] ans = new int[nums.length];
+        Arrays.fill(ans, -1);
+        int len = nums.length << 1;
+        Deque<Integer> stack = new ArrayDeque<>(nums.length + 1);
+        int idx;
+        for (int i = 0; i < len; i++) {
+            idx = i % nums.length;
+            while (!stack.isEmpty() && nums[stack.peek()] < nums[idx]) {
+                ans[stack.pop()] = nums[idx];
+            }
+            if (i < nums.length) {
+                stack.push(i);
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * 示例 1:
+     *
+     * 输入: nums = [1,2,1]
+     * 输出: [2,-1,2]
+     * 解释: 第一个 1 的下一个更大的数是 2；
+     * 数字 2 找不到下一个更大的数；
+     * 第二个 1 的下一个最大的数需要循环搜索，结果也是 2。
+     * 示例 2:
+     *
+     * 输入: nums = [1,2,3,4,3]
+     * 输出: [2,3,4,-1,4]
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(FormatUtils.formatArray(
+                new _503().nextGreaterElements2(
+                        TestCaseUtils.getIntArr("[1,2,3,4,3]")
+                )
+        ));
     }
 
 }
