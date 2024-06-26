@@ -27,10 +27,9 @@ public class _2741 {
          * 使用记忆化搜索的话，深度也只有14层，其实也是可以接受的。
          */
 
-        int mod = 1_000_000_000 + 7;
-
         // cache[i][j] 表示当前状态为i，并且最后一个数是j的方案数
         // cache[i][j] = 所有 (i ^ 1 << j)的状态 并且结尾与j满足条件的状态数之和
+        int mod = 1_000_000_000 + 7;
         int[][] cache = new int[1 << nums.length][nums.length];
 
         // 只有一个结尾的状态
@@ -38,17 +37,17 @@ public class _2741 {
             cache[1 << i][i] = 1;
         }
 
-        int nextState;
+        int lastState;
         for (int state = 0; state < cache.length; state++) {
             for (int j = 0; j < cache[state].length; j++) {
                 // 过滤不存在的情况 即当前状态为state 当是j位上是0
                 if ((state >> j & 1) == 0) {
                     continue;
                 }
-                nextState = state ^ (1 << j);
-                for (int endIdx = 0; endIdx < cache[nextState].length; endIdx++) {
+                lastState = state ^ (1 << j);
+                for (int endIdx = 0; endIdx < cache[lastState].length; endIdx++) {
                     if ((j != endIdx && (nums[j] % nums[endIdx] == 0 || nums[endIdx] % nums[j] == 0))) {
-                        cache[state][j] = (cache[state][j] + cache[nextState][endIdx]) % mod;
+                        cache[state][j] = (cache[state][j] + cache[lastState][endIdx]) % mod;
                     }
                 }
             }
