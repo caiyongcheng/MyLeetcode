@@ -68,6 +68,7 @@ public class _678 {
     }
 
 
+
     public boolean checkValidString1(String s) {
         /*
         少有的使用LinkedList可能更好的情景
