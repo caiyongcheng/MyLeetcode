@@ -22,6 +22,8 @@ import java.util.List;
  * 0 <= maxChanges <= 105
  * maxChanges + sum(nums) >= k
  *
+ * 思路都正确的想出来了 就是代码没写对 垃圾的恨
+ *
  * @author 蔡永程
  * @version 1.0.0
  * @since 2024-07-04 09:05
