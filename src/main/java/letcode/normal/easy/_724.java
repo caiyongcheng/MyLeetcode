@@ -39,19 +39,15 @@ public class _724 {
 
     public int pivotIndex(int[] nums) {
         int sum = 0;
-        int left;
-        int right;
-        int[] preSumArr = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            sum += nums[i];
-            preSumArr[i] = sum;
+        int preSumArr = 0;
+        for (int num : nums) {
+            sum += num;
         }
         for (int i = 0; i < nums.length; i++) {
-            left = i - 1 < 0 ? 0 : preSumArr[i-1];
-            right = sum - preSumArr[i];
-            if (left == right) {
+            if (sum - preSumArr - nums[i] == preSumArr) {
                 return i;
             }
+            preSumArr += nums[i];
         }
         return -1;
     }
