@@ -191,6 +191,15 @@ public class TestCaseUtils {
         return charArr;
     }
 
+    public static char[][] get2DCharArr(String inputStr) {
+        return get2DArr(
+                inputStr,
+                ",",
+                TestCaseUtils::getCharArr,
+                new char[0][0]
+        );
+    }
+
     /**
      * 将输入字符串转化为数组
      * @param inputStr 数组字符串
