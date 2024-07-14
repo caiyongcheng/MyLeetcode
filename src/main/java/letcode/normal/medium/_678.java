@@ -27,6 +27,7 @@
 package letcode.normal.medium;
 
 
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -43,6 +44,67 @@ import java.util.Stack;
  * @date 2021-09-12 20:56
  **/
 public class _678 {
+
+    public boolean checkValidString2(String s) {
+        int minCount = 0, maxCount = 0;
+        int n = s.length();
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            if (c == '(') {
+                minCount++;
+                maxCount++;
+            } else if (c == ')') {
+                minCount = Math.max(minCount - 1, 0);
+                maxCount--;
+                if (maxCount < 0) {
+                    return false;
+                }
+            } else {
+                minCount = Math.max(minCount - 1, 0);
+                maxCount++;
+            }
+        }
+        return minCount == 0;
+    }
+
+
+
+    public boolean checkValidString1(String s) {
+        /*
+        少有的使用LinkedList可能更好的情景
+         */
+        int length = s.length();
+        LinkedList<Integer> leftIdxList = new LinkedList<>();
+        LinkedList<Integer> starIdxList = new LinkedList<>();
+        char ch;
+
+        for (int i = 0; i < length; i++) {
+            ch = s.charAt(i);
+            if (ch == '(') {
+                leftIdxList.addLast(i);
+            } else if (ch == ')') {
+                if (leftIdxList.isEmpty()) {
+                    if (starIdxList.isEmpty()) {
+                        return false;
+                    } else {
+                        starIdxList.removeLast();
+                    }
+                } else {
+                    leftIdxList.removeLast();
+                }
+            } else {
+                starIdxList.addLast(i);
+            }
+        }
+
+        while (!leftIdxList.isEmpty() && !starIdxList.isEmpty()) {
+            if (leftIdxList.removeLast() > starIdxList.removeLast()) {
+                return false;
+            }
+        }
+        return leftIdxList.isEmpty();
+
+    }
 
     public boolean checkValidString(String s) {
         //1 用栈操作 * 和 （ 入栈， 遇到）先出（ 当没有（的时候出*
@@ -96,9 +158,13 @@ public class _678 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(new _678().checkValidString(
-                "(*))"
+        System.out.println(new _678().checkValidString1(
+                "((*)"
         ));
+        System.out.println(new _678().checkValidString(
+                "((*)"
+        ));
+
     }
 
 }
