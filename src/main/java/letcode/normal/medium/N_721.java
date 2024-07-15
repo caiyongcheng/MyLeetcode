@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.CastUtils;
+import letcode.utils.TestCaseUtils;
 
 import java.util.*;
 
@@ -46,79 +46,128 @@ import java.util.*;
  */
 public class N_721 {
 
-
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        //按照名称分组
-        //再确定每个名称组中哪些可以合并
-        for (List<String> account : accounts) {
-            account.sort(String::compareTo);
-            for (int i = account.size() - 1; i >= 0; i--) {
-                if (i-1>-1 && account.get(i).equals(account.get(i-1))) {
-                    account.remove(i);
+        /*
+        并查集的应用
+
+            public int[] parent;
+            public String[]  owners, emails;
+            public Map<String, Integer> emailToId;
+            int emailId = 0;
+
+            public List<List<String>> accountsMerge(List<List<String>> accounts) {
+
+                int n = accounts.size() * 9;
+                parent  =  new int[n];
+                owners  =  new String[n];
+                emails  =  new String[n];
+                emailToId = new HashMap<>(n);
+
+                for(int i = 0; i < n; i++)
+                    parent[i] = i;
+
+                for(List<String>account: accounts){
+                    String owner = account.get(0);
+                    int first = getId(account.get(1), owner);
+                    for(int i = 2; i < account.size(); i++)
+                         union(first, getId(account.get(i), owner));
+
+                }
+
+                int size = emailId;
+                List<String> [] merge = new List[size];
+                for(int i = 0; i < size; i++){
+                    int parent = find(i);
+                    if(merge[parent] == null)
+                        merge[parent] = new ArrayList<>();
+
+                    merge[parent].add(emails[i]);
+                }
+
+                List<List<String>> result=new ArrayList<>();
+                for(int i = 0 ; i < size; i++){
+                    if(merge[i] == null)
+                        continue;
+
+                    Collections.sort(merge[i]);
+                    merge[i].add(0, owners[i]);
+                    result.add(merge[i]);
+                }
+                return result;
+            }
+
+            public int getId(String email, String owner){
+
+                Integer id = emailToId.get(email);
+                if(id == null){
+                    id = emailId++;
+                    emailToId.put(email, id);
+                }
+
+                owners[id] = owner;
+                emails[id] = email;
+                return id;
+            }
+
+            private int find(int x) {
+                return parent[x] == x ? x : (parent[x] = find(parent[x]));
+            }
+
+            private void union(int x, int y) {
+                int rootX = find(x);
+                int rootY = find(y);
+                if (rootX == rootY)
+                    return;
+
+                parent[rootX] = rootY;
+            }
+         */
+        List<Set<String>> unionFindList = new ArrayList<>();
+        Set<Integer> mergeIndexSet = new TreeSet<>((o1, o2) -> o2 - o1);
+        Map<String, String> email2AccountMap = new HashMap<>();
+        Set<String> unionFindSet;
+        String account;
+        String email;
+        for (List<String> data : accounts) {
+            mergeIndexSet = new TreeSet<>((o1, o2) -> o2 - o1);
+            account = data.get(0);
+            for (int i = 1; i < data.size(); i++) {
+                email = data.get(i);
+                email2AccountMap.put(email, account);
+                for (int index = 0; index < unionFindList.size(); index++) {
+                    if (unionFindList.get(index).contains(email)) {
+                        mergeIndexSet.add(index);
+                        break;
+                    }
                 }
             }
-        }
-        String key;
-        HashMap<String, List<List<String>>> listHashMap = new HashMap<>(accounts.size());
-        ArrayList<List<String>> ans = new ArrayList<>();
-        List<List<String>> lists;
-        for (List<String> account : accounts) {
-            key = account.get(0);
-            if (listHashMap.containsKey(key)) {
-                listHashMap.get(key).add(account);
+            if (mergeIndexSet.size() > 1 || mergeIndexSet.size() == 0) {
+                unionFindSet = new HashSet<>();
+                for (Integer index : mergeIndexSet) {
+                    unionFindSet.addAll(unionFindList.get(index));
+                    unionFindList.remove(index.intValue());
+                }
+                unionFindList.add(unionFindSet);
             } else {
-                lists = new ArrayList<>();
-                lists.add(account);
-                listHashMap.put(key, lists);
+                unionFindSet = unionFindList.get(mergeIndexSet.iterator().next());
+            }
+            for (int i = 1; i < data.size(); i++) {
+                unionFindSet.add(data.get(i));
             }
         }
-        Set<String> keySet = listHashMap.keySet();
-        for (String name : keySet) {
-            lists = listHashMap.get(name);
-            ans.addAll(merge(lists));
-        }
-        for (List<String> list : ans) {
-            list.sort(String::compareTo);
+
+        List<List<String>> ans = new ArrayList<>();
+        List<String> item;
+        for (Set<String> unionFind : unionFindList) {
+            unionFind.add("");
+            item = new ArrayList<>(unionFind);
+            Collections.sort(item);
+            item.set(0, email2AccountMap.get(item.get(1)));
+            ans.add(item);
         }
         return ans;
     }
 
-
-    public List<List<String>> merge(List<List<String>> lists) {
-        List<String> tail;
-        List<String> head;
-        boolean isMerge = false;
-        for (int i = 0; i < lists.size(); i++) {
-            isMerge = false;
-            head = lists.get(i);
-            for (int j = lists.size() - 1; j > i; j--) {
-                tail = lists.get(j);
-                if (sameOne(head, tail)) {
-                    head.addAll(tail.subList(1, tail.size()));
-                    lists.remove(j);
-                    isMerge = true;
-                }
-            }
-            if (isMerge) {
-                --i;
-            }
-        }
-        return lists;
-    }
-
-
-    public boolean sameOne(List<String> l1, List<String> l2) {
-        boolean res = false;
-        for (int i = l1.size() - 1; i > 0; i--) {
-            for (int j = l2.size() - 1; j > 0; j--) {
-                if (l1.get(i).equals(l2.get(j))) {
-                    l2.remove(j);
-                    res = true;
-                }
-            }
-        }
-        return res;
-    }
 
     /**
      * 示例 1：
@@ -145,18 +194,14 @@ public class N_721 {
      * [["David","David0@m.co","David1@m.co"],["David","David3@m.co","David4@m.co"],["David","David4@m.co","David5@m.co"],["David","David2@m.co","David3@m.co"],["David","David1@m.co","David2@m.co"]]
      * @param args
      */
-
-
     public static void main(String[] args) {
-        String[][] strings = {
-                {"David","David0@m.co","David1@m.co"},
-                {"David","David3@m.co","David4@m.co"},
-                {"David","David4@m.co","David5@m.co"},
-                {"David","David2@m.co","David3@m.co"},
-                {"David","David1@m.co","David2@m.co"}
-        };
-        List<List<String>> lists = CastUtils.array2List(strings);
-        System.out.println(new N_721().accountsMerge(lists));
+        System.out.println(new N_721().accountsMerge(
+                TestCaseUtils.get2DList(
+                        TestCaseUtils.getStringFromFile(),
+                        ",",
+                        TestCaseUtils::getArr
+                )
+        ));
     }
 
 }

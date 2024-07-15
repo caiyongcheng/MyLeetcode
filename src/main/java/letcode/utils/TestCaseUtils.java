@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
  */
 public class TestCaseUtils {
 
+    private static final String TEST_CASE_FILE_PATH = "src/main/resources/TestCase.txt";
+
     /**
      * 将字符串转化为对应的二维整形数组
      * @param inputStr 输入字符串 形式类似 "[[1,6,1],[3,10,2],[10,12,3],[11,12,2],[12,15,2],[13,18,1]]"
@@ -59,9 +61,28 @@ public class TestCaseUtils {
      * @return 字符串对应的二维数组
      * @param <T> 数组类型[]
      */
-    public static<T> List<List<T>> get2DList(String inputStr, String separator, Function<String, T> mapFun) {
+    public static<T> List<List<T>> get2DList(String inputStr, String separator, Function<String, T[]> mapFun) {
         inputStr = inputStr.substring(1, inputStr.length() - 1).replaceAll("[\\[|\\]]", " ");
         return Arrays.stream(inputStr.split(" " + separator + " ")).map(mapFun).map(Arrays::asList).collect(Collectors.toList());
+    }
+
+    /**
+     * 将字符串转为对应的字符串二维List
+     * @param inputStr 输入字符串 类似 [[...],[...],[...]]
+     * @param separator 字符串中分割数组的分隔符
+     * @return 字符串对应的二维List
+     */
+    public static List<List<String>> get2DStrList(String inputStr, String separator) {
+        return get2DList(inputStr, separator, TestCaseUtils::getArr);
+    }
+
+    /**
+     * 将字符串转为对应的字符串二维List
+     * @param inputStr 输入字符串 类似 [[...],[...],[...]]
+     * @return 字符串对应的二维List
+     */
+    public static List<List<String>> get2DStrList(String inputStr) {
+        return get2DStrList(inputStr, ",");
     }
 
 
@@ -325,6 +346,10 @@ public class TestCaseUtils {
         }
     }
 
+    public static String getStringFromFile() {
+        return getStringFromFile(TEST_CASE_FILE_PATH);
+    }
+
 
     public static int[] createRandomIntArr(int arrLength, int floor, int ceil) {
         int[] randomArr = new int[arrLength];
@@ -351,10 +376,8 @@ public class TestCaseUtils {
         return randomArr;
     }
 
-
-
-
-
-
+    public static void main(String[] args) {
+        System.out.println(TestCaseUtils.getStringFromFile());
+    }
 
 }
