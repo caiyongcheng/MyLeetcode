@@ -80,7 +80,7 @@ public class _2744 {
      */
     public static void main(String[] args) {
         System.out.println(new _2744().maximumNumberOfStringPairs(
-                TestCaseUtils.getArr("[\"aa\",\"ab\"]")
+                TestCaseUtils.getStrArr("[\"aa\",\"ab\"]")
         ));
     }
 

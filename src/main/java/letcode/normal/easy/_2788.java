@@ -3,11 +3,7 @@ package letcode.normal.easy;
 import letcode.utils.TestCaseUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 给你一个字符串数组 words 和一个字符 separator ，请你按 separator 拆分 words 中的每个字符串。
@@ -80,7 +76,7 @@ public class _2788 {
      */
     public static void main(String[] args) {
         System.out.println(new _2788().splitWordsBySeparator(
-                TestCaseUtils.getList("[\"|||\"]"),
+                TestCaseUtils.getStrList("[\"|||\"]"),
                 '|'
         ));
     }

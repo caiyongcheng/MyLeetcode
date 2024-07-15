@@ -118,7 +118,7 @@ public class _2391 {
      */
     public static void main(String[] args) {
         System.out.println(new _2391().garbageCollection(
-                TestCaseUtils.getArr("[\"MMM\",\"PGM\",\"GP\"]"),
+                TestCaseUtils.getStrArr("[\"MMM\",\"PGM\",\"GP\"]"),
                 TestCaseUtils.getIntArr("[3,10]")
         ));
     }

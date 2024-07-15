@@ -69,7 +69,7 @@ public class _522 {
      */
     public static void main(String[] args) {
         System.out.println(new _522().findLUSlength(
-                TestCaseUtils.getArr("[\"aba\",\"cdc\",\"eae\"]")
+                TestCaseUtils.getStrArr("[\"aba\",\"cdc\",\"eae\"]")
         ));
     }
 

@@ -196,10 +196,8 @@ public class N_721 {
      */
     public static void main(String[] args) {
         System.out.println(new N_721().accountsMerge(
-                TestCaseUtils.get2DList(
-                        TestCaseUtils.getStringFromFile(),
-                        ",",
-                        TestCaseUtils::getArr
+                TestCaseUtils.get2DStrList(
+                        TestCaseUtils.getStringFromFile()
                 )
         ));
     }

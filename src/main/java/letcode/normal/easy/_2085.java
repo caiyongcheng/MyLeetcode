@@ -65,8 +65,8 @@ public class _2085 {
      */
     public static void main(String[] args) {
         System.out.println(new _2085().countWords(
-                TestCaseUtils.getArr("[\"a\",\"ab\"]"),
-                TestCaseUtils.getArr("[\"a\",\"a\",\"a\",\"ab\"]")
+                TestCaseUtils.getStrArr("[\"a\",\"ab\"]"),
+                TestCaseUtils.getStrArr("[\"a\",\"a\",\"a\",\"ab\"]")
         ));
     }
 

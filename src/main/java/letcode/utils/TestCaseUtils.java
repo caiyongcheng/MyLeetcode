@@ -73,7 +73,7 @@ public class TestCaseUtils {
      * @return 字符串对应的二维List
      */
     public static List<List<String>> get2DStrList(String inputStr, String separator) {
-        return get2DList(inputStr, separator, TestCaseUtils::getArr);
+        return get2DList(inputStr, separator, TestCaseUtils::getStrArr);
     }
 
     /**
@@ -106,8 +106,8 @@ public class TestCaseUtils {
      *                \"popSmallest\", \"addBack\", \"popSmallest\", \"popSmallest\", \"popSmallest\"]"
      * @return 字符串数组 例如 ["\"SmallestInfiniteSet\""...]
      */
-    public static String[] getArr(String inputStr) {
-        return getArr(inputStr, ",", s -> s.replaceAll("\"", "").trim(), new String[0]);
+    public static String[] getStrArr(String inputStr) {
+        return getStrArr(inputStr, ",", s -> s.replaceAll("\"", "").trim(), new String[0]);
     }
 
     /**
@@ -116,8 +116,8 @@ public class TestCaseUtils {
      *                \"popSmallest\", \"addBack\", \"popSmallest\", \"popSmallest\", \"popSmallest\"]"
      * @return 字符串数组 例如 ["\"SmallestInfiniteSet\""...]
      */
-    public static List<String> getList(String inputStr) {
-        return Arrays.stream(getArr(inputStr, ",", s -> s.replaceAll("\"", "").trim(), new String[0])).collect(Collectors.toList());
+    public static List<String> getStrList(String inputStr) {
+        return Arrays.stream(getStrArr(inputStr, ",", s -> s.replaceAll("\"", "").trim(), new String[0])).collect(Collectors.toList());
     }
 
     /**
@@ -126,8 +126,8 @@ public class TestCaseUtils {
      *                 \"popSmallest\", \"addBack\", \"popSmallest\", \"popSmallest\", \"popSmallest\"]"
      * @return 字符串数组 例如 ["SmallestInfiniteSet"...]
      */
-    public static String[] getArrIgnoreDoubleQuote(String inputStr) {
-        return getArr(inputStr, ",", s -> s.trim().replaceAll("\"", ""), new String[0]);
+    public static String[] getStrArrIgnoreDoubleQuote(String inputStr) {
+        return getStrArr(inputStr, ",", s -> s.trim().replaceAll("\"", ""), new String[0]);
     }
 
     /**
@@ -136,7 +136,7 @@ public class TestCaseUtils {
      * @return Integer数组 [1,2,3]
      */
     public static Integer[] getIntegerArr(String inputStr) {
-        return getArr(
+        return getStrArr(
                 inputStr.trim(),
                 ",",
                 str -> {
@@ -155,7 +155,7 @@ public class TestCaseUtils {
      * @return Integer数组 ['1','2','3']
      */
     public static Character[] getCharacterArr(String inputStr) {
-        return getArr(
+        return getStrArr(
                 inputStr.trim(),
                 ",",
                 str -> {
@@ -175,7 +175,7 @@ public class TestCaseUtils {
      */
     public static List<Integer> getIntegerList(String inputStr) {
         return Arrays.asList(
-                getArr(
+                getStrArr(
                         inputStr,
                         ",",
                         str -> Integer.parseInt(str.replaceAll("\"", "").trim()),
@@ -230,7 +230,7 @@ public class TestCaseUtils {
      * @return 数组
      * @param <T> 目标数组类型
      */
-    public static<T> T[] getArr(String inputStr, String separator, Function<String, T> mapFun, T[] arr) {
+    public static<T> T[] getStrArr(String inputStr, String separator, Function<String, T> mapFun, T[] arr) {
         if (inputStr.startsWith("[")) {
             inputStr = inputStr.substring(1);
         }
@@ -291,7 +291,7 @@ public class TestCaseUtils {
         Method[] methodArr = obj.getClass().getDeclaredMethods();
         Map<String, Method> methodName2Method =
                 Arrays.stream(methodArr).collect(Collectors.toMap(Method::getName, Function.identity()));
-        String[] operationArr = getArrIgnoreDoubleQuote(operationStr);
+        String[] operationArr = getStrArrIgnoreDoubleQuote(operationStr);
         String[][] paramsArr = get2DStrArr(paramsStr);
         String[] ans = new String[paramsArr.length];
         try {
