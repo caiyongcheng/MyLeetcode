@@ -28,7 +28,7 @@ package letcode;
 
 /**
  * @author CaiYongcheng
- * @date 2022-03-25 17:35
+ * @since 2022-03-25 17:35
  **/
 public class ThreadSort implements Runnable {
 

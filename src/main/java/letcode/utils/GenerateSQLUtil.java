@@ -34,7 +34,7 @@ import java.time.format.DateTimeFormatter;
  * sql生成器
  *
  * @author CaiYongcheng
- * @date 2022-08-05 10:05
+ * @since 2022-08-05 10:05
  **/
 public class GenerateSQLUtil {
 

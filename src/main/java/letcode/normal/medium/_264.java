@@ -32,7 +32,7 @@ import java.util.*;
  * 给你一个整数 n ，请你找出并返回第 n 个 丑数 。  丑数 就是只包含质因数 2、3 和/或 5 的正整数。
  *
  * @author CaiYongcheng
- * @date 2021-08-09 09:08
+ * @since 2021-08-09 09:08
  **/
 public class _264 {
 

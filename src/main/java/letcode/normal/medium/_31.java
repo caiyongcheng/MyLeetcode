@@ -34,7 +34,7 @@ import java.util.Arrays;
  * 如果不存在下一个更大的排列，则将数字重新排列成最小的排列（即升序排列）。  必须原地修改，只允许使用额外常数空间。
  *
  * @author : CaiYongcheng
- * @date : 2020-07-01 12:35
+ * @since : 2020-07-01 12:35
  **/
 public class _31 {
 

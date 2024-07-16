@@ -36,7 +36,7 @@ import java.util.List;
  * @description: 基本栈实现
  * @packagename: datastructure.stack
  * @author: 6JSh5rC456iL
- * @date: 2021-03-19 09:12
+ * @since: 2021-03-19 09:12
  **/
 public class LinkedStack<T> implements Stack<T> {
 

@@ -35,7 +35,7 @@ import datastructure.node.Node;
  * @description: 底层使用数组的可扩充栈,准确来说每个数组是一个插槽，插槽使用链表形式扩充
  * @packagename: datastructure.stack
  * @author: 6JSh5rC456iL
- * @date: 2021-03-23 17:41
+ * @since: 2021-03-23 17:41
  **/
 public class ArrayStack<T> implements Stack<T>{
 

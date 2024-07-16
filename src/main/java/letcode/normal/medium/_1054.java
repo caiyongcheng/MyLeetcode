@@ -37,7 +37,7 @@ import java.util.ArrayList;
  * 1 <= barcodes.length <= 10000
  * 1 <= barcodes[i] <= 10000
  * @author CaiYongcheng
- * @date 2021-04-28 10:45
+ * @since 2021-04-28 10:45
  **/
 public class _1054 {
 

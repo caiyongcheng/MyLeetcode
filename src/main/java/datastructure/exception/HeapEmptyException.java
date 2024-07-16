@@ -31,7 +31,7 @@ package datastructure.exception;
  * @description: 堆空异常
  * @packagename: datastructure.exception
  * @author: 6JSh5rC456iL
- * @date: 2021-04-09 09:51
+ * @since: 2021-04-09 09:51
  **/
 public class HeapEmptyException extends RuntimeException {
 

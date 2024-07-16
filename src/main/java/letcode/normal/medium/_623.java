@@ -38,7 +38,7 @@ import letcode.utils.TreeNode;
  * 商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @date 2022-08-05 08:59
+ * @since 2022-08-05 08:59
  **/
 public class _623 {
 

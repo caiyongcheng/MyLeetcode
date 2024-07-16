@@ -34,7 +34,7 @@ import datastructure.stack.LinkedStack;
  * @program: MyLeetcode
  * @description: AVL平衡树
  * @author: 6JSh5rC456iL
- * @date 2021-03-15 17:26
+ * @since 2021-03-15 17:26
  **/
 public class AVLBinaryTree<T extends Comparable<T>>{
 

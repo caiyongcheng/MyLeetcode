@@ -34,7 +34,7 @@ import datastructure.exception.QueueOverFlowException;
  * @description: 创建后容量不可变的队列
  * @packagename: datastructure.queue
  * @author: 6JSh5rC456iL
- * @date: 2021-03-24 10:57
+ * @since: 2021-03-24 10:57
  **/
 public class ImmutableQueue<T> implements Queue<T>{
 

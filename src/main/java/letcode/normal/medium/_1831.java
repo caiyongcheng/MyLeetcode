@@ -36,7 +36,7 @@ package letcode.normal.medium;
  * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/design-a-stack-with-increment-operation 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  * @packagename: letcode.normal.medium
  * @author: 6JSh5rC456iL
- * @date: 2021-03-23 15:11
+ * @since: 2021-03-23 15:11
  **/
 public class _1831 {
 

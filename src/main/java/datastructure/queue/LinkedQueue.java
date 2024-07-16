@@ -35,7 +35,7 @@ import datastructure.validate.ValidateQueue;
  * @description: 底层使用链表，可扩充的队列
  * @packagename: datastructure.queue
  * @author: 6JSh5rC456iL
- * @date: 2021-03-25 09:09
+ * @since: 2021-03-25 09:09
  **/
 public class LinkedQueue<T> implements Queue<T>{
 

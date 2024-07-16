@@ -33,7 +33,7 @@ import java.util.StringJoiner;
  * @description: 二叉平衡树节点
  * @packagename: datastructure.node
  * @author: 6JSh5rC456iL
- * @date: 2021-03-19 09:47
+ * @since: 2021-03-19 09:47
  **/
 public class AVLBTreeNode<T extends Comparable<T>> extends BTreeNode<T> {
 

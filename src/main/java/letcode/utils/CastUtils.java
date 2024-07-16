@@ -39,7 +39,7 @@ import java.util.Scanner;
  * @description: 类型转化工具
  * @packagename: letcode.utils
  * @author: 6JSh5rC456iL
- * @date: 2021-04-14 10:37
+ * @since: 2021-04-14 10:37
  **/
 public class CastUtils {
 

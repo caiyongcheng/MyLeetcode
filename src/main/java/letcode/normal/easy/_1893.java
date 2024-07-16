@@ -35,7 +35,7 @@ import java.util.ArrayList;
  *   来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/check-if-all-the-integers-in-a-range-are-covered 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @date 2021-07-23 09:25
+ * @since 2021-07-23 09:25
  **/
 public class _1893 {
 

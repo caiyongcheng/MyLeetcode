@@ -39,7 +39,7 @@ import java.util.StringJoiner;
  * Leetcode
  *
  * @author : CaiYongcheng
- * @date : 2020-06-28 20:45
+ * @since : 2020-06-28 20:45
  **/
 public class TreeNode {
     public int val;

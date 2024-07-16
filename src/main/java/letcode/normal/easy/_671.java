@@ -34,7 +34,7 @@ import letcode.utils.TreeNode;
  * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/second-minimum-node-in-a-binary-tree 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @date 2021-07-27 10:31
+ * @since 2021-07-27 10:31
  **/
 public class _671 {
 

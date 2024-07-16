@@ -31,7 +31,7 @@ package letcode.normal.difficult;
  * 给定三个字符串 s1, s2, s3, 验证 s3 是否是由 s1 和 s2 交错组成的。
  *
  * @author : CaiYongcheng
- * @date : 2020-08-01 09:09
+ * @since : 2020-08-01 09:09
  **/
 public class _97 {
 

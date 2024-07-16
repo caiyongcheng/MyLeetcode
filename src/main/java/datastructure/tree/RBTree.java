@@ -36,7 +36,7 @@ import datastructure.utils.FormatPrintUtils;
  * @program: MyLeetcode
  * @description: 红黑树实现
  * @author: 6JSh5rC456iL
- * @date 2021-04-12 14:45
+ * @since 2021-04-12 14:45
  **/
 public class RBTree<T extends Comparable<T>> {
 

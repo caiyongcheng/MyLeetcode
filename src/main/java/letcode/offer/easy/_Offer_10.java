@@ -32,7 +32,7 @@ package letcode.offer.easy;
  * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @date 2021-09-04 22:18
+ * @since 2021-09-04 22:18
  **/
 public class _Offer_10 {
 

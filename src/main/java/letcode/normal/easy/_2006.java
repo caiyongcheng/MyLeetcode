@@ -38,7 +38,7 @@ import java.util.List;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @date 2022-02-09 15:38
+ * @since 2022-02-09 15:38
  **/
 public class _2006 {
 

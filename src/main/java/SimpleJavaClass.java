@@ -37,7 +37,7 @@ import java.util.Scanner;
  * 最简单的Java类
  *
  * @author CaiYongcheng
- * @date 2022-01-21 15:48
+ * @since 2022-01-21 15:48
  **/
 public class SimpleJavaClass implements Serializable{
 

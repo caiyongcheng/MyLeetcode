@@ -34,7 +34,7 @@ import java.util.HashSet;
  * 有重复字符串的排列组合。编写一种方法，计算某字符串的所有排列组合。
  *
  * @author CaiYongcheng
- * @date 2021-09-01 09:17
+ * @since 2021-09-01 09:17
  **/
 public class _8_8_eight_eight {
 

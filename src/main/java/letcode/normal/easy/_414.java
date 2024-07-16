@@ -30,7 +30,7 @@ package letcode.normal.easy;
  * 给你一个非空数组，返回此数组中 第三大的数 。如果不存在，则返回数组中最大的数。
  *
  * @author CaiYongcheng
- * @date 2021-10-06 23:50
+ * @since 2021-10-06 23:50
  **/
 public class _414 {
 

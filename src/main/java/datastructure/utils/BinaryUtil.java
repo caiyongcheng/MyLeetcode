@@ -31,7 +31,7 @@ package datastructure.utils;
  * @description: 二进制工具类
  * @packagename: datastructure.utils
  * @author: 6JSh5rC456iL
- * @date: 2021-04-09 09:24
+ * @since: 2021-04-09 09:24
  **/
 public class BinaryUtil {
 

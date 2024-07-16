@@ -31,7 +31,7 @@ package letcode.normal.medium;
  * The rand7() API is already defined in the parent class SolBase.
  * public int rand7();
  * @author CaiYongcheng
- * @date 2021-09-06 09:07
+ * @since 2021-09-06 09:07
  **/
 public class _470 {
 

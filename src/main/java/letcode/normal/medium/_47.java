@@ -35,7 +35,7 @@ import java.util.List;
  * 给定一个可包含重复数字的序列，返回所有不重复的全排列。
  *
  * @author : CaiYongcheng
- * @date : 2020-07-07 12:32
+ * @since : 2020-07-07 12:32
  **/
 public class _47 {
 

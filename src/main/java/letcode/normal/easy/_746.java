@@ -9,7 +9,7 @@ import letcode.utils.TestCaseUtils;
  * 请你计算并返回达到楼梯顶部的最低花费。
  *
  * @author CaiYongcheng
- * @date 2022-01-13 09:00
+ * @since 2022-01-13 09:00
  **/
 public class _746 {
 

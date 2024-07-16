@@ -35,7 +35,7 @@ import java.util.List;
  * 给定一个大小为 n 的整数数组，找出其中所有出现超过 ⌊ n/3 ⌋ 次的元素。
  *
  * @author CaiYongcheng
- * @date 2021-10-22 09:05
+ * @since 2021-10-22 09:05
  **/
 public class _229 {
 

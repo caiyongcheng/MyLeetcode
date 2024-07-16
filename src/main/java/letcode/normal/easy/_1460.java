@@ -52,7 +52,7 @@ package letcode.normal.easy;/*
 
 /**
  * @author 蔡永程
- * @date 2022/8/24 8:50
+ * @since 2022/8/24 8:50
  */
 public class _1460 {
 

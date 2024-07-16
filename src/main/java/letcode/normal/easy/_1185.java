@@ -33,7 +33,7 @@ package letcode.normal.easy;
  * 非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @date 2022-01-04 09:07
+ * @since 2022-01-04 09:07
  **/
 public class _1185 {
 

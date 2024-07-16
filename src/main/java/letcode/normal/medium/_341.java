@@ -94,7 +94,7 @@ class NestedIntegerImpl implements NestedInteger{
  * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/flatten-nested-list-iterator 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  * @packagename: letcode.normal.medium
  * @author: 6JSh5rC456iL
- * @date: 2021-03-23 09:58
+ * @since: 2021-03-23 09:58
  **/
 public class _341 implements Iterator<Integer> {
 

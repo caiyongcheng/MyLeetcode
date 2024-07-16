@@ -35,7 +35,7 @@ import java.util.List;
  * 例如，一个链表有 6 个节点，从头节点开始，它们的值依次是 1、2、3、4、5、6。这个链表的倒数第 3 个节点是值为 4 的节点。
  *
  * @author CaiYongcheng
- * @date 2021-09-02 08:55
+ * @since 2021-09-02 08:55
  **/
 public class _Offer_TwentyTwo22 {
 

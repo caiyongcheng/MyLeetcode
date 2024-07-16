@@ -33,7 +33,7 @@ import java.util.Stack;
  * @description: 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
  * @packagename: letcode.normal.difficult
  * @author: 6JSh5rC456iL
- * @date: 2021-03-30 15:20
+ * @since: 2021-03-30 15:20
  **/
 public class _42 {
 

@@ -35,7 +35,7 @@ import datastructure.queue.Queue;
  * @description: 验证准确性
  * @packagename: datastructure.utils
  * @author: 6JSh5rC456iL
- * @date: 2021-03-25 09:21
+ * @since: 2021-03-25 09:21
  **/
 public class ValidateQueue {
 

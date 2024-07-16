@@ -33,7 +33,7 @@ package letcode.normal.easy;
  * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/sqrtx 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author : CaiYongcheng
- * @date : 2020-06-26 10:47
+ * @since : 2020-06-26 10:47
  **/
 public class _69 {
 

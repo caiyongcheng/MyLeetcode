@@ -28,6 +28,7 @@ package letcode.utils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -35,7 +36,7 @@ import java.util.stream.Collectors;
  * MyString
  *
  * @author : CaiYongcheng
- * @date : 2020-07-15 11:09
+ * @since : 2020-07-15 11:09
  **/
 public class FormatUtils {
 
@@ -89,8 +90,8 @@ public class FormatUtils {
     /**
      * list对象的格式化toString 使用[与]作为前后缀，,作为分隔符
      *
-     * @param list
-     * @param <T>
+     * @param list 需要格式化输出对象
+     * @param <T> list类型
      * @return [list.get(0).toString(), list.get(1).toString()...]
      */
     public static <T> String formatList(List<T> list) {
@@ -223,6 +224,24 @@ public class FormatUtils {
      */
     public static String formatNodeLists(ListNode node) {
         return formatNodeLists(node, "[", "]", ",");
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public static<T> String formatObj(Object execRst) {
+        if (Objects.isNull(execRst)) {
+            return "null";
+        }
+        if (execRst instanceof List) {
+            return "[" + ((List<?>) execRst).stream().map(FormatUtils::formatObj).collect(Collectors.joining(",")) + "]";
+        }
+        if (execRst instanceof int[]) {
+            return formatArray((int[]) execRst);
+        }
+        if (execRst.getClass().isArray()) {
+            return "[" + Arrays.stream((T[]) execRst).map(FormatUtils::formatObj).collect(Collectors.joining(",")) + "]";
+        }
+        return execRst.toString();
     }
 
 

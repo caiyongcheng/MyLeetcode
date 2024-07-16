@@ -31,7 +31,7 @@ package datastructure.node;
  * @description: 二叉树节点
  * @packagename: datastructure.node
  * @author: 6JSh5rC456iL
- * @date: 2021-03-15 17:21
+ * @since: 2021-03-15 17:21
  **/
 public class BTreeNode<T extends Comparable<T>> {
 

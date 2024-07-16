@@ -58,7 +58,7 @@ import java.util.List;
  * LeetCode Node
  *
  * @author CaiYongcheng
- * @date 2021-05-08 15:52
+ * @since 2021-05-08 15:52
  **/
 public class Node {
 

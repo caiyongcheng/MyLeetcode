@@ -31,7 +31,7 @@ import java.util.function.Consumer;
 
 /**
  * @author CaiYongcheng
- * @date 2021-05-06 16:55
+ * @since 2021-05-06 16:55
  **/
 public class Mock {
 
@@ -100,7 +100,7 @@ public class Mock {
             classMain.append("@JsonProperty(\"").append(split[0]).append("\")\n");
             if ("LocalDateTime ".equals(getType(split[2], split.length > 3 ? split[3] : null))) {
                 classMain.append("@JsonFormat(shape = JsonFormat.Shape.STRING, pattern=\"yyyy-MM-dd HH:mm:ss\", timezone = \"GMT+8\")\n");
-                classMain.append("@DateTimeFormat(pattern=\"yyyy-MM-dd HH:mm:ss\")\n");
+                classMain.append("@sinceTimeFormat(pattern=\"yyyy-MM-dd HH:mm:ss\")\n");
             }
             classMain.append("private ");
             classMain.append(getType(split[2], split.length > 3 ? split[3] : null));

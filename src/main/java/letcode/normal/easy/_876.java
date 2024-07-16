@@ -34,7 +34,7 @@ import letcode.utils.ListNode;
  * If there are two middle nodes, return the second middle node.
  *
  * @author CaiYongcheng
- * @date 2021-12-28 14:18
+ * @since 2021-12-28 14:18
  **/
 public class _876 {
 

@@ -34,7 +34,7 @@ import datastructure.exception.StackOverFlowException;
  * @description: 底层使用数组的栈,栈容量固定
  * @packagename: datastructure.stack
  * @author: 6JSh5rC456iL
- * @date: 2021-03-23 16:48
+ * @since: 2021-03-23 16:48
  **/
 public class ImmutableStack<T> implements Stack<T> {
 

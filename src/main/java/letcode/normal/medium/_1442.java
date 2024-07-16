@@ -33,7 +33,7 @@ package letcode.normal.medium;
  * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/count-triplets-that-can-form-two-arrays-of-equal-xor 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @date 2021-05-18 15:01
+ * @since 2021-05-18 15:01
  **/
 public class _1442 {
 

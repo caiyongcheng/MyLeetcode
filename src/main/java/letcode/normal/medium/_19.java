@@ -33,7 +33,7 @@ import letcode.utils.ListNode;
  * 给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。
  *
  * @author : CaiYongcheng
- * @date : 2020-06-27 15:07
+ * @since : 2020-06-27 15:07
  **/
 public class _19 {
 

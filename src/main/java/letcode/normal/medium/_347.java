@@ -35,7 +35,7 @@ import java.util.Arrays;
  * @description: 给定一个非空的整数数组，返回其中出现频率前 k 高的元素。
  * @packagename: letcode.normal.medium
  * @author: 6JSh5rC456iL
- * @date: 2021-03-15 14:41
+ * @since: 2021-03-15 14:41
  **/
 public class _347 {
 

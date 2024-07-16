@@ -31,7 +31,7 @@ package letcode.normal.difficult;
  * 请你返回使nums中包含k个 连续1的 最少交换次数。  来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/minimum-adjacent-swaps-for-k-consecutive-ones 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  * @author CaiYongcheng
- * @date 2021-05-10 09:27
+ * @since 2021-05-10 09:27
  **/
 public class N_1703 {
 

@@ -31,7 +31,7 @@ package letcode.offer.difficult;
  * @description: 给定一个直方图(也称柱状图)，假设有人从上面源源不断地倒水，最后直方图能存多少水量?直方图的宽度为 1。
  * @packagename: letcode.offer.difficult
  * @author: 6JSh5rC456iL
- * @date: 2021-04-02 15:31
+ * @since: 2021-04-02 15:31
  **/
 public class Offer_17_21_Seventeen_TwentyOne {
 

@@ -36,7 +36,7 @@ import java.util.Arrays;
  * 如果数组中不存在目标值，返回 [-1, -1]。
  *
  * @author : CaiYongcheng
- * @date : 2020-07-04 23:14
+ * @since : 2020-07-04 23:14
  **/
 public class _34 {
 

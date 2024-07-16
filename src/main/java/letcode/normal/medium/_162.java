@@ -33,7 +33,7 @@ package letcode.normal.medium;
  * nums[i] != nums[i + 1]
  *
  * @author CaiYongcheng
- * @date 2021-09-15 10:40
+ * @since 2021-09-15 10:40
  **/
 public class _162 {
 

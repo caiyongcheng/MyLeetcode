@@ -32,7 +32,7 @@ import java.util.List;
  * 通用Node
  *
  * @author CaiYongcheng
- * @date 2021-09-24 09:07
+ * @since 2021-09-24 09:07
  **/
 public class Node {
 

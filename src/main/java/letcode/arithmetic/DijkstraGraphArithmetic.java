@@ -30,7 +30,7 @@ package letcode.arithmetic;
  * 迪杰特斯拉算法
  *
  * @author CaiYongcheng
- * @date 2021-08-06 10:53
+ * @since 2021-08-06 10:53
  **/
 public class DijkstraGraphArithmetic {
 

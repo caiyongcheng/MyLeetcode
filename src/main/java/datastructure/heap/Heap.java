@@ -31,7 +31,7 @@ package datastructure.heap;
  * @description: 基础堆接口
  * @packagename: datastructure.heap
  * @author: 6JSh5rC456iL
- * @date: 2021-04-08 14:40
+ * @since: 2021-04-08 14:40
  **/
 public interface Heap<T extends Comparable<T>> {
 

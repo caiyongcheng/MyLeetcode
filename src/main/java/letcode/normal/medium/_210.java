@@ -40,7 +40,7 @@ import java.util.Queue;
  * If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
  *
  * @author CaiYongcheng
- * @date 2021-12-23 10:57
+ * @since 2021-12-23 10:57
  **/
 public class _210 {
 

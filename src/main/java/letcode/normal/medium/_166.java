@@ -36,7 +36,7 @@ import java.util.HashSet;
  * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/fraction-to-recurring-decimal 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @date 2021-10-03 11:28
+ * @since 2021-10-03 11:28
  **/
 public class _166 {
 

@@ -41,7 +41,7 @@ package letcode.normal.medium;
  * boolean param_3 = obj.startsWith(prefix);
  * @packagename: letcode.normal.medium
  * @author: 6JSh5rC456iL
- * @date: 2021-04-14 09:21
+ * @since: 2021-04-14 09:21
  */
 public class _208 {
 

@@ -37,7 +37,7 @@ import java.util.ArrayList;
  * 0 <= goal <= nums.length
  *
  * @author CaiYongcheng
- * @date 2021-07-08 09:09
+ * @since 2021-07-08 09:09
  **/
 public class _930 {
 

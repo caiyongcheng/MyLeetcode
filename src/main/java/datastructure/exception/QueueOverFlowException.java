@@ -31,7 +31,7 @@ package datastructure.exception;
  * @description: 队溢出异常
  * @packagename: datastructure.exception
  * @author: 6JSh5rC456iL
- * @date: 2021-03-24 11:05
+ * @since: 2021-03-24 11:05
  **/
 public class QueueOverFlowException extends RuntimeException{
 

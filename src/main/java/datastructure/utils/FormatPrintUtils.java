@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
  * MyString
  *
  * @author : CaiYongcheng
- * @date : 2020-07-15 11:09
+ * @since : 2020-07-15 11:09
  **/
 public class FormatPrintUtils {
 

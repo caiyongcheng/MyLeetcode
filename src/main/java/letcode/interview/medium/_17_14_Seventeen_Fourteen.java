@@ -34,7 +34,7 @@ import java.util.Arrays;
  * 设计一个算法，找出数组中最小的k个数。以任意顺序返回这k个数均可。
  *
  * @author CaiYongcheng
- * @date 2021-09-03 09:08
+ * @since 2021-09-03 09:08
  **/
 public class _17_14_Seventeen_Fourteen {
 

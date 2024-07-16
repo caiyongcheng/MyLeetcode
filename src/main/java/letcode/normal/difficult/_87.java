@@ -41,7 +41,7 @@ import java.util.Map;
  * 给你两个 长度相等 的字符串 s1 和s2，判断s2是否是s1的扰乱字符串。如果是，返回 true ；否则，返回 false 。  
  * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/scramble-string 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  * @author CaiYongcheng
- * @date 2021-04-16 11:50
+ * @since 2021-04-16 11:50
  **/
 public class _87 {
 

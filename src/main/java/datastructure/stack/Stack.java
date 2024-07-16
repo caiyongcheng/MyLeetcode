@@ -31,7 +31,7 @@ package datastructure.stack;
  * @description: 基础栈接口
  * @packagename: datastructure.stack
  * @author: 6JSh5rC456iL
- * @date: 2021-03-23 16:43
+ * @since: 2021-03-23 16:43
  **/
 public interface Stack<T> {
 

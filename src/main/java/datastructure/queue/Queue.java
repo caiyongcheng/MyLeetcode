@@ -31,7 +31,7 @@ package datastructure.queue;
  * @description: 基本队列接口
  * @packagename: datastructure.queue
  * @author: 6JSh5rC456iL
- * @date: 2021-03-24 10:52
+ * @since: 2021-03-24 10:52
  **/
 public interface Queue<T> {
 

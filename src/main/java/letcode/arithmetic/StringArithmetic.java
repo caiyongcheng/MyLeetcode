@@ -32,7 +32,7 @@ import java.util.HashMap;
  * 字符串的一些算法
  *
  * @author CaiYongcheng
- * @date 2021-04-20 11:18
+ * @since 2021-04-20 11:18
  **/
 public class StringArithmetic {
 

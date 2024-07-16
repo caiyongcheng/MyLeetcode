@@ -32,7 +32,7 @@ import java.util.Arrays;
  * 统计一个数字在排序数组中出现的次数。
  *
  * @author CaiYongcheng
- * @date 2021-07-16 14:45
+ * @since 2021-07-16 14:45
  **/
 public class _Offer_53 {
 

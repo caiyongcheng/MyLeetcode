@@ -31,7 +31,7 @@ package datastructure.exception;
  * @description: 堆溢出异常
  * @packagename: datastructure.exception
  * @author: 6JSh5rC456iL
- * @date: 2021-04-08 14:58
+ * @since: 2021-04-08 14:58
  **/
 public class HeapOverFlowException extends RuntimeException{
 

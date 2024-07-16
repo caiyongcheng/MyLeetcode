@@ -37,7 +37,7 @@ package letcode.normal.medium;
  * deleteAtIndex(index)：如果索引index 有效，则删除链表中的第index 个节点。
  * 来源：力扣（LeetCode） 链接：https://leetcode.cn/problems/design-linked-list 著作权归领扣网络所有。
  * 商业转载请联系官方授权，非商业转载请注明出处。
- * @date 2022/9/23 9:21
+ * @since 2022/9/23 9:21
  */
 public class _707 {
 

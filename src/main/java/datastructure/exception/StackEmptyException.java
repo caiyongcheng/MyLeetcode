@@ -31,7 +31,7 @@ package datastructure.exception;
  * @description: 栈空异常
  * @packagename: datastructure.exception
  * @author: 6JSh5rC456iL
- * @date: 2021-03-23 17:35
+ * @since: 2021-03-23 17:35
  **/
 public class StackEmptyException extends RuntimeException{
 

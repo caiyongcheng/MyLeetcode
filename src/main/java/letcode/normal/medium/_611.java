@@ -31,7 +31,7 @@ import java.util.Arrays;
 /**
  * 给定一个包含非负整数的数组，你的任务是统计其中可以组成三角形三条边的三元组个数。
  * @author CaiYongcheng
- * @date 2021-08-04 09:05
+ * @since 2021-08-04 09:05
  **/
 public class _611 {
 

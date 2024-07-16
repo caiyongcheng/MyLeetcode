@@ -35,7 +35,7 @@ import java.util.Arrays;
  * 如果可以连接 pieces 中的数组形成 arr ，返回 true ；否则，返回 false 。
  * 来源：力扣（LeetCode） 链接：https://leetcode.cn/problems/check-array-formation-through-concatenation 著作权归领扣网络所有。
  * 商业转载请联系官方授权，非商业转载请注明出处。
- * @date 2022/9/22 17:46
+ * @since 2022/9/22 17:46
  */
 public class _1640 {
 

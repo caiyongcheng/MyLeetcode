@@ -31,7 +31,7 @@ package datastructure.exception;
  * @description: 队空异常
  * @packagename: datastructure.exception
  * @author: 6JSh5rC456iL
- * @date: 2021-03-24 11:06
+ * @since: 2021-03-24 11:06
  **/
 public class QueueEmptyException extends RuntimeException{
 

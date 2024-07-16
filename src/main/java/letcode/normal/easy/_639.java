@@ -31,7 +31,7 @@ package letcode.normal.easy;
  * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/n-th-tribonacci-number 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @date 2021-08-08 12:05
+ * @since 2021-08-08 12:05
  **/
 public class  _639 {
 

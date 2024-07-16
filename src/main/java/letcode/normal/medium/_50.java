@@ -31,7 +31,7 @@ package letcode.normal.medium;
  * 实现 pow(x, n) ，即计算 x 的 n 次幂函数。
  *
  * @author : CaiYongcheng
- * @date : 2020-07-09 09:32
+ * @since : 2020-07-09 09:32
  **/
 public class _50 {
 

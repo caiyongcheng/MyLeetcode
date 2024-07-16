@@ -40,7 +40,7 @@ import java.util.Map;
  * 0 <= nums[i] < 2^10
  *
  * @author CaiYongcheng
- * @date 2021-05-25 09:07
+ * @since 2021-05-25 09:07
  **/
 public class _1787 {
 

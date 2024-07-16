@@ -35,7 +35,7 @@ import letcode.utils.ListNode;
  * 这 k 个部分应该按照在链表中出现的顺序排列，并且排在前面的部分的长度应该大于或等于排在后面的长度。  返回一个由上述 k 部分组成的数组。
  *
  * @author CaiYongcheng
- * @date 2021-09-22 09:06
+ * @since 2021-09-22 09:06
  **/
 public class _725 {
 

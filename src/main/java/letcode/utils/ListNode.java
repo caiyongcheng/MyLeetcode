@@ -31,7 +31,7 @@ package letcode.utils;
  * 链表的节点类
  *
  * @author : CaiYongcheng
- * @date : 2020-06-27 11:55
+ * @since : 2020-06-27 11:55
  **/
 public class ListNode {
 

@@ -33,7 +33,7 @@ import letcode.utils.ListNode;
  * 给定一个链表，旋转链表，将链表每个节点向右移动 k 个位置，其中 k 是非负数
  *
  * @author : CaiYongcheng
- * @date : 2020-07-12 14:46
+ * @since : 2020-07-12 14:46
  **/
 public class _61 {
 

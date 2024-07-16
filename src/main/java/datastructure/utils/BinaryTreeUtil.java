@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
  * @description:
  * @packagename: datastructure.utils
  * @author: 6JSh5rC456iL
- * @date: 2021-03-18 16:07
+ * @since: 2021-03-18 16:07
  **/
 public class BinaryTreeUtil {
 

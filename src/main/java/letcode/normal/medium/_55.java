@@ -33,7 +33,7 @@ package letcode.normal.medium;
  * 判断你是否能够到达最后一个位置。
  *
  * @author : CaiYongcheng
- * @date : 2020-07-10 09:59
+ * @since : 2020-07-10 09:59
  **/
 public class _55 {
     /**

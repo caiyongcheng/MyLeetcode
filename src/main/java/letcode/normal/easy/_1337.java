@@ -37,7 +37,7 @@ import java.util.Arrays;
  * 军人 总是 排在一行中的靠前位置，也就是说 1 总是出现在 0 之前。
  *
  * @author CaiYongcheng
- * @date 2021-08-02 09:03
+ * @since 2021-08-02 09:03
  **/
 public class _1337 {
 

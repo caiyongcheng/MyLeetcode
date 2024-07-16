@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -245,41 +246,6 @@ public class TestCaseUtils {
 
 
     /**
-     * 将字符串数组转变为给定类型的参数
-     * @param typeArr 参数类型
-     * @param paramStrArr 字符串参数
-     * @return 转化后结果
-     */
-    public static Object[] getParams(Class<?>[] typeArr, String[] paramStrArr) {
-        if (typeArr == null || typeArr.length == 0 || paramStrArr == null || paramStrArr.length == 0) {
-            return new Object[0];
-        }
-        if (typeArr.length != paramStrArr.length) {
-            throw new IllegalArgumentException(String.format("type array's length[%d] not equal paramStr array's length[%d]",
-                    typeArr.length, paramStrArr.length));
-        }
-        Object[] params = new Object[typeArr.length];
-        for (int i = 0; i < typeArr.length; i++) {
-            if ("int".equals(typeArr[i].getName()) || typeArr[i] == Integer.class) {
-                params[i] = Integer.parseInt(paramStrArr[i].replaceAll("\"", "").trim());
-                continue;
-            }
-            if ("String".equals(typeArr[i].getName()) || typeArr[i] == String.class) {
-                params[i] = paramStrArr[i];
-                continue;
-            }
-            if ("long".equals(typeArr[i].getName()) || typeArr[i] == Long.class) {
-                params[i] = paramStrArr[i];
-                continue;
-            }
-            if ("boolean".equals(typeArr[i].getName()) || typeArr[i] == Boolean.class) {
-                params[i] = paramStrArr[i];
-            }
-        }
-        return params;
-    }
-
-    /**
      * 让指定的对象，执行给定的操作
      * @param obj 执行的对象
      * @param operationStr 操作列表 方法数组字符串
@@ -376,8 +342,176 @@ public class TestCaseUtils {
         return randomArr;
     }
 
-    public static void main(String[] args) {
-        System.out.println(TestCaseUtils.getStringFromFile());
+    public static<T> void test(Class<T> targetClass, String... inputStrArr) {
+        // get test method from target class; test method must be public;
+        Method testMethod = Arrays.stream(targetClass.getMethods())
+                .filter(method -> Modifier.isPublic(method.getModifiers()))
+                .filter(method -> !Modifier.isStatic(method.getModifiers()))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("type %s don't have public method!", targetClass.getName())
+                ));
+
+        Object obj;
+        try {
+            obj = targetClass.getConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.printf("test method is: %s%n", testMethod.getName());
+        System.out.println("====================================== start ======================================\n");
+        int time = 0;
+        Class<?>[] parameterTypes = testMethod.getParameterTypes();
+        for (String inputStr : inputStrArr) {
+            System.out.printf("%n--------------- %d[start] ---------------%n", time);
+            try {
+                String[] paramsStrArr = getParamStrArr(inputStr, parameterTypes);
+                Object[] params = getParams(parameterTypes, paramsStrArr);
+                System.out.printf("| input: %s%n", inputStr);
+                System.out.printf("| params: %s%n", FormatUtils.formatObj(params));
+                Object execRst = testMethod.invoke(obj, params);
+                System.out.printf("| result: %s%n", FormatUtils.formatObj(execRst));
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+                break;
+            }
+            System.out.printf("--------------- %d[end] -----------------%n", time++);
+        }
+        System.out.println("\n====================================== end ======================================");
     }
 
+    /**
+     * 从输入字符串中，根据方法参数类型数组，提取对应的参数字符串数组
+     * @param inputStr 输入字符串
+     * @param parameterTypes 方法参数类型数组
+     * @return 参数字符串数组
+     */
+    private static String[] getParamStrArr(String inputStr, Class<?>[] parameterTypes) {
+        String[] paramsStrArr = new String[parameterTypes.length];
+        int j = 0;
+        int length = inputStr.length();
+        char ch;
+        int retrive = -1;
+        int isArrParam = 0;
+        StringBuilder paramStr = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            ch = inputStr.charAt(i);
+            if (ch == '=') {
+                retrive = 0;
+            } else if (ch == '[' && retrive == 0) {
+                isArrParam++;
+            } else if (ch == ']' && retrive == 0) {
+                if (--isArrParam == 0) {
+                    retrive = 1;
+                }
+            } else if (ch == ',' && retrive == 0 && isArrParam == 0) {
+                retrive = 1;
+            }
+            if (retrive != -1 && ch != '=') {
+                paramStr.append(ch);
+            }
+            if (retrive == 1) {
+                retrive = -1;
+                paramsStrArr[j++] = paramStr.toString();
+                paramStr.delete(0, paramStr.length());
+            }
+        }
+        return paramsStrArr;
+    }
+
+
+    /**
+     * 将字符串数组转变为给定类型的参数
+     * @param typeArr 参数类型
+     * @param paramStrArr 字符串参数
+     * @return 转化后结果
+     */
+    public static Object[] getParams(Class<?>[] typeArr, String[] paramStrArr) {
+        if (typeArr == null || typeArr.length == 0 || paramStrArr == null || paramStrArr.length == 0) {
+            return new Object[0];
+        }
+        if (typeArr.length != paramStrArr.length) {
+            throw new IllegalArgumentException(String.format("type array's length[%d] not equal paramStr array's length[%d]",
+                    typeArr.length, paramStrArr.length));
+        }
+        Object[] params = new Object[typeArr.length];
+        for (int i = 0; i < typeArr.length; i++) {
+            paramStrArr[i] = paramStrArr[i].replaceAll("\"", "").trim();
+            if ("int".equals(typeArr[i].getName()) || typeArr[i] == Integer.class) {
+                params[i] = Integer.parseInt(paramStrArr[i]);
+                continue;
+            }
+            if ("String".equals(typeArr[i].getName()) || typeArr[i] == String.class) {
+                params[i] = paramStrArr[i];
+                continue;
+            }
+            if ("long".equals(typeArr[i].getName()) || typeArr[i] == Long.class) {
+                params[i] = Long.parseLong(paramStrArr[i]);
+                continue;
+            }
+            if ("boolean".equals(typeArr[i].getName()) || typeArr[i] == Boolean.class) {
+                params[i] = Boolean.parseBoolean(paramStrArr[i]);
+                continue;
+            }
+            if ("char".equals(typeArr[i].getName()) || typeArr[i] == Character.class) {
+                params[i] = paramStrArr[i].charAt(0);
+                continue;
+            }
+            if ("double".equals(typeArr[i].getName()) || typeArr[i] == Double.class) {
+                params[i] = Double.parseDouble(paramStrArr[i]);
+                continue;
+            }
+            if ("float".equals(typeArr[i].getName()) || typeArr[i] == Float.class) {
+                params[i] = Float.parseFloat(paramStrArr[i]);
+                continue;
+            }
+            if ("byte".equals(typeArr[i].getName()) || typeArr[i] == Byte.class) {
+                params[i] = Byte.parseByte(paramStrArr[i]);
+                continue;
+            }
+            if ("short".equals(typeArr[i].getName()) || typeArr[i] == Short.class) {
+                params[i] = Short.parseShort(paramStrArr[i]);
+                continue;
+            }
+            if ("char[]".equals(typeArr[i].getName()) || typeArr[i] == char[].class) {
+                params[i] = getCharArr(paramStrArr[i]);
+                continue;
+            }
+            if ("int[]".equals(typeArr[i].getName()) || typeArr[i] == int[].class) {
+                params[i] = getIntArr(paramStrArr[i]);
+                continue;
+            }
+            if ("Integer[]".equals(typeArr[i].getName()) || typeArr[i] == Integer[].class) {
+                params[i] = getIntegerArr(paramStrArr[i]);
+                continue;
+            }
+            if ("String[]".equals(typeArr[i].getName()) || typeArr[i] == String[].class) {
+                params[i] = getStrArr(paramStrArr[i]);
+                continue;
+            }
+            if (typeArr[i] == List.class) {
+                switch (typeArr[i].getName()) {
+                    case "List":
+                    case "List<String>":
+                        params[i] = getStrList(paramStrArr[i]);
+                        continue;
+                    case "List<Integer>":
+                        params[i] = getIntegerList(paramStrArr[i]);
+                        continue;
+                    case "List<List<String>>":
+                        params[i] = get2DStrList(paramStrArr[i]);
+                        continue;
+                    case "List<List<Integer>>":
+                        params[i] = get2DList(paramStrArr[i], ",", TestCaseUtils::getIntegerArr);
+                        continue;
+                }
+            }
+            throw new IllegalArgumentException(String.format(
+                    "type %s is not supported, param string: %s",
+                    typeArr[i].getName(),
+                    paramStrArr[i]
+            ));
+        }
+        return params;
+    }
 }

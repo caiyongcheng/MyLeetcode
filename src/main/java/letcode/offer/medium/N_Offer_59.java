@@ -33,7 +33,7 @@ package letcode.offer.medium;
  * 链接：https://leetcode-cn.com/problems/dui-lie-de-zui-da-zhi-lcof 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  * @packagename: letcode.offer.medium
  * @author: 6JSh5rC456iL
- * @date: 2021-03-29 10:30
+ * @since: 2021-03-29 10:30
  **/
 public class N_Offer_59 {
 

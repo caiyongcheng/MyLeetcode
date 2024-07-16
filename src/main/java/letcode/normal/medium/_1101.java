@@ -33,7 +33,7 @@ package letcode.normal.medium;
  * 我们装载的重量不会超过船的最大运载重量。
  * 返回能在 D 天内将传送带上的所有包裹送达的船的最低运载能力。
  * @author CaiYongcheng
- * @date 2021-04-26 09:09
+ * @since 2021-04-26 09:09
  **/
 public class _1101 {
 

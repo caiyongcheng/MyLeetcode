@@ -30,7 +30,7 @@ package letcode.arithmetic;
  * 弗洛伊德算法
  *
  * @author CaiYongcheng
- * @date 2021-08-06 10:07
+ * @since 2021-08-06 10:07
  **/
 public class FloydGraphArithmetic {
 

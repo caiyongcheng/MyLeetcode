@@ -34,7 +34,7 @@ import java.util.List;
  * 给你一个整数 n ，请你返回所有 0 到 1 之间（不包括 0 和 1）满足分母小于等于  n 的 最简 分数 。分数可以以 任意 顺序返回。
  *
  * @author CaiYongcheng
- * @date 2022-02-10 09:05
+ * @since 2022-02-10 09:05
  **/
 public class _1447 {
 

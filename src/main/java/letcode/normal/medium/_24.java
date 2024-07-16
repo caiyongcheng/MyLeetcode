@@ -34,7 +34,7 @@ import letcode.utils.ListNode;
  * 你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
  *
  * @author : CaiYongcheng
- * @date : 2020-06-29 22:15
+ * @since : 2020-06-29 22:15
  **/
 public class _24 {
 

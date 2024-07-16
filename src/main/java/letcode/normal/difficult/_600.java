@@ -30,7 +30,7 @@ package letcode.normal.difficult;
  * 给定一个正整数 n，找出小于或等于 n 的非负整数中，其二进制表示不包含 连续的1 的个数。
  *
  * @author CaiYongcheng
- * @date 2021-09-11 21:27
+ * @since 2021-09-11 21:27
  **/
 public class _600 {
 

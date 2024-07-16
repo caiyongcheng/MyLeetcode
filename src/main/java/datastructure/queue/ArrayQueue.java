@@ -35,7 +35,7 @@ import datastructure.node.Node;
  * @description: 底层使用数组作为节点的链表，可扩充,
  * @packagename: datastructure.queue
  * @author: 6JSh5rC456iL
- * @date: 2021-03-25 09:40
+ * @since: 2021-03-25 09:40
  **/
 public class ArrayQueue<T> implements Queue<T>{
 

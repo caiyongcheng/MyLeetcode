@@ -32,7 +32,7 @@ import letcode.utils.ListNode;
  * 给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。
  *
  * @author : CaiYongcheng
- * @date : 2020-06-27 11:53
+ * @since : 2020-06-27 11:53
  **/
 
 

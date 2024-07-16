@@ -31,7 +31,7 @@ package datastructure.node;
  * @description: 基本节点类
  * @packagename: datastructure.node
  * @author: 6JSh5rC456iL
- * @date: 2021-03-19 09:13
+ * @since: 2021-03-19 09:13
  **/
 public class Node<T> {
 

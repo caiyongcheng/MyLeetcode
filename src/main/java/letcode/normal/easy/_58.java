@@ -34,7 +34,7 @@ package letcode.normal.easy;
  * 说明：一个单词是指仅由字母组成、不包含任何空格字符的 最大子字符串。
  *
  * @author : CaiYongcheng
- * @date : 2020-06-24 15:01
+ * @since : 2020-06-24 15:01
  **/
 public class _58 {
 

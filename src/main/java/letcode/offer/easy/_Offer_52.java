@@ -31,7 +31,7 @@ import letcode.utils.ListNode;
  * 输入两个链表，找出它们的第一个公共节点。
  *
  * @author CaiYongcheng
- * @date 2021-07-21 23:51
+ * @since 2021-07-21 23:51
  **/
 public class _Offer_52 {
 

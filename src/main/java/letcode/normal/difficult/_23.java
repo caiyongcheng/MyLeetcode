@@ -31,7 +31,7 @@ package letcode.normal.difficult;
  * 合并 k 个排序链表，返回合并后的排序链表。请分析和描述算法的复杂度。
  *
  * @author : CaiYongcheng
- * @date : 2020-06-26 14:59
+ * @since : 2020-06-26 14:59
  **/
 
 class ListNode {

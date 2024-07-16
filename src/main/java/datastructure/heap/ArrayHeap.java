@@ -36,7 +36,7 @@ import java.util.Arrays;
  * @description: 采用数组实现的堆
  * @packagename: datastructure.heap
  * @author: 6JSh5rC456iL
- * @date: 2021-04-08 14:45
+ * @since: 2021-04-08 14:45
  **/
 public class ArrayHeap<T extends Comparable<T>> implements Heap<T>{
 
