@@ -391,30 +391,40 @@ public class TestCaseUtils {
         int j = 0;
         int length = inputStr.length();
         char ch;
-        int retrive = -1;
+        int retrieve = -1;
         int isArrParam = 0;
+        int doubleQuotationCount = 0;
         StringBuilder paramStr = new StringBuilder();
         for (int i = 0; i < length; i++) {
             ch = inputStr.charAt(i);
-            if (ch == '=') {
-                retrive = 0;
-            } else if (ch == '[' && retrive == 0) {
+            if (ch == '=' && (doubleQuotationCount & 1) == 0) {
+                retrieve = 0;
+            } else if (ch == '[' && retrieve == 0) {
                 isArrParam++;
-            } else if (ch == ']' && retrive == 0) {
+            } else if (ch == ']' && retrieve == 0) {
                 if (--isArrParam == 0) {
-                    retrive = 1;
+                    retrieve = 1;
                 }
-            } else if (ch == ',' && retrive == 0 && isArrParam == 0) {
-                retrive = 1;
+            } else if (((ch == ',') || (ch == '输' && (i + 1 < length && inputStr.charAt(i + 1) == '出')))
+                    && retrieve == 0 && isArrParam == 0) {
+                retrieve = 1;
             }
-            if (retrive != -1 && ch != '=') {
-                paramStr.append(ch);
+            if (retrieve == 0) {
+                if (ch != '=' || (doubleQuotationCount & 1) == 1) {
+                    paramStr.append(ch);
+                }
+                if (ch == '\"') {
+                    doubleQuotationCount++;
+                }
             }
-            if (retrive == 1) {
-                retrive = -1;
+            if (retrieve == 1) {
+                retrieve = -1;
                 paramsStrArr[j++] = paramStr.toString();
                 paramStr.delete(0, paramStr.length());
             }
+        }
+        if (paramStr.length() > 0 && j < paramsStrArr.length) {
+            paramsStrArr[j] = paramStr.toString();
         }
         return paramsStrArr;
     }
