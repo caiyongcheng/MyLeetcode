@@ -342,6 +342,10 @@ public class TestCaseUtils {
         return randomArr;
     }
 
+    public static<T> void test(Class<T> targetClass, String inputStrArr) {
+        test(targetClass, Arrays.stream(inputStrArr.split("输入")).filter(str -> str.contains("=")).toArray(String[]::new));
+    }
+
     public static<T> void test(Class<T> targetClass, String... inputStrArr) {
         // get test method from target class; test method must be public;
         Method testMethod = Arrays.stream(targetClass.getMethods())
@@ -359,25 +363,27 @@ public class TestCaseUtils {
             throw new RuntimeException(e);
         }
         System.out.printf("test method is: %s%n", testMethod.getName());
-        System.out.println("====================================== start ======================================\n");
+        System.out.print("====================================== start ======================================\n");
         int time = 0;
         Class<?>[] parameterTypes = testMethod.getParameterTypes();
         for (String inputStr : inputStrArr) {
-            System.out.printf("%n--------------- %d[start] ---------------%n", time);
+            System.out.print("||                                                                               ||\n");
+            System.out.printf("||\t|------------------------------ %02d[start] -----------------------------|     ||%n", time);
             try {
                 String[] paramsStrArr = getParamStrArr(inputStr, parameterTypes);
                 Object[] params = getParams(parameterTypes, paramsStrArr);
-                System.out.printf("| input: %s%n", inputStr);
-                System.out.printf("| params: %s%n", FormatUtils.formatObj(params));
+                printf("input: %s", inputStr);
+                printf("params: %s", FormatUtils.formatObj(params));
                 Object execRst = testMethod.invoke(obj, params);
-                System.out.printf("| result: %s%n", FormatUtils.formatObj(execRst));
+                printf("result: %s", FormatUtils.formatObj(execRst));
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
                 break;
             }
-            System.out.printf("--------------- %d[end] -----------------%n", time++);
+            System.out.printf("||\t------------------------------ %02d[end] ---------------------------------\t ||%n", time++);
         }
-        System.out.println("\n====================================== end ======================================");
+        System.out.print("||                                                                               ||\n");
+        System.out.println("====================================== end ========================================");
     }
 
     /**
@@ -524,4 +530,83 @@ public class TestCaseUtils {
         }
         return params;
     }
+
+    public static void printf(String format, String... params) {
+        print(String.format(format, params));
+    }
+
+    public static void print(String str) {
+        String prefix = "||  | ";
+        String suffix = " |     ||";
+        int lineWidth = getWidth("====================================== start ======================================");
+        int prefixWidth = getWidth(prefix);
+        int suffixWidth = getWidth(suffix);
+        int printStrOneLineWidth = lineWidth - prefixWidth - suffixWidth - 1;
+        int len = str.length();
+        int curWidth = 0;
+        System.out.print(prefix);
+        for (int i = 0; i < len; i++) {
+            if (curWidth == printStrOneLineWidth) {
+                curWidth = 0;
+                System.out.println(suffix);
+                System.out.print(prefix);
+            }
+            int width = getWidth(str.codePointAt(i));
+            if (width == 2 && 2 + curWidth > printStrOneLineWidth) {
+                curWidth = printStrOneLineWidth;
+                --i;
+            } else {
+                System.out.print(str.charAt(i));
+                curWidth += width;
+            }
+        }
+        int tLen = curWidth;
+        while (tLen <= printStrOneLineWidth) {
+            System.out.print(" ");
+            ++tLen;
+        }
+        if (curWidth < printStrOneLineWidth) {
+            System.out.println(suffix);
+        }
+    }
+
+    public static int getWidth(String str) {
+        int width = 0;
+        for (int i = 0; i < str.length(); ) {
+            int codepoint = str.codePointAt(i);
+            int charCount = Character.charCount(codepoint);
+            i += charCount;
+            width += getWidth(codepoint);
+        }
+        return width;
+    }
+
+    private static int getWidth(int codepoint) {
+        if (Character.UnicodeBlock.of(codepoint) == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+                || Character.UnicodeBlock.of(codepoint) == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+                || Character.UnicodeBlock.of(codepoint) == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B
+                || Character.UnicodeBlock.of(codepoint) == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+                || Character.UnicodeBlock.of(codepoint) == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS_SUPPLEMENT) {
+            // CJK characters are typically full-width.
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
+    public static void test(String[] args) {
+        String data = "";
+        String paramStr = "";
+        String[] strArr = Arrays.stream(paramStr.split(","))
+                .map(str ->
+                        str.replaceAll("\\([A-Za-z]+\\)", "")
+                                .replaceAll("\\s", "")
+                                .replaceAll("([0-9]+)T([0-9]+)", "$1 $2")
+                                .replaceAll("\\.[0-9]{9}", "")
+                )
+                .map(str -> "'" + str + "'")
+                .toArray(String[]::new);
+        System.out.println(String.format(data.replaceAll("\\?", "%s"), strArr));
+    }
+
 }

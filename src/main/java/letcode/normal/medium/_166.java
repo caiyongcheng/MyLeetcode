@@ -26,8 +26,9 @@
 
 package letcode.normal.medium;
 
+import letcode.utils.TestCaseUtils;
+
 import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * 给定两个整数，分别表示分数的分子numerator 和分母 denominator，以 字符串形式返回小数 。
@@ -77,38 +78,28 @@ public class _166 {
     }
 
     /**
-     * 示例 1：
-     * <p>
-     * 输入：numerator = 1, denominator = 2
-     * 输出："0.5"
-     * 示例 2：
-     * <p>
-     * 输入：numerator = 2, denominator = 1
-     * 输出："2"
-     * 示例 3：
-     * <p>
-     * 输入：numerator = 2, denominator = 3
-     * 输出："0.(6)"
-     * 示例 4：
-     * <p>
-     * 输入：numerator = 4, denominator = 333
-     * 输出："0.(012)"
-     * 示例 5：
-     * <p>
-     * 输入：numerator = 1, denominator = 5
-     * 输出："0.2"
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/fraction-to-recurring-decimal
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     示例 1：
+
+     输入：numerator = 1, denominator = 2
+     输出："0.5"
+     示例 2：
+
+     输入：numerator = 2, denominator = 1
+     输出："2"
+     示例 3：
+
+     输入：numerator = 4, denominator = 333
+     输出："0.(012)"
      *
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(new _166().fractionToDecimal(
-                -1,
-                -2147483648
-        ));
+        TestCaseUtils.test(
+                _166.class,
+                        "示例 1： 输入：numerator = 1, denominator = 2 输出：\"0.5\" " +
+                                "示例 2： 输入：numerator = 2, denominator = 1 输出：\"2\" " +
+                                "示例 3： 输入：numerator = 4, denominator = 333 输出：\"0.(012)\""
+        );
     }
 
 }
