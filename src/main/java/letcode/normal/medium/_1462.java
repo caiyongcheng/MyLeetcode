@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,7 +125,7 @@ public class _1462 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatList(new _1462().checkIfPrerequisite(
+        System.out.println(TestCaseOutputUtils.formatList(new _1462().checkIfPrerequisite(
                 7,
                 new int[][]{{2, 3}, {2, 1}, {2, 0}, {3, 4}, {3, 6}, {5, 1}, {5, 0}, {1, 4}, {1, 0}, {4, 0}, {0, 6}},
                 new int[][]{{3, 0}, {6, 4}, {5, 6}, {2, 6}, {2, 3}, {5, 6}, {4, 0}, {2, 6}, {3, 5}, {5, 3}, {1, 6}, {1, 0}, {3, 5}, {6, 5}, {2, 3}, {3, 0}, {3, 4}, {3, 4}, {2, 5}, {0, 3}, {4, 0}, {6, 4}, {5, 0}, {6, 5}, {5, 6}, {6, 5}, {1, 0}, {3, 4}, {1, 5}, {1, 4}, {3, 6}, {0, 1}, {1, 2}, {5, 1}, {5, 3}, {5, 3}, {3, 4}, {5, 4}, {5, 4}, {5, 3}}

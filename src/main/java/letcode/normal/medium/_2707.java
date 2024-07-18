@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -70,7 +70,7 @@ public class _2707 {
     public static void main(String[] args) {
         System.out.println(new _2707().minExtraChar(
                 "leetscode",
-                TestCaseUtils.getStrArrIgnoreDoubleQuote("[\"leet\",\"code\",\"leetcode\"]")
+                TestCaseInputUtils.getStrArrIgnoreDoubleQuote("[\"leet\",\"code\",\"leetcode\"]")
         ));
     }
 

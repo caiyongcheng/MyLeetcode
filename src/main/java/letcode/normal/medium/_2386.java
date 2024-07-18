@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个整数数组 nums 和一个 正 整数 k 。你可以选择数组的任一 子序列 并且对其全部元素求和。
@@ -89,7 +89,7 @@ public class _2386 {
      */
     public static void main(String[] args) {
         System.out.println(new _2386().kSum(
-                TestCaseUtils.getIntArr("[1,-2,3,4,-10,12]"),
+                TestCaseInputUtils.getIntArr("[1,-2,3,4,-10,12]"),
                 16
         ));
     }

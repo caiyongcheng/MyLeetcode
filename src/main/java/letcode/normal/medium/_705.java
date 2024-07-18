@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestUtil;
 
 /**
  * 不使用任何内建的哈希表库设计一个哈希集合（HashSet）。
@@ -54,7 +54,7 @@ public class _705 {
      */
     public static void main(String[] args) {
         _705 sevenHundredFive = new _705();
-        System.out.println(TestCaseUtils.operation(
+        System.out.println(TestUtil.operation(
                 sevenHundredFive,
                 "[\"MyHashSet\", \"add\", \"add\", \"contains\", \"contains\", \"add\", \"contains\", \"remove\", \"contains\"]",
                 "[[], [1], [2], [1], [3], [2], [2], [2], [2]]"

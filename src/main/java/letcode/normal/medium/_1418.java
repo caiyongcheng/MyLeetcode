@@ -27,7 +27,7 @@
 package letcode.normal.medium;
 
 import letcode.utils.CastUtils;
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.*;
 
@@ -120,7 +120,7 @@ public class _1418 {
     public static void main(String[] args) {
         String[][] params = {{"Laura","2","Bean Burrito"},{"Jhon","2","Beef Burrito"},{"Melissa","2","Soda"}};
         List<List<String>> lists = new _1418().displayTable(CastUtils.array2List(params));
-        System.out.println(FormatUtils.formatList(lists));
+        System.out.println(TestCaseOutputUtils.formatList(lists));
     }
 
 }

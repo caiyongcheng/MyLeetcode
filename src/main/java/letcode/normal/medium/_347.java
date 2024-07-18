@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.Arrays;
 
@@ -129,7 +129,7 @@ public class _347 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _347().topKFrequent(
+        System.out.println(TestCaseOutputUtils.formatArray(new _347().topKFrequent(
                 new int[]{1},
                 1
         )));

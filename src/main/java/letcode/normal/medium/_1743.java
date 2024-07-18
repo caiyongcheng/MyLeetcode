@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.*;
 
@@ -111,7 +111,7 @@ public class  _1743 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _1743().restoreArray(
+        System.out.println(TestCaseOutputUtils.formatArray(new _1743().restoreArray(
                 new int[][]{{100000, -100000}}
         )));
     }

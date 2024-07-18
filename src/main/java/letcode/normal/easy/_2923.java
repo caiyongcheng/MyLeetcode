@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 一场比赛中共有 n 支队伍，按从 0 到  n - 1 编号。  给你一个下标从 0 开始、大小为 n * n 的二维布尔矩阵 grid 。
@@ -51,7 +51,7 @@ public class _2923 {
      */
     public static void main(String[] args) {
         System.out.println(new _2923().findChampion(
-                TestCaseUtils.get2DIntArr("[[0,0,1],[1,0,1],[0,0,0]]")
+                TestCaseInputUtils.get2DIntArr("[[0,0,1],[1,0,1],[0,0,0]]")
         ));
     }
 

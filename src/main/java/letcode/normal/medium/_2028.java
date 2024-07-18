@@ -1,7 +1,7 @@
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseOutputUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 现有一份 n + m 次投掷单个 六面 骰子的观测数据，骰子的每个面从 1 到 6 编号。观测数据中缺失了 n 份，你手上只拿到剩余 m 次投掷的数据。
@@ -73,8 +73,8 @@ public class _2028 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _2028().missingRolls(
-                TestCaseUtils.getIntArr("[4,5,6,2,3,6,5,4,6,4,5,1,6,3,1,4,5,5,3,2,3,5,3,2,1,5,4,3,5,1,5]"),
+        System.out.println(TestCaseOutputUtils.formatArray(new _2028().missingRolls(
+                TestCaseInputUtils.getIntArr("[4,5,6,2,3,6,5,4,6,4,5,1,6,3,1,4,5,5,3,2,3,5,3,2,1,5,4,3,5,1,5]"),
                 4,
                 40
         )));

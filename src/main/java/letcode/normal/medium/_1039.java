@@ -25,7 +25,7 @@
  */
 
 package letcode.normal.medium;
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 import letcode.utils.ListNode;
 
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class _1039 {
      */
     public static void main(String[] args) {
         ListNode listNode = new ListNode(new int[]{1,7,5,1,9,2,5,1});
-        System.out.println(FormatUtils.formatArray(new _1039().nextLargerNodes(listNode)));
+        System.out.println(TestCaseOutputUtils.formatArray(new _1039().nextLargerNodes(listNode)));
     }
 
 }

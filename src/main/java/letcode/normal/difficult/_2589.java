@@ -1,6 +1,6 @@
 package letcode.normal.difficult;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -79,7 +79,7 @@ public class _2589 {
      */
     public static void main(String[] args) {
         System.out.println(new _2589().findMinimumTime(
-                TestCaseUtils.get2DIntArr("[[8,19,1],[3,20,1],[1,20,2],[6,13,3]]")
+                TestCaseInputUtils.get2DIntArr("[[8,19,1],[3,20,1],[1,20,2],[6,13,3]]")
         ));
     }
 

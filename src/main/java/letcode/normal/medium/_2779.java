@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.Arrays;
 
@@ -136,7 +136,7 @@ public class _2779 {
      */
     public static void main(String[] args) {
         System.out.println(new _2779().maximumBeauty(
-                TestCaseUtils.getIntArr("[49,26]"),
+                TestCaseInputUtils.getIntArr("[49,26]"),
                 12
         ));
     }

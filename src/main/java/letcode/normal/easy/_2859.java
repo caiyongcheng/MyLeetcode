@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class _2859 {
      */
     public static void main(String[] args) {
         System.out.println(new _2859().sumIndicesWithKSetBits(
-                TestCaseUtils.getIntegerList("[4,3,2,1]"),
+                TestCaseInputUtils.getIntegerList("[4,3,2,1]"),
                 2
         ));
     }

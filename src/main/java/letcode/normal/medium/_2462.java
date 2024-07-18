@@ -1,8 +1,7 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
-import java.util.Arrays;
 import java.util.PriorityQueue;
 
 /**
@@ -78,7 +77,7 @@ public class _2462 {
      */
     public static void main(String[] args) {
         System.out.println(new _2462().totalCost(
-                TestCaseUtils.getIntArr("10,1,11,10"),
+                TestCaseInputUtils.getIntArr("10,1,11,10"),
                 2,
                 1
         ));

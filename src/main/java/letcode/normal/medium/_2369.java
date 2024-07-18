@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个下标从 0 开始的整数数组 nums ，你必须将数组划分为一个或多个 连续 子数组。  如果获得的这些子数组中每个都能满足下述条件 之一 ，
@@ -57,7 +57,7 @@ public class _2369 {
      */
     public static void main(String[] args) {
         System.out.println(new _2369().validPartition(
-                TestCaseUtils.getIntArr("[4,4,4,5,6,7,7,7,7]")
+                TestCaseInputUtils.getIntArr("[4,4,4,5,6,7,7,7,7]")
         ));
     }
 

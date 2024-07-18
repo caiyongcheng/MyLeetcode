@@ -1,6 +1,6 @@
 package letcode.lcp;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 力扣城计划在两地设立「力扣嘉年华」的分会场，气象小组正在分析两地区的气温变化趋势，对于第 i ~ (i+1) 天的气温变化趋势，将根据以下规则判断：
@@ -44,8 +44,8 @@ public class _61 {
      */
     public static void main(String[] args) {
         System.out.println(new _61().temperatureTrend(
-                TestCaseUtils.getIntArr("[5,10,16,-6,15,11,3]"),
-                TestCaseUtils.getIntArr("[16,22,23,23,25,3,-16]")
+                TestCaseInputUtils.getIntArr("[5,10,16,-6,15,11,3]"),
+                TestCaseInputUtils.getIntArr("[16,22,23,23,25,3,-16]")
         ));
     }
 

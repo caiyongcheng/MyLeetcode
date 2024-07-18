@@ -1,6 +1,6 @@
 package letcode.normal.difficult;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -251,7 +251,7 @@ public class _3086 {
      */
     public static void main(String[] args) {
         System.out.println(new _3086().minimumMoves2(
-                TestCaseUtils.getIntArr("[1,1,0,0,0,1,1,0,0,1]"),
+                TestCaseInputUtils.getIntArr("[1,1,0,0,0,1,1,0,0,1]"),
                 3,
                 1
         ));

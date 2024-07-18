@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 /**
  * @author Caiyongcheng
@@ -52,7 +52,7 @@ public class _260 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _260().singleNumber(
+        System.out.println(TestCaseOutputUtils.formatArray(new _260().singleNumber(
                 new int[]{0,1}
         )));
     }

@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 import letcode.utils.TreeNode;
 
 import java.util.Objects;
@@ -57,7 +57,7 @@ public class _938 {
      */
     public static void main(String[] args) {
         System.out.println(new _938().rangeSumBST(
-                TreeNode.createUseLeetCode(TestCaseUtils.getIntegerArr("[10,5,15,3,7,13,18,1,null,6]")),
+                TreeNode.createUseLeetCode(TestCaseInputUtils.getIntegerArr("[10,5,15,3,7,13,18,1,null,6]")),
                 6,
                 10
         ));

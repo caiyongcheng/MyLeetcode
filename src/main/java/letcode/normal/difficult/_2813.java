@@ -1,6 +1,6 @@
 package letcode.normal.difficult;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.*;
 
@@ -90,7 +90,7 @@ public class _2813 {
      */
     public static void main(String[] args) {
         System.out.println(new _2813().findMaximumElegance(
-                TestCaseUtils.get2DIntArr("[[10,3],[6,5],[5,4],[4,2],[9,3],[6,4]]"),
+                TestCaseInputUtils.get2DIntArr("[[10,3],[6,5],[5,4],[4,2],[9,3],[6,4]]"),
                 4
         ));
         /**

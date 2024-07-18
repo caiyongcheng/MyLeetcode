@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.*;
 
@@ -196,8 +196,8 @@ public class N_721 {
      */
     public static void main(String[] args) {
         System.out.println(new N_721().accountsMerge(
-                TestCaseUtils.get2DStrList(
-                        TestCaseUtils.getStringFromFile()
+                TestCaseInputUtils.get2DStrList(
+                        TestCaseInputUtils.getStringFromFile()
                 )
         ));
     }

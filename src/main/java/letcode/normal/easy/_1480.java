@@ -26,7 +26,7 @@
 
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 /**
  * 给你一个数组 nums 。数组「动态和」的计算公式为：runningSum[i] = sum(nums[0]…nums[i]) 。 
@@ -71,7 +71,7 @@ public class _1480 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _1480().runningSum(
+        System.out.println(TestCaseOutputUtils.formatArray(new _1480().runningSum(
                 new int[]{3, 1, 2, 10, 1}
         )));
     }

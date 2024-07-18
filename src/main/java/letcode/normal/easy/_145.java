@@ -1,10 +1,9 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 import letcode.utils.TreeNode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,7 +51,7 @@ public class _145 {
      * @param args
      */
     public static void main(String[] args) {
-        TreeNode root = TreeNode.createUseLeetCode(TestCaseUtils.getIntegerArr("[1]"));
+        TreeNode root = TreeNode.createUseLeetCode(TestCaseInputUtils.getIntegerArr("[1]"));
         List<Integer> ans = new _145().postorderTraversal(root);
         ans.forEach(System.out::println);
     }

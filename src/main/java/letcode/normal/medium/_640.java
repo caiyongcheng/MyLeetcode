@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestUtil;
 
 /**
  * 求解一个给定的方程，将x以字符串 "x=#value"的形式返回。该方程仅包含 '+' ， '-' 操作，变量x和其对应系数。
@@ -133,7 +133,7 @@ public class _640 {
      * @param args
      */
     public static void main(String[] args) {
-        TestCaseUtils.test(
+        TestUtil.test(
                 _640.class,
                 "输入: equation = \"x+5-3+x=6+x-2\" 输出: \"x=2\" 示例 2:",
                 "输入: equation = \"x=x\" 输出: \"Infinite solutions\" 示例 3:",

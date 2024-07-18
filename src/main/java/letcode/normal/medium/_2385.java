@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 import letcode.utils.TreeNode;
 
 import java.util.*;
@@ -112,7 +112,7 @@ public class _2385 {
     public static void main(String[] args) {
         System.out.println(new _2385().amountOfTime(
                 TreeNode.createUseLeetCode(
-                        TestCaseUtils.getIntegerArr("[1,5,3,null,4,10,6,9,2]")
+                        TestCaseInputUtils.getIntegerArr("[1,5,3,null,4,10,6,9,2]")
                 ),
                 3
         ));

@@ -26,7 +26,7 @@
 
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +89,7 @@ public class _412 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatList(new _412().fizzBuzz(15)));
+        System.out.println(TestCaseOutputUtils.formatList(new _412().fizzBuzz(15)));
     }
 
 }

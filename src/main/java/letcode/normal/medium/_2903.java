@@ -1,7 +1,7 @@
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseOutputUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个下标从 0 开始、长度为 n 的整数数组 nums ，以及整数 indexDifference 和整数 valueDifference 。
@@ -72,8 +72,8 @@ public class _2903 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _2903().findIndices(
-                TestCaseUtils.getIntArr("[3]"),
+        System.out.println(TestCaseOutputUtils.formatArray(new _2903().findIndices(
+                TestCaseInputUtils.getIntArr("[3]"),
                 1,
                 1
         )));

@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个长度为 n 、下标从 0 开始的整数数组 batteryPercentages ，表示 n 个设备的电池百分比。
@@ -49,7 +49,7 @@ public class _2960 {
      */
     public static void main(String[] args) {
         System.out.println(new _2960().countTestedDevices(
-                TestCaseUtils.getIntArr("[0,1,2]"))
+                TestCaseInputUtils.getIntArr("[0,1,2]"))
         );
     }
 

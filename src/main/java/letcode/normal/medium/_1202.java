@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.CastUtils;
+import letcode.utils.TestUtil;
 
 import java.util.*;
 
@@ -151,10 +151,10 @@ public class _1202 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(new _1202().smallestStringWithSwaps(
-                "dcab",
-                CastUtils.array2List(new Integer[][]{{0,3},{1,2},{0,2}})
-        ));
+        TestUtil.test(_1202.class, "示例 1: 输入：s = \"dcab\", pairs = {{0,3},{1,2}} 输出：\"bacd\" 解释： " +
+                "交换 s{0} 和 s{3}, s = \"bcad\" 交换 s{1} 和 s{2}, s = \"bacd\" 示例 2： 输入：s = \"dcab\", " +
+                "pairs = {{0,3},{1,2},{0,2}} 输出：\"abcd\" 解释： 交换 s{0} 和 s{3}, s =" +
+                " \"bcad\" 交换 s{0} 和 s{2}, s = \"acbd\" 交换 s{1} 和 s{2}, s = \"abcd\"");
     }
     
     

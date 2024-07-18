@@ -26,7 +26,7 @@
 
 package letcode.normal.difficult;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,7 +171,7 @@ public class _68 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatList(new _68().fullJustify(
+        System.out.println(TestCaseOutputUtils.formatList(new _68().fullJustify(
                 new String[]{"Science", "is", "what", "we", "understand", "well", "enough", "to", "explain", "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"},
                 20
         ), "[\n", "\n]", "\n"));

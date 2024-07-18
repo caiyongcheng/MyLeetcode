@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你两个下标从 0 开始的整数数组 player1 和 player2 ，分别表示玩家 1 和玩家 2 击中的瓶数。  保龄球比赛由 n 轮组成，每轮的瓶数恰好为 10 。  假设玩家在第 i 轮中击中 xi 个瓶子。玩家第 i 轮的价值为：  如果玩家在该轮的前两轮的任何一轮中击中了 10 个瓶子，则为 2xi 。 否则，为 xi 。 玩家的得分是其 n 轮价值的总和。  返回  如果玩家 1 的得分高于玩家 2 的得分，则为 1 ； 如果玩家 2 的得分高于玩家 1 的得分，则为 2 ； 如果平局，则为 0 。
@@ -56,8 +56,8 @@ public class _2660 {
      */
     public static void main(String[] args) {
         System.out.println(new _2660().isWinner(
-                TestCaseUtils.getIntArr("[4,10,7,9]"),
-                TestCaseUtils.getIntArr("[6,5,2,3]")
+                TestCaseInputUtils.getIntArr("[4,10,7,9]"),
+                TestCaseInputUtils.getIntArr("[6,5,2,3]")
         ));
     }
 }

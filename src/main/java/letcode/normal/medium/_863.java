@@ -25,7 +25,7 @@
  */
 
 package letcode.normal.medium;
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 import letcode.utils.TreeNode;
 
 import java.util.ArrayList;
@@ -107,7 +107,7 @@ public class _863 {
         treeNode.right = new TreeNode(1);
         treeNode.right.left = new TreeNode(0);
         treeNode.right.right = new TreeNode(8);
-        System.out.println(FormatUtils.formatList(new _863().distanceK(treeNode, treeNode.right.left, 3)));
+        System.out.println(TestCaseOutputUtils.formatList(new _863().distanceK(treeNode, treeNode.right.left, 3)));
     }
 
 

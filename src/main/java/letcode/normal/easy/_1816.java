@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestUtil;
 
 /**
  * 句子 是一个单词列表，列表中的单词之间用单个空格隔开，且不存在前导或尾随空格。每个单词仅由大小写英文字母组成（不含标点符号）。
@@ -58,7 +58,7 @@ public class _1816 {
      * @param args
      */
     public static void main(String[] args) {
-        TestCaseUtils.test(
+        TestUtil.test(
                 _1816.class,
                 "输入：s = \"Hello how are you Contestant\", k = 4",
                 "输入：s = \"What is the solution to this problem\", k = 4",

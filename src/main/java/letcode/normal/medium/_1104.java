@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -82,7 +82,7 @@ public class _1104 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatList(new _1104().pathInZigZagTree(26)));
+        System.out.println(TestCaseOutputUtils.formatList(new _1104().pathInZigZagTree(26)));
     }
 
 }

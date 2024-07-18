@@ -1,7 +1,7 @@
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseOutputUtils;
+import letcode.utils.TestCaseInputUtils;
 
 public class _1652 {
 
@@ -53,8 +53,8 @@ public class _1652 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _1652().decrypt(
-                TestCaseUtils.getIntArr("[5,7,1,4]"),
+        System.out.println(TestCaseOutputUtils.formatArray(new _1652().decrypt(
+                TestCaseInputUtils.getIntArr("[5,7,1,4]"),
                 3
         )));
     }

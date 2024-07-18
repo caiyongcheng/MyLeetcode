@@ -1,7 +1,7 @@
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseOutputUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.Arrays;
 
@@ -45,8 +45,8 @@ public class _2974 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _2974().numberGame(
-                TestCaseUtils.getIntArr("[5,4,2,3]")
+        System.out.println(TestCaseOutputUtils.formatArray(new _2974().numberGame(
+                TestCaseInputUtils.getIntArr("[5,4,2,3]")
         )));
     }
 

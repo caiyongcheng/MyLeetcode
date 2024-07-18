@@ -37,8 +37,9 @@ import java.util.stream.Collectors;
  *
  * @author : CaiYongcheng
  * @since : 2020-07-15 11:09
+ * description: 测试用例结果输出工具类
  **/
-public class FormatUtils {
+public class TestCaseOutputUtils {
 
     private static final String NULL_STRING = "!null object!";
 
@@ -181,7 +182,7 @@ public class FormatUtils {
      */
     public static String format2DArray(int[][] array, String prefix, String suffix, String separator) {
         return prefix
-                + Arrays.stream(array).map(FormatUtils::formatArray).collect(Collectors.joining(separator))
+                + Arrays.stream(array).map(TestCaseOutputUtils::formatArray).collect(Collectors.joining(separator))
                 + suffix;
     }
 
@@ -233,13 +234,13 @@ public class FormatUtils {
             return "null";
         }
         if (execRst instanceof List) {
-            return "[" + ((List<?>) execRst).stream().map(FormatUtils::formatObj).collect(Collectors.joining(",")) + "]";
+            return "[" + ((List<?>) execRst).stream().map(TestCaseOutputUtils::formatObj).collect(Collectors.joining(",")) + "]";
         }
         if (execRst instanceof int[]) {
             return formatArray((int[]) execRst);
         }
         if (execRst.getClass().isArray()) {
-            return "[" + Arrays.stream((T[]) execRst).map(FormatUtils::formatObj).collect(Collectors.joining(",")) + "]";
+            return "[" + Arrays.stream((T[]) execRst).map(TestCaseOutputUtils::formatObj).collect(Collectors.joining(",")) + "]";
         }
         return execRst.toString();
     }

@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +115,7 @@ public class _229 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatList(new _229().majorityElement(
+        System.out.println(TestCaseOutputUtils.formatList(new _229().majorityElement(
                 new int[]{1, 1, 1, 3, 3, 2, 2, 2, 3}
         )));
     }

@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.*;
 
@@ -132,7 +132,7 @@ public class _1109 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(
+        System.out.println(TestCaseOutputUtils.formatArray(
                 new _1109().corpFlightBookings2(
                         new int[][]{{1, 2, 10}, {2, 3, 20}, {2, 5, 25}},
                         5

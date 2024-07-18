@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个下标从 0 开始的字符串数组 garbage ，其中 garbage[i] 表示第 i 个房子的垃圾集合。garbage[i] 只包含字符 'M' ，'P' 和 'G'
@@ -118,8 +118,8 @@ public class _2391 {
      */
     public static void main(String[] args) {
         System.out.println(new _2391().garbageCollection(
-                TestCaseUtils.getStrArr("[\"MMM\",\"PGM\",\"GP\"]"),
-                TestCaseUtils.getIntArr("[3,10]")
+                TestCaseInputUtils.getStrArr("[\"MMM\",\"PGM\",\"GP\"]"),
+                TestCaseInputUtils.getIntArr("[3,10]")
         ));
     }
 

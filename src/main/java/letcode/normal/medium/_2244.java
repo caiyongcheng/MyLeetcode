@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +37,7 @@ public class _2244 {
 
     public static void main(String[] args) {
         System.out.println(new _2244().minimumRounds(
-                TestCaseUtils.getIntArr("[2,3,3]")
+                TestCaseInputUtils.getIntArr("[2,3,3]")
         ));
     }
 

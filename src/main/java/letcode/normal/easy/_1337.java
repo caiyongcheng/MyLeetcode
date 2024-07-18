@@ -26,7 +26,7 @@
 
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.Arrays;
 
@@ -105,7 +105,7 @@ public class _1337 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _1337().kWeakestRows(
+        System.out.println(TestCaseOutputUtils.formatArray(new _1337().kWeakestRows(
                 new int[][]{{1, 0, 0, 0},
                         {1, 1, 1, 1},
                         {1, 0, 0, 0},

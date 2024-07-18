@@ -1,7 +1,7 @@
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseOutputUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -66,9 +66,9 @@ public class  _2225 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatNestList(
+        System.out.println(TestCaseOutputUtils.formatNestList(
                 new _2225().findWinners(
-                        TestCaseUtils.get2DIntArr("[[1,3],[2,3],[3,6],[5,6],[5,7],[4,5],[4,8],[4,9],[10,4],[10,9]]")
+                        TestCaseInputUtils.get2DIntArr("[[1,3],[2,3],[3,6],[5,6],[5,7],[4,5],[4,8],[4,9],[10,4],[10,9]]")
                 )
         ));
     }

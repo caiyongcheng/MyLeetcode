@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.Comparator;
 import java.util.List;
@@ -113,7 +113,7 @@ public class _436 {
      */
     public static void main(String[] args) {
         _436 fourHundredThirtySix = new _436();
-        System.out.println(FormatUtils.formatArray(fourHundredThirtySix.findRightInterval(
+        System.out.println(TestCaseOutputUtils.formatArray(fourHundredThirtySix.findRightInterval(
                 //[[1,2],[2,3],[0,1],[3,4]]
                 new int[][]{{1, 1}, {3, 4}}
         )));

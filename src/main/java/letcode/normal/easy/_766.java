@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个 m x n 的矩阵 matrix 。如果这个矩阵是托普利茨矩阵，返回 true ；否则，返回 false 。
@@ -52,7 +52,7 @@ public class _766 {
      */
     public static void main(String[] args) {
         System.out.println(new _766().isToeplitzMatrix(
-                TestCaseUtils.get2DIntArr("[[1,2],[2,2]]")
+                TestCaseInputUtils.get2DIntArr("[[1,2],[2,2]]")
         ));
     }
 

@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个下标从 0 开始的 8 x 8 网格 board ，其中 board[r][c] 表示游戏棋盘上的格子 (r, c) 。
@@ -65,7 +65,7 @@ public class _1958 {
     public static void main(String[] args) {
 
         System.out.println(new _1958().checkMove(
-                TestCaseUtils.get2DCharArr(
+                TestCaseInputUtils.get2DCharArr(
                        "[[\"B\",\"W\",\"B\",\"B\",\"W\",\"W\",\".\",\"W\"],[\"W\",\"W\",\"B\",\"W\",\"B\",\"B\",\"W\",\".\"],[\"B\",\"W\",\".\",\"W\",\".\",\".\",\"B\",\"B\"],[\".\",\"B\",\"W\",\".\",\"B\",\"W\",\"B\",\"W\"],[\"B\",\"B\",\"W\",\"B\",\".\",\"B\",\"W\",\"B\"],[\"B\",\"B\",\"B\",\"W\",\"B\",\"W\",\"W\",\"B\"],[\".\",\"W\",\".\",\"W\",\".\",\"W\",\"W\",\"W\"],[\".\",\"W\",\"W\",\"B\",\"B\",\"B\",\"B\",\".\"]]"
                 ),
                 7, 7, 'B'

@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestUtil;
 
 import java.util.Arrays;
 
@@ -64,7 +64,7 @@ public class _1688 {
      * @param args
      */
     public static void main(String[] args) {
-        TestCaseUtils.test(_1688.class,
+        TestUtil.test(_1688.class,
                 "aliceValues = [1,3], bobValues = [2,1]",
                 "aliceValues = [1,2], bobValues = [3,1]",
                "aliceValues = [2,4,3], bobValues = [1,6,7]"

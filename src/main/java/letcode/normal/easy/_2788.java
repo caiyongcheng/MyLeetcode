@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,7 @@ public class _2788 {
      */
     public static void main(String[] args) {
         System.out.println(new _2788().splitWordsBySeparator(
-                TestCaseUtils.getStrList("[\"|||\"]"),
+                TestCaseInputUtils.getStrList("[\"|||\"]"),
                 '|'
         ));
     }

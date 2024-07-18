@@ -1,249 +1,24 @@
 package letcode.utils;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static letcode.utils.TestCaseInputUtils.*;
+
 /**
- * @author Caiyongcheng
+ * 测试工具类
+ *
+ * @author 蔡永程
  * @version 1.0.0
- * @since 2023/12/12 9:38
- * description 测试用例工具类
+ * @since 2024-07-18 09:30
  */
-public class TestCaseUtils {
-
-    private static final String TEST_CASE_FILE_PATH = "src/main/resources/TestCase.txt";
-
-    /**
-     * 将字符串转化为对应的二维整形数组
-     * @param inputStr 输入字符串 形式类似 "[[1,6,1],[3,10,2],[10,12,3],[11,12,2],[12,15,2],[13,18,1]]"
-     * @return 对应的二维整形数组
-     */
-    public static int[][] get2DIntArr(String inputStr) {
-        String separator = ",";
-        return get2DArr(
-                inputStr,
-                separator,
-                strArr -> Arrays.stream(strArr.split(separator)).map(String::trim).map(Integer::parseInt).mapToInt(Integer::intValue).toArray(),
-                new int[0][0]
-        );
-    }
-
-    /**
-     * 将字符串转化为对应的二维字符串数组
-     * @param inputStr 输入字符串 形式类似 "[[1,6,1],[3,10,2],[10,12,3],[11,12,2],[12,15,2],[13,18,1]]"
-     * @return 对应的二维字符串数组
-     */
-    public static String[][] get2DStrArr(String inputStr) {
-        String separator = ",";
-        return get2DArr(
-                inputStr,
-                separator,
-                strArr -> Arrays.stream(strArr.split(separator)).map(String::trim).collect(Collectors.toList()).toArray(new String[0]),
-                new String[0][0]
-        );
-    }
-
-    /**
-     * 将字符串转为对应的二维List
-     * @param inputStr 输入字符串 类似 [[...],[...],[...]]
-     * @param separator 字符串中分割数组的分隔符
-     * @param mapFun 一维数组字符串到一维数组实例的转化器
-     * @return 字符串对应的二维数组
-     * @param <T> 数组类型[]
-     */
-    public static<T> List<List<T>> get2DList(String inputStr, String separator, Function<String, T[]> mapFun) {
-        inputStr = inputStr.substring(1, inputStr.length() - 1).replaceAll("[\\[|\\]]", " ");
-        return Arrays.stream(inputStr.split(" " + separator + " ")).map(mapFun).map(Arrays::asList).collect(Collectors.toList());
-    }
-
-    /**
-     * 将字符串转为对应的字符串二维List
-     * @param inputStr 输入字符串 类似 [[...],[...],[...]]
-     * @param separator 字符串中分割数组的分隔符
-     * @return 字符串对应的二维List
-     */
-    public static List<List<String>> get2DStrList(String inputStr, String separator) {
-        return get2DList(inputStr, separator, TestCaseUtils::getStrArr);
-    }
-
-    /**
-     * 将字符串转为对应的字符串二维List
-     * @param inputStr 输入字符串 类似 [[...],[...],[...]]
-     * @return 字符串对应的二维List
-     */
-    public static List<List<String>> get2DStrList(String inputStr) {
-        return get2DStrList(inputStr, ",");
-    }
-
-
-    /**
-     * 将字符串转为对应的二维数组
-     * @param inputStr 输入字符串 类似 [[...],[...],[...]]
-     * @param separator 字符串中分割数组的分隔符
-     * @param mapFun 一维数组字符串到一维数组实例的转化器
-     * @param arr 二维数组 空数组即可 用于list的toArray方法
-     * @return 字符串对应的二维数组
-     * @param <T> 数组类型[]
-     */
-    public static<T> T[] get2DArr(String inputStr, String separator, Function<String, T> mapFun, T[] arr) {
-        inputStr = inputStr.substring(1, inputStr.length() - 1).replaceAll("[\\[|\\]]", " ");
-        return Arrays.stream(inputStr.split(" " + separator + " ")).map(mapFun).collect(Collectors.toList()).toArray(arr);
-    }
-
-    /**
-     * 将输入数组字符串转为字符串数组，保留输入中的"
-     * @param inputStr 数组字符串 例如 "[\"SmallestInfiniteSet\", \"addBack\", \"popSmallest\", \"popSmallest\",
-     *                \"popSmallest\", \"addBack\", \"popSmallest\", \"popSmallest\", \"popSmallest\"]"
-     * @return 字符串数组 例如 ["\"SmallestInfiniteSet\""...]
-     */
-    public static String[] getStrArr(String inputStr) {
-        return getStrArr(inputStr, ",", s -> s.replaceAll("\"", "").trim(), new String[0]);
-    }
-
-    /**
-     * 将输入数组字符串转为字符串List，保留输入中的"
-     * @param inputStr 数组字符串 例如 "[\"SmallestInfiniteSet\", \"addBack\", \"popSmallest\", \"popSmallest\",
-     *                \"popSmallest\", \"addBack\", \"popSmallest\", \"popSmallest\", \"popSmallest\"]"
-     * @return 字符串数组 例如 ["\"SmallestInfiniteSet\""...]
-     */
-    public static List<String> getStrList(String inputStr) {
-        return Arrays.stream(getStrArr(inputStr, ",", s -> s.replaceAll("\"", "").trim(), new String[0])).collect(Collectors.toList());
-    }
-
-    /**
-     * 将输入数组字符串转为字符串数组，不保留输入中的"
-     * @param inputStr 数组字符串 例如 "[\"SmallestInfiniteSet\", \"addBack\", \"popSmallest\", \"popSmallest\",
-     *                 \"popSmallest\", \"addBack\", \"popSmallest\", \"popSmallest\", \"popSmallest\"]"
-     * @return 字符串数组 例如 ["SmallestInfiniteSet"...]
-     */
-    public static String[] getStrArrIgnoreDoubleQuote(String inputStr) {
-        return getStrArr(inputStr, ",", s -> s.trim().replaceAll("\"", ""), new String[0]);
-    }
-
-    /**
-     * 将输入数组字符串转为Integer数组
-     * @param inputStr 数组字符串 例如 "["1", "2", 3]"
-     * @return Integer数组 [1,2,3]
-     */
-    public static Integer[] getIntegerArr(String inputStr) {
-        return getStrArr(
-                inputStr.trim(),
-                ",",
-                str -> {
-                    if ("NULL".equalsIgnoreCase(str)) {
-                        return null;
-                    }
-                    return Integer.parseInt(str.replaceAll("\"", "").trim());
-                },
-                new Integer[0]
-        );
-    }
-
-    /**
-     * 将输入数组字符串转为Character数组
-     * @param inputStr 数组字符串 例如 "["1", "2", 3]"
-     * @return Integer数组 ['1','2','3']
-     */
-    public static Character[] getCharacterArr(String inputStr) {
-        return getStrArr(
-                inputStr.trim(),
-                ",",
-                str -> {
-                    if ("NULL".equalsIgnoreCase(str)) {
-                        return null;
-                    }
-                    return str.replaceAll("\"", "").trim().charAt(0);
-                },
-                new Character[0]
-        );
-    }
-
-    /**
-     * 将输入数组字符串转为List
-     * @param inputStr 数组字符串 例如 "["1", "2", 3]"
-     * @return Integer数组 [1,2,3]
-     */
-    public static List<Integer> getIntegerList(String inputStr) {
-        return Arrays.asList(
-                getStrArr(
-                        inputStr,
-                        ",",
-                        str -> Integer.parseInt(str.replaceAll("\"", "").trim()),
-                        new Integer[0]
-                )
-        );
-    }
-
-    /**
-     * 将输入数组字符串转为int数组
-     * @param inputStr 数组字符串 例如 "["1", "2", 3]"
-     * @return Integer数组 [1,2,3]
-     */
-    public static int[] getIntArr(String inputStr) {
-        Integer[] integerArr = getIntegerArr(inputStr);
-        int[] intArr = new int[integerArr.length];
-        for (int i = 0; i < integerArr.length; i++) {
-            intArr[i] = integerArr[i];
-        }
-        return intArr;
-    }
-
-    /**
-     * 将输入数组字符串转为int数组
-     * @param inputStr 数组字符串 例如 "["1", "2", 3]"
-     * @return Integer数组 [1,2,3]
-     */
-    public static char[] getCharArr(String inputStr) {
-        Character[] characterArr = getCharacterArr(inputStr);
-        char[] charArr = new char[characterArr.length];
-        for (int i = 0; i < characterArr.length; i++) {
-            charArr[i] = characterArr[i];
-        }
-        return charArr;
-    }
-
-    public static char[][] get2DCharArr(String inputStr) {
-        return get2DArr(
-                inputStr,
-                ",",
-                TestCaseUtils::getCharArr,
-                new char[0][0]
-        );
-    }
-
-    /**
-     * 将输入字符串转化为数组
-     * @param inputStr 数组字符串
-     * @param separator 分割符
-     * @param mapFun 映射函数
-     * @param arr 目标数组 用于list.toArray 方法
-     * @return 数组
-     * @param <T> 目标数组类型
-     */
-    public static<T> T[] getStrArr(String inputStr, String separator, Function<String, T> mapFun, T[] arr) {
-        if (inputStr.startsWith("[")) {
-            inputStr = inputStr.substring(1);
-        }
-        if (inputStr.endsWith("]")) {
-            inputStr = inputStr.substring(0, inputStr.length() - 1);
-        }
-        if (inputStr.trim().isEmpty()) {
-            return arr;
-        }
-        return Arrays.stream(inputStr.split(separator)).map(mapFun).collect(Collectors.toList()).toArray(arr);
-    }
-
+public class TestUtil {
 
     /**
      * 让指定的对象，执行给定的操作
@@ -294,58 +69,20 @@ public class TestCaseUtils {
         return operation(obj, operationStr, paramsStr, false);
     }
 
-    public static String getStringFromFile(String fileName) {
-        try (FileReader fileReader = new FileReader(fileName);
-             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-            StringBuilder str = new StringBuilder();
-            String lineStr;
-            while (true) {
-                lineStr = bufferedReader.readLine();
-                if (lineStr == null || lineStr.isEmpty()) {
-                    break;
-                }
-                str.append(lineStr);
-            }
-            return str.toString();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static String getStringFromFile() {
-        return getStringFromFile(TEST_CASE_FILE_PATH);
-    }
-
-
-    public static int[] createRandomIntArr(int arrLength, int floor, int ceil) {
-        int[] randomArr = new int[arrLength];
-        int dist = ceil - floor;
-        try {
-            for (int i = 0; i < randomArr.length; i++) {
-                randomArr[i] = (int) (SecureRandom.getInstanceStrong().nextDouble() * dist) + floor;
-            }
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        return randomArr;
-    }
-
-    public static int[] createRandomIntArr(int arrLength) {
-        int[] randomArr = new int[arrLength];
-        try {
-            for (int i = 0; i < randomArr.length; i++) {
-                randomArr[i] = SecureRandom.getInstanceStrong().nextInt(Integer.MAX_VALUE);
-            }
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        return randomArr;
-    }
-
+    /**
+     * 测试目标类的方法
+     * @param targetClass 目标类
+     * @param inputStrArr 输入字符串，按输入进行划分
+     */
     public static<T> void test(Class<T> targetClass, String inputStrArr) {
         test(targetClass, Arrays.stream(inputStrArr.split("输入")).filter(str -> str.contains("=")).toArray(String[]::new));
     }
 
+    /**
+     * 测试目标类的方法
+     * @param targetClass 目标类
+     * @param inputStrArr 输入字符串数组
+     */
     public static<T> void test(Class<T> targetClass, String... inputStrArr) {
         // get test method from target class; test method must be public;
         Method testMethod = Arrays.stream(targetClass.getMethods())
@@ -363,27 +100,27 @@ public class TestCaseUtils {
             throw new RuntimeException(e);
         }
         System.out.printf("test method is: %s%n", testMethod.getName());
-        System.out.print("====================================== start ======================================\n");
+        System.out.print("=================================================================== start ===================================================================\n");
         int time = 0;
         Class<?>[] parameterTypes = testMethod.getParameterTypes();
         for (String inputStr : inputStrArr) {
-            System.out.print("||                                                                               ||\n");
-            System.out.printf("||\t|------------------------------ %02d[start] -----------------------------|     ||%n", time);
+            System.out.print("||                                                                                                                                         ||\n");
+            System.out.printf("||\t|----------------------------------------------------------- %02d[start] ----------------------------------------------------------|     ||%n", time);
             try {
                 String[] paramsStrArr = getParamStrArr(inputStr, parameterTypes);
                 Object[] params = getParams(parameterTypes, paramsStrArr);
                 printf("input: %s", inputStr);
-                printf("params: %s", FormatUtils.formatObj(params));
+                printf("params: %s", TestCaseOutputUtils.formatObj(params));
                 Object execRst = testMethod.invoke(obj, params);
-                printf("result: %s", FormatUtils.formatObj(execRst));
+                printf("result: %s", TestCaseOutputUtils.formatObj(execRst));
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
                 break;
             }
-            System.out.printf("||\t------------------------------ %02d[end] ---------------------------------\t ||%n", time++);
+            System.out.printf("||\t----------------------------------------------------------- %02d[end] --------------------------------------------------------------\t   ||%n", time++);
         }
-        System.out.print("||                                                                               ||\n");
-        System.out.println("====================================== end ========================================");
+        System.out.print("||                                                                                                                                         ||\n");
+        System.out.println("=================================================================== end =====================================================================");
     }
 
     /**
@@ -518,7 +255,7 @@ public class TestCaseUtils {
                         params[i] = get2DStrList(paramStrArr[i]);
                         continue;
                     case "List<List<Integer>>":
-                        params[i] = get2DList(paramStrArr[i], ",", TestCaseUtils::getIntegerArr);
+                        params[i] = get2DList(paramStrArr[i], ",", TestCaseInputUtils::getIntegerArr);
                         continue;
                 }
             }
@@ -531,14 +268,23 @@ public class TestCaseUtils {
         return params;
     }
 
+    /**
+     * 打印测试结果的语句
+     * @param format 模板
+     * @param params 模板参数
+     */
     public static void printf(String format, String... params) {
         print(String.format(format, params));
     }
 
+    /**
+     * 打印测试结果的语句
+     * @param str 打印语句
+     */
     public static void print(String str) {
         String prefix = "||  | ";
         String suffix = " |     ||";
-        int lineWidth = getWidth("====================================== start ======================================");
+        int lineWidth = getWidth("=================================================================== start ===================================================================");
         int prefixWidth = getWidth(prefix);
         int suffixWidth = getWidth(suffix);
         int printStrOneLineWidth = lineWidth - prefixWidth - suffixWidth - 1;
@@ -570,6 +316,11 @@ public class TestCaseUtils {
         }
     }
 
+    /**
+     * 获取字符的宽度
+     * @param str 字符串
+     * @return 宽度
+     */
     public static int getWidth(String str) {
         int width = 0;
         for (int i = 0; i < str.length(); ) {
@@ -581,6 +332,11 @@ public class TestCaseUtils {
         return width;
     }
 
+    /**
+     * 获取字符的宽度
+     * @param codepoint 字符
+     * @return 宽度
+     */
     private static int getWidth(int codepoint) {
         if (Character.UnicodeBlock.of(codepoint) == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
                 || Character.UnicodeBlock.of(codepoint) == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A

@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你 n 个项目，编号从 0 到 n - 1 。同时给你一个整数数组 milestones ，其中每个 milestones[i] 表示第 i 个项目中的阶段任务数量。
@@ -68,7 +68,7 @@ public class _1953 {
      */
     public static void main(String[] args) {
         System.out.println(new _1953().numberOfWeeks(
-                TestCaseUtils.getIntArr("[42,72,43,54,2,53,36,73,78,84,67,94,70,59,84,8,93,52,4,46]")
+                TestCaseInputUtils.getIntArr("[42,72,43,54,2,53,36,73,78,84,67,94,70,59,84,8,93,52,4,46]")
         ));
     }
 

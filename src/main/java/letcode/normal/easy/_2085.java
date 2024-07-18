@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -65,8 +65,8 @@ public class _2085 {
      */
     public static void main(String[] args) {
         System.out.println(new _2085().countWords(
-                TestCaseUtils.getStrArr("[\"a\",\"ab\"]"),
-                TestCaseUtils.getStrArr("[\"a\",\"a\",\"a\",\"ab\"]")
+                TestCaseInputUtils.getStrArr("[\"a\",\"ab\"]"),
+                TestCaseInputUtils.getStrArr("[\"a\",\"a\",\"a\",\"ab\"]")
         ));
     }
 

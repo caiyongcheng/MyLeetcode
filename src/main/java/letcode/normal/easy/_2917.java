@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个下标从 0 开始的整数数组 nums 和一个整数 k 。  nums 中的 K-or 是一个满足以下条件的非负整数：  只有在 nums 中，至少存在 k 个元素的第 i 位值为 1 ，
@@ -52,7 +52,7 @@ public class _2917 {
      */
     public static void main(String[] args) {
         System.out.println(new _2917().findKOr(
-                TestCaseUtils.getIntArr("[10,8,5,9,11,6,8]"),
+                TestCaseInputUtils.getIntArr("[10,8,5,9,11,6,8]"),
                 1
         ));
     }

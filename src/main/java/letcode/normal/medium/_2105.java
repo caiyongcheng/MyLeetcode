@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * Alice 和 Bob 打算给花园里的 n 株植物浇水。植物排成一行，从左到右进行标记，编号从 0 到 n - 1 。其中，第 i 株植物的位置是 x = i 。
@@ -87,7 +87,7 @@ public class _2105 {
      */
     public static void main(String[] args) {
         System.out.println(new _2105().minimumRefill(
-                TestCaseUtils.getIntArr("[1,10,1]"),
+                TestCaseInputUtils.getIntArr("[1,10,1]"),
                 10,
                 11
         ));

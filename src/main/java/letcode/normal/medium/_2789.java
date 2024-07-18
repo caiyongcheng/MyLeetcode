@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * You are given a 0-indexed array nums consisting of positive integers.
@@ -59,7 +59,7 @@ public class _2789 {
      */
     public static void main(String[] args) {
         System.out.println(new _2789().maxArrayValue(
-                TestCaseUtils.getIntArr("[2,3,7,9,3]")
+                TestCaseInputUtils.getIntArr("[2,3,7,9,3]")
         ));
     }
 

@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个整数数组 nums。  返回两个（不一定不同的）质数在 nums 中 下标 的 最大距离。
@@ -65,7 +65,7 @@ public class _3115 {
      */
     public static void main(String[] args) {
         System.out.println(new _3115().maximumPrimeDifference(
-                TestCaseUtils.getIntArr("[4,8,2,8]")
+                TestCaseInputUtils.getIntArr("[4,8,2,8]")
         ));
     }
 

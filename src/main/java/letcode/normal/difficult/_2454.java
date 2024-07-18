@@ -1,6 +1,6 @@
 package letcode.normal.difficult;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -114,7 +114,7 @@ public class _2454 {
     public static void main(String[] args) {
         System.out.println(Arrays.toString(
                 new _2454().secondGreaterElement(
-                        TestCaseUtils.getIntArr("[272,238,996,406,763,164,102,948,217,760,609,700,848,637,748,718,469,449,502,703,292,86,91,551,699,293,244,406,22,968,434,805,910,927,623,79,108,541,411]")
+                        TestCaseInputUtils.getIntArr("[272,238,996,406,763,164,102,948,217,760,609,700,848,637,748,718,469,449,502,703,292,86,91,551,699,293,244,406,22,968,434,805,910,927,623,79,108,541,411]")
                 )
         ));
     }

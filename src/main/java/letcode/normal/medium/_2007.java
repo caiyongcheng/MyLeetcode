@@ -1,7 +1,7 @@
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseOutputUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.Arrays;
 
@@ -69,8 +69,8 @@ public class _2007 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _2007().findOriginalArray(
-                TestCaseUtils.getIntArr("[0, 100000]")
+        System.out.println(TestCaseOutputUtils.formatArray(new _2007().findOriginalArray(
+                TestCaseInputUtils.getIntArr("[0, 100000]")
         )));
     }
 

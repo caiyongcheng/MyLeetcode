@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 import letcode.utils.TreeNode;
 
 import java.util.HashMap;
@@ -59,8 +59,8 @@ public class __105_New {
      */
     public static void main(String[] args) {
         TreeNode treeNode = new __105_New().buildTree(
-                TestCaseUtils.getIntArr("[3,9,20,15,7]"),
-                TestCaseUtils.getIntArr("[9,3,15,20,7]")
+                TestCaseInputUtils.getIntArr("[3,9,20,15,7]"),
+                TestCaseInputUtils.getIntArr("[9,3,15,20,7]")
         );
         System.out.println(treeNode.toString());
 /*        TreeNode treeNode = new __105_New().buildTree(

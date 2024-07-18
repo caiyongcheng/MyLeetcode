@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.Arrays;
 
@@ -59,7 +59,7 @@ public class _2144 {
      */
     public static void main(String[] args) {
         System.out.println(new _2144().minimumCost(
-                TestCaseUtils.getIntArr(
+                TestCaseInputUtils.getIntArr(
                         "[5,5]"
                 )
         ));

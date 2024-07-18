@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestUtil;
 
 /**
  * 给你两个下标从 0 开始的整数数组 nums1 和 nums2 ，它们分别含有 n 和 m 个元素。
@@ -50,7 +50,7 @@ public class _2956 {
      * @param args
      */
     public static void main(String[] args) {
-        TestCaseUtils.test(_2956.class, "输入：nums1 = [4,3,2,3,1], nums2 = [2,2,5,2,3,6]");
+        TestUtil.test(_2956.class, "输入：nums1 = [4,3,2,3,1], nums2 = [2,2,5,2,3,6]");
     }
 
 }

@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.*;
 
@@ -96,7 +96,7 @@ public class _1488 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _1488().avoidFlood(
+        System.out.println(TestCaseOutputUtils.formatArray(new _1488().avoidFlood(
                 new int[]{
                         1,2,0,1,2
                 }

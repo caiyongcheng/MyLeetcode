@@ -26,11 +26,9 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
 import letcode.utils.TreeNode;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

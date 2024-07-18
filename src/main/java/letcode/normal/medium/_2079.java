@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 你打算用一个水罐给花园里的 n 株植物浇水。植物排成一行，从左到右进行标记，编号从 0 到 n - 1 。其中，第 i 株植物的位置是 x = i 。x = -1 处有一条河，
@@ -71,7 +71,7 @@ public class _2079 {
      */
     public static void main(String[] args) {
         System.out.println(new _2079().wateringPlants(
-                TestCaseUtils.getIntArr("[7,7,7,7,7,7,7]"),
+                TestCaseInputUtils.getIntArr("[7,7,7,7,7,7,7]"),
                 8
         ));
     }

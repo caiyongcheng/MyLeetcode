@@ -1,6 +1,6 @@
 package letcode.interview.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class _8_9_Eight_Nine {
     }
 
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatList(new _8_9_Eight_Nine().generateParenthesis(
+        System.out.println(TestCaseOutputUtils.formatList(new _8_9_Eight_Nine().generateParenthesis(
                 3
         )));
     }

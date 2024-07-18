@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一座由 n x n 个街区组成的城市，每个街区都包含一座立方体建筑。给你一个下标从 0 开始的 n x n 整数矩阵 grid ，
@@ -61,7 +61,7 @@ public class _807 {
      */
     public static void main(String[] args) {
         System.out.println(new _807().maxIncreaseKeepingSkyline(
-                TestCaseUtils.get2DIntArr("[[0,0,0],[0,0,0],[0,0,0]]")
+                TestCaseInputUtils.get2DIntArr("[[0,0,0],[0,0,0],[0,0,0]]")
         ));
     }
 

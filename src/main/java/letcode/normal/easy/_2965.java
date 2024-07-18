@@ -1,7 +1,7 @@
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseOutputUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个下标从 0 开始的二维整数矩阵 grid，大小为 n * n ，其中的值在 [1, n2] 范围内。除了 a 出现 两次，b 缺失 之外，每个整数都 恰好出现一次 。
@@ -49,8 +49,8 @@ public class _2965 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _2965().findMissingAndRepeatedValues(
-                TestCaseUtils.get2DIntArr("[[9,1,7],[8,9,2],[3,4,6]]")
+        System.out.println(TestCaseOutputUtils.formatArray(new _2965().findMissingAndRepeatedValues(
+                TestCaseInputUtils.get2DIntArr("[[9,1,7],[8,9,2],[3,4,6]]")
         )));
     }
 

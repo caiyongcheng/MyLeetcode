@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -80,7 +80,7 @@ public class _2744 {
      */
     public static void main(String[] args) {
         System.out.println(new _2744().maximumNumberOfStringPairs(
-                TestCaseUtils.getStrArr("[\"aa\",\"ab\"]")
+                TestCaseInputUtils.getStrArr("[\"aa\",\"ab\"]")
         ));
     }
 

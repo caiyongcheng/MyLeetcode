@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 import letcode.utils.TreeNode;
 
 import java.util.HashMap;
@@ -99,14 +99,14 @@ public class _106 {
         root.right = new TreeNode(20);
         root.right.left = new TreeNode(15);
         root.right.right = new TreeNode(7);
-        System.out.println(FormatUtils.formatList(TreeNode.inOrder(root)));
-        System.out.println(FormatUtils.formatList(TreeNode.postOrder(root)));
+        System.out.println(TestCaseOutputUtils.formatList(TreeNode.inOrder(root)));
+        System.out.println(TestCaseOutputUtils.formatList(TreeNode.postOrder(root)));
         TreeNode treeNode = new _106().buildTree(
                 new int[]{9, 3, 15, 20, 7},
                 new int[]{9, 15, 7, 20, 3}
         );
-        System.out.println(FormatUtils.formatList(TreeNode.inOrder(treeNode)));
-        System.out.println(FormatUtils.formatList(TreeNode.postOrder(treeNode)));
+        System.out.println(TestCaseOutputUtils.formatList(TreeNode.inOrder(treeNode)));
+        System.out.println(TestCaseOutputUtils.formatList(TreeNode.postOrder(treeNode)));
     }
 
 }

@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给定字符串列表 strs ，返回其中 最长的特殊序列 的长度。如果最长特殊序列不存在，返回 -1 。
@@ -69,7 +69,7 @@ public class _522 {
      */
     public static void main(String[] args) {
         System.out.println(new _522().findLUSlength(
-                TestCaseUtils.getStrArr("[\"aba\",\"cdc\",\"eae\"]")
+                TestCaseInputUtils.getStrArr("[\"aba\",\"cdc\",\"eae\"]")
         ));
     }
 

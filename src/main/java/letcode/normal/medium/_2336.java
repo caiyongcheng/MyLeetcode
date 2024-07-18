@@ -1,8 +1,10 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestUtil;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 /**
  * @author Caiyongcheng
@@ -51,7 +53,7 @@ public class _2336 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(TestCaseUtils.operation(
+        System.out.println(TestUtil.operation(
                 new _2336(),
                 "[\"SmallestInfiniteSet\", \"addBack\", \"popSmallest\", \"popSmallest\", \"popSmallest\", \"addBack\", \"popSmallest\", \"popSmallest\", \"popSmallest\"]",
                 "[[], [2], [], [], [], [1], [], [], []]"

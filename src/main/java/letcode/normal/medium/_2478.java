@@ -1,7 +1,7 @@
 package letcode.normal.medium;
 
 import letcode.utils.ListNode;
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.Stack;
 
@@ -65,7 +65,7 @@ public class _2478 {
     public static void main(String[] args) {
         new _2478().removeNodes(
                 new ListNode(
-                        TestCaseUtils.getIntArr("[5,2,13,3,8]")
+                        TestCaseInputUtils.getIntArr("[5,2,13,3,8]")
                 )
         ).display();
     }

@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.Arrays;
 
@@ -84,7 +84,7 @@ public class _3040 {
      */
     public static void main(String[] args) {
         System.out.println(new _3040().maxOperations(
-                TestCaseUtils.getIntArr(" [3,2,6,1,4]")
+                TestCaseInputUtils.getIntArr(" [3,2,6,1,4]")
         ));
     }
 

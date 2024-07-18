@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +77,7 @@ public class _216 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatNestList(new _216().combinationSum3(3, 7)));
+        System.out.println(TestCaseOutputUtils.formatNestList(new _216().combinationSum3(3, 7)));
     }
 
 

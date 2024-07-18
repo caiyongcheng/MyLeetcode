@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 import letcode.utils.TreeNode;
 
 /**
@@ -105,14 +105,14 @@ public class _105 {
      */
     public static void main(String[] args) {
         TreeNode root = new TreeNode(-1);
-        System.out.println(FormatUtils.formatList(TreeNode.preOrder(root)));
-        System.out.println(FormatUtils.formatList(TreeNode.inOrder(root)));
+        System.out.println(TestCaseOutputUtils.formatList(TreeNode.preOrder(root)));
+        System.out.println(TestCaseOutputUtils.formatList(TreeNode.inOrder(root)));
         TreeNode treeNode = new _105().buildTree(
                 new int[]{-1},
                 new int[]{-1}
         );
-        System.out.println(FormatUtils.formatList(TreeNode.preOrder(treeNode)));
-        System.out.println(FormatUtils.formatList(TreeNode.inOrder(treeNode)));
+        System.out.println(TestCaseOutputUtils.formatList(TreeNode.preOrder(treeNode)));
+        System.out.println(TestCaseOutputUtils.formatList(TreeNode.inOrder(treeNode)));
     }
 
 }

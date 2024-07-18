@@ -1,6 +1,6 @@
 package letcode.normal.difficult;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.*;
 
@@ -107,7 +107,7 @@ public class _2713 {
         -1,0,-5
          */
         System.out.println(new _2713().maxIncreasingCells(
-                TestCaseUtils.get2DIntArr("[[5,2,9],[-6,2,-5],[-1,0,-5]]")
+                TestCaseInputUtils.get2DIntArr("[[5,2,9],[-6,2,-5],[-1,0,-5]]")
         ));
     }
 

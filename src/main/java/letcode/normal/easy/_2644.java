@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你两个下标从 0 开始的整数数组 nums 和 divisors 。  divisors[i] 的 可整除性得分 等于满足 nums[j] 能被 divisors[i] 整除的下标 j 的数量。
@@ -65,8 +65,8 @@ public class _2644 {
      */
     public static void main(String[] args) {
         System.out.println(new _2644().maxDivScore(
-                TestCaseUtils.getIntArr("[4,7,9,3,9]"),
-                TestCaseUtils.getIntArr("[5,2,3]")
+                TestCaseInputUtils.getIntArr("[4,7,9,3,9]"),
+                TestCaseInputUtils.getIntArr("[5,2,3]")
         ));
     }
 

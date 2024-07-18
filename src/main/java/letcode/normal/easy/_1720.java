@@ -26,7 +26,7 @@
 
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 /**
  * 未知 整数数组 arr 由 n 个非负整数组成。  经编码后变为长度为 n - 1 的另一个整数数组 encoded ，其中 encoded[i] = arr[i] XOR arr[i + 1] 。例如，arr = [1,0,2,1] 经编码后得到 encoded = [1,2,3] 。
@@ -65,7 +65,7 @@ public class _1720 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _1720().decode(new int[]{6, 2, 7, 3}, 4)));
+        System.out.println(TestCaseOutputUtils.formatArray(new _1720().decode(new int[]{6, 2, 7, 3}, 4)));
     }
 
 

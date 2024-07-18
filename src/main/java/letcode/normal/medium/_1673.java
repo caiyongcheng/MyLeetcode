@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.Stack;
 
@@ -95,7 +95,7 @@ public class _1673 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _1673().mostCompetitive(
+        System.out.println(TestCaseOutputUtils.formatArray(new _1673().mostCompetitive(
                 new int[]{3,5,2,6},
                 2
         )));

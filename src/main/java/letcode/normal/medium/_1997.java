@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 你需要访问 n 个房间，房间从 0 到 n - 1 编号。同时，每一天都有一个日期编号，从 0 开始，依天数递增。你每天都会访问一个房间。
@@ -69,7 +69,7 @@ public class _1997 {
      */
     public static void main(String[] args) {
         System.out.println(new _1997().firstDayBeenInAllRooms(
-                TestCaseUtils.getIntArr("[0,1,2,0]")
+                TestCaseInputUtils.getIntArr("[0,1,2,0]")
         ));
     }
 

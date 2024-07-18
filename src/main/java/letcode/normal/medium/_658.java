@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +130,7 @@ public class _658 {
                 1,
                 30
         );
-        System.out.println(FormatUtils.formatList(closestElements));
+        System.out.println(TestCaseOutputUtils.formatList(closestElements));
     }
 
 }

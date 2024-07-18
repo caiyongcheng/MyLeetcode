@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.Arrays;
 
@@ -76,7 +76,7 @@ public class _2735 {
      */
     public static void main(String[] args) {
         System.out.println(new _2735().minCost(
-                TestCaseUtils.getIntArr("[31,25,18,59]"),
+                TestCaseInputUtils.getIntArr("[31,25,18,59]"),
                 27
         ));
     }

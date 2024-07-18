@@ -1,10 +1,9 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 import letcode.utils.TreeNode;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author Caiyongcheng
@@ -72,7 +71,7 @@ public class _236 {
      */
     public static void main(String[] args) {
         System.out.println(new _236().lowestCommonAncestor(
-                TreeNode.createUseLeetCode(TestCaseUtils.getIntegerArr("[1,2]")),
+                TreeNode.createUseLeetCode(TestCaseInputUtils.getIntegerArr("[1,2]")),
                 new TreeNode(1),
                 new TreeNode(2)
         ).val);

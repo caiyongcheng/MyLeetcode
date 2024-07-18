@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 一场比赛中共有 n 支队伍，按从 0 到  n - 1 编号。每支队伍也是 有向无环图（DAG） 上的一个节点。
@@ -56,7 +56,7 @@ public class _2924 {
     public static void main(String[] args) {
         System.out.println(new _2924().findChampion(
                 4,
-                TestCaseUtils.get2DIntArr("[[0,2],[1,3],[1,2]]")
+                TestCaseInputUtils.get2DIntArr("[[0,2],[1,3],[1,2]]")
         ));
     }
 

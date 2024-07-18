@@ -1,8 +1,11 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * SnapshotArray(int length) - 初始化一个与指定长度相等的 类数组 的数据结构。初始时，每个元素都等于 0。
@@ -109,7 +112,7 @@ public class _1146 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(TestCaseUtils.operation(
+        System.out.println(TestUtil.operation(
                 new _1146(3),
                 "[\"SnapshotArray\",\"set\",\"snap\",\"set\",\"get\",\"snap\",\"get\"]",
                 "[[3],[0,5],[],[0,6],[0,0],[],[0,1]]"

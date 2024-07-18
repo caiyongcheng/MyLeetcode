@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 import letcode.utils.ListNode;
 
 /**
@@ -127,6 +127,6 @@ public class _725 {
         ListNode listNode = new ListNode(new int[]{0});
         System.out.println(listNode);
         ListNode[] listNodes = new _725().splitListToParts(listNode, 1);
-        System.out.println(FormatUtils.formatArray(listNodes, "", "", "\n"));
+        System.out.println(TestCaseOutputUtils.formatArray(listNodes, "", "", "\n"));
     }
 }

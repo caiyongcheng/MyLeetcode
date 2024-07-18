@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个下标从 0 开始的整数数组 nums 。  如果下标三元组 (i, j, k) 满足下述全部条件，
@@ -76,7 +76,7 @@ public class _2908 {
      */
     public static void main(String[] args) {
         System.out.println(new _2908().minimumSum(
-                TestCaseUtils.getIntArr("[8,6,1,5,3]")
+                TestCaseInputUtils.getIntArr("[8,6,1,5,3]")
         ));
     }
 

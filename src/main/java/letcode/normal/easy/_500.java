@@ -26,7 +26,7 @@
 
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,7 +104,7 @@ public class _500 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _500().findWords(
+        System.out.println(TestCaseOutputUtils.formatArray(new _500().findWords(
                 new String[]{"adsdf", "sfd"}
         )));
     }

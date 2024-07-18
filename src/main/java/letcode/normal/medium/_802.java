@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -112,7 +112,7 @@ public class _802 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatList(new _802().eventualSafeNodes(
+        System.out.println(TestCaseOutputUtils.formatList(new _802().eventualSafeNodes(
                 new int[][]{{}, {0, 2, 3, 4}, {3}, {4}, {}}
         )));
     }

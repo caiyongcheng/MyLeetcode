@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 /**
  * 有一个正整数数组arr，现给你一个对应的查询数组queries，其中queries[i] = [Li,Ri]。  
@@ -79,7 +79,7 @@ public class _1310 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _1310().xorQueries(
+        System.out.println(TestCaseOutputUtils.formatArray(new _1310().xorQueries(
                 new int[]{4, 8, 2, 10},
                 new int[][]{{2, 3}, {1, 3}, {0, 0}, {0, 3}}
         )));

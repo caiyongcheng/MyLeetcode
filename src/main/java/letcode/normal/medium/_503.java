@@ -26,8 +26,8 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseOutputUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
@@ -98,9 +98,9 @@ public class _503 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(
+        System.out.println(TestCaseOutputUtils.formatArray(
                 new _503().nextGreaterElements2(
-                        TestCaseUtils.getIntArr("[1,2,3,4,3]")
+                        TestCaseInputUtils.getIntArr("[1,2,3,4,3]")
                 )
         ));
     }

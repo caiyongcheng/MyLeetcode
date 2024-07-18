@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 import letcode.utils.TreeNode;
 
 /**
@@ -53,8 +53,8 @@ public class _889 {
      */
     public static void main(String[] args) {
         TreeNode root = new _889().constructFromPrePost(
-                TestCaseUtils.getIntArr("[1,2,4,5,3,6,7]"),
-                TestCaseUtils.getIntArr("[4,5,2,6,7,3,1]")
+                TestCaseInputUtils.getIntArr("[1,2,4,5,3,6,7]"),
+                TestCaseInputUtils.getIntArr("[4,5,2,6,7,3,1]")
         );
         System.out.println(root);
         TreeNode.preOrder(root).forEach(System.out::print);

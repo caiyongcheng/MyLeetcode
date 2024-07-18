@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个由 不同 整数组成的整数数组 arr 和一个整数 k 。
@@ -56,7 +56,7 @@ public class _1535 {
      */
     public static void main(String[] args) {
         System.out.println(new _1535().getWinner(
-                TestCaseUtils.getIntArr("[1,11,22,33,44,55,66,77,88,99]"),
+                TestCaseInputUtils.getIntArr("[1,11,22,33,44,55,66,77,88,99]"),
                 1000000000
         ));
     }

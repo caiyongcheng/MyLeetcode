@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.Arrays;
 
@@ -63,7 +63,7 @@ public class _322 {
      */
     public static void main(String[] args) {
         System.out.println(new _322().coinChange(
-                TestCaseUtils.getIntArr("[1, 2, 5]"),
+                TestCaseInputUtils.getIntArr("[1, 2, 5]"),
                 11
         ));
     }

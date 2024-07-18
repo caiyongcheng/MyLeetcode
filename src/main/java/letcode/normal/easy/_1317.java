@@ -26,7 +26,7 @@
 
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 /**
  * @program: MyLeetcode
@@ -95,7 +95,7 @@ public class _1317 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _1317().getNoZeroIntegers(1501)));
+        System.out.println(TestCaseOutputUtils.formatArray(new _1317().getNoZeroIntegers(1501)));
     }
 
 }

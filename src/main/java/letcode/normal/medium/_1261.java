@@ -1,9 +1,13 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
+import letcode.utils.TestUtil;
 import letcode.utils.TreeNode;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.HashSet;
+import java.util.Queue;
+import java.util.Set;
 
 /**
  * root.val == 0 如果 treeNode.val == x 且 treeNode.left != null，那么 treeNode.left.val == 2 * x + 1 如果 treeNode.val == x 且 treeNode.right != null，
@@ -93,10 +97,10 @@ public class _1261 {
      */
     @SuppressWarnings("all")
     public static void main(String[] args) {
-        _1261 test = new _1261(TreeNode.createUseLeetCode(TestCaseUtils.getIntegerArr(
+        _1261 test = new _1261(TreeNode.createUseLeetCode(TestCaseInputUtils.getIntegerArr(
                 "[-1,null,-1,-1,null,-1]"
         )));
-        System.out.println(TestCaseUtils.operation(test, "[\"find\",\"find\",\"find\",\"find\"]", "[[2],[3],[4],[5]]"));
+        System.out.println(TestUtil.operation(test, "[\"find\",\"find\",\"find\",\"find\"]", "[[2],[3],[4],[5]]"));
     }
 
 }

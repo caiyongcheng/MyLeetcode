@@ -1,7 +1,7 @@
 package letcode.normal.easy;
 
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个整数数组 cost ，其中 cost[i] 是从楼梯第 i 个台阶向上爬需要支付的费用。一旦你支付此费用，即可选择向上爬一个或者两个台阶。
@@ -55,7 +55,7 @@ public class _746 {
      */
     public static void main(String[] args) {
         System.out.println(new _746().minCostClimbingStairs(
-                TestCaseUtils.getIntArr("[10,15,20]")
+                TestCaseInputUtils.getIntArr("[10,15,20]")
         ));
     }
 }

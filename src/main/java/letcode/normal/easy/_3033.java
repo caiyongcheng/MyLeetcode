@@ -1,7 +1,7 @@
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseOutputUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个下标从 0 开始、大小为 m x n 的整数矩阵 matrix ，新建一个下标从 0 开始、名为 answer 的矩阵。
@@ -54,8 +54,8 @@ public class _3033 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.format2DArray(new _3033().modifiedMatrix(
-                TestCaseUtils.get2DIntArr("[[3,-1],[5,2]]")
+        System.out.println(TestCaseOutputUtils.format2DArray(new _3033().modifiedMatrix(
+                TestCaseInputUtils.get2DIntArr("[[3,-1],[5,2]]")
         )));
     }
 

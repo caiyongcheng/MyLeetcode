@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * @author Caiyongcheng
@@ -75,7 +75,7 @@ public class _2182 {
      */
     public static void main(String[] args) {
         String ans = new _2182().repeatLimitedString(
-                TestCaseUtils.getStringFromFile("C:\\Users\\10761\\Desktop\\i.txt"),
+                TestCaseInputUtils.getStringFromFile("C:\\Users\\10761\\Desktop\\i.txt"),
                 100000
         );
         System.out.println(ans.length());

@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个下标从 0 开始的整数数组 nums ，它包含 n 个 互不相同 的正整数。
@@ -76,7 +76,7 @@ public class _2741 {
      */
     public static void main(String[] args) {
         System.out.println(new _2741().specialPerm(
-                TestCaseUtils.getIntArr("[1,1,1]")
+                TestCaseInputUtils.getIntArr("[1,1,1]")
         ));
     }
 

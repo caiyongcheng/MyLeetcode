@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestUtil;
 
 import java.util.HashMap;
 
@@ -94,7 +94,7 @@ public class _166 {
      * @param args
      */
     public static void main(String[] args) {
-        TestCaseUtils.test(
+        TestUtil.test(
                 _166.class,
                         "示例 1： 输入：numerator = 1, denominator = 2 输出：\"0.5\" " +
                                 "示例 2： 输入：numerator = 2, denominator = 1 输出：\"2\" " +

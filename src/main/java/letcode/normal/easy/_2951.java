@@ -1,7 +1,7 @@
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseOutputUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +51,8 @@ public class _2951 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatList(new _2951().findPeaks(
-                TestCaseUtils.getIntArr("[1,4,3,8,5]")
+        System.out.println(TestCaseOutputUtils.formatList(new _2951().findPeaks(
+                TestCaseInputUtils.getIntArr("[1,4,3,8,5]")
         )));
     }
 

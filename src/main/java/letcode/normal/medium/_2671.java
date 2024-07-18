@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestUtil;
 
 import java.util.*;
 
@@ -123,7 +123,7 @@ public class _2671 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(TestCaseUtils.operation(
+        System.out.println(TestUtil.operation(
                 new _2671(),
                 "[\"FrequencyTracker\",\"add\",\"hasFrequency\",\"add\",\"deleteOne\",\"hasFrequency\",\"hasFrequency\",\"hasFrequency\",\"add\",\"deleteOne\",\"hasFrequency\",\"deleteOne\",\"add\",\"add\",\"hasFrequency\",\"deleteOne\",\"add\",\"deleteOne\",\"add\",\"hasFrequency\",\"deleteOne\",\"deleteOne\",\"deleteOne\"]",
                 "[[],[4],[1],[8],[2],[1],[1],[1],[4],[6],[2],[8],[8],[8],[1],[4],[1],[4],[4],[3],[9],[8],[2]]"

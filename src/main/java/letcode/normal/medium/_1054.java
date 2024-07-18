@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.ArrayList;
 
@@ -83,7 +83,7 @@ public class _1054 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _1054().rearrangeBarcodes(new int[]{2, 2, 1, 3})));
+        System.out.println(TestCaseOutputUtils.formatArray(new _1054().rearrangeBarcodes(new int[]{2, 2, 1, 3})));
     }
 
 }

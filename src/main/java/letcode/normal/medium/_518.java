@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个整数数组 coins 表示不同面额的硬币，另给一个整数 amount 表示总金额。
@@ -110,15 +110,15 @@ public class _518 {
     public static void main(String[] args) {
         System.out.println(new _518().change(
                 5,
-                TestCaseUtils.getIntArr("[1, 2, 5]")
+                TestCaseInputUtils.getIntArr("[1, 2, 5]")
         ));
         System.out.println(new _518().changeDp(
                 5,
-                TestCaseUtils.getIntArr("[1, 2, 5]")
+                TestCaseInputUtils.getIntArr("[1, 2, 5]")
         ));
         System.out.println(new _518().changeDp2(
                 5,
-                TestCaseUtils.getIntArr("[1, 2, 5]")
+                TestCaseInputUtils.getIntArr("[1, 2, 5]")
         ));
     }
 

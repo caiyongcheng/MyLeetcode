@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.*;
 
@@ -154,9 +154,9 @@ public class _1600 {
         test.birth("andy", "matthew");
         test.birth("bob", "alex");
         test.birth("bob", "asha");
-        System.out.println(FormatUtils.formatList(test.getInheritanceOrder()));
+        System.out.println(TestCaseOutputUtils.formatList(test.getInheritanceOrder()));
         test.death("bob");
-        System.out.println(FormatUtils.formatList(test.getInheritanceOrder()));
+        System.out.println(TestCaseOutputUtils.formatList(test.getInheritanceOrder()));
 
     }
 

@@ -26,7 +26,7 @@
 
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.Stack;
 
@@ -102,7 +102,7 @@ public class _496 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _496().nextGreaterElement(
+        System.out.println(TestCaseOutputUtils.formatArray(new _496().nextGreaterElement(
                 new int[]{4, 1, 2},
                 new int[]{1, 3, 4, 2}
         )));

@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -81,7 +81,7 @@ public class _56 {
                 new int[][]{{1, 4}, {4, 5}}
         );
         for (int[] ints : merge) {
-            System.out.println(FormatUtils.formatArray(ints));
+            System.out.println(TestCaseOutputUtils.formatArray(ints));
         }
     }
 

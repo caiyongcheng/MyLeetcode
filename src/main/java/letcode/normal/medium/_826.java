@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -87,9 +87,9 @@ public class _826 {
      */
     public static void main(String[] args) {
         System.out.println(new _826().maxProfitAssignment(
-                TestCaseUtils.getIntArr("[85,47,57]"),
-                TestCaseUtils.getIntArr("[24,66,99]"),
-                TestCaseUtils.getIntArr("[40,25,25]")
+                TestCaseInputUtils.getIntArr("[85,47,57]"),
+                TestCaseInputUtils.getIntArr("[24,66,99]"),
+                TestCaseInputUtils.getIntArr("[40,25,25]")
         ));
     }
 }

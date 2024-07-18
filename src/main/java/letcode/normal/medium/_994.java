@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +74,7 @@ public class _994 {
 
     public static void main(String[] args) {
         System.out.println(new _994().orangesRotting(
-                TestCaseUtils.get2DIntArr("[[0,2]]")
+                TestCaseInputUtils.get2DIntArr("[[0,2]]")
         ));
     }
 

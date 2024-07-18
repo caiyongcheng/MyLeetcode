@@ -1,9 +1,8 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.Arrays;
-import java.util.Map;
 
 /**
  * 给定一个 正整数 数组 beans ，其中每个整数表示一个袋子里装的魔法豆的数目。
@@ -74,7 +73,7 @@ public class  _2171 {
      */
     public static void main(String[] args) {
         System.out.println(new _2171().minimumRemoval(
-                TestCaseUtils.getIntArr("[4,1,6,5]")
+                TestCaseInputUtils.getIntArr("[4,1,6,5]")
         ));
     }
 

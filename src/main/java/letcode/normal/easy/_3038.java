@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个整数数组 nums ，如果 nums 至少 包含 2 个元素，你可以执行以下操作：  选择 nums 中的前两个元素并将它们删除。 一次操作的 分数 是被删除元素的和。
@@ -48,7 +48,7 @@ public class _3038 {
      */
     public static void main(String[] args) {
         System.out.println(new _3038().maxOperations(
-                TestCaseUtils.getIntArr("[3,2,6,1,4]")
+                TestCaseInputUtils.getIntArr("[3,2,6,1,4]")
         ));
     }
 

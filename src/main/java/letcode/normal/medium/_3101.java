@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个 二进制数组 nums 。
@@ -58,7 +58,7 @@ public class _3101 {
      */
     public static void main(String[] args) {
         System.out.println(new _3101().countAlternatingSubarrays(
-                TestCaseUtils.getIntArr(
+                TestCaseInputUtils.getIntArr(
                         "[1,0,1,0]"
                 )
         ));

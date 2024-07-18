@@ -1,6 +1,6 @@
 package letcode.normal.easy;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 /**
  * 排排坐，分糖果。  我们买了一些糖果 candies，打算把它们分给排好队的 n = num_people 个小朋友。
@@ -66,7 +66,7 @@ public class _1103 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _1103().distributeCandies(
+        System.out.println(TestCaseOutputUtils.formatArray(new _1103().distributeCandies(
                 1000000000,
                 1000
         )));

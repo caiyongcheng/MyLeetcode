@@ -1,7 +1,7 @@
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseOutputUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,8 +84,8 @@ public class _3067 {
      * 所有服务器对都必须通过服务器 0 或 6 才可连接，所以其他服务器对应的可连接服务器对数目都为 0 。
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatArray(new _3067().countPairsOfConnectableServers(
-                TestCaseUtils.get2DIntArr("[[0,6,3],[6,5,3],[0,3,1],[3,2,7],[3,1,6],[3,4,2]]"),
+        System.out.println(TestCaseOutputUtils.formatArray(new _3067().countPairsOfConnectableServers(
+                TestCaseInputUtils.get2DIntArr("[[0,6,3],[6,5,3],[0,3,1],[3,2,7],[3,1,6],[3,4,2]]"),
                 3
         )));
     }

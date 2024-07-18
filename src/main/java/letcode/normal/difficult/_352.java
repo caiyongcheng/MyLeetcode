@@ -26,11 +26,7 @@
 
 package letcode.normal.difficult;
 
-import letcode.utils.FormatUtils;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 
 /**
  * 给你一个由非负整数a1, a2, ..., an 组成的数据流输入，请你将到目前为止看到的数字总结为不相交的区间列表。

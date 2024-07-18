@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * Given an m x n matrix board where each cell is a battleship 'X' or empty '.', return the number of the battleships on board.
@@ -46,10 +46,10 @@ public class _419 {
      */
     public static void main(String[] args) {
         System.out.println(new _419().countBattleships(
-                TestCaseUtils.get2DArr(
+                TestCaseInputUtils.get2DArr(
                         "[[\".\"]]",
                         ",",
-                        TestCaseUtils::getCharArr,
+                        TestCaseInputUtils::getCharArr,
                         new char[0][0]
                 )
         ));

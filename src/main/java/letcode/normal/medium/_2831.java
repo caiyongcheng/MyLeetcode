@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,7 +79,7 @@ public class _2831 {
      */
     public static void main(String[] args) {
         System.out.println(new _2831().longestEqualSubarray(
-                TestCaseUtils.getIntegerList("[2, 1]"),
+                TestCaseInputUtils.getIntegerList("[2, 1]"),
                 0
         ));
     }

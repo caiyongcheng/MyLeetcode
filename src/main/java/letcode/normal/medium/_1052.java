@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 有一个书店老板，他的书店开了 n 分钟。每分钟都有一些顾客进入这家商店。给定一个长度为 n 的整数数组 customers ，
@@ -60,8 +60,8 @@ public class _1052 {
      */
     public static void main(String[] args) {
         System.out.println(new _1052().maxSatisfied(
-                TestCaseUtils.getIntArr("[3,8,8,7,1]"),
-                TestCaseUtils.getIntArr("[1,1,1,1,1]"),
+                TestCaseInputUtils.getIntArr("[3,8,8,7,1]"),
+                TestCaseInputUtils.getIntArr("[1,1,1,1,1]"),
                 3
         ));
     }

@@ -1,6 +1,6 @@
 package letcode.normal.difficult;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -68,7 +68,7 @@ public class _1793 {
      */
     public static void main(String[] args) {
         System.out.println(new _1793().maximumScore(
-                TestCaseUtils.getIntArr("[5,5,4,5,4,1,1,1]"),
+                TestCaseInputUtils.getIntArr("[5,5,4,5,4,1,1,1]"),
                 0
         ));
     }

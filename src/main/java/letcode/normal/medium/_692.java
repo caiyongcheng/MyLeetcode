@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -73,7 +73,7 @@ public class _692 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(FormatUtils.formatList(new _692().topKFrequent(
+        System.out.println(TestCaseOutputUtils.formatList(new _692().topKFrequent(
                 new String[]{"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"},
                 4
         )));

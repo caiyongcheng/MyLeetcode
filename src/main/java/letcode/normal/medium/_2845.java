@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +74,7 @@ public class _2845 {
      */
     public static void main(String[] args) {
         System.out.println(new _2845().countInterestingSubarrays(
-                TestCaseUtils.getIntegerList("[3,2,4]"),
+                TestCaseInputUtils.getIntegerList("[3,2,4]"),
                 2,
                 1
         ));

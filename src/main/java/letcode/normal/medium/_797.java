@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import letcode.utils.FormatUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +114,7 @@ public class _797 {
                 new int[][]{{1,3},{2},{3},{}}
         );
         for (List<Integer> list : lists) {
-            System.out.println(FormatUtils.formatList(list));
+            System.out.println(TestCaseOutputUtils.formatList(list));
         }
     }
 

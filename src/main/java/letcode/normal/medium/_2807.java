@@ -1,7 +1,7 @@
 package letcode.normal.medium;
 
 import letcode.utils.ListNode;
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * @author Caiyongcheng
@@ -60,7 +60,7 @@ public class _2807 {
      */
     public static void main(String[] args) {
         new _2807().insertGreatestCommonDivisors(
-                new ListNode(TestCaseUtils.getIntArr("7"))
+                new ListNode(TestCaseInputUtils.getIntArr("7"))
         ).display();
     }
 

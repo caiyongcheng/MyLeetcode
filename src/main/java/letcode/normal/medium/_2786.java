@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseUtils;
+import letcode.utils.TestCaseInputUtils;
 
 /**
  * 给你一个下标从 0 开始的整数数组 nums 和一个正整数 x 。
@@ -60,7 +60,7 @@ public class _2786 {
      */
     public static void main(String[] args) {
         System.out.println(new _2786().maxScore(
-                TestCaseUtils.getIntArr("[2,3,6,1,9,2]"),
+                TestCaseInputUtils.getIntArr("[2,3,6,1,9,2]"),
                 5
         ));
         // 56 71
