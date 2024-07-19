@@ -34,29 +34,36 @@ public class _3096 {
 
 
     /**
-     * 示例 1：
-     * 输入：possible = [1,0,1,0]
-     * 输出：1
-     * 解释：
-     * 我们来看一下 Alice 可以完成的关卡数目：
-     * 如果 Alice 只完成关卡 0 ，Bob 完成剩下的所有关卡，那么 Alice 获得 1 分，Bob 获得 -1 + 1 - 1 = -1 分。
-     * 如果 Alice 完成到关卡 1 ，Bob 完成剩下的所有关卡，那么 Alice 获得 1 - 1 = 0 分，Bob 获得 1 - 1 = 0 分。
-     * 如果 Alice 完成到关卡 2 ，Bob 完成剩下的所有关卡，那么 Alice 获得 1 - 1 + 1 = 1 分，Bob 获得 -1 分。
-     * Alice 需要完成至少一个关卡获得更多的分数。
-     * 示例 2：
-     * 输入：possible = [1,1,1,1,1]
-     * 输出：3
-     * 解释：
-     * 我们来看一下 Alice 可以完成的关卡数目：
-     * 如果 Alice 只完成关卡 0 ，Bob 完成剩下的所有关卡，那么 Alice 获得 1 分，Bob 获得 4 分。
-     * 如果 Alice 完成到关卡 1 ，Bob 完成剩下的所有关卡，那么 Alice 获得 2 分，Bob 获得 3 分。
-     * 如果 Alice 完成到关卡 2 ，Bob 完成剩下的所有关卡，那么 Alice 获得 3 分，Bob 获得 2 分。
-     * 如果 Alice 完成到关卡 3 ，Bob 完成剩下的所有关卡，那么 Alice 获得 4 分，Bob 获得 1 分。
-     * Alice 需要完成至少三个关卡获得更多的分数。
+     Example 1:
+     Input: possible = [1,0,1,0]
+     Output: 1
+     Explanation:
+     Let's look at all the levels that Alice can play up to:
+     If Alice plays only level 0 and Bob plays the rest of the levels, Alice has 1 point, while Bob has -1 + 1 - 1 = -1 point.
+     If Alice plays till level 1 and Bob plays the rest of the levels, Alice has 1 - 1 = 0 points, while Bob has 1 - 1 = 0 points.
+     If Alice plays till level 2 and Bob plays the rest of the levels, Alice has 1 - 1 + 1 = 1 point, while Bob has -1 point.
+     Alice must play a minimum of 1 level to gain more points.
+     Example 2:
+     Input: possible = [1,1,1,1,1]
+     Output: 3
+     Explanation:
+     Let's look at all the levels that Alice can play up to:
+     If Alice plays only level 0 and Bob plays the rest of the levels, Alice has 1 point, while Bob has 4 points.
+     If Alice plays till level 1 and Bob plays the rest of the levels, Alice has 2 points, while Bob has 3 points.
+     If Alice plays till level 2 and Bob plays the rest of the levels, Alice has 3 points, while Bob has 2 points.
+     If Alice plays till level 3 and Bob plays the rest of the levels, Alice has 4 points, while Bob has 1 point.
+     Alice must play a minimum of 3 levels to gain more points.
+     Example 3:
+     Input: possible = [0,0]
+     Output: -1
+     Explanation:
+     The only possible way is for both players to play 1 level each. Alice plays level 0 and loses 1 point. Bob plays level 1 and loses 1 point. As both players have equal points, Alice can't gain more points than Bob.
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.test(_3096.class, "possible = [1,0,1,0]", "possible = [1,1,1,1,1]", "=[1,1]");
+        TestUtil.test(_3096.class,
+                "Example 1: Input: possible = [1,0,1,0] Output: 1 Explanation: Let's look at all the levels that Alice can play up to: If Alice plays only level 0 and Bob plays the rest of the levels, Alice has 1 point, while Bob has -1 + 1 - 1 = -1 point. If Alice plays till level 1 and Bob plays the rest of the levels, Alice has 1 - 1 = 0 points, while Bob has 1 - 1 = 0 points. If Alice plays till level 2 and Bob plays the rest of the levels, Alice has 1 - 1 + 1 = 1 point, while Bob has -1 point. Alice must play a minimum of 1 level to gain more points. Example 2: Input: possible = [1,1,1,1,1] Output: 3 Explanation: Let's look at all the levels that Alice can play up to: If Alice plays only level 0 and Bob plays the rest of the levels, Alice has 1 point, while Bob has 4 points. If Alice plays till level 1 and Bob plays the rest of the levels, Alice has 2 points, while Bob has 3 points. If Alice plays till level 2 and Bob plays the rest of the levels, Alice has 3 points, while Bob has 2 points. If Alice plays till level 3 and Bob plays the rest of the levels, Alice has 4 points, while Bob has 1 point. Alice must play a minimum of 3 levels to gain more points. Example 3: Input: possible = [0,0] Output: -1 Explanation: The only possible way is for both players to play 1 level each. Alice plays level 0 and loses 1 point. Bob plays level 1 and loses 1 point. As both players have equal points, Alice can't gain more points than Bob.");
+
     }
 
 }

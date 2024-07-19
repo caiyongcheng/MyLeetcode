@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  */
 public class TestCaseInputUtils {
 
-    private static final String TEST_CASE_FILE_PATH = "src/main/resources/TestCase.txt";
+    public static final String TEST_CASE_FILE_PATH_TEMPLATE = "src/main/resources/TestCase%s.txt";
 
     /**
      * 将字符串转化为对应的二维整形数组
@@ -259,7 +259,7 @@ public class TestCaseInputUtils {
     }
 
     public static String getStringFromFile() {
-        return getStringFromFile(TEST_CASE_FILE_PATH);
+        return getStringFromFile(String.format(TEST_CASE_FILE_PATH_TEMPLATE, ""));
     }
 
 

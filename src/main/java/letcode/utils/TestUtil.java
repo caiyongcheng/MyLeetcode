@@ -75,7 +75,7 @@ public class TestUtil {
      * @param inputStrArr 输入字符串，按输入进行划分
      */
     public static<T> void test(Class<T> targetClass, String inputStrArr) {
-        test(targetClass, Arrays.stream(inputStrArr.split("输入")).filter(str -> str.contains("=")).toArray(String[]::new));
+        test(targetClass, Arrays.stream(inputStrArr.split("Example \\d+:")).filter(str -> str.contains("=")).toArray(String[]::new));
     }
 
     /**
@@ -107,17 +107,25 @@ public class TestUtil {
             System.out.print("||                                                                                                                                         ||\n");
             System.out.printf("||\t|----------------------------------------------------------- %02d[start] ----------------------------------------------------------|     ||%n", time);
             try {
-                String[] paramsStrArr = getParamStrArr(inputStr, parameterTypes);
+                String[] split = inputStr.split("Output");
+                printf("input: %s", split[0]);
+                System.out.printf("||\t|                                                                                                                                |\t   ||%n");
+                printf("Output: %s", split[1].split("Explanation")[0]);
+                System.out.printf("||\t|                                                                                                                                |\t   ||%n");
+                printf("Explanation: %s", split[1].split("Explanation")[1]);
+                System.out.printf("||\t|                                                                                                                                |\t   ||%n");
+                String[] paramsStrArr = getParamStrArr(split[0], parameterTypes);
                 Object[] params = getParams(parameterTypes, paramsStrArr);
-                printf("input: %s", inputStr);
                 printf("params: %s", TestCaseOutputUtils.formatObj(params));
+                System.out.printf("||\t|                                                                                                                                |\t   ||%n");
                 Object execRst = testMethod.invoke(obj, params);
                 printf("result: %s", TestCaseOutputUtils.formatObj(execRst));
+
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
                 break;
             }
-            System.out.printf("||\t----------------------------------------------------------- %02d[end] --------------------------------------------------------------\t   ||%n", time++);
+            System.out.printf("||\t|----------------------------------------------------------- %02d[end] ------------------------------------------------------------|\t   ||%n", time++);
         }
         System.out.print("||                                                                                                                                         ||\n");
         System.out.println("=================================================================== end =====================================================================");
@@ -147,6 +155,7 @@ public class TestUtil {
             } else if (ch == ']' && retrieve == 0) {
                 if (--isArrParam == 0) {
                     retrieve = 1;
+                    paramStr.append(ch);
                 }
             } else if (((ch == ',') || (ch == '输' && (i + 1 < length && inputStr.charAt(i + 1) == '出')))
                     && retrieve == 0 && isArrParam == 0) {
@@ -234,12 +243,20 @@ public class TestUtil {
                 params[i] = getIntArr(paramStrArr[i]);
                 continue;
             }
+            if ("[[I".equals(typeArr[i].getName()) || typeArr[i] == int[][].class) {
+                params[i] = get2DIntArr(paramStrArr[i]);
+                continue;
+            }
             if ("Integer[]".equals(typeArr[i].getName()) || typeArr[i] == Integer[].class) {
                 params[i] = getIntegerArr(paramStrArr[i]);
                 continue;
             }
             if ("String[]".equals(typeArr[i].getName()) || typeArr[i] == String[].class) {
                 params[i] = getStrArr(paramStrArr[i]);
+                continue;
+            }
+            if ("[[Ljava.lang.String;".equals(typeArr[i].getName()) || typeArr[i] == String[][].class) {
+                params[i] = get2DStrArr(paramStrArr[i]);
                 continue;
             }
             if (typeArr[i] == List.class) {
@@ -290,21 +307,23 @@ public class TestUtil {
         int printStrOneLineWidth = lineWidth - prefixWidth - suffixWidth - 1;
         int len = str.length();
         int curWidth = 0;
+
         System.out.print(prefix);
-        for (int i = 0; i < len; i++) {
-            if (curWidth == printStrOneLineWidth) {
-                curWidth = 0;
+        String[] wordArr = str.split("\\s+");
+        for (String word : wordArr) {
+            int width = getWidth(word) + 1;
+            if (curWidth + width > printStrOneLineWidth) {
+                while (curWidth <= printStrOneLineWidth) {
+                    System.out.print(" ");
+                    ++curWidth;
+                }
                 System.out.println(suffix);
                 System.out.print(prefix);
+                curWidth = 0;
             }
-            int width = getWidth(str.codePointAt(i));
-            if (width == 2 && 2 + curWidth > printStrOneLineWidth) {
-                curWidth = printStrOneLineWidth;
-                --i;
-            } else {
-                System.out.print(str.charAt(i));
-                curWidth += width;
-            }
+            System.out.print(word);
+            System.out.print(" ");
+            curWidth += width ;
         }
         int tLen = curWidth;
         while (tLen <= printStrOneLineWidth) {
