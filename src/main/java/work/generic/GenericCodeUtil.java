@@ -15,25 +15,12 @@ public class GenericCodeUtil {
 
     public static void init() {
         LineStrConverter.init(
-                "lab_alarm_info",
-                "检验结果危急值信息表",
-                "exam_result_id|exam_result_id|检验结果表主键|bigint(8)|not null\n" +
-                        "sample_detail_id|sample_detail_id|检验申请明细主键|bigint(8)|null\n" +
-                        "sample_info_id|sample_info_id|申请单表主键|bigint(8)|not null\n" +
-                        "ins_id|ins_id|仪器主键|bigint(8)|not null\n" +
-                        "sample_date|sample_date|申请日期|datetime(8)|not null\n" +
-                        "operate_time|operate_time|结果填写日期|datetime(8)|null\n" +
-                        "sample_no|sample_no|申请编号|bigint(8)|not null\n" +
-                        "ad_number|ad_number|门诊、住院、病历号|nvarchar(8000)|not null\n" +
-                        "card_no|card_no|卡号|nvarchar(8000)|null\n" +
-                        "pat_name|pat_name|病人姓名|nvarchar(8000)|not null\n" +
-                        "pat_sex|pat_sex|病人性别|int(4)|null\n" +
-                        "dept_name|dept_name|科室名称|nvarchar(8000)|null\n" +
-                        "item_name|item_name|检验项目名称|nvarchar(8000)|null\n" +
-                        "item_value|item_value|检验值|nvarchar(8000)|null\n" +
-                        "origin_value|origin_value|原始值|nvarchar(8000)|null\n" +
-                        "adjust_value|adjust_value|调整值|nvarchar(8000)|null\n" +
-                        "lab_alarm_info_id|lab_alarm_info_id|id主键|bigint(8)|not null\n"
+                "sys_user_favorite_resource",
+                "用户常用菜单",
+                "user_favourite_resource_id|user_favourite_resource_id|id|bigint(8)|not null\n" +
+                        "user_id|user_id|用户id|bigint(8)|null\n" +
+                        "resource_id|resource_id|排序|tinyint(1)|null\n" +
+                        "sort_num|sort_num|无说明|int(4)|null\n"
         );
     }
 
