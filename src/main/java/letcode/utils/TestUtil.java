@@ -31,14 +31,14 @@ public class TestUtil {
         private String explanationStr = "";
 
         public TestCase(String originStr) {
-            String[] splitByOutput = originStr.split("Output");
+            String[] splitByOutput = originStr.split("Output: ");
             inputStr = splitByOutput[0].replaceAll("Input:", "");
             if (splitByOutput.length == 1) {
                 return;
             }
 
             String[] splitByExplanation = splitByOutput[1].split("Explanation");
-            outputStr = splitByExplanation[0];
+            outputStr = splitByExplanation[0].trim();
             if (splitByExplanation.length == 1) {
                 return;
             }
@@ -109,7 +109,10 @@ public class TestUtil {
                     PrintUtil.print(String.format("params: %s", TestCaseOutputUtils.formatObj(params)), PrintUtil.PURPLE);
                     PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
                     Object execRst = testMethod.invoke(testObj, params);
-                    PrintUtil.print(String.format("result: %s", TestCaseOutputUtils.formatObj(execRst)), PrintUtil.RED);
+                    String excuseResultStr = TestCaseOutputUtils.formatObj(execRst);
+                    PrintUtil.print(String.format("result: %s", excuseResultStr), PrintUtil.RED);
+                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                    PrintUtil.print(String.format("result conpare: %s", testCase.outputStr.equals(excuseResultStr)), "");
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
                     break;
@@ -287,8 +290,8 @@ public class TestUtil {
         private static final String PRINT_TEST_CASE_END = "================================================================== end ======================================================================";
         private static final String PRINT_TEST_CASE_SPLIT_LINE = "||                                                                                                                                         ||\n";
         private static final String PRINT_TEST_CASE_INNER_SPLIT_LINE = "||\t |                                                                                                                                |\t   ||\n";
-        private static final String PRINT_TEST_CASE_INNER_START = "||\t |----------------------------------------------------------- %02d[start] ----------------------------------------------------------|    ||\n";
-        private static final String PRINT_TEST_CASE_INNER_END = "||\t |----------------------------------------------------------- %02d[end] ------------------------------------------------------------|\t   ||\n";
+        private static final String PRINT_TEST_CASE_INNER_START = "||\t ·----------------------------------------------------------- %02d[start] ----------------------------------------------------------·    ||\n";
+        private static final String PRINT_TEST_CASE_INNER_END = "||\t ·----------------------------------------------------------- %02d[end] ------------------------------------------------------------·\t   ||\n";
         private static final String PRINT_TEST_CASE_INNER_TOP = "||\t----------------------------------------------------------------------------------------------------------------------------------\t   ||\n";
         private static final String PRINT_TEST_CASE_INNER_PREFIX = "||   | ";
         private static final String PRINT_TEST_CASE_INNER_SUFFIX = " |    ||";
