@@ -32,7 +32,7 @@ public class TestUtil {
 
         public TestCase(String originStr) {
             String[] splitByOutput = originStr.split("Output");
-            inputStr = splitByOutput[0];
+            inputStr = splitByOutput[0].replaceAll("Input:", "");
             if (splitByOutput.length == 1) {
                 return;
             }
@@ -90,34 +90,34 @@ public class TestUtil {
         
         public void execute() {
             Class<?>[] parameterTypes = testMethod.getParameterTypes();
-            System.out.printf("test method is: %s%n", testMethod.getName());
-            System.out.print(PrintUtil.PRINT_TEST_CASE_START);
+            PrintUtil.consolePrint(String.format("test class is: %s%n", testMethod.getName()), PrintUtil.YELLOW);
+            PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_START, PrintUtil.GREEN);
             for (int time = 1; time <= this.testCaseList.size(); time++) {
                 TestCase testCase = testCaseList.get(time - 1);
-                System.out.print(PrintUtil.PRINT_TEST_CASE_SPLIT_LINE);
+                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_SPLIT_LINE, PrintUtil.GREEN);
                 //System.out.printf(PrintUtil.PRINT_TEST_CASE_INNER_TOP);
-                System.out.printf(PrintUtil.PRINT_TEST_CASE_INNER_START, time);
-                PrintUtil.printf("input: %s", testCase.inputStr);
-                System.out.printf(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE);
-                PrintUtil.printf("Output: %s",  testCase.outputStr);
-                System.out.printf(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE);
-                PrintUtil.printf("Explanation: %s", testCase.explanationStr);
-                System.out.printf(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE);
+                PrintUtil.consolePrint(String.format(PrintUtil.PRINT_TEST_CASE_INNER_START, time), PrintUtil.GREEN);
+                PrintUtil.print(String.format("input: %s", testCase.inputStr), PrintUtil.BLUE);
+                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                PrintUtil.print(String.format("Output: %s",  testCase.outputStr), PrintUtil.CYAN);
+                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                PrintUtil.print(String.format("Explanation: %s", testCase.explanationStr), PrintUtil.YELLOW);
+                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
                 String[] paramsStrArr = getParamStrArr(testCase.inputStr, parameterTypes);
                 Object[] params = getParams(parameterTypes, paramsStrArr);
                 try {
-                    PrintUtil.printf("params: %s", TestCaseOutputUtils.formatObj(params));
-                    System.out.printf(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE);
+                    PrintUtil.print(String.format("params: %s", TestCaseOutputUtils.formatObj(params)), PrintUtil.PURPLE);
+                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
                     Object execRst = testMethod.invoke(testObj, params);
-                    PrintUtil.printf("result: %s", TestCaseOutputUtils.formatObj(execRst));
+                    PrintUtil.print(String.format("result: %s", TestCaseOutputUtils.formatObj(execRst)), PrintUtil.RED);
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
                     break;
                 }
-                System.out.printf(PrintUtil.PRINT_TEST_CASE_INNER_END, time);
+                PrintUtil.consolePrint(String.format(PrintUtil.PRINT_TEST_CASE_INNER_END, time), PrintUtil.GREEN);
             }
-            System.out.print(PrintUtil.PRINT_TEST_CASE_SPLIT_LINE);
-            System.out.println(PrintUtil.PRINT_TEST_CASE_END);
+            PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_SPLIT_LINE, PrintUtil.GREEN);
+            PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_END + "\n", PrintUtil.GREEN);
         }
 
         /**
@@ -286,60 +286,65 @@ public class TestUtil {
         private static final String PRINT_TEST_CASE_START = "================================================================== start ====================================================================\n";
         private static final String PRINT_TEST_CASE_END = "================================================================== end ======================================================================";
         private static final String PRINT_TEST_CASE_SPLIT_LINE = "||                                                                                                                                         ||\n";
-        private static final String PRINT_TEST_CASE_INNER_SPLIT_LINE = "||\t |                                                                                                                                |\t   ||%n";
-        private static final String PRINT_TEST_CASE_INNER_START = "||\t |----------------------------------------------------------- %02d[start] ----------------------------------------------------------|    ||%n";
-        private static final String PRINT_TEST_CASE_INNER_END = "||\t |----------------------------------------------------------- %02d[end] ------------------------------------------------------------|\t   ||%n";
-        private static final String PRINT_TEST_CASE_INNER_TOP = "||\t----------------------------------------------------------------------------------------------------------------------------------\t   ||%n";
+        private static final String PRINT_TEST_CASE_INNER_SPLIT_LINE = "||\t |                                                                                                                                |\t   ||\n";
+        private static final String PRINT_TEST_CASE_INNER_START = "||\t |----------------------------------------------------------- %02d[start] ----------------------------------------------------------|    ||\n";
+        private static final String PRINT_TEST_CASE_INNER_END = "||\t |----------------------------------------------------------- %02d[end] ------------------------------------------------------------|\t   ||\n";
+        private static final String PRINT_TEST_CASE_INNER_TOP = "||\t----------------------------------------------------------------------------------------------------------------------------------\t   ||\n";
         private static final String PRINT_TEST_CASE_INNER_PREFIX = "||   | ";
         private static final String PRINT_TEST_CASE_INNER_SUFFIX = " |    ||";
 
-        /**
-         * 打印测试结果的语句
-         *
-         * @param format 模板
-         * @param params 模板参数
-         */
-        public static void printf(String format, String... params) {
-            print(String.format(format, params));
-        }
+        private static final String RESET = "\u001B[0m";
+        private static final String RED = "\u001B[31m";
+        private static final String GREEN = "\u001B[32m";
+        private static final String YELLOW = "\u001B[33m";
+        private static final String BLUE = "\u001B[34m";
+        private static final String PURPLE = "\u001B[35m";
+        private static final String CYAN = "\u001B[36m";
+        private static final String WHITE = "\u001B[37m";
+
+
 
         /**
          * 打印测试结果的语句
          *
          * @param str 打印语句
          */
-        public static void print(String str) {
+        public static void print(String str, String fontColor) {
             int lineWidth = getWidth(PrintUtil.PRINT_TEST_CASE_START);
             int prefixWidth = getWidth(PrintUtil.PRINT_TEST_CASE_INNER_PREFIX);
             int suffixWidth = getWidth(PrintUtil.PRINT_TEST_CASE_INNER_SUFFIX);
             int printStrOneLineWidth = lineWidth - prefixWidth - suffixWidth - 2;
             int curWidth = 0;
 
-            System.out.print(PrintUtil.PRINT_TEST_CASE_INNER_PREFIX);
+            consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_PREFIX, GREEN);
             String[] wordArr = str.split("\\s+");
             for (String word : wordArr) {
                 int width = getWidth(word) + 1;
                 if (curWidth + width > printStrOneLineWidth) {
                     while (curWidth <= printStrOneLineWidth) {
-                        System.out.print(" ");
+                        consolePrint(" ", fontColor);
                         ++curWidth;
                     }
-                    System.out.println(PrintUtil.PRINT_TEST_CASE_INNER_SUFFIX);
-                    System.out.print(PrintUtil.PRINT_TEST_CASE_INNER_PREFIX);
+                    consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SUFFIX + "\n", GREEN);
+                    consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_PREFIX, GREEN);
                     curWidth = 0;
                 }
-                System.out.print(word);
-                System.out.print(" ");
+                consolePrint(word, fontColor);
+                consolePrint(" ", fontColor);
                 curWidth += width;
             }
             int tLen = curWidth;
             while (tLen <= printStrOneLineWidth) {
-                System.out.print(" ");
+                consolePrint(" ", fontColor);
                 ++tLen;
             }
             if (curWidth < printStrOneLineWidth) {
-                System.out.println(PrintUtil.PRINT_TEST_CASE_INNER_SUFFIX);
+                consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SUFFIX + "\n", GREEN);
             }
+        }
+
+        public static void consolePrint(String str, String fontColor) {
+            System.out.print(String.format("%s%s%s",fontColor, str, RESET));
         }
 
         /**
