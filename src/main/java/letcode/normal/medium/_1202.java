@@ -111,7 +111,7 @@ public class _1202 {
 
 
 
-    public int find(int index, int[] parent) {
+    private int find(int index, int[] parent) {
         Stack<Integer> stack = new Stack<>();
         while (parent[index] != index) {
             index = parent[index];
@@ -124,7 +124,7 @@ public class _1202 {
     }
 
 
-    public void union(int one, int two, int[] parent) {
+    private void union(int one, int two, int[] parent) {
         parent[find(two, parent)] = find(one, parent);
     }
 

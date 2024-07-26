@@ -50,7 +50,7 @@ public class _2956 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.test(_2956.class, "输入：nums1 = [4,3,2,3,1], nums2 = [2,2,5,2,3,6]");
+        TestUtil.testBatch(_2956.class, "输入：nums1 = [4,3,2,3,1], nums2 = [2,2,5,2,3,6]");
     }
 
 }

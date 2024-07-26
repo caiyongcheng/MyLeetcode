@@ -64,7 +64,7 @@ public class _1688 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.test(_1688.class,
+        TestUtil.testBatch(_1688.class,
                 "aliceValues = [1,3], bobValues = [2,1]",
                 "aliceValues = [1,2], bobValues = [3,1]",
                "aliceValues = [2,4,3], bobValues = [1,6,7]"

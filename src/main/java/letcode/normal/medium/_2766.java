@@ -56,7 +56,7 @@ public class _2766 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.test(
+        TestUtil.testBatch(
                 _2766.class,
                 "Example 1: Input: nums = [1,6,7,8], moveFrom = [1,7,2], " +
                         "moveTo = [2,9,5] Output: [5,6,8,9] Explanation: Initially, the marbles are at positions 1,6,7,8." +

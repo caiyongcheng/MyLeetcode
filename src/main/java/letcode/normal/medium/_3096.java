@@ -61,7 +61,7 @@ public class _3096 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.test(_3096.class,
+        TestUtil.testBatch(_3096.class,
                 "Example 1: Input: possible = [1,0,1,0] Output: 1 Explanation: Let's look at all the levels that Alice can play up to: If Alice plays only level 0 and Bob plays the rest of the levels, Alice has 1 point, while Bob has -1 + 1 - 1 = -1 point. If Alice plays till level 1 and Bob plays the rest of the levels, Alice has 1 - 1 = 0 points, while Bob has 1 - 1 = 0 points. If Alice plays till level 2 and Bob plays the rest of the levels, Alice has 1 - 1 + 1 = 1 point, while Bob has -1 point. Alice must play a minimum of 1 level to gain more points. Example 2: Input: possible = [1,1,1,1,1] Output: 3 Explanation: Let's look at all the levels that Alice can play up to: If Alice plays only level 0 and Bob plays the rest of the levels, Alice has 1 point, while Bob has 4 points. If Alice plays till level 1 and Bob plays the rest of the levels, Alice has 2 points, while Bob has 3 points. If Alice plays till level 2 and Bob plays the rest of the levels, Alice has 3 points, while Bob has 2 points. If Alice plays till level 3 and Bob plays the rest of the levels, Alice has 4 points, while Bob has 1 point. Alice must play a minimum of 3 levels to gain more points. Example 3: Input: possible = [0,0] Output: -1 Explanation: The only possible way is for both players to play 1 level each. Alice plays level 0 and loses 1 point. Bob plays level 1 and loses 1 point. As both players have equal points, Alice can't gain more points than Bob.");
 
     }

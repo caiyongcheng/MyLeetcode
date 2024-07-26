@@ -58,7 +58,7 @@ public class _1816 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.test(
+        TestUtil.testBatch(
                 _1816.class,
                 "输入：s = \"Hello how are you Contestant\", k = 4",
                 "输入：s = \"What is the solution to this problem\", k = 4",

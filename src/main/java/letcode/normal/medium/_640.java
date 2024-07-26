@@ -133,7 +133,7 @@ public class _640 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.test(
+        TestUtil.testBatch(
                 _640.class,
                 "输入: equation = \"x+5-3+x=6+x-2\" 输出: \"x=2\" 示例 2:",
                 "输入: equation = \"x=x\" 输出: \"Infinite solutions\" 示例 3:",

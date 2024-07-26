@@ -6,6 +6,7 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -31,13 +32,13 @@ public class TestUtil {
         private String explanationStr = "";
 
         public TestCase(String originStr) {
-            String[] splitByOutput = originStr.split("Output: ");
-            inputStr = splitByOutput[0].replaceAll("Input:", "");
+            String[] splitByOutput = originStr.split("(Output: )|(输出：)");
+            inputStr = splitByOutput[0].replaceAll("(Input:)|(输入：)", "");
             if (splitByOutput.length == 1) {
                 return;
             }
 
-            String[] splitByExplanation = splitByOutput[1].split("Explanation");
+            String[] splitByExplanation = splitByOutput[1].split("(Explanation)|(解释：)");
             outputStr = splitByExplanation[0].trim();
             if (splitByExplanation.length == 1) {
                 return;
@@ -60,7 +61,7 @@ public class TestUtil {
         }
 
         public TestCaseExecutor(Class<T> testClass, String testCaseStr) {
-            init(testClass, testCaseStr.split("Example \\d+:"));
+            init(testClass, testCaseStr.split("(Example \\d+:)|(示例 \\d+：)"));
         }
         
         public void init(Class<T> testClass, String... testCaseStrArr) {
@@ -271,6 +272,9 @@ public class TestUtil {
                         case "List<List<Integer>>":
                             params[i] = get2DList(paramStrArr[i], ",", TestCaseInputUtils::getIntegerArr);
                             continue;
+                        case "java.util.List":
+                            params[i] = get2DStrList(paramStrArr[i]);
+                            continue;
                     }
                 }
                 throw new IllegalArgumentException(String.format(
@@ -444,6 +448,16 @@ public class TestUtil {
      * @param targetClass 目标类
      * @param inputStr 输入字符串，按输入进行划分
      */
+    public static <T> void test(Class<T> targetClass) {
+        new TestCaseExecutor<>(targetClass, TestCaseInputUtils.getStringFromFile()).execute();
+    }
+
+    /**
+     * 测试目标类的方法
+     *
+     * @param targetClass 目标类
+     * @param inputStr 输入字符串，按输入进行划分
+     */
     public static <T> void test(Class<T> targetClass, String inputStr) {
         new TestCaseExecutor<>(targetClass, inputStr).execute();
     }
@@ -454,7 +468,10 @@ public class TestUtil {
      * @param targetClass 目标类
      * @param inputStrArr 输入字符串，按输入进行划分
      */
-    public static <T> void test(Class<T> targetClass, String... inputStrArr) {
+    public static <T> void testBatch(Class<T> targetClass, String... inputStrArr) {
+        if (Objects.isNull(inputStrArr) || inputStrArr.length == 0) {
+            inputStrArr = new String[]{TestCaseInputUtils.getStringFromFile()};
+        }
         new TestCaseExecutor<>(targetClass, inputStrArr).execute();
     }
 
