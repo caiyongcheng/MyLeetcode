@@ -3,6 +3,8 @@ package letcode.utils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -113,7 +115,16 @@ public class TestUtil {
                     String excuseResultStr = TestCaseOutputUtils.formatObj(execRst);
                     PrintUtil.print(String.format("result: %s", excuseResultStr), PrintUtil.RED);
                     PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                    PrintUtil.print(String.format("result conpare: %s", testCase.outputStr.equals(excuseResultStr)), "");
+                    PrintUtil.print(
+                            String.format(
+                                    "result conpare: %s",
+                                    testCase.outputStr.equals(excuseResultStr) || (testMethod.getReturnType() != String.class
+                                            ? false
+                                            : testCase.outputStr.replaceAll("\"", "").equals(excuseResultStr)
+                                    )
+                            ),
+                            ""
+                    );
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
                     break;
@@ -448,8 +459,35 @@ public class TestUtil {
      * @param targetClass 目标类
      * @param inputStr 输入字符串，按输入进行划分
      */
-    public static <T> void test(Class<T> targetClass) {
+    public static <T> void testWithTestFile(Class<T> targetClass) {
         new TestCaseExecutor<>(targetClass, TestCaseInputUtils.getStringFromFile()).execute();
+    }
+
+    /**
+     * 测试目标类的方法
+     *
+     * @param targetClass 目标类
+     * @param inputStr 输入字符串，按输入进行划分
+     */
+    public static <T> void testWithTestClassFile(Class<T> targetClass) {
+        if (Objects.isNull(targetClass)) {
+            throw new IllegalArgumentException("targetClass must not null");
+        }
+        try {
+            URI uri = targetClass.getResource(targetClass.getSimpleName() + ".class").toURI();
+            String path = uri.getPath();
+            path = path.replaceAll("file:/", "");
+            path = path.replaceAll("/target/classes/", "/src/main/java/");
+            path = path.replaceAll(".class", ".java");
+            String inputStr = getStringFromClassFile(path);
+            if (Objects.isNull(inputStr) || inputStr.isEmpty()) {
+                TestUtil.testWithTestFile(targetClass);
+            } else {
+                TestUtil.test(targetClass, inputStr);
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

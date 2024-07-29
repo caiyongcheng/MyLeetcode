@@ -10,5 +10,5 @@ package letcode.normal.difficult;
  * @version 1.0.0
  * @since 2024-07-23 17:43
  */
-public class _3098 {
+public class N_3098 {
 }

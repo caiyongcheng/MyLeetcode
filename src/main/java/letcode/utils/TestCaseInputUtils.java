@@ -1,8 +1,10 @@
 package letcode.utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -247,7 +249,7 @@ public class TestCaseInputUtils {
             String lineStr;
             while (true) {
                 lineStr = bufferedReader.readLine();
-                if (lineStr == null || lineStr.isEmpty()) {
+                if (lineStr == null ) {
                     break;
                 }
                 str.append(lineStr);
@@ -262,6 +264,76 @@ public class TestCaseInputUtils {
         return getStringFromFile(String.format(TEST_CASE_FILE_PATH_TEMPLATE, ""));
     }
 
+    public static String getStringFromClassFile(String fileName) {
+        StringBuilder str = new StringBuilder();
+        String lineStr;
+        String trimLineStr;
+        int inComment = 0;
+        try (BufferedReader bufferedReader = Files.newBufferedReader(new File(fileName).toPath())) {
+            while (true) {
+                lineStr = bufferedReader.readLine();
+                if (lineStr == null) {
+                    break;
+                }
+                if (lineStr.isEmpty()) {
+                    continue;
+                }
+                trimLineStr = lineStr.trim();
+                if (trimLineStr.startsWith("/*")) {
+                    inComment = 1;
+                } else if (trimLineStr.endsWith("*/")) {
+                    inComment = 0;
+                } else if (inComment == 0 && trimLineStr.startsWith("//")) {
+                    str.append(trimLineStr.substring(2));
+                } else if (inComment != 0) {
+                    if (trimLineStr.startsWith("*")) {
+                        trimLineStr = trimLineStr.substring(1);
+                    }
+                    if (trimLineStr.matches("\\s*@param\\sargs.+")) {
+                        continue;
+                    }
+                    str.append(trimLineStr);
+                } else if (trimLineStr.startsWith("public static void main")) {
+                    break;
+                } else {
+                    str.delete(0, str.length());
+                }
+            }
+            return str.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getClassName(String fileName) {
+        String lineStr;
+        String packageUrl = "";
+        try (BufferedReader bufferedReader = Files.newBufferedReader(new File(fileName).toPath())) {
+            while (true) {
+                lineStr = bufferedReader.readLine();
+                if (lineStr == null) {
+                    break;
+                }
+                if (lineStr.isEmpty()) {
+                    continue;
+                }
+                if (lineStr.matches("\\s*package.+")) {
+                    lineStr = lineStr
+                            .replaceAll("package\\s*(.+)\\s*;", "$1")
+                            .replaceAll("\\s", "");
+                    packageUrl = lineStr;
+                } else if (lineStr.matches("\\s*public\\s*class\\s*.+\\s*[\n{]")) {
+                    lineStr = lineStr.replaceAll("\\s*public\\s*class\\s*([A-Za-z0-9$_]+)\\s*[\n{]", "$1");
+                    return packageUrl.isEmpty()
+                            ? lineStr.substring(0, lineStr.indexOf(" "))
+                            : packageUrl + "." + lineStr;
+                }
+            }
+            return null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static int[] createRandomIntArr(int arrLength, int floor, int ceil) {
         int[] randomArr = new int[arrLength];

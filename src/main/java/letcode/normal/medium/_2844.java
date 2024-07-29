@@ -78,6 +78,6 @@ public class _2844 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.test(_2844.class);
+        TestUtil.testWithTestFile(_2844.class);
     }
 }
