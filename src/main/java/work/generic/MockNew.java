@@ -47,10 +47,10 @@ public class MockNew {
             return String.format("    /**\n" +
                     "     *%s\n" +
                     "     */\n" +
-                    "    %s" +
+                    "%s" +
                     "    private %s %s;\n",
                     this.description,
-                    this.required ? "@NotNull(message = \"" + this.propertyName + "不能为空\")\n" : "",
+                    this.required ? "    @NotNull(message = \"" + this.propertyName + "不能为空\")\n" : "",
                     this.className,
                     this.propertyName
                     );
@@ -58,29 +58,28 @@ public class MockNew {
     }
 
     public static String getData() {
-        return "otJbylWmId string Y 西药处方明细表 id\n" +
+        return "otYlbxOutdId string Y 医疗门诊收费明细 id\n" +
+                "otYlbxOutbId string Y 医疗门诊收费票据信息 id（ot_ylbx_outb 表）\n" +
                 "organizationUuid string Y 基层机构 uuid\n" +
-                "otJbylWmpId string Y 西药处方表 id（ot_jbyl_wmp 表）\n" +
-                "organizationName string Y 组织机构名称\n" +
-                "organizationCode string Y 组织机构代码（优先填写统一社会信用代码， 无统一社会信用代码的填写组织机构代码）\n" +
+                "residentsInfoId string N 城乡居民健康档案 id\n" +
+                "otJbylOutpId string Y 门急诊摘要表 id（ot_jbyl_outp表）\n" +
                 "areaCode string Y 区划编码\n" +
-                "serviceDate string Y 服务日期时间\n" +
-                "otJbylWm001 string N 药物名称\n" +
-                "otJbylWm002 string N 药物规格\n" +
-                "otJbylWm003 string N 药物剂型代码（参见数据采集规范枚举）\n" +
-                "otJbylWm004 string N 药物使用次剂量\n" +
-                "otJbylWm005 string N 药物使用剂量单位\n" +
-                "otJbylWm006 string N 药物使用频次代码（参见数据采集规范枚举）\n" +
-                "otJbylWm007 string N 用药途径代码（参见数据采集规范枚举）\n" +
-                "otJbylWm008 string N 药物使用总剂量\n" +
-                "otJbylWm009 string N 处方药品组号重庆市基层卫生综合管理系统新增业务数据上传接口规范\n" +
-                "otJbylWm010 string N 精神药物标志\n" +
-                "otJbylWm011 string N 麻醉药物标志\n" +
-                "otJbylWm012 string N 基本药物标志\n" +
-                "otJbylWm013 string Y 输液用药标志\n" +
-                "otJbylWm014 string Y 抗生素标志\n" +
-                "otJbylWm015 string Y 激素标志\n" +
-                "otJbylWm016 string N 药物类型代码（参见数据采集规范枚举）\n" +
+                "otYlbxOutd001 string N 医生\n" +
+                "otYlbxOutd002 string N 操作员\n" +
+                "otYlbxOutd003 string N 门诊费用结算方式代码（参见数据采集规范枚举）\n" +
+                "otYlbxOutd004 string N 门诊费用分类代码（参见数据采集规范枚举）\n" +
+                "otYlbxOutd005 string N 门诊费用金额(元)\n" +
+                "otYlbxOutd006 string N 医疗付款方式代码（参见数据采集规范枚举）\n" +
+                "otYlbxOutd007 string N 项目编码\n" +
+                "otYlbxOutd008 string N 项目名称\n" +
+                "otYlbxOutd009 string N 单位\n" +
+                "otYlbxOutd010 string N 单价\n" +
+                "otYlbxOutd011 string N 数量\n" +
+                "otYlbxOutd012 string N 个人承担费用金额\n" +
+                "otYlbxOutd013 string N 自付\n" +
+                "otYlbxOutd014 string N 医保金额\n" +
+                "otYlbxOutd015 string N 减免金额\n" +
+                "otYlbxOutd016 string N 备注\n" +
                 "uploadDate string(date-time) Y 数据上传时间（yyyy-MM-dd）\n" +
                 "updateDate string(date-time) Y 数据更新时间（yyyy-MM-dd HH:mm:ss）\n" +
                 "createDate string(date-time) Y 数据创建时间（yyyy-MM-dd HH:mm:ss）\n" +

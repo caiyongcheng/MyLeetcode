@@ -67,34 +67,6 @@ public class _3106 {
      * Explanation:
      *
      * It's impossible to change any character as k = 0.
-     *
-     * 示例 1：
-     *
-     * 输入：s = "zbbz", k = 3
-     * 输出："aaaz"
-     * 解释：在这个例子中，可以执行以下操作：
-     * 将 s[0] 改为 'a' ，s 变为 "abbz" 。
-     * 将 s[1] 改为 'a' ，s 变为 "aabz" 。
-     * 将 s[2] 改为 'a' ，s 变为 "aaaz" 。
-     * "zbbz" 和 "aaaz" 之间的距离等于 k = 3 。
-     * 可以证明 "aaaz" 是在任意次操作后能够得到的字典序最小的字符串。
-     * 因此，答案是 "aaaz" 。
-     * 示例 2：
-     *
-     * 输入：s = "xaxcd", k = 4
-     * 输出："aawcd"
-     * 解释：在这个例子中，可以执行以下操作：
-     * 将 s[0] 改为 'a' ，s 变为 "aaxcd" 。
-     * 将 s[2] 改为 'w' ，s 变为 "aawcd" 。
-     * "xaxcd" 和 "aawcd" 之间的距离等于 k = 4 。
-     * 可以证明 "aawcd" 是在任意次操作后能够得到的字典序最小的字符串。
-     * 因此，答案是 "aawcd" 。
-     * 示例 3：
-     *
-     * 输入：s = "lol", k = 0
-     * 输出："lol"
-     * 解释：在这个例子中，k = 0，更改任何字符都会使得距离大于 0 。
-     * 因此，答案是 "lol" 。
      * @param args
      */
     public static void main(String[] args) {
