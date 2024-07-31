@@ -243,6 +243,10 @@ public class TestCaseInputUtils {
     }
 
     public static String getStringFromFile(String fileName) {
+        return getStringFromFile(fileName, "");
+    }
+
+    public static String getStringFromFile(String fileName, String lineSeparator) {
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             StringBuilder str = new StringBuilder();
@@ -253,6 +257,7 @@ public class TestCaseInputUtils {
                     break;
                 }
                 str.append(lineStr);
+                str.append(lineSeparator);
             }
             return str.toString();
         } catch (IOException e) {
