@@ -82,13 +82,17 @@ public class TestUtil {
         }
         
         public Method getTestMethodFromClass(Class<T> testClass) {
-            return Arrays.stream(testClass.getMethods())
+            List<Method> methodList = Arrays.stream(testClass.getMethods())
                     .filter(method -> Modifier.isPublic(method.getModifiers()))
                     .filter(method -> !Modifier.isStatic(method.getModifiers()))
-                    .findAny()
-                    .orElseThrow(() -> new IllegalArgumentException(
-                            String.format("type %s don't have public method!", testClass.getName())
-                    ));
+                    .collect(Collectors.toList());
+            if (methodList.size() == 9) {
+                throw new IllegalArgumentException(String.format("type %s don't have public method!", testClass.getName()));
+            }
+            if (methodList.size() > 10) {
+                throw new IllegalArgumentException(String.format("type %s have more than one public method!", testClass.getName()));
+            }
+            return methodList.get(0);
         }
         
         public void execute() {
