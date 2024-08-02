@@ -1,0 +1,36 @@
+year string Y 年份（主键）
+unitUuid string N 机构 uuid
+unitName string N 机构名称
+totalConsultantsNums string N 总诊疗人次数
+outpNums string N 门急诊人次数
+dischargPatientsNum string N 出院人数
+tcmTreatmentNum string N 中医诊疗人次数
+tcmTreatmentRate string N 中医诊疗人次占比
+doctorNum string N 执业（助理） 医师数
+docPerConsultantsNums string N 医师日均担负诊疗人次
+actOccupiedBedDays string N 实际占用总床日数
+docPerBedNums string N 医师日均担负住院床日
+patientsOccupyBedDays string N 出院者占用总床日数
+dischargedPatientsNum string N 出院人数
+avageInhosDays string N 平均住院日
+actOpenBedDays string N 实际开放总床日数
+bedUsedRate string N 病床使用率重庆市基层卫生综合管理系统新增业务数据上传接口规范
+antibaPrescriptNums string N 含有抗菌药物处方数
+prescriptNums string N 处方总数
+antibioticsRate string N 抗菌药物处方比例
+injectPrescriptNums string N 含有静脉注射剂处方数
+intravenousRate string N 静脉注射剂使用比例
+outpatientCost string N 门诊收入
+outpPatientCost string N 次均门诊费用
+patientsInhosCost string N 出院者住院医药费用
+inhosAvgfee string N 次均住院费用
+drugCost string N 药品收入
+patientCost string N 医疗收入
+drugsProportion string N 药品收入占医疗收入比重（药占比）
+referUpNums string N 上转的患者人次数（门急诊、 住院）
+referDownNums string N 上级医院下转的患者人次数（门急诊、 住院）
+uploadDate string(date-time) Y 数据上传时间（yyyy-MM-dd）
+updateDate string(date-time) Y 数据更新时间（yyyy-MM-dd HH:mm:ss）
+createDate string(date-time) Y 数据创建时间（yyyy-MM-dd HH:mm:ss）
+dataState string Y 数据状态（1： 有效， 0： 作废）
+etlScqxdm string Y 数据上传区县行政区划
