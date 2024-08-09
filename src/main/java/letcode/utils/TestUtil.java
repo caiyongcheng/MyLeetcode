@@ -272,6 +272,10 @@ public class TestUtil {
                     params[i] = get2DStrArr(paramStrArr[i]);
                     continue;
                 }
+                if (typeArr[i] == TreeNode.class) {
+                    params[i] = new TreeNode(getIntegerArr(paramStrArr[i]));
+                    continue;
+                }
                 if (typeArr[i] == List.class) {
                     switch (typeArr[i].getName()) {
                         case "List":

@@ -15,12 +15,30 @@ public class GenericCodeUtil {
 
     public static void init() {
         LineStrConverter.init(
-                "sys_user_favorite_resource",
-                "用户常用菜单",
-                "user_favourite_resource_id|user_favourite_resource_id|id|bigint(8)|not null\n" +
-                        "user_id|user_id|用户id|bigint(8)|null\n" +
-                        "resource_id|resource_id|排序|tinyint(1)|null\n" +
-                        "sort_num|sort_num|无说明|int(4)|null\n"
+                "IM_DEPARTMENT",
+                "科室信息",
+                "id|id|无说明|int(4)|not null\n" +
+                        "parentId|parentId|无说明|int(4)|not null\n" +
+                        "name|name|无说明|nvarchar(8000)|not null\n" +
+                        "description|description|无说明|nvarchar(8000)|null\n" +
+                        "attribute|attribute|无说明|int(4)|not null\n" +
+                        "state|state|无说明|int(4)|not null\n" +
+                        "address|address|无说明|nvarchar(8000)|null\n" +
+                        "contact|contact|无说明|nvarchar(8000)|null\n" +
+                        "tel|tel|无说明|nvarchar(8000)|null\n" +
+                        "fax|fax|无说明|nvarchar(8000)|null\n" +
+                        "email|email|无说明|nvarchar(8000)|null\n" +
+                        "homepage|homepage|无说明|nvarchar(8000)|null\n" +
+                        "inputcode1|inputcode1|无说明|nvarchar(8000)|null\n" +
+                        "inputcode2|inputcode2|无说明|nvarchar(8000)|null\n" +
+                        "remarks|remarks|无说明|nvarchar(8000)|null\n" +
+                        "updated|updated|无说明|nvarchar(8000)|null\n" +
+                        "lmtime|lmtime|无说明|datetime(8)|not null\n" +
+                        "lmodifier|lModifier|无说明|int(4)|null\n" +
+                        "isOrgan|isOrgan|无说明|tinyint(1)|null\n" +
+                        "organId|organId|无说明|int(4)|null\n" +
+                        "departmentType|departmentType|无说明|int(4)|null\n" +
+                        "interFaceId|interFaceId|无说明|varchar(8000)|null"
         );
     }
 

@@ -294,7 +294,7 @@ public class TestCaseInputUtils {
                     if (trimLineStr.startsWith("*")) {
                         trimLineStr = trimLineStr.substring(1);
                     }
-                    if (trimLineStr.matches("\\s*@param\\sargs.+")) {
+                    if (trimLineStr.matches("\\s+@param\\s*args[.\\s]*")) {
                         continue;
                     }
                     str.append(trimLineStr);
