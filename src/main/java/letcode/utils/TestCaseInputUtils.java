@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -84,6 +85,48 @@ public class TestCaseInputUtils {
         return get2DStrList(inputStr, ",");
     }
 
+    public static Object getParam(String paramType, String paramsStr) {
+        if (paramType.startsWith("java.util.List<")) {
+            paramType = paramType.substring("java.util.List<".length(), paramType.length() - 1);
+            paramsStr = paramsStr.substring(1, paramsStr.length() - 1);
+            List<Integer> splitIndexFromParamsStr = getSplitIndexFromParamsStr(paramsStr);
+            // 这里没有处理类型和参数不匹配的情况 暂时不考虑处理 因为leetcode的测试用例都是正确的格式
+            if (splitIndexFromParamsStr.isEmpty()) {
+                String finalParamType = paramType;
+                return Arrays.stream(paramsStr.split(","))
+                        .map(str -> getParam(finalParamType, str))
+                        .collect(Collectors.toList());
+            } else {
+                List<Object> list = new ArrayList<>();
+                int startIdx = 0;
+                for (Integer splitIndex : splitIndexFromParamsStr) {
+                    if (paramsStr.charAt(startIdx) == ',') {
+                        ++startIdx;
+                    }
+                    list.add(getParam(paramType, paramsStr.substring(startIdx, splitIndex + 1)));
+                    startIdx = splitIndex + 1;
+                }
+                return list;
+            }
+        } else if (paramType.contains("Integer") || paramType.contains("int")) {
+            return Integer.parseInt(paramsStr);
+        } else if (paramType.contains("Character") || paramType.contains("char")) {
+            return paramsStr.charAt(0);
+        } else if (paramType.contains("String")) {
+            return paramsStr;
+        } else if (paramType.contains("int[]")) {
+            return getIntArr(paramsStr);
+        } else if (paramType.contains("Integer[]")) {
+            return getIntegerArr(paramsStr);
+        } else if (paramType.contains("char[]")) {
+            return getCharArr(paramsStr);
+        } else if (paramType.contains("TreeNode")) {
+            return new TreeNode(getIntegerArr(paramsStr));
+        }
+        throw new IllegalArgumentException(String.format(
+                "type %s is not supported, param string: %s", paramType, paramsStr
+        ));
+    }
 
     /**
      * 将字符串转为对应的二维数组
@@ -365,6 +408,23 @@ public class TestCaseInputUtils {
         return randomArr;
     }
 
-
+    static List<Integer> getSplitIndexFromParamsStr(String paramsStr) {
+        int openCnt = 0;
+        int length = paramsStr.length();
+        char ch;
+        List<Integer> strSplitIndexList = new ArrayList<>();
+        for (int i = 0; i < length; i++) {
+            ch = paramsStr.charAt(i);
+            if (ch == '[') {
+                openCnt++;
+            } else if (ch == ']') {
+                --openCnt;
+                if (openCnt == 0) {
+                    strSplitIndexList.add(i);
+                }
+            }
+        }
+        return strSplitIndexList;
+    }
 
 }
