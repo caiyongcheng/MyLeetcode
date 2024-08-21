@@ -24,59 +24,68 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package letcode.normal.easy;
-
-import letcode.utils.TestUtil;
+package letcode.normal.unansweredquestions.difficult;
 
 /**
- * 给你一个字符串 s 表示一个学生的出勤记录，其中的每个字符用来标记当天的出勤情况（缺勤、迟到、到场）。
- * 记录中只含下面三种字符：  'A'：Absent，缺勤 'L'：Late，迟到 'P'：Present，到场
- * 如果学生能够 同时 满足下面两个条件，则可以获得出勤奖励：
- * 按 总出勤 计，学生缺勤（'A'）严格 少于两天。
- * 学生 不会 存在 连续 3 天或 3 天以上的迟到（'L'）记录。
- * 如果学生可以获得出勤奖励，返回 true ；否则，返回 false 。
- * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/student-attendance-record-i 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- *
- * @author CaiYongcheng
- * @since 2021-08-17 21:14
- **/
-public class _551 {
+ * @author 蔡永程
+ * @description
+ * @since 2022/9/6 15:39
+ */
+public class _N828EightHundredTwentyEight {
 
-    public boolean checkRecord(String s) {
-        int length = s.length();
-        int absentCount = 0;
-        char ch;
-        for (int i = 0; i < length; i++) {
-            ch = s.charAt(i);
-            if (ch == 'A' && ++absentCount > 1) {
-                return false;
-            }
-            if (ch == 'L' && i + 2 < length && s.charAt(i+1) == 'L' && s.charAt(i+2) == 'L') {
-                return false;
-            }
-        }
-        return true;
+
+    /**
+     * 我们定义了一个函数 countUniqueChars(s) 来统计字符串 s 中的唯一字符，并返回唯一字符的个数。
+     * <p>
+     * 例如：s = "LEETCODE" ，则其中 "L", "T","C","O","D" 都是唯一字符，因为它们只出现一次，所以 countUniqueChars(s) = 5 。
+     * <p>
+     * 本题将会给你一个字符串 s ，我们需要返回 countUniqueChars(t) 的总和，其中 t 是 s 的子字符串。输入用例保证返回值为32 位整数。
+     * <p>
+     * 注意，某些子字符串可能是重复的，但你统计时也必须算上这些重复的子字符串（也就是说，你必须统计 s 的所有子字符串中的唯一字符）。
+     * <p>
+     * <p>
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode.cn/problems/count-unique-characters-of-all-substrings-of-a-given-string
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param s
+     * @return
+     */
+    public int uniqueLetterString(String s) {
+        /*
+         * 统计左右两部分 每次移动只会增减一个字母 最大复杂度只是O(n)
+         */
+        return 0;
     }
 
 
     /**
      * 示例 1：
-     * 输入：s = "PPALLP"
-     * 输出：true
-     * 解释：学生缺勤次数少于 2 次，且不存在 3 天或以上的连续迟到记录。
-     *
+     * <p>
+     * 输入: s = "ABC"
+     * 输出: 10
+     * 解释: 所有可能的子串为："A","B","C","AB","BC" 和 "ABC"。
+     * 其中，每一个子串都由独特字符构成。
+     * 所以其长度总和为：1 + 1 + 1 + 2 + 2 + 3 = 10
      * 示例 2：
-     * 输入：s = "PPALLL"
-     * 输出：false
-     * 解释：学生最后三天连续迟到，所以不满足出勤奖励的条件。
-     *
+     * <p>
+     * 输入: s = "ABA"
+     * 输出: 8
+     * 解释: 除了 countUniqueChars("ABA") = 1 之外，其余与示例 1 相同。
+     * 示例 3：
+     * <p>
+     * 输入：s = "LEETCODE"
+     * 输出：92
+     * <p>
      * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/student-attendance-record-i
+     * 链接：https://leetcode.cn/problems/count-unique-characters-of-all-substrings-of-a-given-string
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.test(_551.class);
+
     }
 
 }

@@ -54,7 +54,7 @@ public class _3151 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.testWithTestClassFile(_3151.class);
+        TestUtil.test(_3151.class);
     }
 
 }

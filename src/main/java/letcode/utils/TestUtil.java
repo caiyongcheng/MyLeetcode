@@ -380,7 +380,7 @@ public class TestUtil {
      * @param targetClass 目标类
      * @param inputStr 输入字符串，按输入进行划分
      */
-    public static <T> void testWithTestFile(Class<T> targetClass) {
+    public static <T> void testUseTestFile(Class<T> targetClass) {
         new TestCaseExecutor<>(targetClass, TestCaseInputUtils.getStringFromFile()).execute();
     }
 
@@ -390,7 +390,7 @@ public class TestUtil {
      * @param targetClass 目标类
      * @param inputStr 输入字符串，按输入进行划分
      */
-    public static <T> void testWithTestClassFile(Class<T> targetClass) {
+    public static <T> void test(Class<T> targetClass) {
         if (Objects.isNull(targetClass)) {
             throw new IllegalArgumentException("targetClass must not null");
         }
@@ -402,7 +402,7 @@ public class TestUtil {
             path = path.replaceAll(".class", ".java");
             String inputStr = getStringFromClassFile(path);
             if (Objects.isNull(inputStr) || inputStr.isEmpty()) {
-                TestUtil.testWithTestFile(targetClass);
+                TestUtil.testUseTestFile(targetClass);
             } else {
                 TestUtil.test(targetClass, inputStr);
             }

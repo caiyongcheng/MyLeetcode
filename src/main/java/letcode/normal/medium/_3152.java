@@ -63,7 +63,7 @@ public class _3152 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.testWithTestClassFile(_3152.class);
+        TestUtil.test(_3152.class);
     }
 
 }

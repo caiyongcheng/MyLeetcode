@@ -24,59 +24,65 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package letcode.normal.easy;
-
-import letcode.utils.TestUtil;
+package letcode.normal.unansweredquestions.medium;
 
 /**
- * 给你一个字符串 s 表示一个学生的出勤记录，其中的每个字符用来标记当天的出勤情况（缺勤、迟到、到场）。
- * 记录中只含下面三种字符：  'A'：Absent，缺勤 'L'：Late，迟到 'P'：Present，到场
- * 如果学生能够 同时 满足下面两个条件，则可以获得出勤奖励：
- * 按 总出勤 计，学生缺勤（'A'）严格 少于两天。
- * 学生 不会 存在 连续 3 天或 3 天以上的迟到（'L'）记录。
- * 如果学生可以获得出勤奖励，返回 true ；否则，返回 false 。
- * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/student-attendance-record-i 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- *
- * @author CaiYongcheng
- * @since 2021-08-17 21:14
+ * @program: MyLeetcode
+ * @description:
+ * 给你一个按升序排序的整数数组 num（可能包含重复数字），请你将它们分割成一个或多个长度至少为 3 的子序列，其中每个子序列都由连续整数组成。
+ * 如果可以完成上述分割，则返回 true ；否则，返回 false 。
+ * 来源：力扣（LeetCode）
+ * 链接：https://leetcode-cn.com/problems/split-array-into-consecutive-subsequences
+ * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ * @packagename: letcode.normal.medium
+ * @author: 6JSh5rC456iL
+ * @since: 2021-03-17 16:13
  **/
-public class _551 {
+public class N_659 {
 
-    public boolean checkRecord(String s) {
-        int length = s.length();
-        int absentCount = 0;
-        char ch;
-        for (int i = 0; i < length; i++) {
-            ch = s.charAt(i);
-            if (ch == 'A' && ++absentCount > 1) {
-                return false;
-            }
-            if (ch == 'L' && i + 2 < length && s.charAt(i+1) == 'L' && s.charAt(i+2) == 'L') {
-                return false;
-            }
+    static class record{
+        int start;
+        int end;
+        int num;
+
+        @Override
+        public boolean equals(Object obj) {
+            record record = (record) obj;
+            return start == record.start && end == record.end;
         }
+
+        @Override
+        public int hashCode() {
+            return (start+end)*(end-start);
+        }
+    }
+
+    public boolean isPossible(int[] nums) {
         return true;
     }
 
-
     /**
      * 示例 1：
-     * 输入：s = "PPALLP"
-     * 输出：true
-     * 解释：学生缺勤次数少于 2 次，且不存在 3 天或以上的连续迟到记录。
-     *
+     * 输入: [1,2,3,3,4,5]
+     * 输出: True
+     * 解释:
+     * 你可以分割出这样两个连续子序列 :
+     * 1, 2, 3
+     * 3, 4, 5
      * 示例 2：
-     * 输入：s = "PPALLL"
-     * 输出：false
-     * 解释：学生最后三天连续迟到，所以不满足出勤奖励的条件。
-     *
+     * 输入: [1,2,3,3,4,4,5,5]
+     * 输出: True
+     * 解释:
+     * 你可以分割出这样两个连续子序列 :
+     * 1, 2, 3, 4, 5
+     * 3, 4, 5
      * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/student-attendance-record-i
+     * 链接：https://leetcode-cn.com/problems/split-array-into-consecutive-subsequences
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.test(_551.class);
+
     }
 
 }

@@ -65,7 +65,7 @@ public class _2961 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.testWithTestClassFile(_2961.class);
+        TestUtil.test(_2961.class);
     }
 
 }

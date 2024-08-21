@@ -24,59 +24,36 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package letcode.normal.easy;
+package letcode.normal.unansweredquestions.medium;
 
-import letcode.utils.TestUtil;
+import letcode.utils.TreeNode;
 
 /**
- * 给你一个字符串 s 表示一个学生的出勤记录，其中的每个字符用来标记当天的出勤情况（缺勤、迟到、到场）。
- * 记录中只含下面三种字符：  'A'：Absent，缺勤 'L'：Late，迟到 'P'：Present，到场
- * 如果学生能够 同时 满足下面两个条件，则可以获得出勤奖励：
- * 按 总出勤 计，学生缺勤（'A'）严格 少于两天。
- * 学生 不会 存在 连续 3 天或 3 天以上的迟到（'L'）记录。
- * 如果学生可以获得出勤奖励，返回 true ；否则，返回 false 。
- * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/student-attendance-record-i 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ * 完全二叉树 是每一层（除最后一层外）都是完全填充（即，节点数达到最大）的，并且所有的节点都尽可能地集中在左侧。
+ * 设计一种算法，将一个新节点插入到一个完整的二叉树中，并在插入后保持其完整。
+ * 实现 CBTInserter 类:  CBTInserter(TreeNode root)使用头节点为root的给定树初始化该数据结构；
+ * CBTInserter.insert(int v) 向树中插入一个值为Node.val == val的新节点TreeNode。使树保持完全二叉树的状态，
+ * 并返回插入节点TreeNode的父节点的值； CBTInserter.get_root() 将返回树的头节点。
+ * 来源：力扣（LeetCode） 链接：https://leetcode.cn/problems/complete-binary-tree-inserter 著作权归领扣网络所有。
+ * 商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @since 2021-08-17 21:14
+ * @since 2022-07-25 21:44
  **/
-public class _551 {
+public class _N919NineHundredNineteen {
 
-    public boolean checkRecord(String s) {
-        int length = s.length();
-        int absentCount = 0;
-        char ch;
-        for (int i = 0; i < length; i++) {
-            ch = s.charAt(i);
-            if (ch == 'A' && ++absentCount > 1) {
-                return false;
-            }
-            if (ch == 'L' && i + 2 < length && s.charAt(i+1) == 'L' && s.charAt(i+2) == 'L') {
-                return false;
-            }
-        }
-        return true;
+
+    public _N919NineHundredNineteen(TreeNode root) {
+
     }
 
-
-    /**
-     * 示例 1：
-     * 输入：s = "PPALLP"
-     * 输出：true
-     * 解释：学生缺勤次数少于 2 次，且不存在 3 天或以上的连续迟到记录。
-     *
-     * 示例 2：
-     * 输入：s = "PPALLL"
-     * 输出：false
-     * 解释：学生最后三天连续迟到，所以不满足出勤奖励的条件。
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/student-attendance-record-i
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_551.class);
+    public int insert(int val) {
+        return 0;
     }
+
+    public TreeNode get_root() {
+        return null;
+    }
+
 
 }

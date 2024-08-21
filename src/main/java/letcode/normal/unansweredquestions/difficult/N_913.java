@@ -24,59 +24,31 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package letcode.normal.easy;
-
-import letcode.utils.TestUtil;
+package letcode.normal.unansweredquestions.difficult;
 
 /**
- * 给你一个字符串 s 表示一个学生的出勤记录，其中的每个字符用来标记当天的出勤情况（缺勤、迟到、到场）。
- * 记录中只含下面三种字符：  'A'：Absent，缺勤 'L'：Late，迟到 'P'：Present，到场
- * 如果学生能够 同时 满足下面两个条件，则可以获得出勤奖励：
- * 按 总出勤 计，学生缺勤（'A'）严格 少于两天。
- * 学生 不会 存在 连续 3 天或 3 天以上的迟到（'L'）记录。
- * 如果学生可以获得出勤奖励，返回 true ；否则，返回 false 。
- * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/student-attendance-record-i 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ * 两位玩家分别扮演猫和老鼠，在一张 无向 图上进行游戏，两人轮流行动。  图的形式是：graph[a] 是一个列表，由满足ab 是图中的一条边的所有节点 b 组成。
+ * 老鼠从节点 1 开始，第一个出发；猫从节点 2 开始，第二个出发。在节点 0 处有一个洞。
+ * 在每个玩家的行动中，他们 必须 沿着图中与所在当前位置连通的一条边移动。例如，如果老鼠在节点 1 ，那么它必须移动到 graph[1] 中的任一节点。
+ * 此外，猫无法移动到洞中（节点 0）。
+ * 然后，游戏在出现以下三种情形之一时结束：
+ * 如果猫和老鼠出现在同一个节点，猫获胜。
+ * 如果老鼠到达洞中，老鼠获胜。 如果某一位置重复出现（即，玩家的位置和移动顺序都与上一次行动相同），游戏平局。
+ * 给你一张图 graph ，并假设两位玩家都都以最佳状态参与游戏：  如果老鼠获胜，则返回1； 如果猫获胜，则返回 2； 如果平局，则返回 0 。
+ * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/cat-and-mouse 著作权归领扣网络所有。
+ * 商业转载请联系官方授权，非商业转载请注明出处。
  *
  * @author CaiYongcheng
- * @since 2021-08-17 21:14
+ * @since 2022-01-04 14:36
  **/
-public class _551 {
-
-    public boolean checkRecord(String s) {
-        int length = s.length();
-        int absentCount = 0;
-        char ch;
-        for (int i = 0; i < length; i++) {
-            ch = s.charAt(i);
-            if (ch == 'A' && ++absentCount > 1) {
-                return false;
-            }
-            if (ch == 'L' && i + 2 < length && s.charAt(i+1) == 'L' && s.charAt(i+2) == 'L') {
-                return false;
-            }
-        }
-        return true;
-    }
+public class N_913 {
 
 
-    /**
-     * 示例 1：
-     * 输入：s = "PPALLP"
-     * 输出：true
-     * 解释：学生缺勤次数少于 2 次，且不存在 3 天或以上的连续迟到记录。
-     *
-     * 示例 2：
-     * 输入：s = "PPALLL"
-     * 输出：false
-     * 解释：学生最后三天连续迟到，所以不满足出勤奖励的条件。
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/student-attendance-record-i
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_551.class);
+    public int catMouseGame(int[][] graph) {
+        // 如果老鼠能通过多种方式抵达洞穴 则会存在一系列路径 如果在一条路径path= {x0, x1, x2, x3, x4}, 如果猫能更早的到达除了终点外
+        // 的某个点 那么猫就可以抓到老鼠。如果存在一条路径猫在路径上的点都不无法比老鼠先到达，那么老鼠可以获胜。否则的话猫至少不会输。
+        // 猫想要赢，意味着老鼠下一步不管走哪，猫都能在下一步走到。
+        return 0;
     }
 
 }

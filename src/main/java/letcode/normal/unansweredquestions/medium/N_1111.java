@@ -24,59 +24,32 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package letcode.normal.easy;
-
-import letcode.utils.TestUtil;
+package letcode.normal.unansweredquestions.medium;
 
 /**
- * 给你一个字符串 s 表示一个学生的出勤记录，其中的每个字符用来标记当天的出勤情况（缺勤、迟到、到场）。
- * 记录中只含下面三种字符：  'A'：Absent，缺勤 'L'：Late，迟到 'P'：Present，到场
- * 如果学生能够 同时 满足下面两个条件，则可以获得出勤奖励：
- * 按 总出勤 计，学生缺勤（'A'）严格 少于两天。
- * 学生 不会 存在 连续 3 天或 3 天以上的迟到（'L'）记录。
- * 如果学生可以获得出勤奖励，返回 true ；否则，返回 false 。
- * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/student-attendance-record-i 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- *
- * @author CaiYongcheng
- * @since 2021-08-17 21:14
- **/
-public class _551 {
-
-    public boolean checkRecord(String s) {
-        int length = s.length();
-        int absentCount = 0;
-        char ch;
-        for (int i = 0; i < length; i++) {
-            ch = s.charAt(i);
-            if (ch == 'A' && ++absentCount > 1) {
-                return false;
-            }
-            if (ch == 'L' && i + 2 < length && s.charAt(i+1) == 'L' && s.charAt(i+2) == 'L') {
-                return false;
-            }
-        }
-        return true;
-    }
+ * @program: MyLeetcode
+ * @description: 有效括号字符串 定义：对于每个左括号，都能找到与之对应的右括号，反之亦然。详情参见题末「有效括号字符串」部分。 
+ * 嵌套深度 depth 定义：即有效括号字符串嵌套的层数，depth(A) 表示有效括号字符串 A 的嵌套深度。详情参见题末「嵌套深度」部分。
+ * 有效括号字符串类型与对应的嵌套深度计算方法如下图所示：    
+ * 给你一个「有效括号字符串」 seq，请你将其分成两个不相交的有效括号字符串，A 和B，并使这两个字符串的深度最小。
+ * 不相交：每个 seq[i] 只能分给 A 和 B 二者中的一个，不能既属于 A 也属于 B 。
+ * A 或 B 中的元素在原字符串中可以不连续。 
+ * A.length + B.length = seq.length 
+ * 深度最小：max(depth(A), depth(B))的可能取值最小。 
+ * 划分方案用一个长度为 seq.length 的答案数组 answer 表示，
+ * 编码规则如下：  
+ * answer[i] = 0，seq[i] 分给 A 。 answer[i] = 1，seq[i] 分给 B 。 
+ * 如果存在多个满足要求的答案，只需返回其中任意 一个 即可。 
+ * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/maximum-nesting-depth-of-two-valid-parentheses-strings 
+ * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ * @author: 蔡永程
+ * @create: 2021-01-28 09:35
+ */
+public class N_1111 {
 
 
-    /**
-     * 示例 1：
-     * 输入：s = "PPALLP"
-     * 输出：true
-     * 解释：学生缺勤次数少于 2 次，且不存在 3 天或以上的连续迟到记录。
-     *
-     * 示例 2：
-     * 输入：s = "PPALLL"
-     * 输出：false
-     * 解释：学生最后三天连续迟到，所以不满足出勤奖励的条件。
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/student-attendance-record-i
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_551.class);
+    public int[] maxDepthAfterSplit(String seq) {
+        return null;
     }
 
 }

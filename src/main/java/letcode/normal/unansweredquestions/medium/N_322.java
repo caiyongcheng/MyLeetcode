@@ -24,59 +24,52 @@
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-package letcode.normal.easy;
+package letcode.normal.unansweredquestions.medium;
 
-import letcode.utils.TestUtil;
+import java.util.HashMap;
 
 /**
- * 给你一个字符串 s 表示一个学生的出勤记录，其中的每个字符用来标记当天的出勤情况（缺勤、迟到、到场）。
- * 记录中只含下面三种字符：  'A'：Absent，缺勤 'L'：Late，迟到 'P'：Present，到场
- * 如果学生能够 同时 满足下面两个条件，则可以获得出勤奖励：
- * 按 总出勤 计，学生缺勤（'A'）严格 少于两天。
- * 学生 不会 存在 连续 3 天或 3 天以上的迟到（'L'）记录。
- * 如果学生可以获得出勤奖励，返回 true ；否则，返回 false 。
- * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/student-attendance-record-i 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- *
- * @author CaiYongcheng
- * @since 2021-08-17 21:14
- **/
-public class _551 {
+ * @program: Leetcode
+ * @description: 给定不同面额的硬币 coins 和一个总金额 amount。
+ * 编写一个函数来计算可以凑成总金额所需的最少的硬币个数。
+ * 如果没有任何一种硬币组合能组成总金额，返回-1。
+ * 你可以认为每种硬币的数量是无限的。
+ * 来源：力扣（LeetCode）
+ * 链接：https://leetcode-cn.com/problems/coin-change
+ * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ * @author: 蔡永程
+ * @create: 2020-12-11 15:51
+ */
+public class N_322 {
 
-    public boolean checkRecord(String s) {
-        int length = s.length();
-        int absentCount = 0;
-        char ch;
-        for (int i = 0; i < length; i++) {
-            ch = s.charAt(i);
-            if (ch == 'A' && ++absentCount > 1) {
-                return false;
-            }
-            if (ch == 'L' && i + 2 < length && s.charAt(i+1) == 'L' && s.charAt(i+2) == 'L') {
-                return false;
+    private int[] coins;
+    private int coinSize;
+    private HashMap<String, Integer> cache;
+
+    public int dp(int coinsIndex, int remainAount) {
+
+
+        int minCost = Integer.MAX_VALUE;
+        String key;
+        if (remainAount < coins[coinsIndex]) {
+            return Integer.MAX_VALUE;
+        }
+        while (remainAount >= coins[coinsIndex]) {
+            remainAount -= coins[coinsIndex];
+            key = remainAount + "_" + coins[coinsIndex + 1];
+            if (cache.containsKey(key)
+                    && cache.get(key) < minCost) {
+
             }
         }
-        return true;
+
+        return 0;
+
     }
 
 
-    /**
-     * 示例 1：
-     * 输入：s = "PPALLP"
-     * 输出：true
-     * 解释：学生缺勤次数少于 2 次，且不存在 3 天或以上的连续迟到记录。
-     *
-     * 示例 2：
-     * 输入：s = "PPALLL"
-     * 输出：false
-     * 解释：学生最后三天连续迟到，所以不满足出勤奖励的条件。
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/student-attendance-record-i
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_551.class);
+    public int coinChange(int[] coins, int amount) {
+        return 0;
     }
 
 }

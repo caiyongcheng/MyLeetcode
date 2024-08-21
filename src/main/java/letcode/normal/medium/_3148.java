@@ -61,7 +61,7 @@ public class _3148 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.testWithTestClassFile(_3148.class);
+        TestUtil.test(_3148.class);
     }
 
 }

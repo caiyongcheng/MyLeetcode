@@ -68,7 +68,7 @@ public class _318 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.testWithTestClassFile(_318.class);
+        TestUtil.test(_318.class);
     }
 
 

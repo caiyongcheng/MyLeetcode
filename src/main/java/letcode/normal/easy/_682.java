@@ -84,7 +84,7 @@ public class _682 {
      * @param args
      */
     public static void main(String[] args) throws ClassNotFoundException {
-        TestUtil.testWithTestClassFile(_682.class);
+        TestUtil.test(_682.class);
 
     }
 }
