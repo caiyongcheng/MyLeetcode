@@ -108,18 +108,18 @@ public class TestCaseInputUtils {
                 }
                 return list;
             }
-        } else if (paramType.contains("Integer") || paramType.contains("int")) {
-            return Integer.parseInt(paramsStr);
-        } else if (paramType.contains("Character") || paramType.contains("char")) {
-            return paramsStr.charAt(0);
-        } else if (paramType.contains("String")) {
-            return paramsStr;
         } else if (paramType.contains("int[]")) {
             return getIntArr(paramsStr);
         } else if (paramType.contains("Integer[]")) {
             return getIntegerArr(paramsStr);
         } else if (paramType.contains("char[]")) {
             return getCharArr(paramsStr);
+        } else if (paramType.contains("Integer") || paramType.contains("int")) {
+            return Integer.parseInt(paramsStr);
+        } else if (paramType.contains("Character") || paramType.contains("char")) {
+            return paramsStr.charAt(0);
+        } else if (paramType.contains("String")) {
+            return paramsStr;
         } else if (paramType.contains("TreeNode")) {
             return new TreeNode(getIntegerArr(paramsStr));
         }
