@@ -108,6 +108,8 @@ public class TestCaseInputUtils {
                 }
                 return list;
             }
+        } else if (paramType.contains("int[][]")) {
+            return get2DIntArr(paramsStr);
         } else if (paramType.contains("int[]")) {
             return getIntArr(paramsStr);
         } else if (paramType.contains("Integer[]")) {
