@@ -1,9 +1,9 @@
-package work.generic;
+package work.generic.zion;
 
 import java.io.*;
 
-import static work.generic.GenericCodeUtil.PROJECT_PATH;
-import static work.generic.GenericCodeUtil.TEMP_PATH;
+import static work.generic.zion.ZionGenericCodeUtil.PROJECT_PATH;
+import static work.generic.zion.ZionGenericCodeUtil.TEMP_PATH;
 
 /**
  * 生成gateway
@@ -12,7 +12,7 @@ import static work.generic.GenericCodeUtil.TEMP_PATH;
  * @version 1.0.0
  * @since 2024/4/7 15:18
  */
-public class GenericGatewayUtil {
+public class ZionGenericGatewayUtil {
 
     private static String gatewayTempTextPath = TEMP_PATH + "Gateway.txt";
 
@@ -30,8 +30,8 @@ public class GenericGatewayUtil {
 
     public static void createGateway() {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(LineStrConverter.converLine(gatewayTempTextPath)));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(LineStrConverter.converLine(gatewayClassTextPath)));
+                BufferedReader reader = new BufferedReader(new FileReader(ZionLineStrConverter.converLine(gatewayTempTextPath)));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(ZionLineStrConverter.converLine(gatewayClassTextPath)));
         ) {
             String lineStr;
             while (true) {
@@ -39,7 +39,7 @@ public class GenericGatewayUtil {
                 if (lineStr == null) {
                     break;
                 }
-                writer.write(LineStrConverter.converLine(lineStr));
+                writer.write(ZionLineStrConverter.converLine(lineStr));
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -49,8 +49,8 @@ public class GenericGatewayUtil {
 
     public static void createGatewayImpl() {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(LineStrConverter.converLine(gatewayImplTempTextPath)));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(LineStrConverter.converLine(gatewayImplClassTextPath)));
+                BufferedReader reader = new BufferedReader(new FileReader(ZionLineStrConverter.converLine(gatewayImplTempTextPath)));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(ZionLineStrConverter.converLine(gatewayImplClassTextPath)));
         ) {
             String lineStr;
             while (true) {
@@ -58,7 +58,7 @@ public class GenericGatewayUtil {
                 if (lineStr == null) {
                     break;
                 }
-                writer.write(LineStrConverter.converLine(lineStr));
+                writer.write(ZionLineStrConverter.converLine(lineStr));
                 writer.newLine();
             }
         } catch (IOException e) {

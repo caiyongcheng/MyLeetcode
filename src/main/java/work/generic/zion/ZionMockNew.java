@@ -1,4 +1,4 @@
-package work.generic;
+package work.generic.zion;
 
 import letcode.utils.TestCaseInputUtils;
 
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * @version 1.0.0
  * @since 2024-07-24 11:10
  */
-public class MockNew {
+public class ZionMockNew {
 
     static class PropertyDefine {
 
@@ -90,7 +90,7 @@ public class MockNew {
         System.err.println(propertyDefineStrList.size());
         System.out.println(propertyDefineStrList
                 .stream()
-                .map(MockNew::getPropertyDefine)
+                .map(ZionMockNew::getPropertyDefine)
                 .filter(Objects::nonNull)
                 .map(Objects::toString)
                 .collect(Collectors.joining("\n")));

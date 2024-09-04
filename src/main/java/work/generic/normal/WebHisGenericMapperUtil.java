@@ -1,9 +1,10 @@
-package work.generic;
+package work.generic.normal;
 
 import java.io.*;
 
-import static work.generic.GenericCodeUtil.PROJECT_PATH;
-import static work.generic.GenericCodeUtil.TEMP_PATH;
+import static work.generic.normal.WebHisGenericCodeUtil.PROJECT_PATH;
+import static work.generic.normal.WebHisGenericCodeUtil.TEMP_PATH;
+
 
 /**
  * mapper生成工具
@@ -12,11 +13,11 @@ import static work.generic.GenericCodeUtil.TEMP_PATH;
  * @version 1.0.0
  * @since 2024/4/7 16:00
  */
-public class GenericMapperUtil {
+public class WebHisGenericMapperUtil {
 
     private static String mapperTempTextPath = TEMP_PATH + "Mapper.txt";
 
-    private static String mapperClassTextPath = PROJECT_PATH + "infrastructure\\dao\\gen\\dao\\大写表驼峰名称Mapper.java";
+    private static String mapperClassTextPath = PROJECT_PATH + "大写表驼峰名称Mapper.java";
 
 
 
@@ -26,8 +27,8 @@ public class GenericMapperUtil {
 
     public static void createMapper() {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(LineStrConverter.converLine(mapperTempTextPath)));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(LineStrConverter.converLine(mapperClassTextPath)));
+                BufferedReader reader = new BufferedReader(new FileReader(WebHisLineStrConverter.converLine(mapperTempTextPath)));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(WebHisLineStrConverter.converLine(mapperClassTextPath)));
         ) {
             String lineStr;
             while (true) {
@@ -35,7 +36,7 @@ public class GenericMapperUtil {
                 if (lineStr == null) {
                     break;
                 }
-                writer.write(LineStrConverter.converLine(lineStr));
+                writer.write(WebHisLineStrConverter.converLine(lineStr));
                 writer.newLine();
             }
         } catch (IOException e) {

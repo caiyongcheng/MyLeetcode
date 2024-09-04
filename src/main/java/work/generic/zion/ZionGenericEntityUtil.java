@@ -1,8 +1,8 @@
-package work.generic;
+package work.generic.zion;
 
 import java.io.*;
 
-import static work.generic.GenericCodeUtil.*;
+import static work.generic.zion.ZionGenericCodeUtil.*;
 
 /**
  * 生成各种实体的Util
@@ -11,7 +11,7 @@ import static work.generic.GenericCodeUtil.*;
  * @version 1.0.0
  * @since 2024/4/2 16:37
  */
-public class GenericEntityUtil {
+public class ZionGenericEntityUtil {
 
     private static String dtoTempTextPath = TEMP_PATH + "DTO.txt";
     private static String dtoClassTextPath = DTO_VO_PATH + "dto\\大写表驼峰名称DTO.java";
@@ -33,8 +33,8 @@ public class GenericEntityUtil {
     }
     public static void createDTO() {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(LineStrConverter.converLine(dtoTempTextPath)));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(LineStrConverter.converLine(dtoClassTextPath)));
+                BufferedReader reader = new BufferedReader(new FileReader(ZionLineStrConverter.converLine(dtoTempTextPath)));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(ZionLineStrConverter.converLine(dtoClassTextPath)));
         ) {
             String lineStr;
             while (true) {
@@ -42,7 +42,7 @@ public class GenericEntityUtil {
                 if (lineStr == null) {
                     break;
                 }
-                writer.write(LineStrConverter.converLine(lineStr));
+                writer.write(ZionLineStrConverter.converLine(lineStr));
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -52,8 +52,8 @@ public class GenericEntityUtil {
 
     public static void createVO() {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(LineStrConverter.converLine(voTempTextPath)));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(LineStrConverter.converLine(voClassTextPath)));
+                BufferedReader reader = new BufferedReader(new FileReader(ZionLineStrConverter.converLine(voTempTextPath)));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(ZionLineStrConverter.converLine(voClassTextPath)));
         ) {
             String lineStr;
             while (true) {
@@ -61,7 +61,7 @@ public class GenericEntityUtil {
                 if (lineStr == null) {
                     break;
                 }
-                writer.write(LineStrConverter.converLine(lineStr));
+                writer.write(ZionLineStrConverter.converLine(lineStr));
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -71,8 +71,8 @@ public class GenericEntityUtil {
 
     public static void createDomain() {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(LineStrConverter.converLine(domainTempTextPath)));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(LineStrConverter.converLine(domainClassTextPath)));
+                BufferedReader reader = new BufferedReader(new FileReader(ZionLineStrConverter.converLine(domainTempTextPath)));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(ZionLineStrConverter.converLine(domainClassTextPath)));
         ) {
             String lineStr;
             while (true) {
@@ -80,7 +80,7 @@ public class GenericEntityUtil {
                 if (lineStr == null) {
                     break;
                 }
-                writer.write(LineStrConverter.converLine(lineStr));
+                writer.write(ZionLineStrConverter.converLine(lineStr));
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -90,8 +90,8 @@ public class GenericEntityUtil {
 
     public static void createDO() {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(LineStrConverter.converLine(doTempTextPath)));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(LineStrConverter.converLine(doClassTextPath)));
+                BufferedReader reader = new BufferedReader(new FileReader(ZionLineStrConverter.converLine(doTempTextPath)));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(ZionLineStrConverter.converLine(doClassTextPath)));
         ) {
             String lineStr;
             while (true) {
@@ -99,7 +99,7 @@ public class GenericEntityUtil {
                 if (lineStr == null) {
                     break;
                 }
-                writer.write(LineStrConverter.converLine(lineStr));
+                writer.write(ZionLineStrConverter.converLine(lineStr));
                 writer.newLine();
             }
         } catch (IOException e) {

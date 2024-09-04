@@ -1,8 +1,8 @@
-package work.generic;
+package work.generic.zion;
 
 import java.io.*;
 
-import static work.generic.GenericCodeUtil.*;
+import static work.generic.zion.ZionGenericCodeUtil.*;
 
 /**
  * converter生成器
@@ -11,7 +11,7 @@ import static work.generic.GenericCodeUtil.*;
  * @version 1.0.0
  * @since 2024/4/2 17:57
  */
-public class GenericConverterUtil {
+public class ZionGenericConverterUtil {
 
     private static String voConverterTempTextPath = TEMP_PATH + "VOConverter.txt";
     private static String voConverterClassTextPath = PROJECT_PATH + "adapter\\converter\\大写表驼峰名称VOConverter.java";
@@ -32,8 +32,8 @@ public class GenericConverterUtil {
     }
     public static void createVOConverter() {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(LineStrConverter.converLine(voConverterTempTextPath)));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(LineStrConverter.converLine(voConverterClassTextPath)));
+                BufferedReader reader = new BufferedReader(new FileReader(ZionLineStrConverter.converLine(voConverterTempTextPath)));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(ZionLineStrConverter.converLine(voConverterClassTextPath)));
         ) {
             String lineStr;
             while (true) {
@@ -41,7 +41,7 @@ public class GenericConverterUtil {
                 if (lineStr == null) {
                     break;
                 }
-                writer.write(LineStrConverter.converLine(lineStr));
+                writer.write(ZionLineStrConverter.converLine(lineStr));
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -52,8 +52,8 @@ public class GenericConverterUtil {
 
     public static void createDTOConverter() {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(LineStrConverter.converLine(dtoConverterTempTextPath)));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(LineStrConverter.converLine(dtoConverterClassTextPath)));
+                BufferedReader reader = new BufferedReader(new FileReader(ZionLineStrConverter.converLine(dtoConverterTempTextPath)));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(ZionLineStrConverter.converLine(dtoConverterClassTextPath)));
         ) {
             String lineStr;
             while (true) {
@@ -61,7 +61,7 @@ public class GenericConverterUtil {
                 if (lineStr == null) {
                     break;
                 }
-                writer.write(LineStrConverter.converLine(lineStr));
+                writer.write(ZionLineStrConverter.converLine(lineStr));
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -71,8 +71,8 @@ public class GenericConverterUtil {
 
     public static void createDOConverter() {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(LineStrConverter.converLine(doConverterTempTextPath)));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(LineStrConverter.converLine(doConverterClassTextPath)));
+                BufferedReader reader = new BufferedReader(new FileReader(ZionLineStrConverter.converLine(doConverterTempTextPath)));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(ZionLineStrConverter.converLine(doConverterClassTextPath)));
         ) {
             String lineStr;
             while (true) {
@@ -80,7 +80,7 @@ public class GenericConverterUtil {
                 if (lineStr == null) {
                     break;
                 }
-                writer.write(LineStrConverter.converLine(lineStr));
+                writer.write(ZionLineStrConverter.converLine(lineStr));
                 writer.newLine();
             }
         } catch (IOException e) {

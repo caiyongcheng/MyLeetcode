@@ -1,4 +1,4 @@
-package work.generic;
+package work.generic.zion;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * @version 1.0.0
  * @since 2024/4/2 15:25
  */
-public class TableInfoParser {
+public class ZionTableInfoParser {
 
     public static class TableColumn {
 
@@ -86,19 +86,19 @@ public class TableInfoParser {
     private static String originalTableColumnInfo;
 
     public static String getDTOColumnStr() {
-        return tableColumnInfo.stream().map(TableInfoParser::getSingeDTOColumn).collect(Collectors.joining("\n\n"));
+        return tableColumnInfo.stream().map(ZionTableInfoParser::getSingeDTOColumn).collect(Collectors.joining("\n\n"));
     }
 
     public static String getVOColumnStr() {
-        return tableColumnInfo.stream().map(TableInfoParser::getSingeVOColumn).collect(Collectors.joining("\n\n"));
+        return tableColumnInfo.stream().map(ZionTableInfoParser::getSingeVOColumn).collect(Collectors.joining("\n\n"));
     }
 
     public static String getDoColumnStr() {
-        return tableColumnInfo.stream().map(TableInfoParser::getSingeDoColumn).collect(Collectors.joining("\n\n"));
+        return tableColumnInfo.stream().map(ZionTableInfoParser::getSingeDoColumn).collect(Collectors.joining("\n\n"));
     }
 
     public static String getDomainColumnStr() {
-        return tableColumnInfo.stream().map(TableInfoParser::getSingeDomainColumn).collect(Collectors.joining("\n\n"));
+        return tableColumnInfo.stream().map(ZionTableInfoParser::getSingeDomainColumn).collect(Collectors.joining("\n\n"));
     }
 
     public static String getVOConverter(String voObj, String domainObj) {
@@ -121,7 +121,7 @@ public class TableInfoParser {
                     lineStr = lineStr.trim();
                     String[] split = lineStr.split("[\\|\\s]+");
                     TableColumn tableColumn = new TableColumn();
-                    split[0] = LineStrConverter.getTableHumpName(split[0]);
+                    split[0] = ZionLineStrConverter.getTableHumpName(split[0]);
                     tableColumn.setJavaName((char) (split[0].charAt(0) - 'A' + 'a') + split[0].substring(1));
                     tableColumn.setColumnName(split[1]);
 

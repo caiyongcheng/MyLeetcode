@@ -1,4 +1,4 @@
-package work.generic;
+package work.generic.zion;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +12,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since 2024/4/2 14:35
  */
-public class LineStrConverter {
+public class ZionLineStrConverter {
 
     private static String tableComment;
     private static String tableHumpName;
@@ -35,7 +35,7 @@ public class LineStrConverter {
     }
 
     public static void init(String tableName, String tableComment, String tableColumnInfoStr) {
-        TableInfoParser.setOriginalTableColumnInfo(tableColumnInfoStr);
+        ZionTableInfoParser.setOriginalTableColumnInfo(tableColumnInfoStr);
         String tableHumpName = getTableHumpName(tableName);
         String downFirstWordHumpName = (char) (tableHumpName.charAt(0) - 'A' + 'a') + tableHumpName.substring(1);
         addStrConverter(tableName, tableComment, downFirstWordHumpName, tableHumpName);
@@ -46,15 +46,15 @@ public class LineStrConverter {
         nameMap.put("小写表驼峰名称", downFirstWordHumpName);
         nameMap.put("大写表驼峰名称", tableHumpName);
         nameMap.put("表说明", tableComment);
-        nameMap.put("dto字段说明", TableInfoParser.getDTOColumnStr());
-        nameMap.put("vo字段说明", TableInfoParser.getVOColumnStr());
-        nameMap.put("do字段说明", TableInfoParser.getDoColumnStr());
-        nameMap.put("domain字段说明", TableInfoParser.getDomainColumnStr());
-        nameMap.put("voConverter语句", TableInfoParser.getVOConverter(downFirstWordHumpName + "VO", downFirstWordHumpName));
-        nameMap.put("dto2domain语句", TableInfoParser.getDTO2DomainConverter(downFirstWordHumpName + "DTO", downFirstWordHumpName));
-        nameMap.put("mergeNewAndOld语句", TableInfoParser.getMergeConverter("old" + tableHumpName, "new" + tableHumpName));
-        nameMap.put("domain2do语句", TableInfoParser.getMergeConverter(downFirstWordHumpName + "DO", downFirstWordHumpName));
-        nameMap.put("do2domain语句", TableInfoParser.getMergeConverter(downFirstWordHumpName, downFirstWordHumpName + "DO" ));
+        nameMap.put("dto字段说明", ZionTableInfoParser.getDTOColumnStr());
+        nameMap.put("vo字段说明", ZionTableInfoParser.getVOColumnStr());
+        nameMap.put("do字段说明", ZionTableInfoParser.getDoColumnStr());
+        nameMap.put("domain字段说明", ZionTableInfoParser.getDomainColumnStr());
+        nameMap.put("voConverter语句", ZionTableInfoParser.getVOConverter(downFirstWordHumpName + "VO", downFirstWordHumpName));
+        nameMap.put("dto2domain语句", ZionTableInfoParser.getDTO2DomainConverter(downFirstWordHumpName + "DTO", downFirstWordHumpName));
+        nameMap.put("mergeNewAndOld语句", ZionTableInfoParser.getMergeConverter("old" + tableHumpName, "new" + tableHumpName));
+        nameMap.put("domain2do语句", ZionTableInfoParser.getMergeConverter(downFirstWordHumpName + "DO", downFirstWordHumpName));
+        nameMap.put("do2domain语句", ZionTableInfoParser.getMergeConverter(downFirstWordHumpName, downFirstWordHumpName + "DO" ));
         nameMap.put("当前时间", LocalDateTime.now().format(dateTimeFormatter));
     }
 

@@ -1,4 +1,4 @@
-package work.generic;
+package work.generic.zion;
 
 /**
  * 主入口
@@ -7,14 +7,14 @@ package work.generic;
  * @version 1.0.0
  * @since 2024/4/2 14:59
  */
-public class GenericCodeUtil {
+public class ZionGenericCodeUtil {
 
     public static final String PROJECT_PATH = "E:\\code\\work\\cloud-lis-java\\zion-platform\\zion-platform-backend\\src\\main\\java\\com\\ctgs\\zion\\platform\\";
     public static final String DTO_VO_PATH = "E:\\code\\work\\cloud-lis-java\\zion-platform\\zion-platform-client\\src\\main\\java\\com\\ctgs\\zion\\platform\\client\\";
     public static final String TEMP_PATH = "C:\\Users\\HerculesCyc\\Desktop\\";
 
     public static void init() {
-        LineStrConverter.init(
+        ZionLineStrConverter.init(
                 "IM_DEPARTMENT",
                 "科室信息",
                 "id|id|无说明|int(4)|not null\n" +
@@ -44,13 +44,13 @@ public class GenericCodeUtil {
 
     public static void main(String[] args) {
         init();
-        GenericControllerUtil.create();
-        GenericServiceUtil.create();
-        GenericEntityUtil.create();
-        GenericConverterUtil.create();
-        GenericGatewayUtil.create();
-        GenericEnhanceUtil.create();
-        GenericMapperUtil.create();
+        ZionGenericControllerUtil.create();
+        ZionGenericServiceUtil.create();
+        ZionGenericEntityUtil.create();
+        ZionGenericConverterUtil.create();
+        ZionGenericGatewayUtil.create();
+        ZionGenericEnhanceUtil.create();
+        ZionGenericMapperUtil.create();
     }
 
 }

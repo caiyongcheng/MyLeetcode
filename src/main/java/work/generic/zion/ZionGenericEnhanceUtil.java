@@ -1,9 +1,9 @@
-package work.generic;
+package work.generic.zion;
 
 import java.io.*;
 
-import static work.generic.GenericCodeUtil.PROJECT_PATH;
-import static work.generic.GenericCodeUtil.TEMP_PATH;
+import static work.generic.zion.ZionGenericCodeUtil.PROJECT_PATH;
+import static work.generic.zion.ZionGenericCodeUtil.TEMP_PATH;
 
 /**
  * Enhance生成类
@@ -12,7 +12,7 @@ import static work.generic.GenericCodeUtil.TEMP_PATH;
  * @version 1.0.0
  * @since 2024/4/7 15:55
  */
-public class GenericEnhanceUtil {
+public class ZionGenericEnhanceUtil {
 
     private static String enhanceTempTextPath = TEMP_PATH + "Enhance.txt";
 
@@ -29,8 +29,8 @@ public class GenericEnhanceUtil {
 
     public static void createEnhance() {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(LineStrConverter.converLine(enhanceTempTextPath)));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(LineStrConverter.converLine(enhanceClassTextPath)));
+                BufferedReader reader = new BufferedReader(new FileReader(ZionLineStrConverter.converLine(enhanceTempTextPath)));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(ZionLineStrConverter.converLine(enhanceClassTextPath)));
         ) {
             String lineStr;
             while (true) {
@@ -38,7 +38,7 @@ public class GenericEnhanceUtil {
                 if (lineStr == null) {
                     break;
                 }
-                writer.write(LineStrConverter.converLine(lineStr));
+                writer.write(ZionLineStrConverter.converLine(lineStr));
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -48,8 +48,8 @@ public class GenericEnhanceUtil {
 
     public static void createEnhanceImpl() {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(LineStrConverter.converLine(enhanceImplTempTextPath)));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(LineStrConverter.converLine(enhanceImplClassTextPath)));
+                BufferedReader reader = new BufferedReader(new FileReader(ZionLineStrConverter.converLine(enhanceImplTempTextPath)));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(ZionLineStrConverter.converLine(enhanceImplClassTextPath)));
         ) {
             String lineStr;
             while (true) {
@@ -57,7 +57,7 @@ public class GenericEnhanceUtil {
                 if (lineStr == null) {
                     break;
                 }
-                writer.write(LineStrConverter.converLine(lineStr));
+                writer.write(ZionLineStrConverter.converLine(lineStr));
                 writer.newLine();
             }
         } catch (IOException e) {

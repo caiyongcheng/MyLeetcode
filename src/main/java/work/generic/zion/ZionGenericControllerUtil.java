@@ -1,9 +1,9 @@
-package work.generic;
+package work.generic.zion;
 
 import java.io.*;
 
-import static work.generic.GenericCodeUtil.PROJECT_PATH;
-import static work.generic.GenericCodeUtil.TEMP_PATH;
+import static work.generic.zion.ZionGenericCodeUtil.PROJECT_PATH;
+import static work.generic.zion.ZionGenericCodeUtil.TEMP_PATH;
 
 /**
  * 生产代码工具类
@@ -12,15 +12,15 @@ import static work.generic.GenericCodeUtil.TEMP_PATH;
  * @version 1.0.0
  * @since 2024/4/2 14:26
  */
-public class GenericControllerUtil {
+public class ZionGenericControllerUtil {
 
     private static String controllerTempTextPath = TEMP_PATH + "Controller.txt.txt";
     private static String controllerClassTextPath = PROJECT_PATH + "adapter\\web\\controller\\大写表驼峰名称Controller.java";
 
     public static void create() {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(LineStrConverter.converLine(controllerTempTextPath)));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(LineStrConverter.converLine(controllerClassTextPath)));
+                BufferedReader reader = new BufferedReader(new FileReader(ZionLineStrConverter.converLine(controllerTempTextPath)));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(ZionLineStrConverter.converLine(controllerClassTextPath)));
         ) {
             String lineStr;
             while (true) {
@@ -28,7 +28,7 @@ public class GenericControllerUtil {
                 if (lineStr == null) {
                     break;
                 }
-                writer.write(LineStrConverter.converLine(lineStr));
+                writer.write(ZionLineStrConverter.converLine(lineStr));
                 writer.newLine();
             }
         } catch (IOException e) {
