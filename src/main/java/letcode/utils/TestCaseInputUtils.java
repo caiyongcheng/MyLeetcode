@@ -124,6 +124,8 @@ public class TestCaseInputUtils {
             return paramsStr;
         } else if (paramType.contains("TreeNode")) {
             return new TreeNode(getIntegerArr(paramsStr));
+        } else if (paramType.contains("ListNode")) {
+            return new ListNode(getIntArr(paramsStr));
         }
         throw new IllegalArgumentException(String.format(
                 "type %s is not supported, param string: %s", paramType, paramsStr
