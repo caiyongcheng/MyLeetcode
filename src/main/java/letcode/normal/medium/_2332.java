@@ -26,6 +26,32 @@ import java.util.Arrays;
 public class _2332 {
 
     public int latestTimeCatchTheBus(int[] buses, int[] passengers, int capacity) {
+        /*
+        下面的leetcode官方解法，直接找到最后一个上车乘客的时间，然后依次判断能否插队
+        Arrays.sort(buses);
+        Arrays.sort(passengers);
+        int pos = 0;
+        int space = 0;
+
+        for (int arrive : buses) {
+            space = capacity;
+            while (space > 0 && pos < passengers.length && passengers[pos] <= arrive) {
+                space--;
+                pos++;
+            }
+        }
+
+        pos--;
+        int lastCatchTime = space > 0 ? buses[buses.length - 1] : passengers[pos];
+        while (pos >= 0 && passengers[pos] == lastCatchTime) {
+            pos--;
+            lastCatchTime--;
+        }
+
+        return lastCatchTime;
+         */
+
+
         // 先排序 然后依次决定需要上哪辆公交车
         Arrays.sort(buses);
         Arrays.sort(passengers);
