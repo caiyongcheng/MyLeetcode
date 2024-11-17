@@ -93,7 +93,8 @@ public class TestUtil {
         
         public void execute() {
             Class<?>[] parameterTypes = testMethod.getParameterTypes();
-            PrintUtil.consolePrint(String.format("test class is: %s%n", testMethod.getName()), PrintUtil.YELLOW);
+            PrintUtil.consolePrint(String.format("test class is: %s, test method is %s%n",
+                    testObj.getClass().getSimpleName(), testMethod.getName()), PrintUtil.YELLOW);
             PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_START, PrintUtil.GREEN);
             for (int time = 1; time <= this.testCaseList.size(); time++) {
                 TestCase testCase = testCaseList.get(time - 1);
