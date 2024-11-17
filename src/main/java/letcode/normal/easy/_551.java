@@ -26,6 +26,8 @@
 
 package letcode.normal.easy;
 
+import letcode.utils.TestUtil;
+
 /**
  * 给你一个字符串 s 表示一个学生的出勤记录，其中的每个字符用来标记当天的出勤情况（缺勤、迟到、到场）。
  * 记录中只含下面三种字符：  'A'：Absent，缺勤 'L'：Late，迟到 'P'：Present，到场
@@ -41,13 +43,15 @@ package letcode.normal.easy;
 public class _551 {
 
     public boolean checkRecord(String s) {
-        char[] chars = s.toCharArray();
+        int length = s.length();
         int absentCount = 0;
-        for (int i = 0; i < chars.length; i++) {
-            if (chars[i] == 'A' && ++absentCount > 1) {
+        char ch;
+        for (int i = 0; i < length; i++) {
+            ch = s.charAt(i);
+            if (ch == 'A' && ++absentCount > 1) {
                 return false;
             }
-            if (chars[i] == 'L' && i + 2 < s.length() && chars[i+1] == 'L' && chars[i+2] == 'L') {
+            if (ch == 'L' && i + 2 < length && s.charAt(i+1) == 'L' && s.charAt(i+2) == 'L') {
                 return false;
             }
         }
@@ -72,9 +76,7 @@ public class _551 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(new _551().checkRecord(
-                "PPALLA"
-        ));
+        TestUtil.test(_551.class);
     }
 
 }

@@ -1,5 +1,7 @@
 package letcode.normal.medium;
 
+import letcode.utils.TestUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,11 +68,7 @@ public class _318 {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(new _318().maxProduct(
-                new String[]{
-                        "a","aa","aaa","aaaa"
-                }
-        ));
+        TestUtil.test(_318.class);
     }
 
 

@@ -82,7 +82,7 @@ public class _3111 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.testWithTestFile(_3111.class);
+        TestUtil.testUseTestFile(_3111.class);
     }
 
 }
