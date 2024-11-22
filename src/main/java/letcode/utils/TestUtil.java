@@ -22,9 +22,8 @@ import static letcode.utils.TestCaseInputUtils.*;
  * @version 1.0.0
  * @since 2024-07-18 09:30
  */
-@SuppressWarnings("all")
 public class TestUtil {
-    
+
 
     static class TestCase {
 
@@ -76,7 +75,7 @@ public class TestUtil {
                 throw new RuntimeException(e);
             }
             testCaseList = Arrays.stream(testCaseStrArr)
-                    .map(str -> str.trim())
+                    .map(String::trim)
                     .filter(str -> !str.isEmpty())
                     .map(TestCase::new)
                     .collect(Collectors.toList());
@@ -123,9 +122,9 @@ public class TestUtil {
                     PrintUtil.print(
                             String.format(
                                     "result conpare: %s",
-                                    testCase.outputStr.equals(excuseResultStr) || (testMethod.getReturnType() != String.class
-                                            ? false
-                                            : testCase.outputStr.replaceAll("\"", "").equals(excuseResultStr)
+                                    testCase.outputStr.equals(excuseResultStr) || (
+                                            testMethod.getReturnType() == String.class 
+                                                    && testCase.outputStr.replaceAll("\"", "").equals(excuseResultStr)
                                     )
                             ),
                             ""
@@ -283,7 +282,7 @@ public class TestUtil {
         }
 
         public static void consolePrint(String str, String fontColor) {
-            System.out.print(String.format("%s%s%s",fontColor, str, RESET));
+            System.out.printf("%s%s%s",fontColor, str, RESET);
         }
 
         /**
@@ -378,7 +377,6 @@ public class TestUtil {
      * 测试目标类的方法
      *
      * @param targetClass 目标类
-     * @param inputStr 输入字符串，按输入进行划分
      */
     public static <T> void testUseTestFile(Class<T> targetClass) {
         new TestCaseExecutor<>(targetClass, TestCaseInputUtils.getStringFromFile()).execute();
@@ -388,7 +386,6 @@ public class TestUtil {
      * 测试目标类的方法
      *
      * @param targetClass 目标类
-     * @param inputStr 输入字符串，按输入进行划分
      */
     public static <T> void test(Class<T> targetClass) {
         if (Objects.isNull(targetClass)) {
@@ -401,7 +398,7 @@ public class TestUtil {
             path = path.replaceAll("/target/classes/", "/src/main/java/");
             path = path.replaceAll(".class", ".java");
             String inputStr = getStringFromClassFile(path);
-            if (Objects.isNull(inputStr) || inputStr.isEmpty()) {
+            if (inputStr.isEmpty()) {
                 TestUtil.testUseTestFile(targetClass);
             } else {
                 TestUtil.test(targetClass, inputStr);
