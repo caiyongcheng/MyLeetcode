@@ -25,7 +25,7 @@ public class _3233 {
             if (arr[i] == 1) {
                 continue;
             }
-            for (int j = i << 1; j < arr.length; j += i) {
+            for (int j = i * i; j < arr.length; j += i) {
                 arr[j] = 1;
             }
         }

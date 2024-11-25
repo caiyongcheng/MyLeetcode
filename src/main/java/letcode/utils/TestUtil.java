@@ -379,7 +379,7 @@ public class TestUtil {
      * @param targetClass 目标类
      */
     public static <T> void testUseTestFile(Class<T> targetClass) {
-        new TestCaseExecutor<>(targetClass, TestCaseInputUtils.getStringFromFile()).execute();
+        new TestCaseExecutor<>(targetClass, TestCaseInputUtils.getStringFromFile(targetClass)).execute();
     }
 
     /**

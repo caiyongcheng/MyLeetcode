@@ -316,6 +316,10 @@ public class TestCaseInputUtils {
         return getStringFromFile(String.format(TEST_CASE_FILE_PATH_TEMPLATE, ""));
     }
 
+    public static String getStringFromFile(Class<?> clazz) {
+        return getStringFromFile(String.format(TEST_CASE_FILE_PATH_TEMPLATE, clazz.getSimpleName()));
+    }
+
     public static String getStringFromClassFile(String fileName) {
         StringBuilder str = new StringBuilder();
         String lineStr;
