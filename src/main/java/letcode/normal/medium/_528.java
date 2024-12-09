@@ -27,6 +27,7 @@
 package letcode.normal.medium;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 
 /**
@@ -45,9 +46,9 @@ public class _528 {
     public _528(int[] w) {
         seem = Arrays.stream(w).sum();
         probabilities = new BigDecimal[w.length];
-        probabilities[0] = new BigDecimal(w[0]).divide(new BigDecimal(seem), 10, BigDecimal.ROUND_HALF_DOWN);
+        probabilities[0] = new BigDecimal(w[0]).divide(new BigDecimal(seem), 10, RoundingMode.HALF_DOWN);
         for (int i = 1; i < w.length; i++) {
-            probabilities[i] = new BigDecimal(w[i]).divide(new BigDecimal(seem), 10, BigDecimal.ROUND_HALF_DOWN).add(probabilities[i-1]);
+            probabilities[i] = new BigDecimal(w[i]).divide(new BigDecimal(seem), 10, RoundingMode.HALF_DOWN).add(probabilities[i-1]);
         }
     }
 
