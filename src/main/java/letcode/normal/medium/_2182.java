@@ -75,7 +75,7 @@ public class _2182 {
      */
     public static void main(String[] args) {
         String ans = new _2182().repeatLimitedString(
-                TestCaseInputUtils.getStringFromFile("C:\\Users\\10761\\Desktop\\i.txt"),
+                TestCaseInputUtils.getTestInputFromTestFile("C:\\Users\\10761\\Desktop\\i.txt"),
                 100000
         );
         System.out.println(ans.length());
