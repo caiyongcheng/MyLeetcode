@@ -289,11 +289,11 @@ public class TestCaseInputUtils {
         return Arrays.stream(inputStr.split(separator)).map(mapFun).collect(Collectors.toList()).toArray(arr);
     }
 
-    public static String getStringFromFile(String fileName) {
-        return getStringFromFile(fileName, "");
+    public static String getTestInputFromTestFile(String fileName) {
+        return getTestInputFromTestFile(fileName, "");
     }
 
-    public static String getStringFromFile(String fileName, String lineSeparator) {
+    public static String getTestInputFromTestFile(String fileName, String lineSeparator) {
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             StringBuilder str = new StringBuilder();
@@ -312,15 +312,15 @@ public class TestCaseInputUtils {
         }
     }
 
-    public static String getStringFromFile() {
-        return getStringFromFile(String.format(TEST_CASE_FILE_PATH_TEMPLATE, ""));
+    public static String getTestInputFromTestFile() {
+        return getTestInputFromTestFile(String.format(TEST_CASE_FILE_PATH_TEMPLATE, ""));
     }
 
-    public static String getStringFromFile(Class<?> clazz) {
-        return getStringFromFile(String.format(TEST_CASE_FILE_PATH_TEMPLATE, clazz.getSimpleName()));
+    public static String getTestInputFromTestFile(Class<?> clazz) {
+        return getTestInputFromTestFile(String.format(TEST_CASE_FILE_PATH_TEMPLATE, clazz.getSimpleName()));
     }
 
-    public static String getStringFromClassFile(String fileName) {
+    public static String getTestInputFromClassFileMainMethod(String fileName) {
         StringBuilder str = new StringBuilder();
         String lineStr;
         String trimLineStr;
