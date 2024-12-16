@@ -136,6 +136,7 @@ public class TestUtil {
                             ""
                     );
                 } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
                     throw new RuntimeException(e);
                 }
                 PrintUtil.consolePrint(String.format(PrintUtil.PRINT_TEST_CASE_INNER_END, time), PrintUtil.GREEN);
