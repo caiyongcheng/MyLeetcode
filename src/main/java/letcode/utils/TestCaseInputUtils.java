@@ -10,6 +10,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -120,6 +121,8 @@ public class TestCaseInputUtils {
             return Integer.parseInt(paramsStr);
         } else if (paramType.contains("Character") || paramType.contains("char")) {
             return paramsStr.charAt(0);
+        } else if (paramType.contains("String[")) {
+            return getStrArr(paramsStr);
         } else if (paramType.contains("String")) {
             return paramsStr;
         } else if (paramType.contains("TreeNode")) {
@@ -433,6 +436,29 @@ public class TestCaseInputUtils {
             }
         }
         return strSplitIndexList;
+    }
+
+
+    /**
+     * 获取测试目标类
+     * @return 测试目标类
+     */
+    public static Class<?> getTestTargetClass() {
+        // 获取方法堆栈
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        // 保证是main方法是因为，main方法一般情况下是stackTrace的最后一个元素，而这里获取的是最后一个元素
+        // 实际上，正确的逻辑是找到本方法的堆栈，再下一个就是调用方法的信息，但是代码中都是在main方法中调用的，所以这里直接判断main方法
+        if (!Objects.equals(stackTrace[stackTrace.length - 1].getMethodName(), "main")) {
+            throw new RuntimeException("test method must be called in main method");
+        }
+        Class<?> testTargetClass;
+        try {
+            testTargetClass = Class.forName(stackTrace[stackTrace.length - 1].getClassName());
+        } catch (ClassNotFoundException e) {
+            System.err.print("get test class failed, cause:" + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return testTargetClass;
     }
 
 }

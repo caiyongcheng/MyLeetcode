@@ -387,6 +387,14 @@ public class TestUtil {
 
     /**
      * 测试目标类的方法
+     */
+    public static <T> void test() {
+        test(TestCaseInputUtils.getTestTargetClass());
+    }
+
+
+    /**
+     * 测试目标类的方法
      *
      * @param targetClass 目标类
      */
@@ -409,6 +417,15 @@ public class TestUtil {
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 测试目标类的方法
+     *
+     * @param inputStr 输入字符串，按输入进行划分
+     */
+    public static <T> void test(String inputStr) {
+        test(TestCaseInputUtils.getTestTargetClass(), inputStr);
     }
 
     /**
