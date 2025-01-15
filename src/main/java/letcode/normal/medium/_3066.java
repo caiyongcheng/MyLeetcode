@@ -23,8 +23,8 @@ public class _3066 {
     public int minOperations(int[] nums, int k) {
         /*
         可以使用最小堆
-        但是注意到 每次操作得到的结果是递增的，所以把每次操作的结果和原数组分开，每次寻找两边最小的更小值即可
-        复杂度一下子就变成O(n)了
+        但是换一种思路 每次操作得到的结果是递增的，所以把每次操作的结果和原数组分开，每次寻找两边最小的更小值即可
+        只不过这样要求需要先把数组排序，所以复杂度是不会降低的
          */
         long[] newNumArr = new long[nums.length];
         int newNumEndIdx = -1;
