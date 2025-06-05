@@ -5,9 +5,9 @@ import letcode.utils.TestUtil;
 import java.util.*;
 
 /**
- * You have k lists of sorted integers in non-decreasing order.
- * Find the smallest range that includes at least one number from each of the k lists.
- * We define the range [a, b] is smaller than range [c, d] if b - a < d - c or a < c if b - a == d - c.
+ * you have k lists of sorted integers in non-decreasing order.
+ * find the smallest range that includes at least one number from each of the k lists.
+ * we define the range [a, b] is smaller than range [c, d] if b - a < d - c or a < c if b - a == d - c.
  *
  * @author 蔡永程
  * @version 1.0.0
@@ -21,7 +21,9 @@ public class _632 {
          */
         int[][] mergeList = mergeList(nums);
 
+        // 表示 {i,j}包含了每个列表的数量
         int[] kNum2CntMap = new int[nums.size()];
+        // 表示还没包含的列表
         Set<Integer> outkNumSet = new HashSet<>();
         for (int i = 0; i < nums.size(); i++) {
             outkNumSet.add(i);
@@ -33,6 +35,7 @@ public class _632 {
         outkNumSet.remove(mergeList[0][1]);
         for (i = 0; i < mergeList.length; i++) {
             int[] num = mergeList[i];
+            // 迭代到包含未包含的列表为空时结束
             while (!outkNumSet.isEmpty()) {
                 ++j;
                 if (j == mergeList.length) {
@@ -45,10 +48,12 @@ public class _632 {
             if (j == mergeList.length) {
                 break;
             }
+            // 更新ans
             int[] num1 = mergeList[j];
             if (ans[1] - ans[0] > num1[0] - num[0]) {
                 ans = new int[]{num[0], num1[0]};
             }
+            // i点开始向后移动
             kNum2CntMap[num[1]]--;
             if (kNum2CntMap[num[1]] == 0) {
                 outkNumSet.add(num[1]);
