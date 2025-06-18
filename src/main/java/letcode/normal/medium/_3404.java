@@ -23,6 +23,10 @@ public class _3404 {
         int curStrIdx = 1;
         char ch1;
         char ch2;
+        /*
+         * 如果{ansStratIdx, ansDiffIdx} > {curStartIdx, curDiffIdx}, 在curDiffIdx位置不同
+         *
+         */
         while (curStrIdx < length) {
             for (int i = 0; curStrIdx + i < length; i++) {
                 ch1 = word.charAt(i + answerIdx);
