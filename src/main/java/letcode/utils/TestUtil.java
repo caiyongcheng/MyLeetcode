@@ -129,7 +129,7 @@ public class TestUtil {
                             String.format(
                                     "result compare: %s",
                                     testCase.outputStr.equals(excuseResultStr) || (
-                                            testMethod.getReturnType() == String.class 
+                                            resultTypeIsStringType()
                                                     && testCase.outputStr.replaceAll("\"", "").equals(excuseResultStr)
                                     )
                             ),
@@ -221,6 +221,15 @@ public class TestUtil {
                 params[i] = TestCaseInputUtils.getParam(typeArr[i].getTypeName(), paramStrArr[i]);
             }
             return params;
+        }
+
+        /**
+         * 判断returnType是不是String类型或者是String类型的数据
+         * @return returnType是不是String类型或者是String类型的数据
+         */
+        private boolean resultTypeIsStringType() {
+            Class<?> returnType = testMethod.getReturnType();
+            return returnType == String.class || (returnType.isArray() && returnType.getComponentType() == String.class);
         }
 
 
