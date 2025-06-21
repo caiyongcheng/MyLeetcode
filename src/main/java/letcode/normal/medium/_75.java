@@ -26,7 +26,7 @@
 
 package letcode.normal.medium;
 
-import java.util.Arrays;
+import letcode.utils.TestUtil;
 
 /**
  * Leetcode
@@ -48,62 +48,44 @@ import java.util.Arrays;
  **/
 public class _75 {
 
-    /**
-     * 示例:
-     * 输入: [2,0,2,1,1,0]
-     * 输出: [0,0,1,1,2,2]
-     *
-     * @param nums
-     */
-    public static void sortColors(int[] nums) {
-        int left = 0;
-        int right = nums.length - 1;
-        int l1 = -1;
-        int r1 = -1;
-        while (left <= right) {
-            while (left <= right && nums[left] != 2) {
-                if (nums[left] == 1 && l1 != -1) {
-                    l1 = left;
+
+
+    public int[] sortColors(int[] nums) {
+        int redIdx = 0;
+        int whiteIdx = 0;
+        int blueIdx = 0;
+        for (; blueIdx < nums.length; blueIdx++) {
+            if (nums[blueIdx] == 1) {
+                nums[blueIdx] = nums[whiteIdx];
+                nums[whiteIdx] = 1;
+                whiteIdx++;
+            } else if (nums[blueIdx] == 0) {
+                nums[blueIdx] = nums[redIdx];
+                nums[redIdx] = 0;
+                if (redIdx < whiteIdx) {
+                    nums[blueIdx] = nums[whiteIdx];
+                    nums[whiteIdx] = 1;
                 }
-                ++left;
-            }
-            if (left > right) {
-                break;
-            }
-            while (left <= right && nums[right] != 0) {
-                if (nums[right] == 1 && r1 != -1) {
-                    r1 = right;
-                }
-                --right;
-            }
-            if (left > right) {
-                break;
-            }
-            if (r1 != -1 && l1 != -1) {
-                nums[r1] = 2;
-                nums[l1] = 0;
-                nums[left] = nums[right] = 1;
-                r1 = l1 = -1;
-            } else if (r1 != -1) {
-                nums[r1] = 2;
-                nums[left] = 0;
-                nums[right] = 1;
-                r1 = right;
-            } else if (l1 != -1) {
-                nums[l1] = 0;
-                nums[right] = 2;
-                nums[left] = 1;
-                l1 = left;
-            } else {
-                nums[right] = 2;
-                nums[left] = 0;
+                redIdx++;
+                whiteIdx++;
             }
         }
+        return nums;
     }
 
+
+    /**
+     * Example 1:
+     *
+     * Input: nums = [2,0,2,1,1,0]
+     * Output: [0,0,1,1,2,2]
+     * Example 2:
+     *
+     * Input: nums = [2,0,1]
+     * Output: [0,1,2]
+     * @param args
+     */
     public static void main(String[] args) {
-        int[] ints = new int[]{2, 0, 2, 1, 1, 0};
-        sortColors(ints);
-        System.out.println(Arrays.toString(ints));
+        TestUtil.test(_75.class);
     }
 }

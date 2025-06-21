@@ -26,8 +26,9 @@
 
 package letcode.normal.medium;
 
+import letcode.utils.TestUtil;
+
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Stack;
 
 /**
@@ -100,28 +101,20 @@ public class _743 {
 
     /**
      * 示例 1：
-     * 输入：times = {{2,1,1},{2,3,1},{3,4,1}}, n = 4, k = 2
+     * 输入：times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2
      * 输出：2
      * 
      * 示例 2：
-     * 输入：times = {{1,2,1}}, n = 2, k = 1
+     * 输入：times = [[1,2,1]], n = 2, k = 1
      * 输出：1
      * 
      * 示例 3：
-     * 输入：times = {{1,2,1}}, n = 2, k = 2
+     * 输入：times = [[1,2,1]], n = 2, k = 2
      * 输出：-1
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/network-delay-time
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(new _743().networkDelayTime(
-                new int[][]{{3,5,78},{2,1,1},{1,3,0},{4,3,59},{5,3,85},{5,2,22},{2,4,23},{1,4,43},{4,5,75},{5,1,15},{1,5,91},{4,1,16},{3,2,98},{3,4,22},{5,4,31},{1,2,0},{2,5,4},{4,2,51},{3,1,36},{2,3,59}},
-                5,
-                5
-        ));
+        TestUtil.test(_743.class);
     }
 
 }

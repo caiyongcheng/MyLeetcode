@@ -22,13 +22,12 @@ import static letcode.utils.TestCaseInputUtils.*;
  * @version 1.0.0
  * @since 2024-07-18 09:30
  */
-@SuppressWarnings("all")
 public class TestUtil {
-    
+
 
     static class TestCase {
 
-        private String inputStr = "";
+        private final String inputStr;
 
         private String outputStr = "";
         
@@ -57,7 +56,7 @@ public class TestUtil {
 
         private List<TestCase> testCaseList;
         
-        private T testObj;
+        private List<T> testObjList;
 
         public TestCaseExecutor(Class<T> testClass, String... testCaseStrArr) {
             init(testClass, testCaseStrArr);
@@ -69,14 +68,18 @@ public class TestUtil {
         
         public void init(Class<T> testClass, String... testCaseStrArr) {
             testMethod = getTestMethodFromClass(testClass);
-            try {
-                testObj = testClass.getConstructor().newInstance();
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                     NoSuchMethodException e) {
-                throw new RuntimeException(e);
-            }
+            testObjList = Arrays.stream(testCaseStrArr)
+                    .map(str -> {
+                        try {
+                            return testClass.getConstructor().newInstance();
+                        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                                 NoSuchMethodException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .collect(Collectors.toList());
             testCaseList = Arrays.stream(testCaseStrArr)
-                    .map(str -> str.trim())
+                    .map(String::trim)
                     .filter(str -> !str.isEmpty())
                     .map(TestCase::new)
                     .collect(Collectors.toList());
@@ -98,7 +101,9 @@ public class TestUtil {
         
         public void execute() {
             Type[] genericParameterTypes = testMethod.getGenericParameterTypes();
-            PrintUtil.consolePrint(String.format("test class is: %s%n", testMethod.getName()), PrintUtil.YELLOW);
+            PrintUtil.consolePrint(String.format("test class is: %s%n", testMethod.getDeclaringClass().getSimpleName()),
+                    PrintUtil.YELLOW);
+            PrintUtil.consolePrint(String.format("test method is: %s%n", testMethod.getName()), PrintUtil.YELLOW);
             PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_START, PrintUtil.GREEN);
             for (int time = 1; time <= this.testCaseList.size(); time++) {
                 TestCase testCase = testCaseList.get(time - 1);
@@ -116,23 +121,23 @@ public class TestUtil {
                 try {
                     PrintUtil.print(String.format("params: %s", TestCaseOutputUtils.formatObj(params)), PrintUtil.PURPLE);
                     PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                    Object execRst = testMethod.invoke(testObj, params);
+                    Object execRst = testMethod.invoke(testObjList.get(time - 1), params);
                     String excuseResultStr = TestCaseOutputUtils.formatObj(execRst);
                     PrintUtil.print(String.format("result: %s", excuseResultStr), PrintUtil.RED);
                     PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
                     PrintUtil.print(
                             String.format(
-                                    "result conpare: %s",
-                                    testCase.outputStr.equals(excuseResultStr) || (testMethod.getReturnType() != String.class
-                                            ? false
-                                            : testCase.outputStr.replaceAll("\"", "").equals(excuseResultStr)
+                                    "result compare: %s",
+                                    testCase.outputStr.equals(excuseResultStr) || (
+                                            testMethod.getReturnType() == String.class 
+                                                    && testCase.outputStr.replaceAll("\"", "").equals(excuseResultStr)
                                     )
                             ),
                             ""
                     );
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
-                    break;
+                    throw new RuntimeException(e);
                 }
                 PrintUtil.consolePrint(String.format(PrintUtil.PRINT_TEST_CASE_INNER_END, time), PrintUtil.GREEN);
             }
@@ -228,7 +233,6 @@ public class TestUtil {
         private static final String PRINT_TEST_CASE_INNER_SPLIT_LINE = "||\t |                                                                                                                                |\t   ||\n";
         private static final String PRINT_TEST_CASE_INNER_START = "||\t ·----------------------------------------------------------- %02d[start] ----------------------------------------------------------·    ||\n";
         private static final String PRINT_TEST_CASE_INNER_END = "||\t ·----------------------------------------------------------- %02d[end] ------------------------------------------------------------·\t   ||\n";
-        private static final String PRINT_TEST_CASE_INNER_TOP = "||\t----------------------------------------------------------------------------------------------------------------------------------\t   ||\n";
         private static final String PRINT_TEST_CASE_INNER_PREFIX = "||   | ";
         private static final String PRINT_TEST_CASE_INNER_SUFFIX = " |    ||";
 
@@ -239,8 +243,6 @@ public class TestUtil {
         private static final String BLUE = "\u001B[34m";
         private static final String PURPLE = "\u001B[35m";
         private static final String CYAN = "\u001B[36m";
-        private static final String WHITE = "\u001B[37m";
-
 
 
         /**
@@ -283,7 +285,7 @@ public class TestUtil {
         }
 
         public static void consolePrint(String str, String fontColor) {
-            System.out.print(String.format("%s%s%s",fontColor, str, RESET));
+            System.out.printf("%s%s%s",fontColor, str, RESET);
         }
 
         /**
@@ -378,37 +380,52 @@ public class TestUtil {
      * 测试目标类的方法
      *
      * @param targetClass 目标类
-     * @param inputStr 输入字符串，按输入进行划分
      */
     public static <T> void testUseTestFile(Class<T> targetClass) {
-        new TestCaseExecutor<>(targetClass, TestCaseInputUtils.getStringFromFile()).execute();
+        new TestCaseExecutor<>(targetClass, TestCaseInputUtils.getTestInputFromTestFile(targetClass)).execute();
     }
+
+    /**
+     * 测试目标类的方法
+     */
+    public static <T> void test() {
+        test(TestCaseInputUtils.getTestTargetClass());
+    }
+
 
     /**
      * 测试目标类的方法
      *
      * @param targetClass 目标类
-     * @param inputStr 输入字符串，按输入进行划分
      */
     public static <T> void test(Class<T> targetClass) {
         if (Objects.isNull(targetClass)) {
             throw new IllegalArgumentException("targetClass must not null");
         }
         try {
-            URI uri = targetClass.getResource(targetClass.getSimpleName() + ".class").toURI();
+            URI uri = Objects.requireNonNull(targetClass.getResource(targetClass.getSimpleName() + ".class")).toURI();
             String path = uri.getPath();
             path = path.replaceAll("file:/", "");
             path = path.replaceAll("/target/classes/", "/src/main/java/");
             path = path.replaceAll(".class", ".java");
-            String inputStr = getStringFromClassFile(path);
-            if (Objects.isNull(inputStr) || inputStr.isEmpty()) {
+            String inputStr = getTestInputFromClassFileMainMethod(path);
+            if (inputStr.isEmpty()) {
                 TestUtil.testUseTestFile(targetClass);
             } else {
                 TestUtil.test(targetClass, inputStr);
             }
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 测试目标类的方法
+     *
+     * @param inputStr 输入字符串，按输入进行划分
+     */
+    public static <T> void test(String inputStr) {
+        test(TestCaseInputUtils.getTestTargetClass(), inputStr);
     }
 
     /**
@@ -429,7 +446,7 @@ public class TestUtil {
      */
     public static <T> void testBatch(Class<T> targetClass, String... inputStrArr) {
         if (Objects.isNull(inputStrArr) || inputStrArr.length == 0) {
-            inputStrArr = new String[]{TestCaseInputUtils.getStringFromFile()};
+            inputStrArr = new String[]{TestCaseInputUtils.getTestInputFromTestFile()};
         }
         new TestCaseExecutor<>(targetClass, inputStrArr).execute();
     }

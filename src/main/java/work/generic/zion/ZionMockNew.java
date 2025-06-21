@@ -60,7 +60,7 @@ public class ZionMockNew {
     }
 
     public static String getData() {
-        return TestCaseInputUtils.getStringFromFile("src/main/resources/data.txt", "\n");
+        return TestCaseInputUtils.getTestInputFromTestFile("src/main/resources/data.txt", "\n");
     }
 
     public static List<String> getPropertyDefineStr(String str) {
