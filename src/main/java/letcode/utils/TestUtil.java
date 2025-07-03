@@ -229,7 +229,10 @@ public class TestUtil {
          */
         private boolean resultTypeIsStringType() {
             Class<?> returnType = testMethod.getReturnType();
-            return returnType == String.class || (returnType.isArray() && returnType.getComponentType() == String.class);
+            return returnType == String.class
+                    || returnType == Character.class
+                    || returnType.isPrimitive()
+                    || (returnType.isArray() && returnType.getComponentType() == String.class);
         }
 
 
