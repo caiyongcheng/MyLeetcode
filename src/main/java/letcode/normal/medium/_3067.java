@@ -85,7 +85,7 @@ public class _3067 {
      */
     public static void main(String[] args) {
         System.out.println(TestCaseOutputUtils.formatArray(new _3067().countPairsOfConnectableServers(
-                TestCaseInputUtils.get2DIntArr("[[0,6,3],[6,5,3],[0,3,1],[3,2,7],[3,1,6],[3,4,2]]"),
+                TestCaseInputUtils.get2DimensionIntArr("[[0,6,3],[6,5,3],[0,3,1],[3,2,7],[3,1,6],[3,4,2]]"),
                 3
         )));
     }

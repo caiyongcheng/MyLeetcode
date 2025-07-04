@@ -4,13 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -24,19 +22,15 @@ public class TestCaseInputUtils {
 
     public static final String TEST_CASE_FILE_PATH_TEMPLATE = "src/main/resources/TestCase%s.txt";
 
+    public static final String DEFAULT_SEPARATOR = "\\,";
+
     /**
      * 将字符串转化为对应的二维整形数组
      * @param inputStr 输入字符串 形式类似 "[[1,6,1],[3,10,2],[10,12,3],[11,12,2],[12,15,2],[13,18,1]]"
      * @return 对应的二维整形数组
      */
-    public static int[][] get2DIntArr(String inputStr) {
-        String separator = ",";
-        return get2DArr(
-                inputStr,
-                separator,
-                strArr -> Arrays.stream(strArr.split(separator)).map(String::trim).map(Integer::parseInt).mapToInt(Integer::intValue).toArray(),
-                new int[0][0]
-        );
+    public static int[][] get2DimensionIntArr(String inputStr) {
+        return (int[][]) getArr(inputStr, int.class);
     }
 
     /**
@@ -44,14 +38,8 @@ public class TestCaseInputUtils {
      * @param inputStr 输入字符串 形式类似 "[[1,6,1],[3,10,2],[10,12,3],[11,12,2],[12,15,2],[13,18,1]]"
      * @return 对应的二维字符串数组
      */
-    public static String[][] get2DStrArr(String inputStr) {
-        String separator = ",";
-        return get2DArr(
-                inputStr,
-                separator,
-                strArr -> Arrays.stream(strArr.split(separator)).map(String::trim).collect(Collectors.toList()).toArray(new String[0]),
-                new String[0][0]
-        );
+    public static String[][] get2DimensionStrArr(String inputStr) {
+        return (String[][]) getArr(inputStr, String.class);
     }
 
     /**
@@ -62,7 +50,7 @@ public class TestCaseInputUtils {
      * @return 字符串对应的二维数组
      * @param <T> 数组类型[]
      */
-    public static<T> List<List<T>> get2DList(String inputStr, String separator, Function<String, T[]> mapFun) {
+    public static<T> List<List<T>> get2DimensionList(String inputStr, String separator, Function<String, T[]> mapFun) {
         inputStr = inputStr.substring(1, inputStr.length() - 1).replaceAll("[\\[|\\]]", " ");
         return Arrays.stream(inputStr.split(" " + separator + " ")).map(mapFun).map(Arrays::asList).collect(Collectors.toList());
     }
@@ -73,8 +61,8 @@ public class TestCaseInputUtils {
      * @param separator 字符串中分割数组的分隔符
      * @return 字符串对应的二维List
      */
-    public static List<List<String>> get2DStrList(String inputStr, String separator) {
-        return get2DList(inputStr, separator, TestCaseInputUtils::getStrArr);
+    public static List<List<String>> get2DimensionStrList(String inputStr, String separator) {
+        return get2DimensionList(inputStr, separator, TestCaseInputUtils::getStrArr);
     }
 
     /**
@@ -82,57 +70,8 @@ public class TestCaseInputUtils {
      * @param inputStr 输入字符串 类似 [[...],[...],[...]]
      * @return 字符串对应的二维List
      */
-    public static List<List<String>> get2DStrList(String inputStr) {
-        return get2DStrList(inputStr, ",");
-    }
-
-    public static Object getParam(String paramType, String paramsStr) {
-        if (paramType.startsWith("java.util.List<")) {
-            paramType = paramType.substring("java.util.List<".length(), paramType.length() - 1);
-            paramsStr = paramsStr.substring(1, paramsStr.length() - 1);
-            List<Integer> splitIndexFromParamsStr = getSplitIndexFromParamsStr(paramsStr);
-            // 这里没有处理类型和参数不匹配的情况 暂时不考虑处理 因为leetcode的测试用例都是正确的格式
-            if (splitIndexFromParamsStr.isEmpty()) {
-                String finalParamType = paramType;
-                return Arrays.stream(paramsStr.split(","))
-                        .map(str -> getParam(finalParamType, str))
-                        .collect(Collectors.toList());
-            } else {
-                List<Object> list = new ArrayList<>();
-                int startIdx = 0;
-                for (Integer splitIndex : splitIndexFromParamsStr) {
-                    if (paramsStr.charAt(startIdx) == ',') {
-                        ++startIdx;
-                    }
-                    list.add(getParam(paramType, paramsStr.substring(startIdx, splitIndex + 1)));
-                    startIdx = splitIndex + 1;
-                }
-                return list;
-            }
-        } else if (paramType.contains("int[][]")) {
-            return get2DIntArr(paramsStr);
-        } else if (paramType.contains("int[]")) {
-            return getIntArr(paramsStr);
-        } else if (paramType.contains("Integer[]")) {
-            return getIntegerArr(paramsStr);
-        } else if (paramType.contains("char[]")) {
-            return getCharArr(paramsStr);
-        } else if (paramType.contains("Integer") || paramType.contains("int")) {
-            return Integer.parseInt(paramsStr);
-        } else if (paramType.contains("Character") || paramType.contains("char")) {
-            return paramsStr.charAt(0);
-        } else if (paramType.contains("String[")) {
-            return getStrArr(paramsStr);
-        } else if (paramType.contains("String")) {
-            return paramsStr;
-        } else if (paramType.contains("TreeNode")) {
-            return new TreeNode(getIntegerArr(paramsStr));
-        } else if (paramType.contains("ListNode")) {
-            return new ListNode(getIntArr(paramsStr));
-        }
-        throw new IllegalArgumentException(String.format(
-                "type %s is not supported, param string: %s", paramType, paramsStr
-        ));
+    public static List<List<String>> get2DimensionStrList(String inputStr) {
+        return get2DimensionStrList(inputStr, ",");
     }
 
     /**
@@ -144,9 +83,13 @@ public class TestCaseInputUtils {
      * @return 字符串对应的二维数组
      * @param <T> 数组类型[]
      */
-    public static<T> T[] get2DArr(String inputStr, String separator, Function<String, T> mapFun, T[] arr) {
-        inputStr = inputStr.substring(1, inputStr.length() - 1).replaceAll("[\\[|\\]]", " ");
-        return Arrays.stream(inputStr.split(" " + separator + " ")).map(mapFun).collect(Collectors.toList()).toArray(arr);
+    public static<T> T[] get2DimensionArr(String inputStr, String separator, Function<String, T> mapFun, T[] arr) {
+        return (T[]) getArr(
+                inputStr,
+                separator,
+                mapFun,
+                arr.getClass().getComponentType()
+        );
     }
 
     /**
@@ -262,7 +205,7 @@ public class TestCaseInputUtils {
     }
 
     public static char[][] get2DCharArr(String inputStr) {
-        return get2DArr(
+        return get2DimensionArr(
                 inputStr,
                 ",",
                 TestCaseInputUtils::getCharArr,
@@ -280,16 +223,162 @@ public class TestCaseInputUtils {
      * @param <T> 目标数组类型
      */
     public static<T> T[] getStrArr(String inputStr, String separator, Function<String, T> mapFun, T[] arr) {
-        if (inputStr.startsWith("[")) {
-            inputStr = inputStr.substring(1);
+        return (T[]) getArr(
+                inputStr,
+                separator,
+                mapFun,
+                arr.getClass().getComponentType()
+        );
+    }
+
+    /**
+     * 将字符串转化为对应的数组 使用默认分隔符和默认解析方法
+     * @param inputStr 输入字符串 形式类似 "[[1,6,1],[3,10,2],[10,12,3],[11,12,2],[12,15,2],[13,18,1]]"
+     * @param clazz 数组的基础类型
+     * @return 对应的数组
+     */
+    public static<T> Object getArr(String inputStr, Class<T> clazz) {
+        return getArr(
+                inputStr,
+                DEFAULT_SEPARATOR,
+                str -> ((T) resolveParameter(clazz.getName(), str)),
+                clazz
+        );
+    }
+
+    /**
+     * 将字符串转化为对应的数组
+     * @param inputStr 输入字符串 形式类似 "[[1,6,1],[3,10,2],[10,12,3],[11,12,2],[12,15,2],[13,18,1]]"
+     * @param separator 分隔符
+     * @param mapFunc 字符串怎么解析为数组基础类型的实现 如果为空 则使用resolveParameter方法
+     * @param clazz 数组的基础类型
+     * @return 对应的数组
+     */
+
+    public static Object getArr(String inputStr, String separator, Function<String, ?> mapFunc, Class<?> clazz) {
+        // 1 计算维度
+        int dimension = 0;
+        int length = inputStr.length();
+        for (int i = 0; i < length; i++) {
+            if (inputStr.charAt(i) != '[') {
+                break;
+            }
+            ++dimension;
         }
-        if (inputStr.endsWith("]")) {
-            inputStr = inputStr.substring(0, inputStr.length() - 1);
+
+        // 2 非数组 直接返回
+        if (dimension == 0) {
+            return resolveParameter(clazz.getName(), inputStr);
         }
-        if (inputStr.trim().isEmpty()) {
-            return arr;
+
+        // 3 数组的话 计算正确维度
+        // [[1,6,1],[3,10,2],[10,12,3],[11,12,2],[12,15,2],[13,18,1]]
+        int[] dimensionArr = new int[dimension];
+        StringBuilder arrStartStr = new StringBuilder(separator);
+        StringBuilder arrEndStr = new StringBuilder("]");
+        for (int i = dimension - 1; i > -1; i--) {
+            dimensionArr[i] = inputStr.substring(
+                    0, inputStr.indexOf(arrEndStr.toString())).split(arrStartStr.toString()
+            ).length;
+            arrStartStr.append("\\[");
+            arrEndStr.append("]");
         }
-        return Arrays.stream(inputStr.split(separator)).map(mapFun).collect(Collectors.toList()).toArray(arr);
+        // 3.1 计算每个维度对应的元素数量 用于计算下标
+        int[] elementCountArr = new int[dimension];
+        elementCountArr[dimension - 1] = 1;
+        for (int i = elementCountArr.length - 2; i >= 0; i--) {
+            elementCountArr[i] = elementCountArr[i + 1] * dimensionArr[i + 1];
+        }
+
+        // 3.2 构造对应维度数组
+        Object arr = Array.newInstance(clazz, dimensionArr);
+        // 3.3 获取输入转化后的结果
+        Object[] plantItemArr = Arrays.stream(
+                inputStr.replaceAll("\\[", "").replaceAll("]", "").split(separator)
+        ).map(mapFunc).toArray();
+        // 3.4 设置值
+        Object wrp;
+        for (int i = 0; i < plantItemArr.length; i++) {
+            wrp = arr;
+            int idx = i;
+            for (int i1 = 0; i1 < elementCountArr.length - 1; i1++) {
+                wrp = Array.get(wrp, idx / elementCountArr[i1]);
+                idx %= elementCountArr[i1];
+            }
+            Array.set(wrp, idx % dimensionArr[dimension - 1], plantItemArr[i]);
+        }
+        return arr;
+    }
+
+    /**
+     * 将字符串转为对应的参数对象
+     * @param paramType 参数类型
+     * @param paramsStr 参数字符串
+     * @return 参数对象
+     */
+    public static Object resolveParameter(String paramType, String paramsStr) {
+        if (paramType.startsWith("java.util.List<")) {
+            paramType = paramType.substring("java.util.List<".length(), paramType.length() - 1);
+            paramsStr = paramsStr.substring(1, paramsStr.length() - 1);
+            List<Integer> splitIndexFromParamsStr = getSplitIndexFromParamsStr(paramsStr);
+            // 这里没有处理类型和参数不匹配的情况 暂时不考虑处理 因为leetcode的测试用例都是正确的格式
+            if (splitIndexFromParamsStr.isEmpty()) {
+                String finalParamType = paramType;
+                return Arrays.stream(paramsStr.split(","))
+                        .map(str -> resolveParameter(finalParamType, str))
+                        .collect(Collectors.toList());
+            } else {
+                List<Object> list = new ArrayList<>();
+                int startIdx = 0;
+                for (Integer splitIndex : splitIndexFromParamsStr) {
+                    if (paramsStr.charAt(startIdx) == ',') {
+                        ++startIdx;
+                    }
+                    list.add(resolveParameter(paramType, paramsStr.substring(startIdx, splitIndex + 1)));
+                    startIdx = splitIndex + 1;
+                }
+                return list;
+            }
+        } else if (paramType.contains("int[][]")) {
+            return get2DimensionIntArr(paramsStr);
+        } else if (paramType.contains("int[]")) {
+            return getIntArr(paramsStr);
+        } else if (paramType.contains("Integer[]")) {
+            return getIntegerArr(paramsStr);
+        } else if (paramType.contains("char[]")) {
+            return getCharArr(paramsStr);
+        } else if (paramType.contains("Integer") || paramType.contains("int")) {
+            return Integer.parseInt(paramsStr);
+        } else if (paramType.contains("long[][]")) {
+            return get2DimensionArr(
+                    paramsStr,
+                    ",",
+                    strArr -> Arrays.stream(strArr.split(","))
+                            .map(String::trim)
+                            .map(Long::parseLong)
+                            .mapToLong(Long::intValue).toArray(),
+                    new int[0][0]
+            );
+        } else if (paramType.contains("long[]")) {
+            return getIntArr(paramsStr);
+        } else if (paramType.contains("Long[]")) {
+            return getIntegerArr(paramsStr);
+        } else if (paramType.contains("Long") || paramType.contains("long")) {
+            return Integer.parseInt(paramsStr);
+        } else if (paramType.contains("Character") || paramType.contains("char")) {
+            return paramsStr.charAt(0);
+        } else if (paramType.contains("String[")) {
+            return getStrArr(paramsStr);
+        } else if (paramType.contains("String")) {
+            return paramsStr;
+        } else if (paramType.contains("TreeNode")) {
+            return new TreeNode(getIntegerArr(paramsStr));
+        } else if (paramType.contains("ListNode")) {
+            return new ListNode(getIntArr(paramsStr));
+        }
+        throw new IllegalArgumentException(String.format(
+                "type %s is not supported, param string: %s", paramType, paramsStr
+        ));
     }
 
     public static String getTestInputFromTestFile(String fileName) {
@@ -349,6 +438,9 @@ public class TestCaseInputUtils {
                         trimLineStr = trimLineStr.substring(1);
                     }
                     if (trimLineStr.matches("\\s+@param\\s*args[.\\s]*")) {
+                        continue;
+                    }
+                    if (trimLineStr.matches("<p>")) {
                         continue;
                     }
                     str.append(trimLineStr);

@@ -46,7 +46,7 @@ public class _419 {
      */
     public static void main(String[] args) {
         System.out.println(new _419().countBattleships(
-                TestCaseInputUtils.get2DArr(
+                TestCaseInputUtils.get2DimensionArr(
                         "[[\".\"]]",
                         ",",
                         TestCaseInputUtils::getCharArr,

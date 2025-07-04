@@ -101,7 +101,7 @@ public class _2732 {
     public static void main(String[] args) {
         System.out.println(TestCaseOutputUtils.formatList(
                 new _2732().goodSubsetofBinaryMatrix(
-                        TestCaseInputUtils.get2DIntArr("[[1,1,1],[1,1,1]]")
+                        TestCaseInputUtils.get2DimensionIntArr("[[1,1,1],[1,1,1]]")
                 )
         ));
     }

@@ -74,7 +74,7 @@ public class _994 {
 
     public static void main(String[] args) {
         System.out.println(new _994().orangesRotting(
-                TestCaseInputUtils.get2DIntArr("[[0,2]]")
+                TestCaseInputUtils.get2DimensionIntArr("[[0,2]]")
         ));
     }
 

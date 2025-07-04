@@ -34,6 +34,7 @@ public class TestUtil {
         private String explanationStr = "";
 
         public TestCase(String originStr) {
+            originStr = originStr.replaceAll("<p>", "");
             String[] splitByOutput = originStr.split("(Output: )|(输出：)");
             inputStr = splitByOutput[0].replaceAll("(Input:)|(输入：)", "");
             if (splitByOutput.length == 1) {
@@ -218,7 +219,7 @@ public class TestUtil {
             Object[] params = new Object[typeArr.length];
             for (int i = 0; i < typeArr.length; i++) {
                 paramStrArr[i] = paramStrArr[i].replaceAll("\"", "").trim();
-                params[i] = TestCaseInputUtils.getParam(typeArr[i].getTypeName(), paramStrArr[i]);
+                params[i] = TestCaseInputUtils.resolveParameter(typeArr[i].getTypeName(), paramStrArr[i]);
             }
             return params;
         }
@@ -351,7 +352,7 @@ public class TestUtil {
         Map<String, Method> methodName2Method =
                 Arrays.stream(methodArr).collect(Collectors.toMap(Method::getName, Function.identity()));
         String[] operationArr = getStrArrIgnoreDoubleQuote(operationStr);
-        String[][] paramsArr = get2DStrArr(paramsStr);
+        String[][] paramsArr = get2DimensionStrArr(paramsStr);
         String[] ans = new String[paramsArr.length];
         try {
             for (int i = 0; i < ans.length; i++) {

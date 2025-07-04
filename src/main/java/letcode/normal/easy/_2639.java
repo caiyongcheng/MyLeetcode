@@ -47,7 +47,7 @@ public class _2639 {
      */
     public static void main(String[] args) {
         System.out.println(Arrays.toString(new _2639().findColumnWidth(
-                TestCaseInputUtils.get2DIntArr(
+                TestCaseInputUtils.get2DimensionIntArr(
                         "[[-15,1,3],[15,7,12],[5,6,-2]]"
                 )
         )));

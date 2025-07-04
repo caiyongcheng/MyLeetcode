@@ -55,7 +55,7 @@ public class _3033 {
      */
     public static void main(String[] args) {
         System.out.println(TestCaseOutputUtils.format2DArray(new _3033().modifiedMatrix(
-                TestCaseInputUtils.get2DIntArr("[[3,-1],[5,2]]")
+                TestCaseInputUtils.get2DimensionIntArr("[[3,-1],[5,2]]")
         )));
     }
 

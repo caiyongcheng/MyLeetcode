@@ -69,7 +69,7 @@ public class _1329 {
         System.out.println(
                 TestCaseOutputUtils.format2DArray(
                         new _1329().diagonalSort(
-                                TestCaseInputUtils.get2DIntArr("[[11,25,66,1,69,7],[23,55,17,45,15,52],[75,31,36,44,58,8],[22,27,33,25,68,4],[84,28,14,11,5,50]]")
+                                TestCaseInputUtils.get2DimensionIntArr("[[11,25,66,1,69,7],[23,55,17,45,15,52],[75,31,36,44,58,8],[22,27,33,25,68,4],[84,28,14,11,5,50]]")
                         )
                 )
         );

@@ -52,7 +52,7 @@ public class _766 {
      */
     public static void main(String[] args) {
         System.out.println(new _766().isToeplitzMatrix(
-                TestCaseInputUtils.get2DIntArr("[[1,2],[2,2]]")
+                TestCaseInputUtils.get2DimensionIntArr("[[1,2],[2,2]]")
         ));
     }
 

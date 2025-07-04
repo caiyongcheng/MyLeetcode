@@ -107,7 +107,7 @@ public class _2713 {
         -1,0,-5
          */
         System.out.println(new _2713().maxIncreasingCells(
-                TestCaseInputUtils.get2DIntArr("[[5,2,9],[-6,2,-5],[-1,0,-5]]")
+                TestCaseInputUtils.get2DimensionIntArr("[[5,2,9],[-6,2,-5],[-1,0,-5]]")
         ));
     }
 

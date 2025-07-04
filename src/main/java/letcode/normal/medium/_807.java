@@ -61,7 +61,7 @@ public class _807 {
      */
     public static void main(String[] args) {
         System.out.println(new _807().maxIncreaseKeepingSkyline(
-                TestCaseInputUtils.get2DIntArr("[[0,0,0],[0,0,0],[0,0,0]]")
+                TestCaseInputUtils.get2DimensionIntArr("[[0,0,0],[0,0,0],[0,0,0]]")
         ));
     }
 

@@ -71,7 +71,7 @@ public class _2580 {
      */
     public static void main(String[] args) {
         System.out.println(new _2580().countWays(
-                TestCaseInputUtils.get2DIntArr("[[34,56],[28,29],[12,16],[11,48],[28,54],[22,55],[28,41],[41,44]]")
+                TestCaseInputUtils.get2DimensionIntArr("[[34,56],[28,29],[12,16],[11,48],[28,54],[22,55],[28,41],[41,44]]")
         ));
     }
 

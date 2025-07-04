@@ -51,7 +51,7 @@ public class _2923 {
      */
     public static void main(String[] args) {
         System.out.println(new _2923().findChampion(
-                TestCaseInputUtils.get2DIntArr("[[0,0,1],[1,0,1],[0,0,0]]")
+                TestCaseInputUtils.get2DimensionIntArr("[[0,0,1],[1,0,1],[0,0,0]]")
         ));
     }
 

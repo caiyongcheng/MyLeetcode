@@ -196,7 +196,7 @@ public class N_721 {
      */
     public static void main(String[] args) {
         System.out.println(new N_721().accountsMerge(
-                TestCaseInputUtils.get2DStrList(
+                TestCaseInputUtils.get2DimensionStrList(
                         TestCaseInputUtils.getTestInputFromTestFile()
                 )
         ));

@@ -94,7 +94,7 @@ public class _1901 {
      */
     public static void main(String[] args) {
         System.out.println(Arrays.toString(new _1901().findPeakGrid(
-                TestCaseInputUtils.get2DIntArr("[[1,2,6],[3,4,5]]")
+                TestCaseInputUtils.get2DimensionIntArr("[[1,2,6],[3,4,5]]")
         )));
     }
 

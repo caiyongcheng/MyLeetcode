@@ -50,7 +50,7 @@ public class _2965 {
      */
     public static void main(String[] args) {
         System.out.println(TestCaseOutputUtils.formatArray(new _2965().findMissingAndRepeatedValues(
-                TestCaseInputUtils.get2DIntArr("[[9,1,7],[8,9,2],[3,4,6]]")
+                TestCaseInputUtils.get2DimensionIntArr("[[9,1,7],[8,9,2],[3,4,6]]")
         )));
     }
 

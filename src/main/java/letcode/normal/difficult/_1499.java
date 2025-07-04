@@ -105,7 +105,7 @@ public class _1499 {
      */
     public static void main(String[] args) {
         System.out.println(new _1499().findMaxValueOfEquation(
-                TestCaseInputUtils.get2DIntArr("[[-13,19],[-6,-16],[2,-7],[6,-13],[8,-16],[13,6],[14,-13],[20,4]]"),
+                TestCaseInputUtils.get2DimensionIntArr("[[-13,19],[-6,-16],[2,-7],[6,-13],[8,-16],[13,6],[14,-13],[20,4]]"),
                 3
         ));
     }
