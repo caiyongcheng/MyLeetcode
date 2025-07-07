@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -122,7 +124,9 @@ public class TestUtil {
                 try {
                     PrintUtil.print(String.format("params: %s", TestCaseOutputUtils.formatObj(params)), PrintUtil.PURPLE);
                     PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                    long startNonoTime = System.nanoTime();
                     Object execRst = testMethod.invoke(testObjList.get(time - 1), params);
+                    long endNonoTime = System.nanoTime();
                     String excuseResultStr = TestCaseOutputUtils.formatObj(execRst);
                     PrintUtil.print(String.format("result: %s", excuseResultStr), PrintUtil.RED);
                     PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
@@ -134,7 +138,17 @@ public class TestUtil {
                                                     && testCase.outputStr.replaceAll("\"", "").equals(excuseResultStr)
                                     )
                             ),
-                            ""
+                            PrintUtil.LIGHT_GREEN
+                    );
+                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                    PrintUtil.print(
+                            String.format(
+                                    "time-consuming execution : %s nanosecond, %s milliseconds, %s second",
+                                    endNonoTime - startNonoTime,
+                                    BigDecimal.valueOf(endNonoTime - startNonoTime).divide(BigDecimal.valueOf(1000000), 6, RoundingMode.HALF_UP),
+                                    BigDecimal.valueOf(endNonoTime - startNonoTime).divide(BigDecimal.valueOf(1000000000), 6, RoundingMode.HALF_UP)
+                            ),
+                            PrintUtil.LIGHT_YELLOW
                     );
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
@@ -257,6 +271,14 @@ public class TestUtil {
         private static final String PURPLE = "\u001B[35m";
         private static final String CYAN = "\u001B[36m";
 
+        private static final String WHITE = "\u001B[37m";
+        private static final String GRAY = "\u001B[90m";
+        private static final String LIGHT_RED = "\u001B[91m";
+        private static final String LIGHT_GREEN = "\u001B[92m";
+        private static final String LIGHT_YELLOW = "\u001B[93m";
+        private static final String LIGHT_BLUE = "\u001B[94m";
+        private static final String LIGHT_PURPLE = "\u001B[95m";
+        private static final String LIGHT_CYAN = "\u001B[96m";
 
         /**
          * 打印测试结果的语句
