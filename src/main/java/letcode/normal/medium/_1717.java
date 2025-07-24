@@ -15,8 +15,8 @@ import letcode.utils.TestUtil;
 public class _1717 {
 
     public int maximumGain(String s, int x, int y) {
-        int highScoreChar;
-        int lowScoreChar;
+        char highScoreChar;
+        char lowScoreChar;
         int highScore;
         int lowScore;
         if (x >= y) {
@@ -32,12 +32,10 @@ public class _1717 {
         }
 
         int ans = 0;
-        int length = s.length();
-        char curChar;
         int highScoreCharCount = 0;
         int lowScoreCharCount = 0;
-        for (int i = 0; i < length; i++) {
-            curChar = s.charAt(i);
+        char[] charArray = s.toCharArray();
+        for (char curChar : charArray) {
             if (curChar == highScoreChar) {
                 highScoreCharCount++;
             } else if (curChar == lowScoreChar)  {
