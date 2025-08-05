@@ -1,7 +1,7 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseOutputUtils;
 import letcode.utils.TestCaseInputUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 /**
  * 给你一个下标从 0 开始的二维整数矩阵 grid，大小为 n * n ，其中的值在 [1, n2] 范围内。除了 a 出现 两次，b 缺失 之外，每个整数都 恰好出现一次 。

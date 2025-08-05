@@ -28,7 +28,7 @@ package letcode.normal.medium;
 
 import letcode.utils.TestCaseOutputUtils;
 
-import java.util.*;
+import java.util.Arrays;
 
 /**
  * 这里有n个航班，它们分别从 1 到 n 进行编号。  

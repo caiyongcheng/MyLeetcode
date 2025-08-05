@@ -1,8 +1,5 @@
 package letcode.normal.difficult;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Caiyongcheng
  * @version 1.0.0

@@ -26,7 +26,9 @@
 
 package letcode.normal.difficult;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 实现 AllOne 类：  AllOne() 初始化数据结构的对象。 inc(String key) 字符串 key 的计数增加 1 。

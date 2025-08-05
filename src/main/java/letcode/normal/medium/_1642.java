@@ -26,8 +26,6 @@
 
 package letcode.normal.medium;
 
-import java.util.HashMap;
-
 /**
  * @program: Leetcode
  * @description: 给你一个整数数组 heights ，表示建筑物的高度。

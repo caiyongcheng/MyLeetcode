@@ -26,7 +26,6 @@
 
 package letcode.normal.difficult;
 
-import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 /**

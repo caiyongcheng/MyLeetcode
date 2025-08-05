@@ -26,9 +26,7 @@
 
 package letcode.normal.difficult;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 使用下面描述的算法可以扰乱字符串 s 得到字符串 t ： 

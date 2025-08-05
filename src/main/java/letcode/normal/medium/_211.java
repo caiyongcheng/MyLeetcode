@@ -26,7 +26,8 @@
 
 package letcode.normal.medium;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Objects;
 
 /**
  * 请你设计一个数据结构，支持 添加新单词 和 查找字符串是否与任何先前添加的字符串匹配 。

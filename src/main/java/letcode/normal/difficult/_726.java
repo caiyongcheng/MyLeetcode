@@ -26,11 +26,10 @@
 
 package letcode.normal.difficult;
 
-import letcode.normal.medium._1190;
-
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+import java.util.TreeMap;
 
 /**
  * 给定一个化学式formula（作为字符串），返回每种原子的数量。  原子总是以一个大写字母开始，接着跟随0个或任意个小写字母，表示原子的名字。

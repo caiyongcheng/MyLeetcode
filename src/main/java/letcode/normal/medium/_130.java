@@ -26,8 +26,6 @@
 
 package letcode.normal.medium;
 
-import datastructure.utils.FormatPrintUtils;
-
 import java.util.Arrays;
 import java.util.Stack;
 

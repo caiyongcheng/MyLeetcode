@@ -1,7 +1,5 @@
 package letcode.normal.medium;
 
-import java.util.*;
-
 /**
  * @author Caiyongcheng
  * @version 1.0.0

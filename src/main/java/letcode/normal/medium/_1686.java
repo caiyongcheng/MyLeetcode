@@ -2,8 +2,6 @@ package letcode.normal.medium;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Alice 和 Bob 轮流玩一个游戏，Alice 先手。

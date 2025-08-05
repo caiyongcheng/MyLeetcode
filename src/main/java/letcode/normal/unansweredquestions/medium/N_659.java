@@ -40,15 +40,15 @@ package letcode.normal.unansweredquestions.medium;
  **/
 public class N_659 {
 
-    static class record{
+    static class MyRecord {
         int start;
         int end;
         int num;
 
         @Override
         public boolean equals(Object obj) {
-            record record = (record) obj;
-            return start == record.start && end == record.end;
+            MyRecord MyRecord = (MyRecord) obj;
+            return start == MyRecord.start && end == MyRecord.end;
         }
 
         @Override

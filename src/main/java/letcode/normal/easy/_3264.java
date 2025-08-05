@@ -2,9 +2,7 @@ package letcode.normal.easy;
 
 import letcode.utils.TestUtil;
 
-import java.util.Comparator;
 import java.util.PriorityQueue;
-import java.util.function.Function;
 
 /**
  * You are given an integer array nums, an integer k, and an integer multiplier.  You need to perform k operations on nums.

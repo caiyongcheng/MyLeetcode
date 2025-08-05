@@ -2,7 +2,6 @@ package letcode.normal.medium;
 
 import letcode.utils.TestUtil;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**

@@ -3,7 +3,9 @@ package letcode.normal.medium;
 import letcode.utils.TestCaseInputUtils;
 import letcode.utils.TreeNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Caiyongcheng

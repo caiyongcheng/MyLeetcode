@@ -1,7 +1,5 @@
 package letcode.normal.easy;
 
-import java.util.Arrays;
-
 /**
  * @author Caiyongcheng
  * @version 1.0.0

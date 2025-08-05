@@ -2,8 +2,6 @@ package letcode.normal.medium;
 
 import letcode.utils.TestUtil;
 
-import java.util.Arrays;
-
 /**
  * You are given a string word and an integer k.
  * We consider word to be k-special if |freq(word[i]) - freq(word[j])| <= k for all indices i and j in the string.

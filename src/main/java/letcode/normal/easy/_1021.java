@@ -26,8 +26,6 @@
 
 package letcode.normal.easy;
 
-import java.util.Stack;
-
 /**
  * @program: MyLeetcode
  * @description: 有效括号字符串为空("")、"(" + A + ")"或A + B，其中A 和B都是有效的括号字符串，+代表字符串的连接。

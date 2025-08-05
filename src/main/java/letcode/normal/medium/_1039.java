@@ -25,8 +25,9 @@
  */
 
 package letcode.normal.medium;
-import letcode.utils.TestCaseOutputUtils;
+
 import letcode.utils.ListNode;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.ArrayList;
 import java.util.Stack;

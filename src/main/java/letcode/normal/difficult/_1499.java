@@ -2,7 +2,7 @@ package letcode.normal.difficult;
 
 import letcode.utils.TestCaseInputUtils;
 
-import java.util.*;
+import java.util.TreeSet;
 
 /**
  * 给你一个数组 points 和一个整数 k 。数组中每个元素都表示二维平面上的点的坐标，并按照横坐标 x 的值从小到大排序。也就是说 points[i] = [xi, yi] ，

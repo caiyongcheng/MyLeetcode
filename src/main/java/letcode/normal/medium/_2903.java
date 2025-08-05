@@ -1,7 +1,7 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseOutputUtils;
 import letcode.utils.TestCaseInputUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 /**
  * 给你一个下标从 0 开始、长度为 n 的整数数组 nums ，以及整数 indexDifference 和整数 valueDifference 。

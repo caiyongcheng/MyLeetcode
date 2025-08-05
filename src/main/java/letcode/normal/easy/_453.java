@@ -26,8 +26,6 @@
 
 package letcode.normal.easy;
 
-import java.util.Arrays;
-
 /**
  * @author CaiYongcheng
  * @since 2021-10-20 09:02

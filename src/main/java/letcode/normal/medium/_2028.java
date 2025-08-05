@@ -1,7 +1,7 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseOutputUtils;
 import letcode.utils.TestCaseInputUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 /**
  * 现有一份 n + m 次投掷单个 六面 骰子的观测数据，骰子的每个面从 1 到 6 编号。观测数据中缺失了 n 份，你手上只拿到剩余 m 次投掷的数据。

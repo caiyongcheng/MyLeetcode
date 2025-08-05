@@ -1,5 +1,7 @@
 package letcode.normal.easy;
+
 import letcode.utils.Node;
+
 import java.util.List;
 
 /**

@@ -1,7 +1,7 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestCaseOutputUtils;
 import letcode.utils.TestCaseInputUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 import java.util.ArrayList;
 import java.util.List;

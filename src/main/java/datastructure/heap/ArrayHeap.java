@@ -29,8 +29,6 @@ package datastructure.heap;
 import datastructure.exception.HeapEmptyException;
 import datastructure.exception.HeapOverFlowException;
 
-import java.util.Arrays;
-
 /**
  * @program: MyLeetcode
  * @description: 采用数组实现的堆

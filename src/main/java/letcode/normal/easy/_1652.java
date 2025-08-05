@@ -1,7 +1,7 @@
 package letcode.normal.easy;
 
-import letcode.utils.TestCaseOutputUtils;
 import letcode.utils.TestCaseInputUtils;
+import letcode.utils.TestCaseOutputUtils;
 
 public class _1652 {
 

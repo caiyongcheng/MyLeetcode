@@ -3,10 +3,6 @@ package letcode.normal.medium;
 
 import letcode.utils.Node;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
 /**
  * @author Caiyongcheng
  * @version 1.0.0

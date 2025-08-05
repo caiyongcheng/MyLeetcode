@@ -26,8 +26,6 @@
 
 package letcode.normal.medium;
 
-import java.util.Arrays;
-
 /**
  * 你在进行一个简化版的吃豆人游戏。你从 [0, 0] 点开始出发，你的目的地是target = [xtarget, ytarget] 。
  * 地图上有一些阻碍者，以数组 ghosts 给出，第 i 个阻碍者从ghosts[i] = [xi, yi]出发。所有输入均为 整数坐标 。
