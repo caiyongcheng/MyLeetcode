@@ -233,7 +233,7 @@ public class TestUtil {
             Object[] params = new Object[typeArr.length];
             for (int i = 0; i < typeArr.length; i++) {
                 paramStrArr[i] = paramStrArr[i].replaceAll("\"", "").trim();
-                params[i] = TestCaseInputUtils.resolveParameter(typeArr[i].getTypeName(), paramStrArr[i]);
+                params[i] = TestCaseInputUtils.resolveParameter(typeArr[i].getTypeName(), paramStrArr[i].replaceAll("\\s", ""));
             }
             return params;
         }

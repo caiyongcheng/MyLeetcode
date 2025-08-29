@@ -24,10 +24,7 @@ package work;/*
  * 本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。
  */
 
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.CountedCompleter;
-import java.util.function.Consumer;
 
 /**
  * @author CaiYongcheng

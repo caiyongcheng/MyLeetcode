@@ -2,7 +2,8 @@ package work.generic.zion;
 
 import java.io.*;
 
-import static work.generic.zion.ZionGenericCodeUtil.*;
+import static work.generic.zion.ZionGenericCodeUtil.PROJECT_PATH;
+import static work.generic.zion.ZionGenericCodeUtil.TEMP_PATH;
 
 /**
  * converter生成器
