@@ -124,9 +124,9 @@ public class TestUtil {
                 try {
                     PrintUtil.print(String.format("params: %s", TestCaseOutputUtils.formatObj(params)), PrintUtil.PURPLE);
                     PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                    long startNonoTime = System.nanoTime();
+                    long startNanoTime = System.nanoTime();
                     Object execRst = testMethod.invoke(testObjList.get(time - 1), params);
-                    long endNonoTime = System.nanoTime();
+                    long endNaneTime = System.nanoTime();
                     String excuseResultStr = TestCaseOutputUtils.formatObj(execRst);
                     PrintUtil.print(String.format("result: %s", excuseResultStr), PrintUtil.RED);
                     PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
@@ -144,9 +144,9 @@ public class TestUtil {
                     PrintUtil.print(
                             String.format(
                                     "time-consuming execution : %s nanosecond, %s milliseconds, %s second",
-                                    endNonoTime - startNonoTime,
-                                    BigDecimal.valueOf(endNonoTime - startNonoTime).divide(BigDecimal.valueOf(1000000), 6, RoundingMode.HALF_UP),
-                                    BigDecimal.valueOf(endNonoTime - startNonoTime).divide(BigDecimal.valueOf(1000000000), 6, RoundingMode.HALF_UP)
+                                    endNaneTime - startNanoTime,
+                                    BigDecimal.valueOf(endNaneTime - startNanoTime).divide(BigDecimal.valueOf(1000000), 6, RoundingMode.HALF_UP),
+                                    BigDecimal.valueOf(endNaneTime - startNanoTime).divide(BigDecimal.valueOf(1000000000), 6, RoundingMode.HALF_UP)
                             ),
                             PrintUtil.LIGHT_YELLOW
                     );
@@ -233,7 +233,12 @@ public class TestUtil {
             Object[] params = new Object[typeArr.length];
             for (int i = 0; i < typeArr.length; i++) {
                 paramStrArr[i] = paramStrArr[i].replaceAll("\"", "").trim();
-                params[i] = TestCaseInputUtils.resolveParameter(typeArr[i].getTypeName(), paramStrArr[i].replaceAll("\\s", ""));
+                params[i] = TestCaseInputUtils.resolveParameter(
+                        typeArr[i].getTypeName(),
+                        Objects.equals(typeArr[i], String.class)
+                                ? paramStrArr[i]
+                                : paramStrArr[i].replaceAll("\\s", "")
+                );
             }
             return params;
         }
