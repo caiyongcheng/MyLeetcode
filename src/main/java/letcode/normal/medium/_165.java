@@ -26,9 +26,9 @@
 
 package letcode.normal.medium;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import letcode.utils.TestUtil;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * 给你两个版本号 version1 和 version2 ，请你比较它们。  
@@ -49,57 +49,75 @@ import java.util.stream.Collectors;
 public class _165 {
 
     public int compareVersion(String version1, String version2) {
-        List<Long> collect1 = Arrays.stream(version1.split("\\.")).map(Long::valueOf).collect(Collectors.toList());
-        List<Long> collect2 = Arrays.stream(version2.split("\\.")).map(Long::valueOf).collect(Collectors.toList());
-        int i1 = 0;
-        int i2 = 0;
-        long c1 = 0L;
-        long c2 = 0L;
-        while (i1 < collect1.size() || i2 < collect2.size()) {
-            c1 = i1 >= collect1.size() ? 0L : collect1.get(i1);
-            c2 = i2 >= collect2.size() ? 0L : collect2.get(i2);
-            if (c1 != c2) {
-                return c1 > c2 ? 1 : -1;
+        int idx1 = 0;
+        int idx2 = 0;
+        int subVersion1;
+        int subVersion2;
+        byte[] byteArr1 = version1.getBytes(StandardCharsets.UTF_8);
+        byte[] byteArr2 = version2.getBytes(StandardCharsets.UTF_8);
+
+        while (idx1 < byteArr1.length || idx2 < byteArr2.length) {
+            subVersion1 = 0;
+            while (idx1 < byteArr1.length) {
+                if (byteArr1[idx1] == '.') {
+                    ++idx1;
+                    break;
+                }
+                subVersion1 = subVersion1 * 10 + byteArr1[idx1++] - '0';
             }
-            ++i1;
-            ++i2;
+
+            subVersion2 = 0;
+            while (idx2 < byteArr2.length) {
+                if (byteArr2[idx2] == '.') {
+                    ++idx2;
+                    break;
+                }
+                subVersion2 = subVersion2 * 10 + byteArr2[idx2++] - '0';
+            }
+
+            if (subVersion1 > subVersion2) {
+                return 1;
+            } else if (subVersion1 < subVersion2) {
+                return -1;
+            }
         }
         return 0;
     }
 
     /**
-     * 示例 1：
-     * 输入：version1 = "1.01", version2 = "1.001"
-     * 输出：0
-     * 解释：忽略前导零，"01" 和 "001" 都表示相同的整数 "1"
+     * Example 1:
      *
-     * 示例 2：
-     * 输入：version1 = "1.0", version2 = "1.0.0"
-     * 输出：0
-     * 解释：version1 没有指定下标为 2 的修订号，即视为 "0"
+     * Input: version1 = "1.2", version2 = "1.10"
      *
-     * 示例 3：
-     * 输入：version1 = "0.1", version2 = "1.1"
-     * 输出：-1
-     * 解释：version1 中下标为 0 的修订号是 "0"，version2 中下标为 0 的修订号是 "1" 。0 < 1，所以 version1 < version2
+     * Output: -1
      *
-     * 示例 4：
-     * 输入：version1 = "1.0.1", version2 = "1"
-     * 输出：1
+     * Explanation:
      *
-     * 示例 5:
-     * 输入：version1 = "7.5.2.4", version2 = "7.5.3"
-     * 输出：-1
+     * version1's second revision is "2" and version2's second revision is "10": 2 < 10, so version1 < version2.
      *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/compare-version-numbers
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * Example 2:
+     *
+     * Input: version1 = "1.01", version2 = "1.001"
+     *
+     * Output: 0
+     *
+     * Explanation:
+     *
+     * Ignoring leading zeroes, both "01" and "001" represent the same integer "1".
+     *
+     * Example 3:
+     *
+     * Input: version1 = "1.0", version2 = "1.0.0.0"
+     *
+     * Output: 0
+     *
+     * Explanation:
+     *
+     * version1 has less revisions, which means every missing revision are treated as "0".
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(new _165().compareVersion(
-                "7.5.2.4",  "7.5.3"
-        ));
+        TestUtil.test();
     }
 
 
