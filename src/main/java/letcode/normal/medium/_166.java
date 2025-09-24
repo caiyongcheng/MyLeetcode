@@ -29,6 +29,7 @@ package letcode.normal.medium;
 import letcode.utils.TestUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 给定两个整数，分别表示分数的分子numerator 和分母 denominator，以 字符串形式返回小数 。
@@ -42,64 +43,71 @@ import java.util.HashMap;
 public class _166 {
 
     public String fractionToDecimal(int numerator, int denominator) {
-        return fractionToDecimalByLong(numerator, denominator);
-    }
+        long num = numerator;
+        long den = denominator;
+        StringBuilder ans = new StringBuilder();
 
+        // 处理符号位
+        if (num > 0 && denominator < 0) {
+            ans.append("-");
+            den = -den;
+        } else if (num < 0 && denominator > 0) {
+            ans.append("-");
+            num = -num;
+        } else if (num < 0) {
+            num = -num;
+            den = -den;
+        }
 
-    public String fractionToDecimalByLong(long numerator, long denominator) {
-        if ((numerator < 0 && denominator > 0) || (numerator > 0 && denominator < 0)) {
-            return "-" + fractionToDecimalByLong(Math.abs(numerator), Math.abs(denominator));
+        // 整数部分
+        ans.append(num / den);
+        num = num % den;
+        if (num != 0) {
+            ans.append(".");
         }
-        numerator = Math.abs(numerator);
-        denominator = Math.abs(denominator);
-        long rel = numerator / denominator;
-        StringBuilder sb = new StringBuilder(rel + "");
-        numerator %= denominator;
-        if (numerator == 0) {
-            return sb.toString();
-        }
-        int index = sb.length() + 1;
-        HashMap<Long, Integer> cache = new HashMap<>();
-        cache.put(numerator, index++);
-        sb.append('.');
-        numerator *= 10;
-        while (numerator != 0) {
-            sb.append(numerator / denominator);
-            rel = numerator % denominator;
-            if (cache.containsKey(rel)) {
-                sb.insert(cache.get(rel), "(");
-                sb.append(")");
+
+        // 除法实现
+        Map<Long, Integer> modMap = new HashMap<>();
+        int lastIdx;
+        while (true) {
+            // 除尽的情况
+            if (num == 0) {
                 break;
             }
-            cache.put(rel, index++);
-            numerator = rel * 10;
+            // 出现循环节
+            lastIdx = modMap.getOrDefault(num, -1);
+            if (lastIdx != -1) {
+                ans.insert(lastIdx, '(');
+                ans.append(')');
+                break;
+            } else {
+                modMap.put(num, ans.length());
+            }
+            num *= 10;
+            ans.append(num / den);
+            num = num % den;
         }
-        return sb.toString();
+        return ans.toString();
     }
 
+
     /**
-     示例 1：
-
-     输入：numerator = 1, denominator = 2
-     输出："0.5"
-     示例 2：
-
-     输入：numerator = 2, denominator = 1
-     输出："2"
-     示例 3：
-
-     输入：numerator = 4, denominator = 333
-     输出："0.(012)"
+     * Example 1:
      *
+     * Input: numerator = 1, denominator = 2
+     * Output: "0.5"
+     * Example 2:
+     *
+     * Input: numerator = 2, denominator = 1
+     * Output: "2"
+     * Example 3:
+     *
+     * Input: numerator = 4, denominator = 333
+     * Output: "0.(012)"
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.test(
-                _166.class,
-                        "示例 1： 输入：numerator = 1, denominator = 2 输出：\"0.5\" " +
-                                "示例 2： 输入：numerator = 2, denominator = 1 输出：\"2\" " +
-                                "示例 3： 输入：numerator = 4, denominator = 333 输出：\"0.(012)\""
-        );
+        TestUtil.test();
     }
 
 }
