@@ -26,6 +26,8 @@
 
 package letcode.normal.medium;
 
+import letcode.utils.TestUtil;
+
 import java.util.Arrays;
 
 /**
@@ -36,59 +38,39 @@ import java.util.Arrays;
 public class _611 {
 
     public int triangleNumber(int[] nums) {
-        /**
-         * 朴素方法 暴力+二分搜索
-         */
+        int n = nums.length;
         Arrays.sort(nums);
         int ans = 0;
-        int maxIndex;
-        for (int i = 0; i < nums.length-2; i++) {
-            for (int j = i+1; j < nums.length-1; j++) {
-                if (nums[j+1] >= nums[i] + nums[j]) {
-                    continue;
+        for (int i = 0; i < n; ++i) {
+            int k = i;
+            for (int j = i + 1; j < n; ++j) {
+                while (k + 1 < n && nums[k + 1] < nums[i] + nums[j]) {
+                    ++k;
                 }
-                maxIndex = binarySearch(nums, j+1, nums[i]+nums[j]);
-                ans += maxIndex - j;
+                ans += Math.max(k - j, 0);
             }
         }
         return ans;
     }
 
 
-
-    public int binarySearch(int[] arr, int startIndex, int limit) {
-        int right = arr.length;
-        int mid;
-        while (startIndex < right) {
-            mid = (startIndex + right) >> 1;
-            if (arr[mid] >= limit) {
-                right = mid;
-            } else {
-                if (startIndex == mid) {
-                    break;
-                }
-                startIndex = mid;
-            }
-        }
-        return startIndex;
-    }
-
-
     /**
-     * 示例 1:
-     * 输入: [2,2,3,4]
-     * 输出: 3
-     * 解释:
-     * 有效的组合是:
-     * 2,3,4 (使用第一个 2)
-     * 2,3,4 (使用第二个 2)
+     * Example 1:
+     *
+     * Input: nums = [2,2,3,4]
+     * Output: 3
+     * Explanation: Valid combinations are:
+     * 2,3,4 (using the first 2)
+     * 2,3,4 (using the second 2)
      * 2,2,3
+     * Example 2:
+     *
+     * Input: nums = [4,2,3,4]
+     * Output: 4
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(new _611().triangleNumber(
-                new int[]{2,2,3,4}
-        ));
+        TestUtil.test();
     }
 
 
