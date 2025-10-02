@@ -73,7 +73,7 @@ public class _211 {
                 return false;
             }
             Wrapper wrapper = (Wrapper) o;
-            if (scoreLow > wrapper.scoreHigh || wrapper.scoreLow > scoreHigh) {
+            if (scoreLow > wrapper.scoreHigh || wrapper.scoreHigh > scoreHigh) {
                 return false;
             }
             int length = str.length();
