@@ -1,4 +1,4 @@
-package letcode.normal.difficult;
+package letcode.normal.unansweredquestions.difficult;
 
 /**
  * You are given an n x n binary grid board. In each move, you can swap any two rows with each other, or any two columns with each other.
