@@ -1,4 +1,4 @@
-package letcode.normal.medium;
+package letcode.normal.unansweredquestions.medium;
 
 import letcode.utils.TestUtil;
 

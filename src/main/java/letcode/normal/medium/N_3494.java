@@ -14,7 +14,7 @@ package letcode.normal.medium;
  * @version 1.0.0
  * @since 2025-10-19 14:34
  */
-public class _3494 {
+public class N_3494 {
 
     public long minTime(int[] skill, int[] mana) {
         return 0;
