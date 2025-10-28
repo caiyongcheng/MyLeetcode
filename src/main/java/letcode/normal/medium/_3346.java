@@ -69,7 +69,7 @@ public class _3346 {
      * @param args
      */
     public static void main(String[] args) {
-        TestUtil.test("=[9],=0,=0");
+        TestUtil.test();
     }
 
 }
