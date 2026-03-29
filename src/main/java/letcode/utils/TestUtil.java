@@ -2,7 +2,6 @@ package letcode.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -10,7 +9,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -19,7 +17,7 @@ import java.util.stream.Collectors;
 import static letcode.utils.TestCaseInputUtils.*;
 
 /**
- * 测试工具类
+ * 测试工具类：题解方法解析见 {@link SolutionMethodResolver}，示例字符串与参数转换见 {@link TestCaseArgumentCodec}。
  *
  * @author 蔡永程
  * @version 1.0.0
@@ -56,11 +54,11 @@ public class TestUtil {
     
     static class TestCaseExecutor<T> {
 
+        private Class<T> testClass;
+
         private List<Method> testMethods;
 
         private List<TestCase> testCaseList;
-        
-        private List<T> testObjList;
 
         public TestCaseExecutor(Class<T> testClass, String... testCaseStrArr) {
             init(testClass, testCaseStrArr);
@@ -71,149 +69,40 @@ public class TestUtil {
         }
         
         public void init(Class<T> testClass, String... testCaseStrArr) {
-            testMethods = getTestMethodsFromClass(testClass);
-            testObjList = Arrays.stream(testCaseStrArr)
-                    .map(str -> {
-                        try {
-                            return testClass.getConstructor().newInstance();
-                        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                                 NoSuchMethodException e) {
-                            throw new RuntimeException(e);
-                        }
-                    })
-                    .collect(Collectors.toList());
+            this.testClass = testClass;
+            testMethods = SolutionMethodResolver.resolveSolutionMethods(testClass);
             testCaseList = Arrays.stream(testCaseStrArr)
                     .map(String::trim)
                     .filter(str -> !str.isEmpty())
                     .map(TestCase::new)
                     .collect(Collectors.toList());
         }
-        
+
         /**
          * 返回本题要跑的全部题解方法（顺序：类上可重复注解顺序，或方法上注解的声明顺序）。
          */
         public List<Method> getTestMethodsFromClass(Class<T> testClass) {
-            List<Method> methodAnnotated = Arrays.stream(testClass.getDeclaredMethods())
-                    .filter(m -> m.getAnnotation(SolutionTestMethod.class) != null)
-                    .collect(Collectors.toList());
-            for (Method m : methodAnnotated) {
-                SolutionTestMethod meta = m.getAnnotation(SolutionTestMethod.class);
-                if (!Modifier.isPublic(m.getModifiers()) || Modifier.isStatic(m.getModifiers())) {
-                    throw new IllegalArgumentException(String.format(
-                            "@SolutionTestMethod must be on a public non-static method: %s.%s",
-                            testClass.getSimpleName(), m.getName()));
-                }
-                if (meta != null && !meta.method().isEmpty()) {
-                    throw new IllegalArgumentException(String.format(
-                            "@SolutionTestMethod on method %s must leave method() empty; use class-level to specify name",
-                            m.getName()));
-                }
-            }
-
-            SolutionTestMethod[] classAnnos = testClass.getAnnotationsByType(SolutionTestMethod.class);
-
-            if (!methodAnnotated.isEmpty() && classAnnos.length > 0) {
-                throw new IllegalArgumentException(String.format(
-                        "type %s cannot mix @SolutionTestMethod on class and on methods at the same time",
-                        testClass.getName()));
-            }
-
-            if (!methodAnnotated.isEmpty()) {
-                return methodAnnotated;
-            }
-
-            if (classAnnos.length > 0) {
-                List<Method> resolved = new ArrayList<>(classAnnos.length);
-                for (SolutionTestMethod classAnno : classAnnos) {
-                    resolved.add(resolveMethodFromClassAnnotation(testClass, classAnno));
-                }
-                return resolved;
-            }
-
-            List<Method> methods = Arrays.stream(testClass.getMethods())
-                    .filter(m -> Modifier.isPublic(m.getModifiers()))
-                    .filter(m -> !Modifier.isStatic(m.getModifiers()))
-                    .filter(m -> m.getDeclaringClass() == testClass)
-                    .filter(m -> !isPublicObjectMethodSignature(m))
-                    .collect(Collectors.toList());
-            if (methods.isEmpty()) {
-                throw new IllegalArgumentException(String.format(
-                        "type %s has no public non-static method declared in this class (excluding Object overrides). "
-                                + "Use @SolutionTestMethod on class or method, or expose a single such method.",
-                        testClass.getName()));
-            }
-            if (methods.size() > 1) {
-                throw new IllegalArgumentException(String.format(
-                        "type %s has more than one public non-static method: %s. "
-                                + "Use @SolutionTestMethod on class (method + paramTypes) or on the solution method.",
-                        testClass.getName(),
-                        methods.stream().map(Method::getName).collect(Collectors.toList())));
-            }
-            return Collections.singletonList(methods.get(0));
+            return SolutionMethodResolver.resolveSolutionMethods(testClass);
         }
 
         public Method getTestMethodFromClass(Class<T> testClass) {
-            List<Method> list = getTestMethodsFromClass(testClass);
-            if (list.size() != 1) {
-                throw new IllegalArgumentException(String.format(
-                        "expected exactly one solution method, found %d; use getTestMethodsFromClass() for multiple",
-                        list.size()));
-            }
-            return list.get(0);
-        }
-
-        private static Method resolveMethodFromClassAnnotation(Class<?> testClass, SolutionTestMethod classAnno) {
-            String methodName = classAnno.method();
-            if (methodName == null || methodName.isEmpty()) {
-                throw new IllegalArgumentException(
-                        "@SolutionTestMethod on class requires non-empty method() to select the solution method");
-            }
-            Class<?>[] paramTypes = classAnno.paramTypes();
-            if (paramTypes != null && paramTypes.length > 0) {
-                try {
-                    Method m = testClass.getMethod(methodName, paramTypes);
-                    if (m.getDeclaringClass() != testClass) {
-                        throw new IllegalArgumentException(String.format(
-                                "method %s must be declared in %s, not inherited",
-                                methodName, testClass.getName()));
-                    }
-                    if (Modifier.isStatic(m.getModifiers())) {
-                        throw new IllegalArgumentException("solution method must not be static: " + methodName);
-                    }
-                    return m;
-                } catch (NoSuchMethodException e) {
-                    throw new IllegalArgumentException(String.format(
-                            "no method %s with paramTypes %s on %s",
-                            methodName, Arrays.toString(paramTypes), testClass.getName()), e);
-                }
-            }
-            List<Method> sameName = Arrays.stream(testClass.getDeclaredMethods())
-                    .filter(m -> Modifier.isPublic(m.getModifiers()))
-                    .filter(m -> !Modifier.isStatic(m.getModifiers()))
-                    .filter(m -> m.getName().equals(methodName))
-                    .collect(Collectors.toList());
-            if (sameName.size() == 1) {
-                return sameName.get(0);
-            }
-            if (sameName.isEmpty()) {
-                throw new IllegalArgumentException(String.format(
-                        "no public instance method named %s on %s", methodName, testClass.getName()));
-            }
-            throw new IllegalArgumentException(String.format(
-                    "multiple overloads named %s on %s; set paramTypes in @SolutionTestMethod",
-                    methodName, testClass.getName()));
+            return SolutionMethodResolver.resolveSingleSolutionMethod(testClass);
         }
 
         /**
-         * java.lang.Object 上的 public 实例方法（含签名）；子类中与之同签名的 override（如 toString）应排除，否则会与题解方法并列。
+         * 每个题解方法单独一套实例：与用例数相同，彼此不与其它题解方法共享引用。
          */
-        private static boolean isPublicObjectMethodSignature(Method m) {
-            try {
-                Object.class.getMethod(m.getName(), m.getParameterTypes());
-                return true;
-            } catch (NoSuchMethodException e) {
-                return false;
+        private List<T> newTestObjectsOnePerCase() {
+            List<T> list = new ArrayList<>(testCaseList.size());
+            for (int i = 0; i < testCaseList.size(); i++) {
+                try {
+                    list.add(testClass.getConstructor().newInstance());
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                         NoSuchMethodException e) {
+                    throw new RuntimeException(e);
+                }
             }
+            return list;
         }
         
         public void execute() {
@@ -222,6 +111,7 @@ public class TestUtil {
                     PrintUtil.YELLOW);
             for (int mi = 0; mi < testMethods.size(); mi++) {
                 Method testMethod = testMethods.get(mi);
+                List<T> testObjList = newTestObjectsOnePerCase();
                 if (testMethods.size() > 1) {
                     PrintUtil.consolePrint(String.format(
                             "---------- solution targets [%d/%d]: %s ----------%n",
@@ -230,154 +120,70 @@ public class TestUtil {
                             testMethod.getName()
                     ), PrintUtil.YELLOW);
                 }
-                Type[] genericParameterTypes = testMethod.getGenericParameterTypes();
                 PrintUtil.consolePrint(String.format("test method is: %s%n", testMethod.getName()), PrintUtil.YELLOW);
                 PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_START, PrintUtil.GREEN);
-                for (int time = 1; time <= this.testCaseList.size(); time++) {
-                    TestCase testCase = testCaseList.get(time - 1);
-                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_SPLIT_LINE, PrintUtil.GREEN);
-                    PrintUtil.consolePrint(String.format(PrintUtil.PRINT_TEST_CASE_INNER_START, time), PrintUtil.GREEN);
-                    PrintUtil.print(String.format("input: %s", testCase.inputStr), PrintUtil.BLUE);
-                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                    PrintUtil.print(String.format("Output: %s", testCase.outputStr), PrintUtil.CYAN);
-                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                    PrintUtil.print(String.format("Explanation: %s", testCase.explanationStr), PrintUtil.YELLOW);
-                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                    String[] paramsStrArr = getParamStrArr(testCase.inputStr, genericParameterTypes);
-                    Object[] params = getParams(genericParameterTypes, paramsStrArr);
-                    try {
-                        PrintUtil.print(String.format("params: %s", TestCaseOutputUtils.formatObj(params)), PrintUtil.PURPLE);
-                        PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                        long startNanoTime = System.nanoTime();
-                        Object execRst = testMethod.invoke(testObjList.get(time - 1), params);
-                        long endNanoTime = System.nanoTime();
-                        String actualResultStr = TestCaseOutputUtils.formatObj(execRst);
-                        PrintUtil.print(String.format("result: %s", actualResultStr), PrintUtil.RED);
-                        PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                        PrintUtil.print(
-                                String.format(
-                                        "result compare: %s",
-                                        testCase.outputStr.equals(actualResultStr) || (
-                                                resultTypeIsStringType(testMethod)
-                                                        && testCase.outputStr.replaceAll("\"", "").equals(actualResultStr)
-                                        )
-                                ),
-                                PrintUtil.LIGHT_GREEN
-                        );
-                        PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                        PrintUtil.print(
-                                String.format(
-                                        "time-consuming execution : %s nanosecond, %s milliseconds, %s second",
-                                        endNanoTime - startNanoTime,
-                                        BigDecimal.valueOf(endNanoTime - startNanoTime).divide(BigDecimal.valueOf(1000000), 6, RoundingMode.HALF_UP),
-                                        BigDecimal.valueOf(endNanoTime - startNanoTime).divide(BigDecimal.valueOf(1000000000), 6, RoundingMode.HALF_UP)
-                                ),
-                                PrintUtil.LIGHT_YELLOW
-                        );
-                    } catch (IllegalAccessException | InvocationTargetException e) {
-                        e.printStackTrace();
-                        throw new RuntimeException(e);
-                    }
-                    PrintUtil.consolePrint(String.format(PrintUtil.PRINT_TEST_CASE_INNER_END, time), PrintUtil.GREEN);
-                }
+                runExamplesForMethod(testMethod, testObjList);
                 PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_SPLIT_LINE, PrintUtil.GREEN);
                 PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_END + "\n", PrintUtil.GREEN);
             }
         }
 
-        /**
-         * 从输入字符串中，根据方法参数类型数组，提取对应的参数字符串数组
-         *
-         * @param inputStr       输入字符串
-         * @param parameterTypes 方法参数类型数组
-         * @return 参数字符串数组
-         */
-        private static String[] getParamStrArr(String inputStr, Type[] parameterTypes) {
-            String[] paramsStrArr = new String[parameterTypes.length];
-            int j = 0;
-            int length = inputStr.length();
-            char ch;
-            int retrieve = -1;
-            int isArrParam = 0;
-            int doubleQuotationCount = 0;
-            StringBuilder paramStr = new StringBuilder();
-            for (int i = 0; i < length; i++) {
-                ch = inputStr.charAt(i);
-                if (ch == '=' && (doubleQuotationCount & 1) == 0) {
-                    retrieve = 0;
-                } else if (ch == '[' && retrieve == 0) {
-                    isArrParam++;
-                } else if (ch == ']' && retrieve == 0) {
-                    if (--isArrParam == 0) {
-                        retrieve = 1;
-                        paramStr.append(ch);
-                    }
-                } else if (((ch == ',') || (ch == '输' && (i + 1 < length && inputStr.charAt(i + 1) == '出')))
-                        && retrieve == 0 && isArrParam == 0) {
-                    retrieve = 1;
+        private void runExamplesForMethod(Method testMethod, List<T> testObjList) {
+            Type[] genericParameterTypes = testMethod.getGenericParameterTypes();
+            for (int time = 1; time <= this.testCaseList.size(); time++) {
+                TestCase testCase = testCaseList.get(time - 1);
+                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_SPLIT_LINE, PrintUtil.GREEN);
+                PrintUtil.consolePrint(String.format(PrintUtil.PRINT_TEST_CASE_INNER_START, time), PrintUtil.GREEN);
+                PrintUtil.print(String.format("input: %s", testCase.inputStr), PrintUtil.BLUE);
+                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                PrintUtil.print(String.format("Output: %s", testCase.outputStr), PrintUtil.CYAN);
+                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                PrintUtil.print(String.format("Explanation: %s", testCase.explanationStr), PrintUtil.YELLOW);
+                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                String[] paramsStrArr = TestCaseArgumentCodec.splitInputToParamStrings(testCase.inputStr, genericParameterTypes);
+                Object[] params = TestCaseArgumentCodec.buildParams(genericParameterTypes, paramsStrArr);
+                try {
+                    PrintUtil.print(String.format("params: %s", TestCaseOutputUtils.formatObj(params)), PrintUtil.PURPLE);
+                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                    long startNanoTime = System.nanoTime();
+                    Object execRst = testMethod.invoke(testObjList.get(time - 1), params);
+                    long endNanoTime = System.nanoTime();
+                    String actualResultStr = TestCaseOutputUtils.formatObj(execRst);
+                    PrintUtil.print(String.format("result: %s", actualResultStr), PrintUtil.RED);
+                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                    PrintUtil.print(
+                            String.format(
+                                    "result compare: %s",
+                                    testCase.outputStr.equals(actualResultStr) || (
+                                            TestCaseArgumentCodec.returnTypeComparesLikePlainString(testMethod)
+                                                    && testCase.outputStr.replaceAll("\"", "").equals(actualResultStr)
+                                    )
+                            ),
+                            PrintUtil.LIGHT_GREEN
+                    );
+                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                    PrintUtil.print(
+                            String.format(
+                                    "time-consuming execution : %s nanosecond, %s milliseconds, %s second",
+                                    endNanoTime - startNanoTime,
+                                    BigDecimal.valueOf(endNanoTime - startNanoTime).divide(BigDecimal.valueOf(1000000), 6, RoundingMode.HALF_UP),
+                                    BigDecimal.valueOf(endNanoTime - startNanoTime).divide(BigDecimal.valueOf(1000000000), 6, RoundingMode.HALF_UP)
+                            ),
+                            PrintUtil.LIGHT_YELLOW
+                    );
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
-                if (retrieve == 0) {
-                    if (ch != '=' || (doubleQuotationCount & 1) == 1) {
-                        paramStr.append(ch);
-                    }
-                    if (ch == '\"') {
-                        doubleQuotationCount++;
-                    }
-                }
-                if (retrieve == 1) {
-                    retrieve = -1;
-                    paramsStrArr[j++] = paramStr.toString();
-                    paramStr.delete(0, paramStr.length());
-                }
+                PrintUtil.consolePrint(String.format(PrintUtil.PRINT_TEST_CASE_INNER_END, time), PrintUtil.GREEN);
             }
-            if (paramStr.length() > 0 && j < paramsStrArr.length) {
-                paramsStrArr[j] = paramStr.toString();
-            }
-            if (j == 0 && paramStr.length() == 0) {
-                paramsStrArr[0] = inputStr;
-            }
-            return paramsStrArr;
         }
 
-
         /**
-         * 将字符串数组转变为给定类型的参数
-         *
-         * @param typeArr     参数类型
-         * @param paramStrArr 字符串参数
-         * @return 转化后结果
+         * 将字符串数组转变为给定类型的参数（供 {@link TestUtil#operation} 等复用）。
          */
         public static Object[] getParams(Type[] typeArr, String[] paramStrArr) {
-            if (typeArr == null || typeArr.length == 0 || paramStrArr == null || paramStrArr.length == 0) {
-                return new Object[0];
-            }
-            if (typeArr.length != paramStrArr.length) {
-                throw new IllegalArgumentException(String.format("type array's length[%d] not equal paramStr array's length[%d]",
-                        typeArr.length, paramStrArr.length));
-            }
-            Object[] params = new Object[typeArr.length];
-            for (int i = 0; i < typeArr.length; i++) {
-                paramStrArr[i] = paramStrArr[i].replaceAll("\"", "").trim();
-                params[i] = TestCaseInputUtils.resolveParameter(
-                        typeArr[i].getTypeName(),
-                        Objects.equals(typeArr[i], String.class)
-                                ? paramStrArr[i]
-                                : paramStrArr[i].replaceAll("\\s", "")
-                );
-            }
-            return params;
-        }
-
-        /**
-         * 判断returnType是不是String类型或者是String类型的数据
-         * @return returnType是不是String类型或者是String类型的数据
-         */
-        private boolean resultTypeIsStringType(Method testMethod) {
-            Class<?> returnType = testMethod.getReturnType();
-            return returnType == String.class
-                    || returnType == Character.class
-                    || returnType.isPrimitive()
-                    || (returnType.isArray() && returnType.getComponentType() == String.class);
+            return TestCaseArgumentCodec.buildParams(typeArr, paramStrArr);
         }
 
 
