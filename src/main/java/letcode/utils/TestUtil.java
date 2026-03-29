@@ -3,6 +3,7 @@ package letcode.utils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.NoSuchMethodException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -88,20 +89,73 @@ public class TestUtil {
         }
         
         public Method getTestMethodFromClass(Class<T> testClass) {
-            List<Method> annotated = Arrays.stream(testClass.getMethods())
-                    .filter(m -> Modifier.isPublic(m.getModifiers()))
-                    .filter(m -> !Modifier.isStatic(m.getModifiers()))
-                    .filter(m -> m.getDeclaringClass() == testClass)
+            List<Method> methodAnnotated = Arrays.stream(testClass.getDeclaredMethods())
                     .filter(m -> m.getAnnotation(SolutionTestMethod.class) != null)
                     .collect(Collectors.toList());
-            if (annotated.size() > 1) {
-                throw new IllegalArgumentException(String.format(
-                        "type %s has more than one @SolutionTestMethod: %s",
-                        testClass.getName(),
-                        annotated.stream().map(Method::getName).collect(Collectors.toList())));
+            for (Method m : methodAnnotated) {
+                SolutionTestMethod meta = m.getAnnotation(SolutionTestMethod.class);
+                if (!Modifier.isPublic(m.getModifiers()) || Modifier.isStatic(m.getModifiers())) {
+                    throw new IllegalArgumentException(String.format(
+                            "@SolutionTestMethod must be on a public non-static method: %s.%s",
+                            testClass.getSimpleName(), m.getName()));
+                }
+                if (meta != null && !meta.method().isEmpty()) {
+                    throw new IllegalArgumentException(String.format(
+                            "@SolutionTestMethod on method %s must leave method() empty; use class-level to specify name",
+                            m.getName()));
+                }
             }
-            if (annotated.size() == 1) {
-                return annotated.get(0);
+            if (methodAnnotated.size() > 1) {
+                throw new IllegalArgumentException(String.format(
+                        "type %s has more than one @SolutionTestMethod on methods: %s",
+                        testClass.getName(),
+                        methodAnnotated.stream().map(Method::getName).collect(Collectors.toList())));
+            }
+            if (methodAnnotated.size() == 1) {
+                return methodAnnotated.get(0);
+            }
+
+            SolutionTestMethod classAnno = testClass.getAnnotation(SolutionTestMethod.class);
+            if (classAnno != null) {
+                String methodName = classAnno.method();
+                if (methodName == null || methodName.isEmpty()) {
+                    throw new IllegalArgumentException(
+                            "@SolutionTestMethod on class requires non-empty method() to select the solution method");
+                }
+                Class<?>[] paramTypes = classAnno.paramTypes();
+                if (paramTypes != null && paramTypes.length > 0) {
+                    try {
+                        Method m = testClass.getMethod(methodName, paramTypes);
+                        if (m.getDeclaringClass() != testClass) {
+                            throw new IllegalArgumentException(String.format(
+                                    "method %s must be declared in %s, not inherited",
+                                    methodName, testClass.getName()));
+                        }
+                        if (Modifier.isStatic(m.getModifiers())) {
+                            throw new IllegalArgumentException("solution method must not be static: " + methodName);
+                        }
+                        return m;
+                    } catch (NoSuchMethodException e) {
+                        throw new IllegalArgumentException(String.format(
+                                "no method %s with paramTypes %s on %s",
+                                methodName, Arrays.toString(paramTypes), testClass.getName()), e);
+                    }
+                }
+                List<Method> sameName = Arrays.stream(testClass.getDeclaredMethods())
+                        .filter(m -> Modifier.isPublic(m.getModifiers()))
+                        .filter(m -> !Modifier.isStatic(m.getModifiers()))
+                        .filter(m -> m.getName().equals(methodName))
+                        .collect(Collectors.toList());
+                if (sameName.size() == 1) {
+                    return sameName.get(0);
+                }
+                if (sameName.isEmpty()) {
+                    throw new IllegalArgumentException(String.format(
+                            "no public instance method named %s on %s", methodName, testClass.getName()));
+                }
+                throw new IllegalArgumentException(String.format(
+                        "multiple overloads named %s on %s; set paramTypes in @SolutionTestMethod",
+                        methodName, testClass.getName()));
             }
 
             List<Method> methods = Arrays.stream(testClass.getMethods())
@@ -113,13 +167,13 @@ public class TestUtil {
             if (methods.isEmpty()) {
                 throw new IllegalArgumentException(String.format(
                         "type %s has no public non-static method declared in this class (excluding Object overrides). "
-                                + "Add exactly one @SolutionTestMethod or expose a single such method.",
+                                + "Use @SolutionTestMethod on class or method, or expose a single such method.",
                         testClass.getName()));
             }
             if (methods.size() > 1) {
                 throw new IllegalArgumentException(String.format(
                         "type %s has more than one public non-static method: %s. "
-                                + "Mark the solution with @SolutionTestMethod or reduce to one public instance method.",
+                                + "Use @SolutionTestMethod on class (method + paramTypes) or on the solution method.",
                         testClass.getName(),
                         methods.stream().map(Method::getName).collect(Collectors.toList())));
             }
