@@ -8,6 +8,9 @@
 out
 gen
 ### Java template
+# Maven
+target/
+
 # Compiled class file
 *.class
 
