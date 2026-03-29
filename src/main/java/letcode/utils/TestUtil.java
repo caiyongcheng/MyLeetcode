@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static letcode.utils.TestCaseInputUtils.*;
@@ -89,17 +88,36 @@ public class TestUtil {
         }
         
         public Method getTestMethodFromClass(Class<T> testClass) {
-            List<Method> methodList = Arrays.stream(testClass.getMethods())
-                    .filter(method -> Modifier.isPublic(method.getModifiers()))
-                    .filter(method -> !Modifier.isStatic(method.getModifiers()))
+            List<Method> methods = Arrays.stream(testClass.getMethods())
+                    .filter(m -> Modifier.isPublic(m.getModifiers()))
+                    .filter(m -> !Modifier.isStatic(m.getModifiers()))
+                    .filter(m -> m.getDeclaringClass() == testClass)
+                    .filter(m -> !isPublicObjectMethodSignature(m))
                     .collect(Collectors.toList());
-            if (methodList.size() == 9) {
-                throw new IllegalArgumentException(String.format("type %s don't have public method!", testClass.getName()));
+            if (methods.isEmpty()) {
+                throw new IllegalArgumentException(String.format(
+                        "type %s has no public non-static method declared in this class (excluding Object overrides)",
+                        testClass.getName()));
             }
-            if (methodList.size() > 10) {
-                throw new IllegalArgumentException(String.format("type %s have more than one public method!", testClass.getName()));
+            if (methods.size() > 1) {
+                throw new IllegalArgumentException(String.format(
+                        "type %s has more than one public non-static method: %s",
+                        testClass.getName(),
+                        methods.stream().map(Method::getName).collect(Collectors.toList())));
             }
-            return methodList.get(0);
+            return methods.get(0);
+        }
+
+        /**
+         * java.lang.Object 上的 public 实例方法（含签名）；子类中与之同签名的 override（如 toString）应排除，否则会与题解方法并列。
+         */
+        private static boolean isPublicObjectMethodSignature(Method m) {
+            try {
+                Object.class.getMethod(m.getName(), m.getParameterTypes());
+                return true;
+            } catch (NoSuchMethodException e) {
+                return false;
+            }
         }
         
         public void execute() {
@@ -126,16 +144,16 @@ public class TestUtil {
                     PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
                     long startNanoTime = System.nanoTime();
                     Object execRst = testMethod.invoke(testObjList.get(time - 1), params);
-                    long endNaneTime = System.nanoTime();
-                    String excuseResultStr = TestCaseOutputUtils.formatObj(execRst);
-                    PrintUtil.print(String.format("result: %s", excuseResultStr), PrintUtil.RED);
+                    long endNanoTime = System.nanoTime();
+                    String actualResultStr = TestCaseOutputUtils.formatObj(execRst);
+                    PrintUtil.print(String.format("result: %s", actualResultStr), PrintUtil.RED);
                     PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
                     PrintUtil.print(
                             String.format(
                                     "result compare: %s",
-                                    testCase.outputStr.equals(excuseResultStr) || (
+                                    testCase.outputStr.equals(actualResultStr) || (
                                             resultTypeIsStringType()
-                                                    && testCase.outputStr.replaceAll("\"", "").equals(excuseResultStr)
+                                                    && testCase.outputStr.replaceAll("\"", "").equals(actualResultStr)
                                     )
                             ),
                             PrintUtil.LIGHT_GREEN
@@ -144,9 +162,9 @@ public class TestUtil {
                     PrintUtil.print(
                             String.format(
                                     "time-consuming execution : %s nanosecond, %s milliseconds, %s second",
-                                    endNaneTime - startNanoTime,
-                                    BigDecimal.valueOf(endNaneTime - startNanoTime).divide(BigDecimal.valueOf(1000000), 6, RoundingMode.HALF_UP),
-                                    BigDecimal.valueOf(endNaneTime - startNanoTime).divide(BigDecimal.valueOf(1000000000), 6, RoundingMode.HALF_UP)
+                                    endNanoTime - startNanoTime,
+                                    BigDecimal.valueOf(endNanoTime - startNanoTime).divide(BigDecimal.valueOf(1000000), 6, RoundingMode.HALF_UP),
+                                    BigDecimal.valueOf(endNanoTime - startNanoTime).divide(BigDecimal.valueOf(1000000000), 6, RoundingMode.HALF_UP)
                             ),
                             PrintUtil.LIGHT_YELLOW
                     );
@@ -376,20 +394,21 @@ public class TestUtil {
      */
     public static String operation(Object obj, String operationStr, String paramsStr, boolean debug) {
         Method[] methodArr = obj.getClass().getDeclaredMethods();
-        Map<String, Method> methodName2Method =
-                Arrays.stream(methodArr).collect(Collectors.toMap(Method::getName, Function.identity()));
+        Map<String, List<Method>> methodsByName =
+                Arrays.stream(methodArr).collect(Collectors.groupingBy(Method::getName));
         String[] operationArr = getStrArrIgnoreDoubleQuote(operationStr);
         String[][] paramsArr = get2DimensionStrArr(paramsStr);
         String[] ans = new String[paramsArr.length];
         try {
             for (int i = 0; i < ans.length; i++) {
-                Method method = methodName2Method.get(operationArr[i]);
-                // 构造函数 忽略
-                if (method == null) {
+                List<Method> candidates = methodsByName.get(operationArr[i]);
+                if (candidates == null || candidates.isEmpty()) {
                     ans[i] = null;
                     continue;
                 }
-                Object[] params = TestCaseExecutor.getParams(method.getParameterTypes(), paramsArr[i]);
+                Method method = selectOperationMethod(candidates, paramsArr[i]);
+                method.setAccessible(true);
+                Object[] params = TestCaseExecutor.getParams(method.getGenericParameterTypes(), paramsArr[i]);
                 ans[i] = String.valueOf(method.invoke(obj, params));
                 if (debug) {
                     System.out.printf(
@@ -402,6 +421,39 @@ public class TestUtil {
             System.err.printf("operation method has error: %s \n", e.getMessage());
         }
         return Arrays.toString(ans);
+    }
+
+    /**
+     * 在同名方法中按参数个数解析重载；多个同 arity 时尝试 {@link TestCaseExecutor#getParams} 直至成功。
+     */
+    private static Method selectOperationMethod(List<Method> candidates, String[] paramStrings) {
+        int arity = paramStrings.length;
+        List<Method> arityMatch = candidates.stream()
+                .filter(m -> m.getGenericParameterTypes().length == arity)
+                .collect(Collectors.toList());
+        if (arityMatch.isEmpty()) {
+            throw new IllegalArgumentException(String.format(
+                    "No overload with arity %d for name %s, candidates=%s, params=%s",
+                    arity,
+                    candidates.get(0).getName(),
+                    candidates.stream().map(Method::toString).collect(Collectors.toList()),
+                    Arrays.toString(paramStrings)));
+        }
+        if (arityMatch.size() == 1) {
+            return arityMatch.get(0);
+        }
+        for (Method m : arityMatch) {
+            try {
+                TestCaseExecutor.getParams(m.getGenericParameterTypes(), paramStrings);
+                return m;
+            } catch (RuntimeException ignored) {
+                // try next overload
+            }
+        }
+        throw new IllegalArgumentException(String.format(
+                "Cannot resolve overload among %s for params %s",
+                arityMatch.stream().map(Method::toString).collect(Collectors.toList()),
+                Arrays.toString(paramStrings)));
     }
 
     /**

@@ -194,6 +194,38 @@ public class TestCaseInputUtils {
     }
 
     /**
+     * 将输入数组字符串转为 Long 装箱数组（元素可为 null）
+     */
+    public static Long[] getLongObjArr(String inputStr) {
+        return getStrArr(
+                inputStr.trim(),
+                ",",
+                str -> {
+                    if ("NULL".equalsIgnoreCase(str)) {
+                        return null;
+                    }
+                    return Long.parseLong(str.replaceAll("\"", "").trim());
+                },
+                new Long[0]
+        );
+    }
+
+    /**
+     * 将输入数组字符串转为 long 基本类型数组
+     */
+    public static long[] getLongArr(String inputStr) {
+        Long[] boxed = getLongObjArr(inputStr);
+        long[] longArr = new long[boxed.length];
+        for (int i = 0; i < boxed.length; i++) {
+            if (boxed[i] == null) {
+                throw new IllegalArgumentException("null element not allowed in long[]");
+            }
+            longArr[i] = boxed[i];
+        }
+        return longArr;
+    }
+
+    /**
      * 将输入数组字符串转为int数组
      * @param inputStr 数组字符串 例如 "["1", "2", 3]"
      * @return Integer数组 [1,2,3]
@@ -356,18 +388,15 @@ public class TestCaseInputUtils {
             return get2DimensionArr(
                     paramsStr,
                     ",",
-                    strArr -> Arrays.stream(strArr.split(","))
-                            .map(String::trim)
-                            .map(Long::parseLong)
-                            .mapToLong(Long::intValue).toArray(),
-                    new int[0][0]
+                    TestCaseInputUtils::getLongArr,
+                    new long[0][0]
             );
         } else if (paramType.contains("long[]")) {
-            return getIntArr(paramsStr);
+            return getLongArr(paramsStr);
         } else if (paramType.contains("Long[]")) {
-            return getIntegerArr(paramsStr);
+            return getLongObjArr(paramsStr);
         } else if (paramType.contains("Long") || paramType.contains("long")) {
-            return Integer.parseInt(paramsStr);
+            return Long.parseLong(paramsStr.replaceAll("\"", "").trim());
         } else if (paramType.contains("Character") || paramType.contains("char")) {
             return paramsStr.charAt(0);
         } else if (paramType.contains("String[")) {

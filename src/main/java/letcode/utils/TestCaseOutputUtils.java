@@ -237,11 +237,17 @@ public class TestCaseOutputUtils {
      * @return prefix array[0].toString() separator array[1].toString() suffix
      */
     public static String formatNodeLists(ListNode node, String prefix, String suffix, String separator) {
-        final StringBuilder formatStr = new StringBuilder(prefix);
-        while (node.next != null) {
-            formatStr.append(node.val).append(separator);
+        if (node == null) {
+            return prefix + suffix;
         }
-        formatStr.delete(formatStr.length() - separator.length(), formatStr.length());
+        final StringBuilder formatStr = new StringBuilder(prefix);
+        while (node != null) {
+            formatStr.append(node.val);
+            if (node.next != null) {
+                formatStr.append(separator);
+            }
+            node = node.next;
+        }
         return formatStr.append(suffix).toString();
     }
 
@@ -262,6 +268,9 @@ public class TestCaseOutputUtils {
     public static<T> String formatObj(Object execRst) {
         if (Objects.isNull(execRst)) {
             return "null";
+        }
+        if (execRst instanceof ListNode) {
+            return formatNodeLists((ListNode) execRst);
         }
         if (execRst instanceof List) {
             return "[" + ((List<?>) execRst).stream().map(TestCaseOutputUtils::formatObj).collect(Collectors.joining(",")) + "]";
