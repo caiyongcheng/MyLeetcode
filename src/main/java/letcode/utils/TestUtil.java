@@ -88,6 +88,22 @@ public class TestUtil {
         }
         
         public Method getTestMethodFromClass(Class<T> testClass) {
+            List<Method> annotated = Arrays.stream(testClass.getMethods())
+                    .filter(m -> Modifier.isPublic(m.getModifiers()))
+                    .filter(m -> !Modifier.isStatic(m.getModifiers()))
+                    .filter(m -> m.getDeclaringClass() == testClass)
+                    .filter(m -> m.getAnnotation(SolutionTestMethod.class) != null)
+                    .collect(Collectors.toList());
+            if (annotated.size() > 1) {
+                throw new IllegalArgumentException(String.format(
+                        "type %s has more than one @SolutionTestMethod: %s",
+                        testClass.getName(),
+                        annotated.stream().map(Method::getName).collect(Collectors.toList())));
+            }
+            if (annotated.size() == 1) {
+                return annotated.get(0);
+            }
+
             List<Method> methods = Arrays.stream(testClass.getMethods())
                     .filter(m -> Modifier.isPublic(m.getModifiers()))
                     .filter(m -> !Modifier.isStatic(m.getModifiers()))
@@ -96,12 +112,14 @@ public class TestUtil {
                     .collect(Collectors.toList());
             if (methods.isEmpty()) {
                 throw new IllegalArgumentException(String.format(
-                        "type %s has no public non-static method declared in this class (excluding Object overrides)",
+                        "type %s has no public non-static method declared in this class (excluding Object overrides). "
+                                + "Add exactly one @SolutionTestMethod or expose a single such method.",
                         testClass.getName()));
             }
             if (methods.size() > 1) {
                 throw new IllegalArgumentException(String.format(
-                        "type %s has more than one public non-static method: %s",
+                        "type %s has more than one public non-static method: %s. "
+                                + "Mark the solution with @SolutionTestMethod or reduce to one public instance method.",
                         testClass.getName(),
                         methods.stream().map(Method::getName).collect(Collectors.toList())));
             }
