@@ -3,13 +3,14 @@ package letcode.utils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.NoSuchMethodException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -55,7 +56,7 @@ public class TestUtil {
     
     static class TestCaseExecutor<T> {
 
-        private Method testMethod;
+        private List<Method> testMethods;
 
         private List<TestCase> testCaseList;
         
@@ -70,7 +71,7 @@ public class TestUtil {
         }
         
         public void init(Class<T> testClass, String... testCaseStrArr) {
-            testMethod = getTestMethodFromClass(testClass);
+            testMethods = getTestMethodsFromClass(testClass);
             testObjList = Arrays.stream(testCaseStrArr)
                     .map(str -> {
                         try {
@@ -88,7 +89,10 @@ public class TestUtil {
                     .collect(Collectors.toList());
         }
         
-        public Method getTestMethodFromClass(Class<T> testClass) {
+        /**
+         * 返回本题要跑的全部题解方法（顺序：类上可重复注解顺序，或方法上注解的声明顺序）。
+         */
+        public List<Method> getTestMethodsFromClass(Class<T> testClass) {
             List<Method> methodAnnotated = Arrays.stream(testClass.getDeclaredMethods())
                     .filter(m -> m.getAnnotation(SolutionTestMethod.class) != null)
                     .collect(Collectors.toList());
@@ -105,57 +109,25 @@ public class TestUtil {
                             m.getName()));
                 }
             }
-            if (methodAnnotated.size() > 1) {
+
+            SolutionTestMethod[] classAnnos = testClass.getAnnotationsByType(SolutionTestMethod.class);
+
+            if (!methodAnnotated.isEmpty() && classAnnos.length > 0) {
                 throw new IllegalArgumentException(String.format(
-                        "type %s has more than one @SolutionTestMethod on methods: %s",
-                        testClass.getName(),
-                        methodAnnotated.stream().map(Method::getName).collect(Collectors.toList())));
-            }
-            if (methodAnnotated.size() == 1) {
-                return methodAnnotated.get(0);
+                        "type %s cannot mix @SolutionTestMethod on class and on methods at the same time",
+                        testClass.getName()));
             }
 
-            SolutionTestMethod classAnno = testClass.getAnnotation(SolutionTestMethod.class);
-            if (classAnno != null) {
-                String methodName = classAnno.method();
-                if (methodName == null || methodName.isEmpty()) {
-                    throw new IllegalArgumentException(
-                            "@SolutionTestMethod on class requires non-empty method() to select the solution method");
+            if (!methodAnnotated.isEmpty()) {
+                return methodAnnotated;
+            }
+
+            if (classAnnos.length > 0) {
+                List<Method> resolved = new ArrayList<>(classAnnos.length);
+                for (SolutionTestMethod classAnno : classAnnos) {
+                    resolved.add(resolveMethodFromClassAnnotation(testClass, classAnno));
                 }
-                Class<?>[] paramTypes = classAnno.paramTypes();
-                if (paramTypes != null && paramTypes.length > 0) {
-                    try {
-                        Method m = testClass.getMethod(methodName, paramTypes);
-                        if (m.getDeclaringClass() != testClass) {
-                            throw new IllegalArgumentException(String.format(
-                                    "method %s must be declared in %s, not inherited",
-                                    methodName, testClass.getName()));
-                        }
-                        if (Modifier.isStatic(m.getModifiers())) {
-                            throw new IllegalArgumentException("solution method must not be static: " + methodName);
-                        }
-                        return m;
-                    } catch (NoSuchMethodException e) {
-                        throw new IllegalArgumentException(String.format(
-                                "no method %s with paramTypes %s on %s",
-                                methodName, Arrays.toString(paramTypes), testClass.getName()), e);
-                    }
-                }
-                List<Method> sameName = Arrays.stream(testClass.getDeclaredMethods())
-                        .filter(m -> Modifier.isPublic(m.getModifiers()))
-                        .filter(m -> !Modifier.isStatic(m.getModifiers()))
-                        .filter(m -> m.getName().equals(methodName))
-                        .collect(Collectors.toList());
-                if (sameName.size() == 1) {
-                    return sameName.get(0);
-                }
-                if (sameName.isEmpty()) {
-                    throw new IllegalArgumentException(String.format(
-                            "no public instance method named %s on %s", methodName, testClass.getName()));
-                }
-                throw new IllegalArgumentException(String.format(
-                        "multiple overloads named %s on %s; set paramTypes in @SolutionTestMethod",
-                        methodName, testClass.getName()));
+                return resolved;
             }
 
             List<Method> methods = Arrays.stream(testClass.getMethods())
@@ -177,7 +149,59 @@ public class TestUtil {
                         testClass.getName(),
                         methods.stream().map(Method::getName).collect(Collectors.toList())));
             }
-            return methods.get(0);
+            return Collections.singletonList(methods.get(0));
+        }
+
+        public Method getTestMethodFromClass(Class<T> testClass) {
+            List<Method> list = getTestMethodsFromClass(testClass);
+            if (list.size() != 1) {
+                throw new IllegalArgumentException(String.format(
+                        "expected exactly one solution method, found %d; use getTestMethodsFromClass() for multiple",
+                        list.size()));
+            }
+            return list.get(0);
+        }
+
+        private static Method resolveMethodFromClassAnnotation(Class<?> testClass, SolutionTestMethod classAnno) {
+            String methodName = classAnno.method();
+            if (methodName == null || methodName.isEmpty()) {
+                throw new IllegalArgumentException(
+                        "@SolutionTestMethod on class requires non-empty method() to select the solution method");
+            }
+            Class<?>[] paramTypes = classAnno.paramTypes();
+            if (paramTypes != null && paramTypes.length > 0) {
+                try {
+                    Method m = testClass.getMethod(methodName, paramTypes);
+                    if (m.getDeclaringClass() != testClass) {
+                        throw new IllegalArgumentException(String.format(
+                                "method %s must be declared in %s, not inherited",
+                                methodName, testClass.getName()));
+                    }
+                    if (Modifier.isStatic(m.getModifiers())) {
+                        throw new IllegalArgumentException("solution method must not be static: " + methodName);
+                    }
+                    return m;
+                } catch (NoSuchMethodException e) {
+                    throw new IllegalArgumentException(String.format(
+                            "no method %s with paramTypes %s on %s",
+                            methodName, Arrays.toString(paramTypes), testClass.getName()), e);
+                }
+            }
+            List<Method> sameName = Arrays.stream(testClass.getDeclaredMethods())
+                    .filter(m -> Modifier.isPublic(m.getModifiers()))
+                    .filter(m -> !Modifier.isStatic(m.getModifiers()))
+                    .filter(m -> m.getName().equals(methodName))
+                    .collect(Collectors.toList());
+            if (sameName.size() == 1) {
+                return sameName.get(0);
+            }
+            if (sameName.isEmpty()) {
+                throw new IllegalArgumentException(String.format(
+                        "no public instance method named %s on %s", methodName, testClass.getName()));
+            }
+            throw new IllegalArgumentException(String.format(
+                    "multiple overloads named %s on %s; set paramTypes in @SolutionTestMethod",
+                    methodName, testClass.getName()));
         }
 
         /**
@@ -193,61 +217,72 @@ public class TestUtil {
         }
         
         public void execute() {
-            Type[] genericParameterTypes = testMethod.getGenericParameterTypes();
-            PrintUtil.consolePrint(String.format("test class is: %s%n", testMethod.getDeclaringClass().getSimpleName()),
+            Method first = testMethods.get(0);
+            PrintUtil.consolePrint(String.format("test class is: %s%n", first.getDeclaringClass().getSimpleName()),
                     PrintUtil.YELLOW);
-            PrintUtil.consolePrint(String.format("test method is: %s%n", testMethod.getName()), PrintUtil.YELLOW);
-            PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_START, PrintUtil.GREEN);
-            for (int time = 1; time <= this.testCaseList.size(); time++) {
-                TestCase testCase = testCaseList.get(time - 1);
-                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_SPLIT_LINE, PrintUtil.GREEN);
-                //System.out.printf(PrintUtil.PRINT_TEST_CASE_INNER_TOP);
-                PrintUtil.consolePrint(String.format(PrintUtil.PRINT_TEST_CASE_INNER_START, time), PrintUtil.GREEN);
-                PrintUtil.print(String.format("input: %s", testCase.inputStr), PrintUtil.BLUE);
-                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                PrintUtil.print(String.format("Output: %s",  testCase.outputStr), PrintUtil.CYAN);
-                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                PrintUtil.print(String.format("Explanation: %s", testCase.explanationStr), PrintUtil.YELLOW);
-                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                String[] paramsStrArr = getParamStrArr(testCase.inputStr, genericParameterTypes);
-                Object[] params = getParams(genericParameterTypes, paramsStrArr);
-                try {
-                    PrintUtil.print(String.format("params: %s", TestCaseOutputUtils.formatObj(params)), PrintUtil.PURPLE);
-                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                    long startNanoTime = System.nanoTime();
-                    Object execRst = testMethod.invoke(testObjList.get(time - 1), params);
-                    long endNanoTime = System.nanoTime();
-                    String actualResultStr = TestCaseOutputUtils.formatObj(execRst);
-                    PrintUtil.print(String.format("result: %s", actualResultStr), PrintUtil.RED);
-                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                    PrintUtil.print(
-                            String.format(
-                                    "result compare: %s",
-                                    testCase.outputStr.equals(actualResultStr) || (
-                                            resultTypeIsStringType()
-                                                    && testCase.outputStr.replaceAll("\"", "").equals(actualResultStr)
-                                    )
-                            ),
-                            PrintUtil.LIGHT_GREEN
-                    );
-                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
-                    PrintUtil.print(
-                            String.format(
-                                    "time-consuming execution : %s nanosecond, %s milliseconds, %s second",
-                                    endNanoTime - startNanoTime,
-                                    BigDecimal.valueOf(endNanoTime - startNanoTime).divide(BigDecimal.valueOf(1000000), 6, RoundingMode.HALF_UP),
-                                    BigDecimal.valueOf(endNanoTime - startNanoTime).divide(BigDecimal.valueOf(1000000000), 6, RoundingMode.HALF_UP)
-                            ),
-                            PrintUtil.LIGHT_YELLOW
-                    );
-                } catch (IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
-                    throw new RuntimeException(e);
+            for (int mi = 0; mi < testMethods.size(); mi++) {
+                Method testMethod = testMethods.get(mi);
+                if (testMethods.size() > 1) {
+                    PrintUtil.consolePrint(String.format(
+                            "---------- solution targets [%d/%d]: %s ----------%n",
+                            mi + 1,
+                            testMethods.size(),
+                            testMethod.getName()
+                    ), PrintUtil.YELLOW);
                 }
-                PrintUtil.consolePrint(String.format(PrintUtil.PRINT_TEST_CASE_INNER_END, time), PrintUtil.GREEN);
+                Type[] genericParameterTypes = testMethod.getGenericParameterTypes();
+                PrintUtil.consolePrint(String.format("test method is: %s%n", testMethod.getName()), PrintUtil.YELLOW);
+                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_START, PrintUtil.GREEN);
+                for (int time = 1; time <= this.testCaseList.size(); time++) {
+                    TestCase testCase = testCaseList.get(time - 1);
+                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_SPLIT_LINE, PrintUtil.GREEN);
+                    PrintUtil.consolePrint(String.format(PrintUtil.PRINT_TEST_CASE_INNER_START, time), PrintUtil.GREEN);
+                    PrintUtil.print(String.format("input: %s", testCase.inputStr), PrintUtil.BLUE);
+                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                    PrintUtil.print(String.format("Output: %s", testCase.outputStr), PrintUtil.CYAN);
+                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                    PrintUtil.print(String.format("Explanation: %s", testCase.explanationStr), PrintUtil.YELLOW);
+                    PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                    String[] paramsStrArr = getParamStrArr(testCase.inputStr, genericParameterTypes);
+                    Object[] params = getParams(genericParameterTypes, paramsStrArr);
+                    try {
+                        PrintUtil.print(String.format("params: %s", TestCaseOutputUtils.formatObj(params)), PrintUtil.PURPLE);
+                        PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                        long startNanoTime = System.nanoTime();
+                        Object execRst = testMethod.invoke(testObjList.get(time - 1), params);
+                        long endNanoTime = System.nanoTime();
+                        String actualResultStr = TestCaseOutputUtils.formatObj(execRst);
+                        PrintUtil.print(String.format("result: %s", actualResultStr), PrintUtil.RED);
+                        PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                        PrintUtil.print(
+                                String.format(
+                                        "result compare: %s",
+                                        testCase.outputStr.equals(actualResultStr) || (
+                                                resultTypeIsStringType(testMethod)
+                                                        && testCase.outputStr.replaceAll("\"", "").equals(actualResultStr)
+                                        )
+                                ),
+                                PrintUtil.LIGHT_GREEN
+                        );
+                        PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_INNER_SPLIT_LINE, PrintUtil.GREEN);
+                        PrintUtil.print(
+                                String.format(
+                                        "time-consuming execution : %s nanosecond, %s milliseconds, %s second",
+                                        endNanoTime - startNanoTime,
+                                        BigDecimal.valueOf(endNanoTime - startNanoTime).divide(BigDecimal.valueOf(1000000), 6, RoundingMode.HALF_UP),
+                                        BigDecimal.valueOf(endNanoTime - startNanoTime).divide(BigDecimal.valueOf(1000000000), 6, RoundingMode.HALF_UP)
+                                ),
+                                PrintUtil.LIGHT_YELLOW
+                        );
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException(e);
+                    }
+                    PrintUtil.consolePrint(String.format(PrintUtil.PRINT_TEST_CASE_INNER_END, time), PrintUtil.GREEN);
+                }
+                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_SPLIT_LINE, PrintUtil.GREEN);
+                PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_END + "\n", PrintUtil.GREEN);
             }
-            PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_SPLIT_LINE, PrintUtil.GREEN);
-            PrintUtil.consolePrint(PrintUtil.PRINT_TEST_CASE_END + "\n", PrintUtil.GREEN);
         }
 
         /**
@@ -337,7 +372,7 @@ public class TestUtil {
          * 判断returnType是不是String类型或者是String类型的数据
          * @return returnType是不是String类型或者是String类型的数据
          */
-        private boolean resultTypeIsStringType() {
+        private boolean resultTypeIsStringType(Method testMethod) {
             Class<?> returnType = testMethod.getReturnType();
             return returnType == String.class
                     || returnType == Character.class
