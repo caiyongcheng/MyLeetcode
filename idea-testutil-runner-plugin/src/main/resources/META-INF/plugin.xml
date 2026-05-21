@@ -1,0 +1,24 @@
+<idea-plugin>
+    <id>letcode.testutil.runner</id>
+    <name>LeetCode TestUtil Runner</name>
+    <version>1.0.0</version>
+    <vendor email="noreply@example.com">Local</vendor>
+    <idea-version since-build="233"/>
+    <description><![CDATA[
+        Run current Java class through letcode.utils.TestUtilRunner.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <actions>
+        <action id="letcode.testutil.runner.action"
+                class="letcode.plugin.RunWithTestUtilAction"
+                text="Run via TestUtilRunner"
+                description="Run current Java class with letcode.utils.TestUtilRunner">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
