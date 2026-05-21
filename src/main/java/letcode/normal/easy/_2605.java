@@ -64,26 +64,4 @@ public class _2605 {
     }
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：nums1 = [4,1,3], nums2 = [5,7]
-     * 输出：15
-     * 解释：数字 15 的数位 1 在 nums1 中出现，数位 5 在 nums2 中出现。15 是我们能得到的最小数字。
-     * 示例 2：
-     * <p>
-     * 输入：nums1 = [3,5,2,6], nums2 = [3,1,7]
-     * 输出：3
-     * 解释：数字 3 的数位 3 在两个数组中都出现了。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2605().minNumber(
-                new int[]{3, 5, 2, 6},
-                new int[]{3, 1, 7}
-        ));
-    }
-
-
 }

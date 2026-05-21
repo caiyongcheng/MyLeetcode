@@ -75,22 +75,4 @@ public class _670 {
     }
 
 
-    /**
-     * 示例 1 :
-     * <p>
-     * 输入: 2736
-     * 输出: 7236
-     * 解释: 交换数字2和数字7。
-     * 示例 2 :
-     * <p>
-     * 输入: 9973
-     * 输出: 9973
-     * 解释: 不需要交换。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _670().maximumSwap(9973));
-    }
-
 }

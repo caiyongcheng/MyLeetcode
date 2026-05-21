@@ -107,29 +107,4 @@ public class _1061 {
         return res;
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: s1 = "parker", s2 = "morris", baseStr = "parser"
-     * Output: "makkek"
-     * Explanation: Based on the equivalency information in s1 and s2, we can group their characters as [m,p], [a,o], [k,r,s], [e,i].
-     * The characters in each group are equivalent and sorted in lexicographical order.
-     * So the answer is "makkek".
-     * Example 2:
-     *
-     * Input: s1 = "hello", s2 = "world", baseStr = "hold"
-     * Output: "hdld"
-     * Explanation: Based on the equivalency information in s1 and s2, we can group their characters as [h,w], [d,e,o], [l,r].
-     * So only the second letter 'o' in baseStr is changed to 'd', the answer is "hdld".
-     * Example 3:
-     *
-     * Input: s1 = "leetcode", s2 = "programs", baseStr = "sourcecode"
-     * Output: "aauaaaaada"
-     * Explanation: We group the equivalent characters in s1 and s2 as [a,o,e,r,s,c], [l,p], [g,t] and [d,m], thus all letters in baseStr except 'u' and 'd' are transformed to 'a', the answer is "aauaaaaada".
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
-    }
-
 }

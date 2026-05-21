@@ -70,36 +70,4 @@ public class _1090 {
     }
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：values = new int[]{5,4,3,2,1}, labels = new int[]{1,1,2,2,3}, numWanted = 3, useLimit = 1
-     * 输出：9
-     * 解释：选出的子集是第一项，第三项和第五项。
-     * 示例 2：
-     * <p>
-     * 输入：values = new int[]{5,4,3,2,1}, labels = new int[]{1,3,3,3,2}, numWanted = 3, useLimit = 2
-     * 输出：12
-     * 解释：选出的子集是第一项，第二项和第三项。
-     * 示例 3：
-     * <p>
-     * 输入：values = new int[]{9,8,8,7,6}, labels = new int[]{0,0,0,1,1}, numWanted = 3, useLimit = 1
-     * 输出：16
-     * 解释：选出的子集是第一项和第四项。
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode.cn/problems/largest-values-from-labels
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1090().largestValsFromLabels(
-                new int[]{9, 8, 8, 7, 6},
-                new int[]{0, 0, 0, 1, 1},
-                3,
-                1
-        ));
-    }
-
 }

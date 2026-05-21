@@ -1,0 +1,1 @@
+ 示例 1： 输入：nums = [1,2,3,4] 输出：3 解释：nums 中有三个子等差数组：[1, 2, 3]、[2, 3, 4] 和 [1,2,3,4] 自身。 示例 2： 输入：nums = [1] 输出：0 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/arithmetic-slices 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。

@@ -129,22 +129,4 @@ public class _1044 {
     }
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：s = "banana"
-     * 输出："ana"
-     * 示例 2：
-     * <p>
-     * 输入：s = "abcd"
-     * 输出：""
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1044().longestDupSubstring(
-                "banana"
-        ));
-    }
-
 }

@@ -120,27 +120,4 @@ public class _393 {
         return true;
     }
 
-    /**
-     * 示例 1:
-     * data = [197, 130, 1], 表示 8 位的序列: 11000101 10000010 00000001.
-     * 返回 true 。
-     * 这是有效的 utf-8 编码，为一个2字节字符，跟着一个1字节字符。
-     *
-     * 示例 2:
-     * data = [235, 140, 4], 表示 8 位的序列: 11101011 10001100 00000100.
-     * 返回 false 。
-     * 前 3 位都是 1 ，第 4 位为 0 表示它是一个3字节字符。
-     * 下一个字节是开头为 10 的延续字节，这是正确的。
-     * 但第二个延续字节不以 10 开头，所以是不符合规则的。
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/utf-8-validation
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _393().validUtf8(new int[]{
-
-        }));
-    }
-
 }

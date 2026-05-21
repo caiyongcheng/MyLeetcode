@@ -45,27 +45,4 @@ public class _322 {
     }
 
 
-    /**
-     * 示例 1：
-     *
-     * 输入：coins = [1, 2, 5], amount = 11
-     * 输出：3
-     * 解释：11 = 5 + 5 + 1
-     * 示例 2：
-     *
-     * 输入：coins = [2], amount = 3
-     * 输出：-1
-     * 示例 3：
-     *
-     * 输入：coins = [1], amount = 0
-     * 输出：0
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _322().coinChange(
-                TestCaseInputUtils.getIntArr("[1, 2, 5]"),
-                11
-        ));
-    }
-
 }

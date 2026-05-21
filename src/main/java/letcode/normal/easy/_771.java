@@ -51,21 +51,4 @@ public class _771 {
     }
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：jewels = "aA", stones = "aAAbbbb"
-     * 输出：3
-     * 示例 2：
-     * <p>
-     * 输入：jewels = "z", stones = "ZZ"
-     * 输出：0
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(_771.numJewelsInStones("z", "ZZ"));
-    }
-
-
 }

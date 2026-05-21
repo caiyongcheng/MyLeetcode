@@ -52,25 +52,4 @@ public class _10_02_Ten_Two {
     }
 
 
-    /**
-     * 输入: ["eat", "tea", "tan", "ate", "nat", "bat"],
-     * 输出:
-     * [
-     *   ["ate","eat","tea"],
-     *   ["nat","tan"],
-     *   ["bat"]
-     * ]
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/group-anagrams-lcci
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        List<List<String>> lists = new _10_02_Ten_Two().groupAnagrams(new String[]{"eat", "tea", "tan", "ate", "nat", "bat"});
-        for (List<String> list : lists) {
-            System.out.println(TestCaseOutputUtils.formatList(list));
-        }
-    }
-
-
 }

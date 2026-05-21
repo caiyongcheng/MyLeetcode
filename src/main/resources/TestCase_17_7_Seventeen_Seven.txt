@@ -1,0 +1,1 @@
+ 示例： 输入：names = ["John(15)","Jon(12)","Chris(13)","Kris(4)","Christopher(19)"], synonyms = ["(Jon,John)","(John,Johnny)","(Chris,Kris)","(Chris,Christopher)"] 输出：["John(27)","Chris(36)"] 来源：力扣（LeetCode） ["a(10)","c(13)"] ["(a,b)","(c,d)","(b,c)"] 链接：https://leetcode-cn.com/problems/baby-names-lcci 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。

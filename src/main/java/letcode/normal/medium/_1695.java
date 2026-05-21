@@ -32,22 +32,4 @@ public class _1695 {
         return ans;
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: nums = [4,2,4,5,6]
-     * Output: 17
-     * Explanation: The optimal subarray here is [2,4,5,6].
-     * Example 2:
-     *
-     * Input: nums = [5,2,1,2,5,2,1,2,5]
-     * Output: 8
-     * Explanation: The optimal subarray here is [5,2,1] or [1,2,5].
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
-    }
-
-
 }

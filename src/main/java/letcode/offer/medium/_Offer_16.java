@@ -36,30 +36,6 @@ package letcode.offer.medium;
 public class _Offer_16 {
 
 
-    /**
-     * 示例 1:
-     * 输入: 2.00000, 10
-     * 输出: 1024.00000
-     * <p>
-     * 示例2:
-     * 输入: 2.10000, 3
-     * 输出: 9.26100
-     * <p>
-     * 示例3:
-     * 输入: 2.00000, -2
-     * 输出: 0.25000
-     * 解释: 2-2 = 1/22 = 1/4 = 0.25
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/shu-zhi-de-zheng-shu-ci-fang-lcof
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _Offer_16().myPow(2.10000, 3));
-
-    }
-
     public double myPowRecursion(double x, int n) {
         if (n == 1) {
             return x;

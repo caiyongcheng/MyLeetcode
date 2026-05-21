@@ -101,17 +101,4 @@ public class _767 {
         return String.valueOf(ans);
     }
 
-    /**
-     * 示例 1:
-     * 输入: S = "aab"
-     * 输出: "aba"
-     * 示例 2:
-     * 输入: S = "aaab"
-     * 输出: ""
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _767().reorganizeString("aaab"));
-    }
-
 }

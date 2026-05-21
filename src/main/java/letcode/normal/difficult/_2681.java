@@ -78,24 +78,4 @@ public class _2681 {
         return rst.intValue();
     }
 
-    /**
-     * 输入：nums = [2,1,4]
-     * 输出：141
-     * 解释：1 12 16*7
-     * 第 2 组：[1] 的力量为 12 * 1 = 1 。
-     * 第 1 组：[2] 的力量为 22 * 2 = 8 。
-     * 第 4 组：[2,1] 的力量为 22 * 1 = 4 。
-     * 第 3 组：[4] 的力量为 42 * 4 = 64 。
-     * 第 5 组：[2,4] 的力量为 42 * 2 = 32 。
-     * 第 6 组：[1,4] 的力量为 42 * 1 = 16 。
-     * 第 7 组：[2,1,4] 的力量为 42 * 1 = 16 。
-     * 所有英雄组的力量之和为 8 + 1 + 64 + 4 + 32 + 16 + 16 = 141 。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(BigDecimal.valueOf(1000000000 + 7));
-        System.out.println(BigDecimal.valueOf(10e9 + 7));
-    }
-
 }

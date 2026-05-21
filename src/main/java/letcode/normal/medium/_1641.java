@@ -49,28 +49,4 @@ public class _1641 {
     }
 
 
-    /**
-     * 示例 1：
-     *
-     * 输入：n = 1
-     * 输出：5
-     * 解释：仅由元音组成的 5 个字典序字符串为 ["a","e","i","o","u"]
-     * 示例 2：
-     *
-     * 输入：n = 2
-     * 输出：15
-     * 解释：仅由元音组成的 15 个字典序字符串为
-     * ["aa","ae","ai","ao","au","ee","ei","eo","eu","ii","io","iu","oo","ou","uu"]
-     * 注意，"ea" 不是符合题意的字符串，因为 'e' 在字母表中的位置比 'a' 靠后
-     *
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/count-sorted-vowel-strings
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1641().countVowelStrings(4));
-    }
-
 }

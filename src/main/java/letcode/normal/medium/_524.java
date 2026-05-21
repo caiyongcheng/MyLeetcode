@@ -72,34 +72,4 @@ public class _524 {
     }
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：s = "abpcplea", dictionary = ["ale","apple","monkey","plea"]
-     * 输出："apple"
-     * 示例 2：
-     * <p>
-     * 输入：s = "abpcplea", dictionary = ["a","b","c"]
-     * 输出："a"
-     * <p>
-     * "abpcplea"
-     * ["ale","apple","monkey","plea", "abpcplaaa","abpcllllll","abccclllpppeeaaaa"]
-     * <p>
-     * "aaa"
-     * ["aaa","aa","a"]
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _524().findLongestWord(
-                "abpcplea",
-                Arrays.asList("ale", "apple", "monkey", "plea")
-        ));
-    }
-
-
 }

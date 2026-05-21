@@ -141,44 +141,6 @@ public class _1670 {
         return delVal;
     }
 
-    /**
-     * {"pushFront","pushMiddle","pushMiddle","pushFront","pushFront","pushMiddle","popMiddle","popMiddle","pushMiddle","pushMiddle","popFront"}
-     * {{888438],{772690],{375192],{411268],{885613},{508187},{},{},{111498},{296008},{}}
-     * 输出：
-     * [null, null, null, null, null, 1, 3, 4, 2, -1]
-     *
-     * 解释：
-     * FrontMiddleBackQueue q = new FrontMiddleBackQueue();
-     * q.pushFront(1);   // [1]
-     * q.pushBack(2);    // [1, 2]
-     * q.pushMiddle(3);  // [1, 3, 2]
-     * q.pushMiddle(4);  // [1, 4, 3, 2]
-     * q.popFront();     // 返回 1 -> [4, 3, 2]
-     * q.popMiddle();    // 返回 3 -> [4, 2]
-     * q.popMiddle();    // 返回 4 -> [2]
-     * q.popBack();      // 返回 2 -> []
-     * q.popFront();     // 返回 -1 -> [] （队列为空）
-     * @param args
-     */
-    public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        String[] optArr = {
-                "pushFront", "pushBack", "pushMiddle", "pushMiddle", "popFront", "popMiddle", "popMiddle", "popBack", "popFront"
-        };
-        Object[][] data = {{1}, {2}, {3}, {4}, {}, {}, {}, {}, {}};
-
-        _1670 check = new _1670();
-        Class<? extends _1670> checkClass = check.getClass();
-        Map<String, Method> name2Method = Arrays.stream(checkClass.getMethods()).filter(method -> method.getName().startsWith("p")).collect(Collectors.toMap(
-                Method::getName,
-                Function.identity()
-        ));
-        for (int i = 0; i < optArr.length; i++) {
-            display(check);
-            Method method = name2Method.get(optArr[i]);
-            System.out.println(method.invoke(check, data[i]));
-        }
-    }
-
     static void display(_1670 c) {
         InnerNode t = c.head.next;
         System.out.print("[");

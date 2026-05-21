@@ -39,17 +39,6 @@ package letcode.lrc.medium;
  */
 public class _46 {
 
-    /**
-     * 输入: 12258
-     * 输出: 5
-     * 解释: 12258有5种不同的翻译，分别是"bccfi", "bwfi", "bczi", "mcfi"和"mzi"
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _46().translateNum(100));
-    }
-
     public int translateNum(int num) {
         if (num < 10) {
             return 1;

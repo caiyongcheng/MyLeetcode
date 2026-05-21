@@ -43,36 +43,6 @@ package letcode.normal.medium;
 public class _794 {
 
 
-    /**
-     * 示例 1:
-     * 输入: board = ["O  ", "   ", "   "]
-     * 输出: false
-     * 解释: 第一个玩家总是放置“X”。
-     * <p>
-     * 示例 2:
-     * 输入: board = ["XOX", " X ", "   "]
-     * 输出: false
-     * 解释: 玩家应该是轮流放置的。
-     * <p>
-     * 示例 3:
-     * 输入: board = ["X XX", "   ", "O OO"]
-     * 输出: false
-     * <p>
-     * 示例 4:
-     * 输入: board = ["XOX", "O O", "XOX"]
-     * 输出: true
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/valid-tic-tac-toe-state
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        final String[] strings = new String[]{"OXX", "XOX", "OXO"};
-        System.out.println(new _794().validTicTacToe(strings));
-    }
-
     public boolean validTicTacToe(String[] board) {
 
         int isfunishX = 0;

@@ -86,32 +86,4 @@ public class _3176 {
         return ans;
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: nums = [1,2,1,1,3], k = 2
-     *
-     * Output: 4
-     *
-     * Explanation:
-     *
-     * The maximum length subsequence is [1,2,1,1,3].
-     *
-     * Example 2:
-     *
-     * Input: nums = [1,2,3,4,5,1], k = 0
-     *
-     * Output: 2
-     *
-     * Explanation:
-     *
-     * The maximum length subsequence is [1,2,3,4,5,1].
-     * @param args
-     */
-    public static void main(String[] args) {
-        //TestUtil.test(_3176.class);
-        //TestUtil.test(_3176.class, "=[29,30,30],=0");
-        TestUtil.test(_3176.class, "=[60,58,60,59,58,58],=2");
-    }
-
 }

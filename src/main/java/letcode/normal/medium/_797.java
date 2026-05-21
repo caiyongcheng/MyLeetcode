@@ -83,39 +83,4 @@ public class _797 {
         }
     }
 
-    /**
-     * 输入：graph = {{1,2},{3},{3},{}}
-     * 输出：{{0,1,3},{0,2,3}}
-     * 解释：有两条路径 0 -> 1 -> 3 和 0 -> 2 -> 3
-     * 
-     * 示例 2：
-     * 输入：graph = {{4,3,1},{3,2,4},{3},{4},{}}
-     * 输出：{{0,4},{0,3,4},{0,1,3,4},{0,1,2,3,4},{0,1,4}}
-     * 
-     * 示例 3：
-     * 输入：graph = {{1},{}}
-     * 输出：{{0,1}}
-     * 
-     * 示例 4：
-     * 输入：graph = {{1,2,3},{2},{3},{}}
-     * 输出：{{0,1,2,3},{0,2,3},{0,3}}
-     * 
-     * 示例 5：
-     * 输入：graph = {{1,3},{2},{3},{}}
-     * 输出：{{0,1,2,3},{0,3}}
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/all-paths-from-source-to-target
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        List<List<Integer>> lists = new _797().allPathsSourceTarget(
-                new int[][]{{1,3},{2},{3},{}}
-        );
-        for (List<Integer> list : lists) {
-            System.out.println(TestCaseOutputUtils.formatList(list));
-        }
-    }
-
 }

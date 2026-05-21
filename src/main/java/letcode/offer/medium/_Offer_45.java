@@ -37,20 +37,6 @@ import java.util.Arrays;
 public class _Offer_45 {
 
 
-    /**
-     * 示例 1:
-     * 输入: [10,2]
-     * 输出: "102"
-     * 示例 2:
-     * 输入: [3,30,34,5,9]
-     * 输出: "3033459"
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-
-    }
-
     public int compare(String x, String y) {
         final char xc = x.charAt(0);
         final char yc = y.charAt(0);

@@ -48,32 +48,4 @@ public class _1716 {
     }
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：n = 4
-     * 输出：10
-     * 解释：第 4 天后，总额为 1 + 2 + 3 + 4 = 10 。
-     * 示例 2：
-     * <p>
-     * 输入：n = 10
-     * 输出：37
-     * 解释：第 10 天后，总额为 (1 + 2 + 3 + 4 + 5 + 6 + 7) + (2 + 3 + 4) = 37 。注意到第二个星期一，Hercy 存入 2 块钱。
-     * 示例 3：
-     * <p>
-     * 输入：n = 20
-     * 输出：96
-     * 解释：第 20 天后，总额为 (1 + 2 + 3 + 4 + 5 + 6 + 7) + (2 + 3 + 4 + 5 + 6 + 7 + 8) + (3 + 4 + 5 + 6 + 7 + 8) = 96 。
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/calculate-money-in-leetcode-bank
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1716().totalMoney(20));
-    }
-
-
 }

@@ -36,21 +36,4 @@ public class _572 {
         );
     }
 
-    /**
-     * 示例 1：
-     *
-     *
-     * 输入：root = [3,4,5,1,2], subRoot = [4,1,2]
-     * 输出：true
-     * 示例 2：
-     *
-     *
-     * 输入：root = [3,4,5,1,2,null,null,null,null,0], subRoot = [4,1,2]
-     * 输出：false
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_572.class);
-    }
-
 }

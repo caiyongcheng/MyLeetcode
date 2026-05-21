@@ -98,30 +98,4 @@ public class _2332 {
         return ans;
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: buses = [10,20], passengers = [2,17,18,19], capacity = 2
-     * Output: 16
-     * Explanation: Suppose you arrive at time 16.
-     * At time 10, the first bus departs with the 0th passenger.
-     * At time 20, the second bus departs with you and the 1st passenger.
-     * Note that you may not arrive at the same time as another passenger, which is why you must arrive before the 1st passenger to catch the bus.
-     * Example 2:
-     *
-     * Input: buses = [20,30,10], passengers = [19,13,26,4,25,11,21], capacity = 2
-     * Output: 20
-     * Explanation: Suppose you arrive at time 20.
-     * At time 10, the first bus departs with the 3rd passenger.
-     * At time 20, the second bus departs with the 5th and 1st passengers.
-     * At time 30, the third bus departs with the 0th passenger and you.
-     * Notice if you had arrived any later, then the 6th passenger would have taken your seat on the third bus.
-     * @param args
-     */
-    public static void main(String[] args) {
-        //TestUtil.test(_2332.class);
-        //TestUtil.test(_2332.class, "=[2,3],=[4,2],=1");
-        TestUtil.test(_2332.class, "=[3,2],=[2],=2");
-    }
-
 }

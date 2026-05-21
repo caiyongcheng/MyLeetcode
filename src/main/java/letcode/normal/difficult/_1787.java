@@ -125,32 +125,4 @@ public class _1787 {
         return cache[0];
     }
 
-    /**
-     * 示例 1：
-     * 输入：nums = [1,2,0,3,0], k = 1
-     * 输出：3
-     * 解释：将数组 [1,2,0,3,0] 修改为 [0,0,0,0,0]
-     *
-     * 示例 2：
-     * 输入：nums = [3,4,5,2,1,7,3,4,7], k = 3
-     * 输出：3
-     * 解释：将数组 [3,4,5,2,1,7,3,4,7] 修改为 [3,4,7,3,4,7,3,4,7]
-     *
-     * 示例 3：
-     * 输入：nums = [1,2,4,1,2,5,1,2,6], k = 3
-     * 输出：3
-     * 解释：将数组[1,2,4,1,2,5,1,2,6] 修改为 [1,2,3,1,2,3,1,2,3]
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/make-the-xor-of-all-segments-equal-to-zero
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1787().minChanges(
-                new int[]{1,2,4,1,2,5,1,2,6},
-                3
-        ));
-    }
-
 }

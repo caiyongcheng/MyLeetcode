@@ -114,26 +114,4 @@ public class _347 {
         return ints;
     }
 
-    /**
-     * 示例 1:
-     * 输入: nums = [1,1,1,2,2,3], k = 2
-     * 输出: [1,2]
-     *
-     * 示例 2:
-     * 输入: nums = [1], k = 1
-     * 输出: [1]
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/top-k-frequent-elements
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatArray(new _347().topKFrequent(
-                new int[]{1},
-                1
-        )));
-    }
-
-
 }

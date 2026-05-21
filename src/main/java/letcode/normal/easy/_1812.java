@@ -17,26 +17,4 @@ public class _1812 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: coordinates = "a1"
-     * Output: false
-     * Explanation: From the chessboard above, the square with coordinates "a1" is black, so return false.
-     * Example 2:
-     *
-     * Input: coordinates = "h3"
-     * Output: true
-     * Explanation: From the chessboard above, the square with coordinates "h3" is white, so return true.
-     * Example 3:
-     *
-     * Input: coordinates = "c7"
-     * Output: false
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_1812.class);
-    }
-
-
 }

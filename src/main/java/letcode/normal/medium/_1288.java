@@ -75,19 +75,4 @@ public class _1288 {
     }
 
 
-    /**
-     * 示例：
-     * 输入：intervals = {{1,4},{3,6},{2,8}}
-     * 输出：2
-     * 解释：区间 [3,6] 被区间 [2,8] 覆盖，所以它被删除了。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1288().removeCoveredIntervals(
-                new int[][]{{1,4},{3,6},{2,8}}
-        ));
-    }
-
-
-
 }

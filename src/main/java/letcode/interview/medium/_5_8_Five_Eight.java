@@ -42,24 +42,6 @@ import java.util.Arrays;
 public class _5_8_Five_Eight {
 
 
-    /**
-     * 示例1:
-     * 输入：length = 1, w = 32, x1 = 30, x2 = 31, y = 0
-     * 输出：[3]
-     * 说明：在第0行的第30位到第31为画一条直线，屏幕表示为[0b000000000000000000000000000000011]
-     * 示例2:
-     * 输入：length = 3, w = 96, x1 = 0, x2 = 95, y = 0
-     * 输出：[-1, -1, -1]
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/draw-line-lcci
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(Arrays.toString(new _5_8_Five_Eight().drawLine(3, 96, 0, 95, 0)));
-    }
-
     private int getIntForBinaryStr(int startInex, int endIndex) {
         int b = 1 << (31 - endIndex);
         int resultInt = b;

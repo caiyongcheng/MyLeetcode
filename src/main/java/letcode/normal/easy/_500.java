@@ -84,29 +84,4 @@ public class _500 {
         return ans.toArray(new String[0]);
     }
 
-    /**
-     * 示例 1：
-     * 输入：words = ["Hello","Alaska","Dad","Peace"]
-     * 输出：["Alaska","Dad"]
-     * <p>
-     * 示例 2：
-     * 输入：words = ["omk"]
-     * 输出：[]
-     * <p>
-     * 示例 3：
-     * 输入：words = ["adsdf","sfd"]
-     * 输出：["adsdf","sfd"]
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/keyboard-row
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatArray(new _500().findWords(
-                new String[]{"adsdf", "sfd"}
-        )));
-    }
-
 }

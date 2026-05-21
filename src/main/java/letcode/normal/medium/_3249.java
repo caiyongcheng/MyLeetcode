@@ -58,44 +58,4 @@ public class _3249 {
         return new int[]{curTreePointCnt, subGoodPointCnt + subTreeHasSamePointCnt};
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: edges = [[0,1],[0,2],[1,3],[1,4],[2,5],[2,6]]
-     *
-     * Output: 7
-     *
-     * Explanation:
-     *
-     *
-     * All of the nodes of the given tree are good.
-     *
-     * Example 2:
-     *
-     * Input: edges = [[0,1],[1,2],[2,3],[3,4],[0,5],[1,6],[2,7],[3,8]]
-     *
-     * Output: 6
-     *
-     * Explanation:
-     *
-     *
-     * There are 6 good nodes in the given tree. They are colored in the image above.
-     *
-     * Example 3:
-     *
-     * Input: edges = [[0,1],[1,2],[1,3],[1,4],[0,5],[5,6],[6,7],[7,8],[0,9],[9,10],[9,12],[10,11]]
-     *
-     * Output: 12
-     *
-     * Explanation:
-     *
-     *
-     * All nodes except node 9 are good.
-     * @param args
-     */
-    public static void main(String[] args) {
-        //TestUtil.test(_3249.class);
-        TestUtil.test(_3249.class, "=[[2,0],[4,2],[1,2],[3,1],[5,1]]");
-    }
-
 }

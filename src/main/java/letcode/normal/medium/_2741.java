@@ -61,24 +61,4 @@ public class _2741 {
     }
 
 
-    /**
-     * 示例 1：
-     *
-     * 输入：nums = [2,3,6]
-     * 输出：2
-     * 解释：[3,6,2] 和 [2,6,3] 是 nums 两个特别的排列。
-     * 示例 2：
-     *
-     * 输入：nums = [1,4,3]
-     * 输出：2
-     * 解释：[3,1,4] 和 [4,1,3] 是 nums 两个特别的排列。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2741().specialPerm(
-                TestCaseInputUtils.getIntArr("[1,1,1]")
-        ));
-    }
-
-
 }

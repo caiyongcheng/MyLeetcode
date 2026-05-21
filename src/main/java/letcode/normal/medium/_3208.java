@@ -69,27 +69,4 @@ public class _3208 {
     }
 
 
-    /**
-     *
-     * Example 1:
-     * Input: colors = [0,1,0,1,0], k = 3
-     * Output: 3
-     * Explanation:
-     * Alternating groups:
-     * Example 2:
-     * Input: colors = [0,1,0,0,1,0,1], k = 6
-     * Output: 2
-     * Explanation:
-     * Alternating groups:
-     * Example 3:
-     * Input: colors = [1,1,0,1], k = 4
-     * Output: 0
-     * Explanation:
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3208.class, "=[0,1,0,1],=3");
-    }
-
-
 }

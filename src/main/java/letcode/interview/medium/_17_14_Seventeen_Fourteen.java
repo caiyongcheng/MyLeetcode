@@ -75,17 +75,4 @@ public class _17_14_Seventeen_Fourteen {
     }
 
 
-    /**
-     * 示例：
-     * 输入： arr = [1,3,5,7,2,4,6,8], k = 4
-     * 输出： [1,2,3,4]
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatArray(new _17_14_Seventeen_Fourteen().smallestK(
-                new int[]{1, 3, 5, 7, 2, 4, 6, 8, 0, -1},
-                4
-        )));
-    }
-
 }

@@ -49,26 +49,4 @@ public class _40 {
         return -1;
     }
 
-    /**
-     * 示例 1：
-     *
-     * 输入：cards = [1,2,8,9], cnt = 3
-     *
-     * 输出：18
-     *
-     * 解释：选择数字为 1、8、9 的这三张卡牌，此时可获得最大的有效得分 1+8+9=18。
-     *
-     * 示例 2：
-     *
-     * 输入：cards = [3,3,1], cnt = 1
-     *
-     * 输出：0
-     *
-     * 解释：不存在获取有效得分的卡牌方案。
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_40.class, "=[7,4,1], =1");
-    }
-
 }

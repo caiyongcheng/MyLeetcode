@@ -41,22 +41,4 @@ public class _3033 {
     }
 
 
-    /**
-     * 输入：matrix = [[1,2,-1],[4,-1,6],[7,8,9]]
-     * 输出：[[1,2,9],[4,8,6],[7,8,9]]
-     * 解释：上图显示了发生替换的元素（蓝色区域）。
-     * - 将单元格 [1][1] 中的值替换为列 1 中的最大值 8 。
-     * - 将单元格 [0][2] 中的值替换为列 2 中的最大值 9 。
-     *
-     * 输入：matrix = [[3,-1],[5,2]]
-     * 输出：[[3,2],[5,2]]
-     * 解释：上图显示了发生替换的元素（蓝色区域）。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.format2DArray(new _3033().modifiedMatrix(
-                TestCaseInputUtils.get2DimensionIntArr("[[3,-1],[5,2]]")
-        )));
-    }
-
 }

@@ -45,34 +45,4 @@ public class _1686 {
         return Integer.compare(aScore, bScore);
     }
 
-    /**
-     * 示例 1：
-     *
-     * 输入：aliceValues = [1,3], bobValues = [2,1]
-     * 输出：1
-     * 解释：
-     * 如果 Alice 拿石子 1 （下标从 0开始），那么 Alice 可以得到 3 分。
-     * Bob 只能选择石子 0 ，得到 2 分。
-     * Alice 获胜。
-     * 示例 2：
-     *
-     * 输入：aliceValues = [1,2], bobValues = [3,1]
-     * 输出：0
-     * 解释：
-     * Alice 拿石子 0 ， Bob 拿石子 1 ，他们得分都为 1 分。
-     * 打平。
-     * 示例 3：
-     *
-     * 输入：aliceValues = [2,4,3], bobValues = [1,6,7]
-     * 输出：-1
-     * 解释：
-     * 不管 Alice 怎么操作，Bob 都可以得到比 Alice 更高的得分。
-     * 比方说，Alice 拿石子 1 ，Bob 拿石子 2 ， Alice 拿石子 0 ，Alice 会得到 6 分而 Bob 得分为 7 分。
-     * Bob 会获胜。
-     * @param args
-     */
-    public static void main(String[] args) {
-
-    }
-
 }

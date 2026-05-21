@@ -38,26 +38,6 @@ package normal.easy;
  */
 public class _509 {
 
-    /**
-     * 示例 1：
-     * 输入：2
-     * 输出：1
-     * 解释：F(2) = F(1) + F(0) = 1 + 0 = 1
-     * 示例 2：
-     * 输入：3
-     * 输出：2
-     * 解释：F(3) = F(2) + F(1) = 1 + 1 = 2
-     * 示例 3：
-     * 输入：4
-     * 输出：3
-     * 解释：F(4) = F(3) + F(2) = 2 + 1 = 3
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _509().fib(11));
-    }
-
     public int fib(int n) {
         if (n < 2) {
             return n;

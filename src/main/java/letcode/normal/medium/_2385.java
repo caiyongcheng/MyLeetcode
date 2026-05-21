@@ -91,31 +91,4 @@ public class _2385 {
         map.put(point.val, edge);
     }
 
-    /**
-     * 输入：root = [1,5,3,null,4,10,6,9,2], start = 3
-     * 输出：4
-     * 解释：节点按以下过程被感染：
-     * - 第 0 分钟：节点 3
-     * - 第 1 分钟：节点 1、10、6
-     * - 第 2 分钟：节点5
-     * - 第 3 分钟：节点 4
-     * - 第 4 分钟：节点 9 和 2
-     * 感染整棵树需要 4 分钟，所以返回 4 。
-     * 示例 2：
-     *
-     *
-     * 输入：root = [1], start = 1
-     * 输出：0
-     * 解释：第 0 分钟，树中唯一一个节点处于感染状态，返回 0 。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2385().amountOfTime(
-                TreeNode.createUseLeetCode(
-                        TestCaseInputUtils.getIntegerArr("[1,5,3,null,4,10,6,9,2]")
-                ),
-                3
-        ));
-    }
-
 }

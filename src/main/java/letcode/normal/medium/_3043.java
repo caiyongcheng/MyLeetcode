@@ -1,7 +1,6 @@
 package letcode.normal.medium;
 
 import letcode.utils.SolutionTestMethod;
-import letcode.utils.TestUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +16,7 @@ import java.util.Set;
  * You need to find the length of the longest common prefix between all pairs of integers (x, y) such that x belongs to
  * arr1 and y belongs to arr2.  Return the length of the longest common prefix among all pairs.
  * If no common prefix exists among them, return 0.
+ *
  *
  * @author 蔡永程
  * @version 1.0.0
@@ -51,29 +51,6 @@ public class _3043 {
             len++;
         }
         return len;
-    }
-
-
-    /**
-     * Example 1:
-     *
-     * Input: arr1 = [1,10,100], arr2 = [1000]
-     * Output: 3
-     * Explanation: There are 3 pairs (arr1[i], arr2[j]):
-     * - The longest common prefix of (1, 1000) is 1.
-     * - The longest common prefix of (10, 1000) is 10.
-     * - The longest common prefix of (100, 1000) is 100.
-     * The longest common prefix is 100 with a length of 3.
-     * Example 2:
-     *
-     * Input: arr1 = [1,2,3], arr2 = [4,4,4]
-     * Output: 0
-     * Explanation: There exists no common prefix for any pair (arr1[i], arr2[j]), hence we return 0.
-     * Note that common prefixes between elements of the same array do not count.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
     }
 
 

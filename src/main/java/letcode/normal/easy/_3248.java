@@ -40,25 +40,4 @@ public class _3248 {
     }
 
 
-    /**
-     * Example 1:
-     * Input: n = 2, commands = ["RIGHT","DOWN"]
-     * Output: 3
-     * Explanation:
-     * 0	1
-     * 2	3
-     * 0	1
-     * 2	3
-     * 0	1
-     * 2	3
-     * Example 2:
-     * Input: n = 3, commands = ["DOWN","RIGHT","UP"]
-     * Output: 1
-     * Explanation:
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3248.class);
-    }
-
 }

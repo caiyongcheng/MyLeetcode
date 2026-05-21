@@ -99,22 +99,4 @@ public class _743 {
     }
 
 
-    /**
-     * 示例 1：
-     * 输入：times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2
-     * 输出：2
-     * 
-     * 示例 2：
-     * 输入：times = [[1,2,1]], n = 2, k = 1
-     * 输出：1
-     * 
-     * 示例 3：
-     * 输入：times = [[1,2,1]], n = 2, k = 2
-     * 输出：-1
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_743.class);
-    }
-
 }

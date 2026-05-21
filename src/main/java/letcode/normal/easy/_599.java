@@ -107,33 +107,4 @@ public class _599 {
     }
 
 
-    /**
-     * 示例 1:
-     *
-     * 输入: list1 = {"Shogun", "Tapioca Express", "Burger King", "KFC"}，list2 = {"Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"}
-     * 输出: {"Shogun"}
-     * 解释: 他们唯一共同喜爱的餐厅是“Shogun”。
-     * 示例 2:
-     *
-     * 输入:list1 = {"Shogun", "Tapioca Express", "Burger King", "KFC"}，list2 = {"KFC", "Shogun", "Burger King"}
-     * 输出: {"Shogun"}
-     * 解释: 他们共同喜爱且具有最小索引和的餐厅是“Shogun”，它有最小的索引和1(0+1)。
-     *
-     *
-     * ["Shogun","Tapioca Express","Burger King","KFC"]
-     * ["KFC","Burger King","Tapioca Express","Shogun"]
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/minimum-index-sum-of-two-lists
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _599().findRestaurant(
-                new String[]{"Shogun","Tapioca Express","Burger King","KFC"},
-                new String[]{"KFC","Burger King","Tapioca Express","Shogun"}
-        )));
-    }
-
-
 }

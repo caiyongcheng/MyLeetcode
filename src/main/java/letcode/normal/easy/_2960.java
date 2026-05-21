@@ -24,33 +24,4 @@ public class _2960 {
         return passTestCnt;
     }
 
-    /**
-     * 示例 1：
-     *
-     * 输入：batteryPercentages = [1,1,2,1,3]
-     * 输出：3
-     * 解释：按顺序从设备 0 开始执行测试操作：
-     * 在设备 0 上，batteryPercentages[0] > 0 ，现在有 1 个已测试设备，batteryPercentages 变为 [1,0,1,0,2] 。
-     * 在设备 1 上，batteryPercentages[1] == 0 ，移动到下一个设备而不进行测试。
-     * 在设备 2 上，batteryPercentages[2] > 0 ，现在有 2 个已测试设备，batteryPercentages 变为 [1,0,1,0,1] 。
-     * 在设备 3 上，batteryPercentages[3] == 0 ，移动到下一个设备而不进行测试。
-     * 在设备 4 上，batteryPercentages[4] > 0 ，现在有 3 个已测试设备，batteryPercentages 保持不变。
-     * 因此，答案是 3 。
-     * 示例 2：
-     *
-     * 输入：batteryPercentages = [0,1,2]
-     * 输出：2
-     * 解释：按顺序从设备 0 开始执行测试操作：
-     * 在设备 0 上，batteryPercentages[0] == 0 ，移动到下一个设备而不进行测试。
-     * 在设备 1 上，batteryPercentages[1] > 0 ，现在有 1 个已测试设备，batteryPercentages 变为 [0,1,1] 。
-     * 在设备 2 上，batteryPercentages[2] > 0 ，现在有 2 个已测试设备，batteryPercentages 保持不变。
-     * 因此，答案是 2 。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2960().countTestedDevices(
-                TestCaseInputUtils.getIntArr("[0,1,2]"))
-        );
-    }
-
 }

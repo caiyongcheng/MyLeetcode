@@ -36,21 +36,6 @@ import java.util.Arrays;
  */
 public class _628 {
 
-    /**
-     * 示例 1:
-     * 输入: [1,2,3]
-     * 输出: 6
-     * 示例 2:
-     * 输入: [1,2,3,4]
-     * 输出: 24
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        final int[] ints = {-100, -98, -1, 2, 3, 4};
-        System.out.println(new _628().maximumProduct(ints));
-    }
-
     public int maximumProduct(int[] nums) {
         Arrays.sort(nums);
         int m1 = nums[nums.length - 3] * nums[nums.length - 2] * nums[nums.length - 1];

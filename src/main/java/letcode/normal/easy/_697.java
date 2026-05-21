@@ -78,26 +78,4 @@ public class _697 {
         return minLength;
     }
 
-    /**
-     * 示例 1：
-     * 输入：[1, 2, 2, 3, 1]
-     * 输出：2
-     * 解释：
-     * 输入数组的度是2，因为元素1和2的出现频数最大，均为2.
-     * 连续子数组里面拥有相同度的有如下所示:
-     * [1, 2, 2, 3, 1], [1, 2, 2, 3], [2, 2, 3, 1], [1, 2, 2], [2, 2, 3], [2, 2]
-     * 最短连续子数组[2, 2]的长度为2，所以返回2.
-     * 示例 2：
-     * 输入：[1,2,2,3,1,4,2]
-     * 输出：6
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/degree-of-an-array
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _697().findShortestSubArray(new int[]{1,2,2,1,2,1,1,1,1,2,2,2}));
-    }
-    
-    
 }

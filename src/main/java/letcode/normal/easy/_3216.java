@@ -28,30 +28,4 @@ public class _3216 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: s = "45320"
-     *
-     * Output: "43520"
-     *
-     * Explanation:
-     *
-     * s[1] == '5' and s[2] == '3' both have the same parity, and swapping them results in the lexicographically smallest string.
-     *
-     * Example 2:
-     *
-     * Input: s = "001"
-     *
-     * Output: "001"
-     *
-     * Explanation:
-     *
-     * There is no need to perform a swap because s is already the lexicographically smallest.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3216.class);
-    }
-
 }

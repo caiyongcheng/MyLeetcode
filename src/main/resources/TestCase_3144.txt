@@ -1,0 +1,1 @@
+ Example 1: Input: s = "fabccddg" Output: 3 Explanation: We can partition the string s into 3 substrings in one of the following ways: ("fab, "ccdd", "g"), or ("fabc", "cd", "dg"). Example 2: Input: s = "abababaccddb" Output: 2 Explanation: We can partition the string s into 2 substrings like so: ("abab", "abaccddb").

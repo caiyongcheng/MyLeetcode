@@ -114,28 +114,4 @@ public class _1244 {
     }
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：nums = {2,2,1,1,5,3,3,5}
-     * 输出：7
-     * 解释：对于长度为 7 的子数组 {2,2,1,1,5,3,3}，如果我们从中删去 nums{4} = 5，就可以得到 {2,2,1,1,3,3}，里面每个数字都出现了两次。
-     * 示例 2：
-     * <p>
-     * 输入：nums = {1,1,1,2,2,2,3,3,3,4,4,4,5}
-     * 输出：13
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode.cn/problems/maximum-equal-frequency
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1244().maxEqualFreq(
-                new int[]{1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5}
-        ));
-    }
-
-
 }

@@ -64,30 +64,4 @@ public class _1185 {
         return DAYS[(3 + betweenDays) % 7];
     }
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：day = 31, month = 8, year = 2019
-     * 输出："Saturday"
-     * <p>
-     * 示例 2：
-     * 输入：day = 18, month = 7, year = 1999
-     * 输出："Sunday"
-     * <p>
-     * 示例 3：
-     * 输入：day = 15, month = 8, year = 1993
-     * 输出："Sunday"
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/day-of-the-week
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1185().dayOfTheWeek(
-                4, 1, 2022
-        ));
-    }
-
 }

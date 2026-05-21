@@ -34,19 +34,4 @@ public class _61 {
         return ans;
     }
 
-    /**
-     * 输入： temperatureA = [21,18,18,18,31] temperatureB = [34,32,16,16,17]
-     * 输出：2
-     *
-     * 输入： temperatureA = [5,10,16,-6,15,11,3] temperatureB = [16,22,23,23,25,3,-16]
-     * 输出：3
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _61().temperatureTrend(
-                TestCaseInputUtils.getIntArr("[5,10,16,-6,15,11,3]"),
-                TestCaseInputUtils.getIntArr("[16,22,23,23,25,3,-16]")
-        ));
-    }
-
 }

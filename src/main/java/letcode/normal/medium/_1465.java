@@ -42,27 +42,4 @@ public class _1465 {
     }
 
 
-    /**
-     *
-     输入：h = 5, w = 4, horizontalCuts = [1,2,4], verticalCuts = [1,3]
-     输出：4
-     解释：上图所示的矩阵蛋糕中，红色线表示水平和竖直方向上的切口。切割蛋糕后，绿色的那份蛋糕面积最大。
-     示例 2：
-     输入：h = 5, w = 4, horizontalCuts = [3,1], verticalCuts = [1]
-     输出：6
-     解释：上图所示的矩阵蛋糕中，红色线表示水平和竖直方向上的切口。切割蛋糕后，绿色和黄色的两份蛋糕面积最大。
-     示例 3：
-     输入：h = 5, w = 4, horizontalCuts = [3], verticalCuts = [3]
-     输出：9
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1465().maxArea(
-                4,
-                5,
-                new int[]{3},
-                new int[]{3}
-        ));
-    }
-
 }

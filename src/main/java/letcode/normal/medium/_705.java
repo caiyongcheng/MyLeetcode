@@ -31,34 +31,4 @@ public class _705 {
         return set[key] == 1;
     }
 
-    /**
-     * 示例：
-     *
-     * 输入：
-     * ["MyHashSet", "add", "add", "contains", "contains", "add", "contains", "remove", "contains"]
-     * [[], [1], [2], [1], [3], [2], [2], [2], [2]]
-     * 输出：
-     * [null, null, null, true, false, null, true, null, false]
-     *
-     * 解释：
-     * MyHashSet myHashSet = new MyHashSet();
-     * myHashSet.add(1);      // set = [1]
-     * myHashSet.add(2);      // set = [1, 2]
-     * myHashSet.contains(1); // 返回 True
-     * myHashSet.contains(3); // 返回 False ，（未找到）
-     * myHashSet.add(2);      // set = [1, 2]
-     * myHashSet.contains(2); // 返回 True
-     * myHashSet.remove(2);   // set = [1]
-     * myHashSet.contains(2); // 返回 False ，（已移除）
-     * @param args
-     */
-    public static void main(String[] args) {
-        _705 sevenHundredFive = new _705();
-        System.out.println(TestUtil.operation(
-                sevenHundredFive,
-                "[\"MyHashSet\", \"add\", \"add\", \"contains\", \"contains\", \"add\", \"contains\", \"remove\", \"contains\"]",
-                "[[], [1], [2], [1], [3], [2], [2], [2], [2]]"
-        ));
-    }
-
 }

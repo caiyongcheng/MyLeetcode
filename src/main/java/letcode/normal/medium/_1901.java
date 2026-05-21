@@ -80,22 +80,4 @@ public class _1901 {
     }
 
 
-    /**
-     *
-     示例 1:
-     输入: mat = [[1,4],[3,2]]
-     输出: [0,1]
-     解释: 3 和 4 都是峰值，所以[1,0]和[0,1]都是可接受的答案。
-     示例 2:
-     输入: mat = [[10,20,15],[21,30,14],[7,16,32]]
-     输出: [1,1]
-     解释: 30 和 32 都是峰值，所以[1,1]和[2,2]都是可接受的答案。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(Arrays.toString(new _1901().findPeakGrid(
-                TestCaseInputUtils.get2DimensionIntArr("[[1,2,6],[3,4,5]]")
-        )));
-    }
-
 }

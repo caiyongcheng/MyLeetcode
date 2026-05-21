@@ -74,30 +74,4 @@ public class _659 {
         return ans;
     }
 
-    /**
-     * 示例 1：
-     * 输入：3
-     * 输出：3
-     * 解释：
-     * 最初, 只有一个字符 'A'。
-     * 第 1 步, 使用 Copy All 操作。
-     * 第 2 步, 使用 Paste 操作来获得 'AA'。
-     * 第 3 步, 使用 Paste 操作来获得 'AAA'。
-     * <p>
-     * 示例 2：
-     * 输入：n = 1
-     * 输出：0
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/2-keys-keyboard
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _659().minSteps(
-                333
-        ));
-    }
-
 }

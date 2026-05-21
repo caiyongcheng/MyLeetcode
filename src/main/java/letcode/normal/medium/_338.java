@@ -46,18 +46,4 @@ public class _338 {
         return ans;
     }
 
-    /**
-     * 示例 1:
-     * 输入: 2
-     * 输出: [0,1,1]
-     *
-     * 示例 2:
-     * 输入: 5
-     * 输出: [0,1,1,2,1,2]
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatArray(new _338().countBits(0)));
-    }
-
 }

@@ -54,24 +54,4 @@ public class _611 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: nums = [2,2,3,4]
-     * Output: 3
-     * Explanation: Valid combinations are:
-     * 2,3,4 (using the first 2)
-     * 2,3,4 (using the second 2)
-     * 2,2,3
-     * Example 2:
-     *
-     * Input: nums = [4,2,3,4]
-     * Output: 4
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
-    }
-
-
 }

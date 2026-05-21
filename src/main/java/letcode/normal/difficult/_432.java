@@ -139,28 +139,4 @@ public class _432 {
     }
 
 
-    /**
-     ["AllOne","inc","inc","inc","inc","getMaxKey","inc","inc","inc","dec","inc","inc","inc","getMaxKey"]
-     [[],["hello"],["goodbye"],["hello"],["hello"],[],["leet"],["code"],["leet"],["hello"],["leet"],["code"],["code"],[]]
-     * @param args
-     */
-    public static void main(String[] args) {
-        _432 allOne  = new _432();
-        allOne.inc("hello");
-        allOne.inc("goodbye");
-        allOne.inc("hello");
-        allOne.inc("hello");
-        System.out.println(allOne.getMaxKey());
-        allOne.inc("leet");
-        allOne.inc("code");
-        allOne.inc("leet");
-        allOne.dec("hello");
-        allOne.inc("leet");
-        allOne.inc("code");
-        allOne.inc("code");
-        System.out.println(allOne.getMaxKey());
-    }
-
-
-
 }

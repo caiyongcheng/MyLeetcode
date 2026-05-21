@@ -64,22 +64,4 @@ public class _2578 {
         return min1 + min2;
     }
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：num = 4325
-     * 输出：59
-     * 解释：我们可以将 4325 分割成 num1 = 24 和 num2 = 35 ，和为 59 ，59 是最小和。
-     * 示例 2：
-     * <p>
-     * 输入：num = 687
-     * 输出：75
-     * 解释：我们可以将 687 分割成 num1 = 68 和 num2 = 7 ，和为最优值 75 。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2578().splitNum(10));
-    }
-
 }

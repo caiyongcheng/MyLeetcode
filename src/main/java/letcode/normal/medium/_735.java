@@ -77,34 +77,4 @@ public class _735 {
     }
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：asteroids = [5,10,-5]
-     * 输出：[5,10]
-     * 解释：10 和 -5 碰撞后只剩下 10 。 5 和 10 永远不会发生碰撞。
-     * 示例 2：
-     * <p>
-     * 输入：asteroids = [8,-8]
-     * 输出：[]
-     * 解释：8 和 -8 碰撞后，两者都发生爆炸。
-     * 示例 3：
-     * <p>
-     * 输入：asteroids = [10,2,-5]
-     * 输出：[10]
-     * 解释：2 和 -5 发生碰撞后剩下 -5 。10 和 -5 发生碰撞后剩下 10 。
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode.cn/problems/asteroid-collision
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatArray(new _735().asteroidCollision(
-                new int[]{10, 2, -5}
-        )));
-    }
-
-
 }

@@ -112,34 +112,4 @@ public class _640 {
         return "x=" + -constNum / coefficient + "";
     }
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入: equation = "x+5-3+x=6+x-2"
-     * 输出: "x=2"
-     * 示例 2:
-     * <p>
-     * 输入: equation = "x=x"
-     * 输出: "Infinite solutions"
-     * 示例 3:
-     * <p>
-     * 输入: equation = "2x=x"
-     * 输出: "x=0"
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode.cn/problems/solve-the-equation
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.testBatch(
-                _640.class,
-                "输入: equation = \"x+5-3+x=6+x-2\" 输出: \"x=2\" 示例 2:",
-                "输入: equation = \"x=x\" 输出: \"Infinite solutions\" 示例 3:",
-                "输入: equation = \"2x=x\" 输出: \"x=0\""
-        );
-    }
-
-
 }

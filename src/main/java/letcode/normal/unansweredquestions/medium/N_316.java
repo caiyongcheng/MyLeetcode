@@ -38,20 +38,6 @@ import java.util.LinkedList;
 public class N_316 {
 
 
-    /**
-     * 示例 1：
-     * 输入：s = "bcabc"
-     * 输出："abc"
-     * 示例 2：
-     * 输入：s = "cbacdcbc"
-     * 输出："acdb"
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new N_316().removeDuplicateLetters("cbacdcbc"));
-    }
-
     public String removeDuplicateLetters(String s) {
         boolean[] isUse = new boolean[23];
         LinkedList<Character> linkedList = new LinkedList<>();

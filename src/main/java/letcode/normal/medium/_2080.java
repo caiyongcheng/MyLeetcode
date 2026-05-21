@@ -102,30 +102,4 @@ public class _2080 {
         }
     }
 
-    /**
-     * Example 1:
-     * <p>
-     * Input
-     * ["RangeFreqQuery", "query", "query"]
-     * [[[12, 33, 4, 56, 22, 2, 34, 33, 22, 12, 34, 56]], [1, 2, 4], [0, 11, 33]]
-     * Output
-     * [null, 1, 2]
-     * <p>
-     * Explanation
-     * RangeFreqQuery rangeFreqQuery = new RangeFreqQuery([12, 33, 4, 56, 22, 2, 34, 33, 22, 12, 34, 56]);
-     * rangeFreqQuery.query(1, 2, 4); // return 1. The value 4 occurs 1 time in the subarray [33, 4]
-     * rangeFreqQuery.query(0, 11, 33); // return 2. The value 33 occurs 2 times in the whole array.
-     *
-     * ["RangeFreqQuery","query","query","query","query","query"]
-     * [[[3,4,5,3,3,2,2,2,5,4]],[2,6,3],[5,6,5],[1,6,2],[0,2,3],[5,6,4]]
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestUtil.operation(
-                new _2080(TestCaseInputUtils.getIntArr("[3,4,5,3,3,2,2,2,5,4]")),
-                "[\"RangeFreqQuery\",\"query\",\"query\",\"query\",\"query\",\"query\"]",
-                "[[[3,4,5,3,3,2,2,2,5,4]],[2,6,3],[5,6,5],[1,6,2],[0,2,3],[5,6,4]]"
-        ));
-    }
-
 }

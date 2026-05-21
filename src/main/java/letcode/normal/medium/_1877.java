@@ -65,30 +65,4 @@ public class _1877 {
         return ans;
     }
 
-    /**
-     * 示例 1：
-     * 输入：nums = [3,5,2,3]
-     * 输出：7
-     * 解释：数组中的元素可以分为数对 (3,3) 和 (5,2) 。
-     * 最大数对和为 max(3+3, 5+2) = max(6, 7) = 7 。
-     *
-     * 示例 2：
-     * 输入：nums = [3,5,4,2,4,6]
-     * 输出：8
-     * 解释：数组中的元素可以分为数对 (3,5)，(4,4) 和 (6,2) 。
-     * 最大数对和为 max(3+5, 4+4, 6+2) = max(8, 8, 8) = 8 。
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/minimize-maximum-pair-sum-in-array
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1877().minPairSum(
-                new int[]{
-                        3,5,4,2,4,6
-                }
-        ));
-    }
-
 }

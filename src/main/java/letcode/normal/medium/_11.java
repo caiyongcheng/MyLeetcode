@@ -64,10 +64,4 @@ public class _11 {
         return marea;
     }
 
-    //[10,14,10,4,10,2,6,1,6,12]
-    public static void main(String[] args) {
-        int[] ints = new int[]{10, 14, 10, 4, 10, 2, 6, 1, 6, 12};
-        System.out.println(maxArea(ints));
-    }
-
 }

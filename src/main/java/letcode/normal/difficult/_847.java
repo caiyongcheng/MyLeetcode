@@ -88,29 +88,4 @@ public class _847 {
     }
 
 
-    /**
-     * 示例 1：
-     *
-     *
-     * 输入：graph = {{1,2,3},{0},{0},{0}}
-     * 输出：4
-     * 解释：一种可能的路径为 {1,0,2,0,3}
-     * 
-     * 示例 2：
-     * 输入：graph = {{1},{0,2,4},{1,3,4},{2},{1,2}}
-     * 输出：4
-     * 解释：一种可能的路径为 {0,1,4,2,3}
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/shortest-path-visiting-all-nodes
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _847().shortestPathLength(
-                new int[][]{{1},{0,2,4},{1,3,4},{2},{1,2}}
-        ));
-    }
-
-
 }

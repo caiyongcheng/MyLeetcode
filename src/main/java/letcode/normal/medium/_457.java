@@ -77,32 +77,4 @@ public class _457 {
     }
 
 
-    /**
-     * 示例 1：
-     * 输入：nums = {2,-1,1,2,2}
-     * 输出：true
-     * 解释：存在循环，按下标 0 -> 2 -> 3 -> 0 。循环长度为 3 。
-     * 
-     * 示例 2：
-     * 输入：nums = {-1,2}
-     * 输出：false
-     * 解释：按下标 1 -> 1 -> 1 ... 的运动无法构成循环，因为循环的长度为 1 。根据定义，循环的长度必须大于 1 。
-     * 
-     * 示例 3:
-     * 输入：nums = {-2,1,-1,-2,-2}
-     * 输出：false
-     * 解释：按下标 1 -> 2 -> 1 -> ... 的运动无法构成循环，因为 nums{1} 是正数，而 nums{2} 是负数。
-     * 所有 nums{seq{j}} 应当不是全正就是全负。
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/circular-array-loop
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _457().circularArrayLoop(
-                new int[]{-1,2,1,2}
-        ));
-    }
-
 }

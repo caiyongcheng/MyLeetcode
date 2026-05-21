@@ -129,34 +129,4 @@ public class _1202 {
     }
 
 
-    /**
-     * 示例 1:
-     * 输入：s = "dcab", pairs = {{0,3},{1,2}}
-     * 输出："bacd"
-     * 解释：
-     * 交换 s{0} 和 s{3}, s = "bcad"
-     * 交换 s{1} 和 s{2}, s = "bacd"
-     *
-     * 示例 2：
-     * 输入：s = "dcab", pairs = {{0,3},{1,2},{0,2}}
-     * 输出："abcd"
-     * 解释：
-     * 交换 s{0} 和 s{3}, s = "bcad"
-     * 交换 s{0} 和 s{2}, s = "acbd"
-     * 交换 s{1} 和 s{2}, s = "abcd"
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/smallest-string-with-swaps
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_1202.class, "示例 1: 输入：s = \"dcab\", pairs = {{0,3},{1,2}} 输出：\"bacd\" 解释： " +
-                "交换 s{0} 和 s{3}, s = \"bcad\" 交换 s{1} 和 s{2}, s = \"bacd\" 示例 2： 输入：s = \"dcab\", " +
-                "pairs = {{0,3},{1,2},{0,2}} 输出：\"abcd\" 解释： 交换 s{0} 和 s{3}, s =" +
-                " \"bcad\" 交换 s{0} 和 s{2}, s = \"acbd\" 交换 s{1} 和 s{2}, s = \"abcd\"");
-    }
-    
-    
-    
 }

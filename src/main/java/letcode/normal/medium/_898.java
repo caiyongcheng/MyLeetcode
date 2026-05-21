@@ -55,36 +55,4 @@ public class _898 {
     }
 
 
-    /**
-     * 示例 1：
-     * 输入：[0]
-     * 输出：1
-     * 解释：
-     * 只有一个可能的结果 0 。
-     *
-     * 示例 2：
-     * 输入：[1,1,2]
-     * 输出：3
-     * 解释：
-     * 可能的子数组为 [1]，[1]，[2]，[1, 1]，[1, 2]，[1, 1, 2]。
-     * 产生的结果为 1，1，2，1，3，3 。
-     * 有三个唯一值，所以答案是 3 。
-     *
-     * 示例3：
-     * 输入：[1,2,4]
-     * 输出：6
-     * 解释：
-     * 可能的结果是 1，2，3，4，6，以及 7 。
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/bitwise-ors-of-subarrays
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _898().subarrayBitwiseORs(new int[]{
-                1,1,2
-        }));
-    }
-
 }

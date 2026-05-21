@@ -42,26 +42,4 @@ public class _441 {
         return (ans + 1) * 1.0 * ans > nn ? ans - 1 : ans;
     }
 
-    /**
-     * 示例 1：
-     * 输入：n = 5
-     * 输出：2
-     * 解释：因为第三行不完整，所以返回 2 。
-     * <p>
-     * 示例 2：
-     * 输入：n = 8
-     * 输出：3
-     * 解释：因为第四行不完整，所以返回 3 。
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/arranging-coins
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(Integer.MAX_VALUE);
-        System.out.println(new _441().arrangeCoins(1804289383));
-    }
-
 }

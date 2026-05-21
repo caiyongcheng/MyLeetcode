@@ -75,48 +75,4 @@ public class _869 {
     }
 
 
-    /**
-     * 示例 1：
-     * 输入：1
-     * 输出：true
-     * <p>
-     * 示例 2：
-     * 输入：10
-     * 输出：false
-     * <p>
-     * 示例 3：
-     * 输入：16
-     * 输出：true
-     * <p>
-     * 示例 4：
-     * 输入：24
-     * 输出：false
-     * <p>
-     * 示例 5：
-     * 输入：46
-     * 输出：true
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/reordered-power-of-2
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) throws IOException {
-        FileInputStream fileInputStream = new FileInputStream(new File("C:\\Users\\10761\\Desktop\\1.txt"));
-        StringBuilder sb = new StringBuilder();
-        byte[] bytes = new byte[1024];
-        while ((fileInputStream.read(bytes)) != -1) {
-            sb.append(new String(bytes));
-        }
-        while (true) {
-            int index = sb.indexOf("\"ybmzdjlsh\"");
-            if (index == -1) {
-                break;
-            }
-            System.out.println("'" + sb.substring(index + 14, index + 46) + "',");
-            sb.replace(index, index + 47, "");
-        }
-    }
-
 }

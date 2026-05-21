@@ -33,34 +33,4 @@ public class _2595 {
         return new int[]{evenCnt, oddCnt};
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: n = 50
-     *
-     * Output: [1,2]
-     *
-     * Explanation:
-     *
-     * The binary representation of 50 is 110010.
-     *
-     * It contains 1 on indices 1, 4, and 5.
-     *
-     * Example 2:
-     *
-     * Input: n = 2
-     *
-     * Output: [0,1]
-     *
-     * Explanation:
-     *
-     * The binary representation of 2 is 10.
-     *
-     * It contains 1 only on index 1.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
-    }
-
 }

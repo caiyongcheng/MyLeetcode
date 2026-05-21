@@ -37,33 +37,4 @@ public class _2786 {
 
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: nums = [2,3,6,1,9,2], x = 5
-     * Output: 13
-     * Explanation: We can visit the following positions in the array: 0 -> 2 -> 3 -> 4.
-     * The corresponding values are 2, 6, 1 and 9. Since the integers 6 and 1 have different parities, the move 2 -> 3 will make you lose a score of x = 5.
-     * The total score will be: 2 + 6 + 1 + 9 - 5 = 13.
-     * Example 2:
-     *
-     * Input: nums = [2,4,6,8], x = 3
-     * Output: 20
-     * Explanation: All the integers in the array have the same parities, so we can visit all of them without losing any score.
-     * The total score is: 2 + 4 + 6 + 8 = 20.
-     *
-     * [38,92,23,30,25,96,6,71,78,77,33,23,71,48,87,77,53,28,6,20,90,83,42,21,64,95,84,29,22,21,33,36,53,51,85,25,80,56,71,69,5,21,4,84,28,16,65,7]
-     * 52
-     * 1545
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2786().maxScore(
-                TestCaseInputUtils.getIntArr("[2,3,6,1,9,2]"),
-                5
-        ));
-        // 56 71
-    }
-
 }

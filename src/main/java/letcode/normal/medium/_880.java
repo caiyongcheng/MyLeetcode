@@ -88,33 +88,4 @@ public class _880 {
     }
 
 
-    /**
-     * 示例 1：
-     * 输入：S = "leet2code3", K = 19 7
-     * 输出："o"
-     * 解释：
-     * 解码后的字符串为 "leetleetcodeleetleetcodeleetleetcode"。
-     * 字符串中的第 10 个字母是 "o"。
-     *
-     * 示例 2：
-     * 输入：S = "ha22", K = 5
-     * 输出："h"
-     * 解释：
-     * 解码后的字符串为 "hahahaha"。第 5 个字母是 "h"。
-     *
-     * 示例 3：
-     * 输入：S = "a2345678999999999999999", K = 1
-     * 输出："a"
-     * 解释：
-     * 解码后的字符串为 "a" 重复 8301530446056247680 次。第 1 个字母是 "a"。
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/decoded-string-at-index
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     */
-    public static void main(String[] args) {
-        System.out.println(98);
-        System.out.println(new _880().decodeAtIndex("vzpp636m8y",
-                2920));
-    }
-
 }

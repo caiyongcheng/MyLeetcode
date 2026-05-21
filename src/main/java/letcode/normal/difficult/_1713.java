@@ -102,29 +102,4 @@ public class _1713 {
     }
 
 
-    /**
-     * 示例 1：
-     * 输入：target = [5,1,3], arr = [9,4,2,3,4]
-     * 输出：2
-     * 解释：你可以添加 5 和 1 ，使得 arr 变为 [5,9,4,1,2,3,4] ，target 为 arr 的子序列。
-     *
-     * 示例 2：
-     * 输入：target = [6,4,8,1,3,2], arr = [4,7,6,2,3,8,6,1]
-     * 输出：3
-     * [5,10,8,11,3,15,9,20,18,13]
-     * [15,8,2,9,11,20,8,11,7,2]
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/minimum-operations-to-make-a-subsequence
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1713().minOperations(
-                new int[]{5,10,8,11,3,15,9,20,18,13},
-                new int[]{15,8,2,9,11,20,8,11,7,2}
-        ));
-    }
-
-
 }

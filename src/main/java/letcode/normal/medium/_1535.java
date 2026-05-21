@@ -38,27 +38,4 @@ public class _1535 {
         return arr[curIdx];
     }
 
-    /**
-     * 示例 2：
-     *
-     * 输入：arr = [3,2,1], k = 10
-     * 输出：3
-     * 解释：3 将会在前 10 个回合中连续获胜。
-     * 示例 3：
-     *
-     * 输入：arr = [1,9,8,2,3,7,6,4,5], k = 7
-     * 输出：9
-     * 示例 4：
-     *
-     * 输入：arr = [1,11,22,33,44,55,66,77,88,99], k = 1000000000
-     * 输出：99
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1535().getWinner(
-                TestCaseInputUtils.getIntArr("[1,11,22,33,44,55,66,77,88,99]"),
-                1000000000
-        ));
-    }
-
 }

@@ -42,24 +42,4 @@ public class _889 {
         return root;
     }
 
-    /**
-     * 输入：preorder = [1,2,4,5,3,6,7], postorder = [4,5,2,6,7,3,1]
-     * 输出：[1,2,3,4,5,6,7]
-     * 示例 2:
-     *
-     * 输入: preorder = [1], postorder = [1]
-     * 输出: [1]
-     * @param args
-     */
-    public static void main(String[] args) {
-        TreeNode root = new _889().constructFromPrePost(
-                TestCaseInputUtils.getIntArr("[1,2,4,5,3,6,7]"),
-                TestCaseInputUtils.getIntArr("[4,5,2,6,7,3,1]")
-        );
-        System.out.println(root);
-        TreeNode.preOrder(root).forEach(System.out::print);
-        System.out.println();
-        TreeNode.postOrder(root).forEach(System.out::print);
-    }
-
 }

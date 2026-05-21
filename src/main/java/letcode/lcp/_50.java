@@ -60,23 +60,4 @@ public class _50 {
         return max - min;
     }
 
-    /**
-     * 输入：gem = {3,1,2}, operations = {{0,2},{2,1},{2,0}}
-     * 输出：2
-     * <p>
-     * 输入：gem = {100,0,50,100}, operations = {{0,2},{0,1},{3,0},{3,0}}
-     * 输出：75
-     * <p>
-     * 输入：gem = {0,0,0,0}, operations = {{1,2},{3,1},{1,2}}
-     * 输出：0
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _50().giveGem(
-                new int[]{0, 0, 0, 0},
-                new int[][]{{1, 2}, {3, 1}, {1, 2}}
-        ));
-    }
-
 }

@@ -35,30 +35,6 @@ package normal.easy;
 public class _191 {
 
 
-    /**
-     * 示例 1：
-     * 输入：00000000000000000000000000001011
-     * 输出：3
-     * 解释：输入的二进制串 00000000000000000000000000001011中，共有三位为 '1'。
-     * 示例 2：
-     * 输入：00000000000000000000000010000000
-     * 输出：1
-     * 解释：输入的二进制串 00000000000000000000000010000000中，共有一位为 '1'。
-     * 示例 3：
-     * 输入：11111111111111111111111111111101
-     * 输出：31
-     * 解释：输入的二进制串 11111111111111111111111111111101 中，共有 31 位为 '1'。
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/number-of-1-bits
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _191().
-                hammingWeight(Integer.parseUnsignedInt("11111111111111111111111111111101", 2)));
-    }
-
     public int hammingWeight(int n) {
         int binary = 1;
         int result = n < 0 ? 1 : 0;

@@ -41,25 +41,4 @@ public class _2369 {
     }
 
 
-    /**
-     * 示例 1：
-     *
-     * 输入：nums = [4,4,4,5,6]
-     * 输出：true
-     * 解释：数组可以划分成子数组 [4,4] 和 [4,5,6] 。
-     * 这是一种有效划分，所以返回 true 。
-     * 示例 2：
-     *
-     * 输入：nums = [1,1,1,2]
-     * 输出：false
-     * 解释：该数组不存在有效划分。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2369().validPartition(
-                TestCaseInputUtils.getIntArr("[4,4,4,5,6,7,7,7,7]")
-        ));
-    }
-
-
 }

@@ -312,26 +312,4 @@ public class Four20210911 {
     }
 
 
-    /**
-     * source = {{1,3},{5,4}}, target = {{3,1},{6,5}}
-     * <p>
-     * {{1,2,3},{3,4,5}}, target = {{1,3,5},{2,3,4}}
-     * <p>
-     * toys = {{3,3,1},{3,2,1}}, circles = {{4,3}}, r = 2
-     * <p>
-     * <p>
-     * {{1,3,2},{4,3,1},{7,1,2}}, circles = {{1,0},{3,3}}, r = 4
-     * <p>
-     * 输出：1
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new Four20210911().circleGame(
-                new int[][]{{1, 3, 2}, {4, 3, 1}, {7, 1, 2}},
-                new int[][]{{1, 0}, {3, 3}},
-                4
-        ));
-    }
-
 }

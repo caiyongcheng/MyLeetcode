@@ -23,21 +23,4 @@ public class _3021 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: n = 3, m = 2
-     * Output: 3
-     * Explanation: The following pairs satisfy conditions described in the statement: (1,2), (3,2), (2,1).
-     * Example 2:
-     *
-     * Input: n = 1, m = 1
-     * Output: 0
-     * Explanation: No pairs satisfy the conditions described in the statement.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
-    }
-
 }

@@ -36,25 +36,6 @@ import letcode.utils.ListNode;
  */
 public class _147 {
 
-    /**
-     * 示例 1：
-     * 输入: 4->2->1->3
-     * 输出: 1->2->3->4
-     * 示例2：
-     * 输入: -1->5->3->4->0
-     * 输出: -1->0->3->4->5
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/insertion-sort-list
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        final ListNode listNode = new ListNode(new int[]{4, 2, 1, 3, 5});
-        listNode.display();
-        new _147().insertionSortList(listNode).display();
-    }
-
     private ListNode searchListNode(ListNode head, int target) {
         ListNode p = head;
         while (p.next != null) {

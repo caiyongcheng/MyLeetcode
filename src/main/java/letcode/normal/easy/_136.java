@@ -45,20 +45,4 @@ public class _136 {
         return ans;
     }
 
-    /**
-     * 示例 1:
-     * 输入: [2,2,1]
-     * 输出: 1
-     *
-     * 示例 2:
-     * 输入: [4,1,2,1,2]
-     * 输出: 4
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _136().singleNumber(
-                new int[]{4,1,2,1,2}
-        ));
-    }
-
 }

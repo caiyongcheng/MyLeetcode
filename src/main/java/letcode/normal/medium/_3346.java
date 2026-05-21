@@ -42,34 +42,4 @@ public class _3346 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: nums = [1,4,5], k = 1, numOperations = 2
-     *
-     * Output: 2
-     *
-     * Explanation:
-     *
-     * We can achieve a maximum frequency of two by:
-     *
-     * Adding 0 to nums[1]. nums becomes [1, 4, 5].
-     * Adding -1 to nums[2]. nums becomes [1, 4, 4].
-     * Example 2:
-     *
-     * Input: nums = [5,11,20,20], k = 5, numOperations = 1
-     *
-     * Output: 2
-     *
-     * Explanation:
-     *
-     * We can achieve a maximum frequency of two by:
-     *
-     * Adding 0 to nums[1].
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
-    }
-
 }

@@ -38,24 +38,4 @@ public class _3206 {
         return ans;
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: colors = [1,1,1]
-     *
-     * Output: 0
-     *
-     * Example 2:
-     *
-     * Input: colors = [0,1,0,0,1]
-     *
-     * Output: 3
-     *
-     * Explanation:
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3206.class);
-    }
-
 }

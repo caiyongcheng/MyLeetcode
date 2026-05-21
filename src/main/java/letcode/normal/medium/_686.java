@@ -67,33 +67,4 @@ public class _686 {
         return -1;
     }
 
-    /**
-     * 示例 1：
-     * 输入：a = "abcd", b = "cdabcdab"
-     * 输出：3
-     * 解释：a 重复叠加三遍后为 "abcdabcdabcd", 此时 b 是其子串。
-     * <p>
-     * 示例 2：
-     * 输入：a = "a", b = "aa"
-     * 输出：2
-     * <p>
-     * 示例 3：
-     * 输入：a = "a", b = "a"
-     * 输出：1
-     * <p>
-     * 示例 4：
-     * 输入：a = "abc", b = "wxyz"
-     * 输出：-1
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/repeated-string-match
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _686().repeatedStringMatch("abcd", "cdabcdab"));
-    }
-
-
 }

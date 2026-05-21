@@ -46,35 +46,6 @@ import java.util.Comparator;
  */
 public class _452 {
 
-    /**
-     * 示例 1：
-     * 输入：points = {{10,16},{2,8},{1,6},{7,12}}
-     * 输出：2
-     * 解释：对于该样例，x = 6 可以射爆 {2,8},{1,6} 两个气球，以及 x = 11 射爆另外两个气球
-     * 示例 2：
-     * 输入：points = {{1,2},{3,4},{5,6},{7,8}}
-     * 输出：4
-     * 示例 3：
-     * 输入：points = {{1,2},{2,3},{3,4},{4,5}}
-     * 输出：2
-     * 示例 4：
-     * 输入：points = {{1,2}}
-     * 输出：1
-     * 示例 5：
-     * 输入：points = {{2,3},{2,3}}
-     * 输出：1
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _452().findMinArrowShots(
-                new int[][]{{10, 16}, {2, 8}, {1, 6}, {7, 12}}
-        ));
-    }
-
     public int findMinArrowShots(int[][] points) {
         if (points.length < 2) {
             return points.length;

@@ -66,29 +66,4 @@ public class _337 {
     }
 
 
-    /**
-     * Input: root = [3,2,3,null,3,null,1]
-     * Output: 7
-     * Explanation: Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.
-     * <p>
-     * Input: root = [3,4,5,1,3,null,1]
-     * Output: 9
-     * Explanation: Maximum amount of money the thief can rob = 4 + 5 = 9.
-     * <p>
-     * [4,1,null,2,null,3]
-     * 7
-     * <p>
-     * [2,1,3,null,4]
-     * 7
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        TreeNode root = TreeNode.createUseLeetCode(new Integer[]{
-                4, 1, null, 2, null, 3
-        });
-        System.out.println(new _337().rob(root));
-    }
-
-
 }

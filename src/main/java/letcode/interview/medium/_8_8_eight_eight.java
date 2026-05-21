@@ -66,21 +66,4 @@ public class _8_8_eight_eight {
     }
 
 
-    /**
-     * 示例1:
-     *  输入：S = "qqe"
-     *  输出：["eqq","qeq","qqe"]
-     *
-     * 示例2:
-     *  输入：S = "ab"
-     *  输出：["ab", "ba"]
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatArray(new _8_8_eight_eight().permutation(
-                "ab"
-        )));
-    }
-
-
 }

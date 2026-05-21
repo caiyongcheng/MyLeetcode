@@ -37,40 +37,4 @@ public class _3106 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: s = "zbbz", k = 3
-     *
-     * Output: "aaaz"
-     *
-     * Explanation:
-     *
-     * Change s to "aaaz". The distance between "zbbz" and "aaaz" is equal to k = 3.
-     *
-     * Example 2:
-     *
-     * Input: s = "xaxcd", k = 4
-     *
-     * Output: "aawcd"
-     *
-     * Explanation:
-     *
-     * The distance between "xaxcd" and "aawcd" is equal to k = 4.
-     *
-     * Example 3:
-     *
-     * Input: s = "lol", k = 0
-     *
-     * Output: "lol"
-     *
-     * Explanation:
-     *
-     * It's impossible to change any character as k = 0.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3106.class);
-    }
-
 }

@@ -21,36 +21,4 @@ public class _3298 {
         return new _3297().validSubstringCount(word1, word2);
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: word1 = "bcca", word2 = "abc"
-     *
-     * Output: 1
-     *
-     * Explanation:
-     *
-     * The only valid substring is "bcca" which can be rearranged to "abcc" having "abc" as a prefix.
-     *
-     * Example 2:
-     *
-     * Input: word1 = "abcabc", word2 = "abc"
-     *
-     * Output: 10
-     *
-     * Explanation:
-     *
-     * All the substrings except substrings of size 1 and size 2 are valid.
-     *
-     * Example 3:
-     *
-     * Input: word1 = "abcabc", word2 = "aaabc"
-     *
-     * Output: 0
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
-    }
-
 }

@@ -134,24 +134,4 @@ public class _707 {
     }
 
 
-    /**
-     * 示例：
-     * <p>
-     * ["MyLinkedList","addAtHead","addAtHead","addAtHead","addAtIndex","deleteAtIndex","addAtHead","addAtTail","get","addAtHead","addAtIndex","addAtHead"]
-     * [[],[7],[2],[1],[3,0],[2],[6],[4],[4],[4],[5,0],[6]]
-     * <p>
-     * ["MyLinkedList","addAtHead","addAtTail","deleteAtIndex","addAtTail","addAtIndex","addAtIndex","deleteAtIndex","deleteAtIndex","addAtTail","addAtIndex","addAtTail"]
-     * [[],[7],[0],[1],[5],[1,1],[2,6],[2],[1],[7],[1,7],[6]]
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode.cn/problems/design-linked-list
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-
-    }
-
-
 }

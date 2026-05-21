@@ -102,44 +102,4 @@ public class _3239 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: grid = [[1,0,0],[0,0,0],[0,0,1]]
-     *
-     * Output: 2
-     *
-     * Explanation:
-     *
-     *
-     *
-     * Flipping the highlighted cells makes all the rows palindromic.
-     *
-     * Example 2:
-     *
-     * Input: grid = [[0,1],[0,1],[0,0]]
-     *
-     * Output: 1
-     *
-     * Explanation:
-     *
-     *
-     *
-     * Flipping the highlighted cell makes all the columns palindromic.
-     *
-     * Example 3:
-     *
-     * Input: grid = [[1],[0]]
-     *
-     * Output: 0
-     *
-     * Explanation:
-     *
-     * All rows are already palindromic.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3239.class);
-    }
-
 }

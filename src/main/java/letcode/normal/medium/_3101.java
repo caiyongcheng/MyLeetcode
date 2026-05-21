@@ -43,25 +43,4 @@ public class _3101 {
     }
 
 
-    /**
-     * 示例 1：
-     * 输入： nums = [0,1,1,1]
-     * 输出： 5
-     * 解释：
-     * 以下子数组是交替子数组：[0] 、[1] 、[1] 、[1] 以及 [0,1] 。
-     * 示例 2：
-     * 输入： nums = [1,0,1,0]
-     * 输出： 10
-     * 解释：
-     * 数组的每个子数组都是交替子数组。可以统计在内的子数组共有 10 个。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _3101().countAlternatingSubarrays(
-                TestCaseInputUtils.getIntArr(
-                        "[1,0,1,0]"
-                )
-        ));
-    }
-
 }

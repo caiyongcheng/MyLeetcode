@@ -148,18 +148,4 @@ public class Two20210815 {
     }
 
 
-    /**
-     * row = 2, col = 2, cells = {{1,1},{2,1},{1,2},{2,2}}      2
-     * row = 2, col = 2, cells = {{1,1},{1,2},{2,1},{2,2}}      1
-     * row = 3, col = 3, cells = {{1,2},{2,1},{3,3},{2,2},{1,1},{1,3},{2,3},{3,2},{3,1}}   3
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new Two20210815().latestDayToCross(
-                3,
-                3,
-                new int[][]{{1,2},{2,1},{3,3},{2,2},{1,1},{1,3},{2,3},{3,2},{3,1}}
-        ));
-    }
-
 }

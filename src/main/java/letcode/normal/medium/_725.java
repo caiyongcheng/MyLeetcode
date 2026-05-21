@@ -103,30 +103,4 @@ public class _725 {
         return ans;
     }
 
-    /**
-     * 示例 1：
-     * 输入：head = [1,2,3], k = 5
-     * 输出：[[1],[2],[3],[],[]]
-     * 解释：
-     * 第一个元素 output[0] 为 output[0].val = 1 ，output[0].next = null 。
-     * 最后一个元素 output[4] 为 null ，但它作为 ListNode 的字符串表示是 [] 。
-     * <p>
-     * 示例 2：
-     * 输入：head = [1,2,3,4,5,6,7,8,9,10], k = 3
-     * 输出：[[1,2,3,4],[5,6,7],[8,9,10]]
-     * 解释：
-     * 输入被分成了几个连续的部分，并且每部分的长度相差不超过 1 。前面部分的长度大于等于后面部分的长度。
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/split-linked-list-in-parts
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        ListNode listNode = new ListNode(new int[]{0});
-        System.out.println(listNode);
-        ListNode[] listNodes = new _725().splitListToParts(listNode, 1);
-        System.out.println(TestCaseOutputUtils.formatArray(listNodes, "", "", "\n"));
-    }
 }

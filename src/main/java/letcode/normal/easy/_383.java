@@ -28,26 +28,4 @@ public class _383 {
         return true;
     }
 
-    /**
-     * 示例 1：
-     *
-     * 输入：ransomNote = "a", magazine = "b"
-     * 输出：false
-     * 示例 2：
-     *
-     * 输入：ransomNote = "aa", magazine = "ab"
-     * 输出：false
-     * 示例 3：
-     *
-     * 输入：ransomNote = "aa", magazine = "aab"
-     * 输出：true
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _383().canConstruct(
-                "aa",
-                "b"
-        ));
-    }
-
 }

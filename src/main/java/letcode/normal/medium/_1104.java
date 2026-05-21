@@ -71,18 +71,4 @@ public class _1104 {
     }
 
 
-    /**
-     * 示例 1：
-     * 输入：label = 14
-     * 输出：[1,3,4,14]
-     *
-     * 示例 2：
-     * 输入：label = 26
-     * 输出：[1,2,6,10,26]
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatList(new _1104().pathInZigZagTree(26)));
-    }
-
 }

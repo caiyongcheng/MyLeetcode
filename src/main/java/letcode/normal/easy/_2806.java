@@ -20,23 +20,4 @@ public class _2806 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: purchaseAmount = 9
-     * Output: 90
-     * Explanation: In this example, the nearest multiple of 10 to 9 is 10. Hence, your account balance becomes 100 - 10 = 90.
-     * Example 2:
-     *
-     * Input: purchaseAmount = 15
-     * Output: 80
-     * Explanation: In this example, there are two nearest multiples of 10 to 15: 10 and 20. So, the larger multiple, 20, is chosen.
-     * Hence, your account balance becomes 100 - 20 = 80.
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2806().accountBalanceAfterPurchase(9));
-        System.out.println(new _2806().accountBalanceAfterPurchase(15));
-    }
-
 }

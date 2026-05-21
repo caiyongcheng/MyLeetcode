@@ -45,40 +45,4 @@ public class _3238 {
                 .count());
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: n = 4, pick = [[0,0],[1,0],[1,0],[2,1],[2,1],[2,0]]
-     *
-     * Output: 2
-     *
-     * Explanation:
-     *
-     * Player 0 and player 1 win the game, while players 2 and 3 do not win.
-     *
-     * Example 2:
-     *
-     * Input: n = 5, pick = [[1,1],[1,2],[1,3],[1,4]]
-     *
-     * Output: 0
-     *
-     * Explanation:
-     *
-     * No player wins the game.
-     *
-     * Example 3:
-     *
-     * Input: n = 5, pick = [[1,1],[2,4],[2,4],[2,4]]
-     *
-     * Output: 1
-     *
-     * Explanation:
-     *
-     * Player 2 wins the game by picking 3 balls with color 4.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3238.class);
-    }
-
 }

@@ -87,20 +87,4 @@ public class N_698 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: nums = [4,3,2,3,5,2,1], k = 4
-     * Output: true
-     * Explanation: It is possible to divide it into 4 subsets (5), (1, 4), (2,3), (2,3) with equal sums.
-     * Example 2:
-     *
-     * Input: nums = [1,2,3,4], k = 3
-     * Output: false
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(N_698.class);
-    }
-
 }

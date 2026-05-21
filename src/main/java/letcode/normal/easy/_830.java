@@ -43,40 +43,6 @@ import java.util.List;
  */
 public class _830 {
 
-    /**
-     * 示例1：
-     * 输入：s = "abbxxxxzzy"
-     * 输出：[[3,6]]
-     * 解释："xxxx" 是一个起始于 3 且终止于 6 的较大分组。
-     * <p>
-     * 示例 2：
-     * 输入：s = "abc"
-     * 输出：[]
-     * 解释："a","b" 和 "c" 均不是符合要求的较大分组。
-     * <p>
-     * 示例 3：
-     * 输入：s = "abcdddeeeeaabbbcd"
-     * 输出：[[3,5],[6,9],[12,14]]
-     * 解释：较大分组为 "ddd", "eeee" 和 "bbb"
-     * <p>
-     * 示例 4：
-     * 输入：s = "aba"
-     * 输出：[]
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/positions-of-large-groups
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        final List<List<Integer>> lists =
-                new _830().largeGroupPositions("aaa");
-        for (List<Integer> list : lists) {
-            System.out.println(list);
-        }
-    }
-
     public List<List<Integer>> largeGroupPositions(String s) {
         s = s + "1";
         char[] chars = s.toCharArray();

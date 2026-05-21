@@ -39,23 +39,4 @@ public class _2216 {
     }
 
 
-    /**
-     * 示例 1：
-     *
-     * 输入：nums = [1,1,2,3,5]
-     * 输出：1
-     * 解释：可以删除 nums[0] 或 nums[1] ，这样得到的 nums = [1,2,3,5] 是一个美丽数组。可以证明，要想使 nums 变为美丽数组，至少需要删除 1 个元素。
-     * 示例 2：
-     *
-     * 输入：nums = [1,1,2,2,3,3]
-     * 输出：2
-     * 解释：可以删除 nums[0] 和 nums[5] ，这样得到的 nums = [1,2,2,3] 是一个美丽数组。可以证明，要想使 nums 变为美丽数组，至少需要删除 2 个元素。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2216().minDeletion(
-                new int[]{1,1,2,2,3,3}
-        ));
-    }
-
 }

@@ -35,18 +35,6 @@ package normal.easy;
 public class _387 {
 
 
-    /**
-     * s = "leetcode"
-     * 返回 0
-     * s = "loveleetcode"
-     * 返回 2
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _387().firstUniqChar(""));
-    }
-
     public int firstUniqChar(String s) {
         int[][] ints = new int[26][2];
         char[] chars = s.toCharArray();

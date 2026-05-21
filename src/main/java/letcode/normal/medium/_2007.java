@@ -46,32 +46,4 @@ public class _2007 {
         return idx == changed.length >>> 1 ? Arrays.copyOfRange(rst, 0, changed.length >>> 1) : new int[0];
     }
 
-    /**
-     * 示例 1：
-     *
-     * 输入：changed = [1,3,4,2,6,8]
-     * 输出：[1,3,4]
-     * 解释：一个可能的 original 数组为 [1,3,4] :
-     * - 将 1 乘以 2 ，得到 1 * 2 = 2 。
-     * - 将 3 乘以 2 ，得到 3 * 2 = 6 。
-     * - 将 4 乘以 2 ，得到 4 * 2 = 8 。
-     * 其他可能的原数组方案为 [4,3,1] 或者 [3,1,4] 。
-     * 示例 2：
-     *
-     * 输入：changed = [6,3,0,1]
-     * 输出：[]
-     * 解释：changed 不是一个双倍数组。
-     * 示例 3：
-     *
-     * 输入：changed = [1]
-     * 输出：[]
-     * 解释：changed 不是一个双倍数组。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatArray(new _2007().findOriginalArray(
-                TestCaseInputUtils.getIntArr("[0, 100000]")
-        )));
-    }
-
 }

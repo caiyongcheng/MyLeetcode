@@ -62,21 +62,4 @@ public class _2785 {
         return new String(sBytes);
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: s = "lEetcOde"
-     * Output: "lEOtcede"
-     * Explanation: 'E', 'O', and 'e' are the vowels in s; 'l', 't', 'c', and 'd' are all consonants. The vowels are sorted according to their ASCII values, and the consonants remain in the same places.
-     * Example 2:
-     *
-     * Input: s = "lYmpH"
-     * Output: "lYmpH"
-     * Explanation: There are no vowels in s (all characters in s are consonants), so we return "lYmpH".
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
-    }
-
 }

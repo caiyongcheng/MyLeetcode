@@ -34,27 +34,4 @@ public class _145 {
         ans.add(root.val);
     }
 
-    /**
-     * 示例 1：
-     *
-     *
-     * 输入：root = [1,null,2,3]
-     * 输出：[3,2,1]
-     * 示例 2：
-     *
-     * 输入：root = []
-     * 输出：[]
-     * 示例 3：
-     *
-     * 输入：root = [1]
-     * 输出：[1]
-     * @param args
-     */
-    public static void main(String[] args) {
-        TreeNode root = TreeNode.createUseLeetCode(TestCaseInputUtils.getIntegerArr("[1]"));
-        List<Integer> ans = new _145().postorderTraversal(root);
-        ans.forEach(System.out::println);
-    }
-
-
 }

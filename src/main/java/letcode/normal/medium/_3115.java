@@ -53,20 +53,4 @@ public class _3115 {
     }
 
 
-    /**
-     * 示例 1：
-     * 输入： nums = [4,2,9,5,3]
-     * 输出： 3
-     * 解释： nums[1]、nums[3] 和 nums[4] 是质数。因此答案是 |4 - 1| = 3。
-     * 示例 2：
-     * 输入： nums = [4,8,2,8]
-     * 输出： 0
-     * 解释： nums[2] 是质数。因为只有一个质数，所以答案是 |2 - 2| = 0。
-     */
-    public static void main(String[] args) {
-        System.out.println(new _3115().maximumPrimeDifference(
-                TestCaseInputUtils.getIntArr("[4,8,2,8]")
-        ));
-    }
-
 }

@@ -120,36 +120,4 @@ public class _1404 {
         return oneHighIndex;
     }
 
-    /**
-     * 示例 1：
-     *
-     * 输入：s = "1101"
-     * 输出：6
-     * 解释："1101" 表示十进制数 13 。
-     * Step 1) 13 是奇数，加 1 得到 14
-     * Step 2) 14 是偶数，除 2 得到 7
-     * Step 3) 7  是奇数，加 1 得到 8
-     * Step 4) 8  是偶数，除 2 得到 4
-     * Step 5) 4  是偶数，除 2 得到 2
-     * Step 6) 2  是偶数，除 2 得到 1
-     *
-     * 示例 2：
-     * 输入：s = "10"
-     * 输出：1
-     * 解释："10" 表示十进制数 2 。
-     * Step 1) 2 是偶数，除 2 得到 1
-     *
-     * 示例 3：
-     * 输入：s = "1"
-     * 输出：0
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/number-of-steps-to-reduce-a-number-in-binary-representation-to-one
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1404().numSteps("1"));
-    }
-
 }

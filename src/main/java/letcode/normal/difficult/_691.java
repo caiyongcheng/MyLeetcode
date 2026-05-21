@@ -51,26 +51,6 @@ public class _691 {
     private int minSize;
 
     /**
-     * ["major","love","help","weight","flow","energy","year","it","done","duck","fear","soon","yes","best","little","afraid","eye","tire","mix","rather","broad","support","father","cent","continent","field","rich","basic","several","happy","draw","north","string","leg","syllable","never","quite","game","lay","exact","throw","arrange","bat","we","camp","cover","together","ocean","radio","top"]
-     * "speakcry"
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _691().minStickers(
-                new String[]{
-                        "major", "love", "help", "weight", "flow", "energy", "year", "it", "done",
-                        "duck", "fear", "soon", "yes", "best", "little", "afraid", "eye", "tire", "mix",
-                        "rather", "broad", "support", "father", "cent", "continent", "field", "rich",
-                        "basic", "several", "happy", "draw", "north", "string", "leg", "syllable", "never",
-                        "quite", "game", "lay", "exact", "throw", "arrange", "bat", "we", "camp", "cover",
-                        "together", "ocean", "radio", "top"
-                },
-                "speakcry"
-        ));
-    }
-
-    /**
      * 判断目标单词是否被凑出
      *
      * @return

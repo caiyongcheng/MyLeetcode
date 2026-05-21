@@ -60,28 +60,4 @@ public class _456 {
         return false;
     }
 
-    /**
-     * 示例 1：
-     * 输入：nums = [1,2,3,4]
-     * 输出：false
-     * 解释：序列中不存在 132 模式的子序列。
-     *
-     * 示例 2：
-     * 输入：nums = [3,1,4,2]
-     * 输出：true
-     * 解释：序列中有 1 个 132 模式的子序列： [1, 4, 2] 。
-     * 示例 3：
-     * 输入：nums = [-1,3,2,0]
-     * 输出：true
-     * 解释：序列中有 3 个 132 模式的的子序列：[-1, 3, 2]、[-1, 3, 0] 和 [-1, 2, 0] 。
-     * 1 7 3 5 3 8 7 2 1
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/132-pattern
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _456().find132pattern(new int[]{1,3,2,4,5,6,7,8,9,10}));
-    }
-
 }

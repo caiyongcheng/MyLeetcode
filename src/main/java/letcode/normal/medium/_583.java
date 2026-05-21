@@ -57,15 +57,4 @@ public class _583 {
         return chs1.length - dp[0][0] + chs2.length - dp[0][0];
     }
 
-    /**
-     * 输入: "sea", "eat"
-     * 输出: 2
-     * 解释: 第一步将"sea"变为"ea"，第二步将"eat"变为"ea"
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _583().minDistance("sea", "eat"));
-    }
-
 }

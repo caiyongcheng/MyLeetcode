@@ -43,29 +43,4 @@ public class _575 {
         return Math.min(Arrays.stream(candyType).boxed().collect(Collectors.toSet()).size(), candyType.length >> 1);
     }
 
-    /**
-     * 示例 1:
-     * 输入: candies = [1,1,2,2,3,3]
-     * 输出: 3
-     * 解析: 一共有三种种类的糖果，每一种都有两个。
-     * 最优分配方案：妹妹获得[1,2,3],弟弟也获得[1,2,3]。这样使妹妹获得糖果的种类数最多。
-     * <p>
-     * 示例 2 :
-     * 输入: candies = [1,1,2,3]
-     * 输出: 2
-     * 解析: 妹妹获得糖果[2,3],弟弟获得糖果[1,1]，妹妹有两种不同的糖果，弟弟只有一种。这样使得妹妹可以获得的糖果种类数最多。
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/distribute-candies
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _575().distributeCandies(
-                new int[]{1, 1, 2, 3}
-        ));
-    }
-
-
 }

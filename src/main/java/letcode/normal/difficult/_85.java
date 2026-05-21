@@ -87,18 +87,4 @@ public class _85 {
         return maxArea;
     }
 
-    /**
-     * matrix = {{'1','0','1','0','0'},{'1','0','1','1','1'},{'1','1','1','1','1'},{'1','0','0','1','0'}}
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/maximal-rectangle
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _85().maximalRectangle(
-                new char[][]{{'1', '0', '1', '0', '0'}, {'1', '0', '1', '1', '1'}, {'1', '1', '1', '1', '1'}, {'1', '0', '0', '1', '0'}}
-        ));
-    }
-
 }

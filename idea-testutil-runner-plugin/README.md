@@ -1,6 +1,6 @@
 # LeetCode TestUtil Runner
 
-IntelliJ IDEA 本地插件：在 Java 题解类上右键，直接通过 `letcode.utils.TestUtilRunner` 调用 `TestUtil.test(Class)`，不用再手写 `main` 方法。
+IntelliJ IDEA 本地插件：在 Java 题解类上右键，通过 `letcode.utils.TestUtilRunner` 调用 `TestUtil`，不用再手写 `main` 方法。
 
 ## 构建
 
@@ -47,9 +47,25 @@ Settings -> Plugins -> 齿轮 -> Install Plugin from Disk
 Run via TestUtilRunner
 ```
 
+每次运行前都会弹出测试用例确认框，可以按原来的 `TestUtil.test()` 输入格式编辑用例。
+
+默认用例来源优先级：
+
+1. 当前题解类 `main` 方法前的注释用例。
+2. 项目内 `src/main/resources/TestCase<类简单名>.txt`（与 `TestCaseInputUtils` 文本用例路径一致）。
+3. 空输入框。
+
+点击 OK 后，插件会把确认后的用例保存到：
+
+```text
+src/main/resources/TestCase<类简单名>.txt
+```
+
+例如类 `_632` 对应 `src/main/resources/TestCase_632.txt`。
+
 插件会创建临时 Application 运行配置：
 
 - Main class: `letcode.utils.TestUtilRunner`
-- Program arguments: 当前题解类全限定名
+- Program arguments: 当前题解类全限定名和 Base64 编码后的测试用例
 - Working directory: 当前项目根目录
 - Module: 当前题解类所在模块

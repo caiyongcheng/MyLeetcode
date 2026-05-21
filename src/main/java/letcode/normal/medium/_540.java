@@ -72,26 +72,4 @@ public class _540 {
         return nums[li];
     }
 
-    /**
-     * 示例 1:
-     * <p>
-     * 输入: nums = [1,1,2,3,3,4,4,8,8]
-     * 输出: 2
-     * 示例 2:
-     * <p>
-     * 输入: nums =  [3,3,7,7,10,11,11]
-     * 输出: 10
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/single-element-in-a-sorted-array
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _540().singleNonDuplicate(
-                new int[]{3, 3, 7, 7, 10, 11, 11}
-        ));
-    }
-
 }

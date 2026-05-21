@@ -38,31 +38,4 @@ public class _3304 {
         return (n < 0) ? 1 : (n >= Integer.MAX_VALUE) ? Integer.MAX_VALUE : n + 1;
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: k = 5
-     *
-     * Output: "b"
-     *
-     * Explanation:
-     *
-     * Initially, word = "a". We need to do the operation three times:
-     *
-     * Generated string is "b", word becomes "ab".
-     * Generated string is "bc", word becomes "abbc".
-     * Generated string is "bccd", word becomes "abbcbccd".
-     * Example 2:
-     *
-     * Input: k = 10
-     *
-     * Output: "c"
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
-    }
-
-
-
 }

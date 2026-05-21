@@ -48,30 +48,4 @@ public class _3211 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: n = 3
-     *
-     * Output: ["010","011","101","110","111"]
-     *
-     * Explanation:
-     *
-     * The valid strings of length 3 are: "010", "011", "101", "110", and "111".
-     *
-     * Example 2:
-     *
-     * Input: n = 1
-     *
-     * Output: ["0","1"]
-     *
-     * Explanation:
-     *
-     * The valid strings of length 1 are: "0" and "1".
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3211.class);
-    }
-
 }

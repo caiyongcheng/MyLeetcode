@@ -49,39 +49,6 @@ public class _967 {
 
     private int spacing;
 
-    /**
-     * 示例 1：
-     * 输入：n = 3, k = 7
-     * 输出：[181,292,707,818,929]
-     * 解释：注意，070 不是一个有效的数字，因为它有前导零。
-     * <p>
-     * 示例 2：
-     * 输入：n = 2, k = 1
-     * 输出：[10,12,21,23,32,34,43,45,54,56,65,67,76,78,87,89,98]
-     * <p>
-     * 示例 3：
-     * 输入：n = 2, k = 0
-     * 输出：[11,22,33,44,55,66,77,88,99]
-     * <p>
-     * 示例 4：
-     * 输入：n = 2, k = 1
-     * 输出：[10,12,21,23,32,34,43,45,54,56,65,67,76,78,87,89,98]
-     * <p>
-     * 示例 5：
-     * 输入：n = 2, k = 2
-     * 输出：[13,20,24,31,35,42,46,53,57,64,68,75,79,86,97]
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/numbers-with-same-consecutive-differences
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        final int[] ints = new _967().numsSameConsecDiff(3, 7);
-        Arrays.sort(ints);
-        System.out.println(Arrays.toString(ints));
-    }
-
     public void searchNum(int nowValue, int nowNum, int nowlength) {
         if (nowlength > floor) {
             return;

@@ -62,19 +62,4 @@ public class _345 {
                     || letter == 'A' || letter == 'E' || letter == 'I' || letter == 'O' || letter == 'U');
     }
 
-    /**
-     * 例 1：
-     * 输入：s = "hello"
-     * 输出："holle"
-     *
-     * 示例 2：
-     * 输入：s = "leetcode"
-     * 输出："leotcede"
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _345().reverseVowels("leetcode"));
-    }
-
-
 }

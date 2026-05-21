@@ -34,23 +34,4 @@ public class _2414 {
         return ans;
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: s = "abacaba"
-     * Output: 2
-     * Explanation: There are 4 distinct continuous substrings: "a", "b", "c" and "ab".
-     * "ab" is the longest continuous substring.
-     * Example 2:
-     *
-     * Input: s = "abcde"
-     * Output: 5
-     * Explanation: "abcde" is the longest continuous substring.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_2414.class);
-    }
-
-
 }

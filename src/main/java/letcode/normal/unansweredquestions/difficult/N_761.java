@@ -37,23 +37,6 @@ package letcode.normal.unansweredquestions.difficult;
  */
 public class N_761 {
 
-    /**
-     * 示例 1:
-     * 输入: S = "11011000"
-     * 输出: "11100100"
-     * 解释:
-     * 将子串 "10" （在S[1]出现） 和 "1100" （在S[3]出现）进行交换。
-     * 这是在进行若干次操作后按字典序排列最大的结果。
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/special-binary-string
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-
-    }
-
     public String makeLargestSpecial(String S) {
         return null;
     }

@@ -1,0 +1,1 @@
+ Example 1: Input: colors = [1,1,1] Output: 0 Example 2: Input: colors = [0,1,0,0,1] Output: 3 Explanation:

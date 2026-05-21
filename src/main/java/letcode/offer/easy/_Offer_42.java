@@ -56,18 +56,4 @@ public class _Offer_42 {
         return max;
     }
 
-    /**
-     * 示例1:
-     * 输入: nums = [-2,1,-3,4,-1,2,1,-5,4]
-     * 输出: 6
-     * 解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _Offer_42().maxSubArray(
-                new int[]{-2,1,-3,4,-1,2,1,-5,4}
-        ));
-    }
-
-
 }

@@ -62,31 +62,4 @@ public class _3040 {
         return operations;
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: nums = [3,2,1,2,3,4]
-     * Output: 3
-     * Explanation: We perform the following operations:
-     * - Delete the first two elements, with score 3 + 2 = 5, nums = [1,2,3,4].
-     * - Delete the first and the last elements, with score 1 + 4 = 5, nums = [2,3].
-     * - Delete the first and the last elements, with score 2 + 3 = 5, nums = [].
-     * We are unable to perform any more operations as nums is empty.
-     * Example 2:
-     *
-     * Input: nums = [3,2,6,1,4]
-     * Output: 2
-     * Explanation: We perform the following operations:
-     * - Delete the first two elements, with score 3 + 2 = 5, nums = [6,1,4].
-     * - Delete the last two elements, with score 1 + 4 = 5, nums = [6].
-     * It can be proven that we can perform at most 2 operations.
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _3040().maxOperations(
-                TestCaseInputUtils.getIntArr(" [3,2,6,1,4]")
-        ));
-    }
-
-
 }

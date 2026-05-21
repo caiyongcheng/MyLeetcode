@@ -142,29 +142,4 @@ public class _678 {
         return leftCount == 0;
     }
 
-    /**
-     * 示例 1:
-     * 输入: "()"
-     * 输出: True
-     * <p>
-     * 示例 2:
-     * 输入: "(*)"
-     * 输出: True
-     * <p>
-     * 示例 3:
-     * 输入: "(*))"
-     * 输出: True
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _678().checkValidString1(
-                "((*)"
-        ));
-        System.out.println(new _678().checkValidString(
-                "((*)"
-        ));
-
-    }
-
 }

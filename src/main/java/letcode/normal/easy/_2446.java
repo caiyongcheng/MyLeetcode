@@ -57,33 +57,4 @@ public class _2446 {
         return (numStr.charAt(startIdx) - '0') * 10 + numStr.charAt(startIdx + 1) - '0';
     }
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：event1 = {"01:15","02:00"}, event2 = {"02:00","03:00"}
-     * 输出：true
-     * 解释：两个事件在 2:00 出现交集。
-     * 示例 2：
-     * <p>
-     * 输入：event1 = {"01:00","02:00"}, event2 = {"01:20","03:00"}
-     * 输出：true
-     * 解释：两个事件的交集从 01:20 开始，到 02:00 结束。
-     * 示例 3：
-     * <p>
-     * 输入：event1 = {"10:00","11:00"}, event2 = {"14:00","15:00"}
-     * 输出：false
-     * 解释：两个事件不存在交集。
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode.cn/problems/determine-if-two-events-have-conflict
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2446().haveConflict(
-                new String[]{"10:00", "11:00"},
-                new String[]{"14:00", "15:00"}
-        ));
-    }
 }

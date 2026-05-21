@@ -43,24 +43,6 @@ import java.util.List;
 public class _368 {
 
 
-    /**
-     * 示例 1:
-     * 输入: [1,2,3]
-     * 输出: [1,2] (当然, [1,3] 也正确)
-     * 示例 2:
-     * 输入: [1,2,4,8]
-     * 输出: [1,2,4,8]
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        _368 threeHundredSixtyEight = new _368();
-        List<Integer> integers = threeHundredSixtyEight.largestDivisibleSubset(new int[]{1, 2, 4, 8, 3, 9, 27, 81});
-        for (Integer integer : integers) {
-            System.out.print(integer + "、");
-        }
-    }
-
     public List<Integer> largestDivisibleSubset(int[] nums) {
         if (nums == null || nums.length == 0) {
             return new ArrayList<>();

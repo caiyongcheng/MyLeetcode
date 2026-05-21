@@ -26,40 +26,4 @@ public class _3131 {
         return minForNums2 - minForNums1;
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: nums1 = [2,6,4], nums2 = [9,7,5]
-     *
-     * Output: 3
-     *
-     * Explanation:
-     *
-     * The integer added to each element of nums1 is 3.
-     *
-     * Example 2:
-     *
-     * Input: nums1 = [10], nums2 = [5]
-     *
-     * Output: -5
-     *
-     * Explanation:
-     *
-     * The integer added to each element of nums1 is -5.
-     *
-     * Example 3:
-     *
-     * Input: nums1 = [1,1,1,1], nums2 = [1,1,1,1]
-     *
-     * Output: 0
-     *
-     * Explanation:
-     *
-     * The integer added to each element of nums1 is 0.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3131.class);
-    }
-
 }

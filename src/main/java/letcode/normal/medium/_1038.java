@@ -36,20 +36,4 @@ public class _1038 {
     }
 
 
-    /**
-     * 输入：[4,1,6,0,2,5,7,null,null,null,3,null,null,null,8]
-     * 输出：[30,36,21,36,35,26,15,null,null,null,33,null,null,null,8]
-     * 示例 2：
-     *
-     * 输入：root = [0,null,1]
-     * 输出：[1,null,1]
-     * @param args
-     */
-    public static void main(String[] args) {
-        TreeNode treeNode = new TreeNode(new Integer[]{4, 1, 6, 0, 2, 5, 7, null, null, null, 3, null, null, null, 8});
-        System.out.println(new _1038().bstToGst(
-                treeNode
-        ));
-    }
-
 }

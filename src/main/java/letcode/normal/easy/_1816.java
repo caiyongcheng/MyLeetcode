@@ -33,37 +33,4 @@ public class _1816 {
         return sb.toString();
     }
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：s = "Hello how are you Contestant", k = 4
-     * 输出："Hello how are you"
-     * 解释：
-     * s 中的单词为 ["Hello", "how" "are", "you", "Contestant"]
-     * 前 4 个单词为 ["Hello", "how", "are", "you"]
-     * 因此，应当返回 "Hello how are you"
-     * 示例 2：
-     * <p>
-     * 输入：s = "What is the solution to this problem", k = 4
-     * 输出："What is the solution"
-     * 解释：
-     * s 中的单词为 ["What", "is" "the", "solution", "to", "this", "problem"]
-     * 前 4 个单词为 ["What", "is", "the", "solution"]
-     * 因此，应当返回 "What is the solution"
-     * 示例 3：
-     * <p>
-     * 输入：s = "chopper is not a tanuki", k = 5
-     * 输出："chopper is not a tanuki"
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.testBatch(
-                _1816.class,
-                "输入：s = \"Hello how are you Contestant\", k = 4",
-                "输入：s = \"What is the solution to this problem\", k = 4",
-                "输入：s = \"chopper is not a tanuki\", k = 5"
-        );
-    }
-
 }

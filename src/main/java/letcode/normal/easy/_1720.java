@@ -49,26 +49,4 @@ public class _1720 {
         return ans;
     }
 
-    /**
-     * 示例 1：
-     * 输入：encoded = [1,2,3], first = 1
-     * 输出：[1,0,2,1]
-     * 解释：若 arr = [1,0,2,1] ，那么 first = 1 且 encoded = [1 XOR 0, 0 XOR 2, 2 XOR 1] = [1,2,3]
-     *
-     * 示例 2：
-     * 输入：encoded = [6,2,7,3], first = 4
-     * 输出：[4,2,0,7,4]
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/decode-xored-array
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatArray(new _1720().decode(new int[]{6, 2, 7, 3}, 4)));
-    }
-
-
-
-
 }

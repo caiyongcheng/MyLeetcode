@@ -44,25 +44,4 @@ public class _6 {
         //return Arrays.stream(coins).map(coin -> (coin + 1) >>> 1).sum();
     }
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：[4,2,1]
-     * <p>
-     * 输出：4
-     * <p>
-     * 解释：第一堆力扣币最少需要拿 2 次，第二堆最少需要拿 1 次，第三堆最少需要拿 1 次，总共 4 次即可拿完。
-     * <p>
-     * 示例 2：
-     * <p>
-     * 输入：[2,3,10]
-     * <p>
-     * 输出：8
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _6().minCount(new int[]{2, 3, 10}));
-    }
-
 }

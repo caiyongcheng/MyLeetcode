@@ -28,29 +28,4 @@ public class _3038 {
         return ans;
     }
 
-    /**
-     * 示例 1：
-     *
-     * 输入：nums = [3,2,1,4,5]
-     * 输出：2
-     * 解释：我们执行以下操作：
-     * - 删除前两个元素，分数为 3 + 2 = 5 ，nums = [1,4,5] 。
-     * - 删除前两个元素，分数为 1 + 4 = 5 ，nums = [5] 。
-     * 由于只剩下 1 个元素，我们无法继续进行任何操作。
-     * 示例 2：
-     *
-     * 输入：nums = [3,2,6,1,4]
-     * 输出：1
-     * 解释：我们执行以下操作：
-     * - 删除前两个元素，分数为 3 + 2 = 5 ，nums = [6,1,4] 。
-     * 由于下一次操作的分数与前一次不相等，我们无法继续进行任何操作。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _3038().maxOperations(
-                TestCaseInputUtils.getIntArr("[3,2,6,1,4]")
-        ));
-    }
-
-
 }

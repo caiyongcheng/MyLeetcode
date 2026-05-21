@@ -35,26 +35,4 @@ public class _365 {
     }
 
 
-    /**
-     * 示例 1:
-     *
-     * 输入: jug1Capacity = 3, jug2Capacity = 5, targetCapacity = 4
-     * 输出: true
-     * 解释：来自著名的 "Die Hard"
-     * 示例 2:
-     *
-     * 输入: jug1Capacity = 2, jug2Capacity = 6, targetCapacity = 5
-     * 输出: false
-     * 示例 3:
-     *
-     * 输入: jug1Capacity = 1, jug2Capacity = 2, targetCapacity = 3
-     * 输出: true
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _365().canMeasureWater(
-                1, 2, 3
-        ));
-    }
-
 }

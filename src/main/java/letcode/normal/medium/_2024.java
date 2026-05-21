@@ -51,32 +51,4 @@ public class _2024 {
         return ans;
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: answerKey = "TTFF", k = 2
-     * Output: 4
-     * Explanation: We can replace both the 'F's with 'T's to make answerKey = "TTTT".
-     * There are four consecutive 'T's.
-     * Example 2:
-     *
-     * Input: answerKey = "TFFT", k = 1
-     * Output: 3
-     * Explanation: We can replace the first 'T' with an 'F' to make answerKey = "FFFT".
-     * Alternatively, we can replace the second 'T' with an 'F' to make answerKey = "TFFF".
-     * In both cases, there are three consecutive 'F's.
-     * Example 3:
-     *
-     * Input: answerKey = "TTFTTFTT", k = 1
-     * Output: 5
-     * Explanation: We can replace the first 'F' to make answerKey = "TTTTTFTT"
-     * Alternatively, we can replace the second 'F' to make answerKey = "TTFTTTTT".
-     * In both cases, there are five consecutive 'T's.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_2024.class);
-    }
-
-
 }

@@ -45,13 +45,4 @@ public class _16_1_Sixteen_One {
         return numbers;
     }
 
-    /**
-     * 输入: numbers = [1,2]
-     * 输出: [2,1]
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatArray(new _16_1_Sixteen_One().swapNumbers(new int[]{1, 2})));
-    }
-
 }

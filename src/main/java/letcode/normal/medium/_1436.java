@@ -61,35 +61,4 @@ public class _1436 {
     }
 
 
-    /**
-     * 示例 1：
-     * 输入：paths = {{"London","New York"},{"New York","Lima"},{"Lima","Sao Paulo"}}
-     * 输出："Sao Paulo"
-     * 解释：从 "London" 出发，最后抵达终点站 "Sao Paulo" 。本次旅行的路线是 "London" -> "New York" -> "Lima" -> "Sao Paulo" 。
-     * <p>
-     * 示例 2：
-     * 输入：paths = {{"B","C"},{"D","B"},{"C","A"}}
-     * 输出："A"
-     * 解释：所有可能的线路是：
-     * "D" -> "B" -> "C" -> "A".
-     * "B" -> "C" -> "A".
-     * "C" -> "A".
-     * "A".
-     * 显然，旅行终点站是 "A" 。
-     * <p>
-     * 示例 3：
-     * 输入：paths = {{"A","Z"}}
-     * 输出："Z"
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/destination-city
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        List<List<String>> lists = CastUtils.array2List(new String[][]{{"A", "Z"}});
-        System.out.println(new _1436().destCity(lists));
-    }
-
 }

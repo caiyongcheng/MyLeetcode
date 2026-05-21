@@ -32,27 +32,4 @@ public class _419 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     *
-     * Input: board = [["X",".",".","X"],[".",".",".","X"],[".",".",".","X"]]
-     * Output: 2
-     * Example 2:
-     *
-     * Input: board = [["."]]
-     * Output: 0
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _419().countBattleships(
-                TestCaseInputUtils.get2DimensionArr(
-                        "[[\".\"]]",
-                        ",",
-                        TestCaseInputUtils::getCharArr,
-                        new char[0][0]
-                )
-        ));
-    }
-
 }

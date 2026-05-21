@@ -36,20 +36,4 @@ public class _324 {
         }
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: nums = [1,5,1,1,6,4]
-     * Output: [1,6,1,5,1,4]
-     * Explanation: [1,4,1,5,1,6] is also accepted.
-     * Example 2:
-     *
-     * Input: nums = [1,3,2,2,3,1]
-     * Output: [2,3,1,3,1,2]
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
-    }
-
 }

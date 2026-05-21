@@ -62,37 +62,4 @@ public class _852 {
         return arr[left] > arr[right] ? left : right;
     }
 
-    /**
-     * 示例 1：
-     * 输入：arr = [0,1,0]
-     * 输出：1
-     * <p>
-     * 示例 2：
-     * 输入：arr = [1,3,5,4,2]
-     * 输出：2
-     * <p>
-     * 示例 3：
-     * 输入：arr = [0,10,5,2]
-     * 输出：1
-     * <p>
-     * 示例 4：
-     * 输入：arr = [3,4,5,1]
-     * 输出：2
-     * <p>
-     * 示例 5：
-     * 输入：arr = [24,69,100,99,79,78,67,36,26,19]
-     * 输出：2
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/B1IidL
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _852().peakIndexInMountainArray(
-                new int[]{24, 69, 100, 99, 79, 78, 67, 36, 26, 19}
-        ));
-    }
-
 }

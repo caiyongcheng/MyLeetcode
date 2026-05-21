@@ -65,26 +65,4 @@ public class _187 {
     }
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
-     * 输出：["AAAAACCCCC","CCCCCAAAAA"]
-     * 示例 2：
-     * <p>
-     * 输入：s = "AAAAAAAAAAAAA"
-     * 输出：["AAAAAAAAAA"]
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/repeated-dna-sequences
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _187().findRepeatedDnaSequences(
-                "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
-        ));
-    }
-
 }

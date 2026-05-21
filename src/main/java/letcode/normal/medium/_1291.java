@@ -38,27 +38,6 @@ import java.util.List;
 public class _1291 {
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输出：low = 100, high = 300
-     * 输出：[123,234]
-     * 示例 2：
-     * <p>
-     * 输出：low = 1000, high = 13000
-     * 输出：[1234,2345,3456,4567,5678,6789,12345]
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/sequential-digits
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        List<Integer> integers = new _1291().sequentialDigits(100, 300);
-        System.out.println(integers);
-    }
-
     private Integer getNumGrade(Integer num) {
         if (num == 100000000) {
             return 9;

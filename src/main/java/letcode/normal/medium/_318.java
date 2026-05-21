@@ -49,28 +49,4 @@ public class _318 {
     }
 
 
-    /**
-     * 示例 1：
-     *
-     * 输入：words = ["abcw","baz","foo","bar","xtfn","abcdef"]
-     * 输出：16
-     * 解释：这两个单词为 "abcw", "xtfn"。
-     * 示例 2：
-     *
-     * 输入：words = ["a","ab","abc","d","cd","bcd","abcd"]
-     * 输出：4
-     * 解释：这两个单词为 "ab", "cd"。
-     * 示例 3：
-     *
-     * 输入：words = ["a","aa","aaa","aaaa"]
-     * 输出：0
-     * 解释：不存在这样的两个单词。
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_318.class);
-    }
-
-
-
 }

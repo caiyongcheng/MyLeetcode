@@ -89,30 +89,4 @@ public class _105 {
     }
 
 
-    /**
-     * Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
-     * Output: [3,9,20,null,null,15,7]
-     * <p>
-     * 示例 2:
-     * Input: preorder = [-1], inorder = [-1]
-     * Output: [-1]
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        TreeNode root = new TreeNode(-1);
-        System.out.println(TestCaseOutputUtils.formatList(TreeNode.preOrder(root)));
-        System.out.println(TestCaseOutputUtils.formatList(TreeNode.inOrder(root)));
-        TreeNode treeNode = new _105().buildTree(
-                new int[]{-1},
-                new int[]{-1}
-        );
-        System.out.println(TestCaseOutputUtils.formatList(TreeNode.preOrder(treeNode)));
-        System.out.println(TestCaseOutputUtils.formatList(TreeNode.inOrder(treeNode)));
-    }
-
 }

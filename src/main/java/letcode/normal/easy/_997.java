@@ -66,31 +66,4 @@ public class _997 {
         return judge;
     }
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：n = 2, trust = {{1,2}}
-     * 输出：2
-     * 示例 2：
-     * <p>
-     * 输入：n = 3, trust = {{1,3},{2,3}}
-     * 输出：3
-     * 示例 3：
-     * <p>
-     * 输入：n = 3, trust = {{1,3},{2,3},{3,1}}
-     * 输出：-1
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/find-the-town-judge
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _997().findJudge(
-                1,
-                new int[][]{}
-        ));
-    }
-
 }

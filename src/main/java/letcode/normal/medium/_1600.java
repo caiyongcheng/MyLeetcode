@@ -124,43 +124,4 @@ public class _1600 {
         return ans;
     }
 
-    /**
-     * 输入：
-     * ["ThroneInheritance", "birth", "birth", "birth", "birth", "birth", "birth", "getInheritanceOrder", "death", "getInheritanceOrder"]
-     * [["king"], ["king", "andy"], ["king", "bob"], ["king", "catherine"], ["andy", "matthew"], ["bob", "alex"], ["bob", "asha"], [null], ["bob"], [null]]
-     * 输出：
-     * [null, null, null, null, null, null, null, ["king", "andy", "matthew", "bob", "alex", "asha", "catherine"], null, ["king", "andy", "matthew", "alex", "asha", "catherine"]]
-     * 解释：
-     * ThroneInheritance t= new ThroneInheritance("king"); // 继承顺序：king
-     * t.birth("king", "andy"); // 继承顺序：king > andy
-     * t.birth("king", "bob"); // 继承顺序：king > andy > bob
-     * t.birth("king", "catherine"); // 继承顺序：king > andy > bob > catherine
-     * t.birth("andy", "matthew"); // 继承顺序：king > andy > matthew > bob > catherine
-     * t.birth("bob", "alex"); // 继承顺序：king > andy > matthew > bob > alex > catherine
-     * t.birth("bob", "asha"); // 继承顺序：king > andy > matthew > bob > alex > asha > catherine
-     * t.getInheritanceOrder(); // 返回 ["king", "andy", "matthew", "bob", "alex", "asha", "catherine"]
-     * t.death("bob"); // 继承顺序：king > andy > matthew > bob（已经去世）> alex > asha > catherine
-     * t.getInheritanceOrder(); // 返回 ["king", "andy", "matthew", "alex", "asha", "catherine"]
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/throne-inheritance
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-
-
-        _1600 test = new _1600("king");
-        test.birth("king", "andy");
-        test.birth("king", "bob");
-        test.birth("king", "catherine");
-        test.birth("andy", "matthew");
-        test.birth("bob", "alex");
-        test.birth("bob", "asha");
-        System.out.println(TestCaseOutputUtils.formatList(test.getInheritanceOrder()));
-        test.death("bob");
-        System.out.println(TestCaseOutputUtils.formatList(test.getInheritanceOrder()));
-
-    }
-
 }

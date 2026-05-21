@@ -97,26 +97,4 @@ public class _460 {
         dates[removeKey] = 0;
     }
 
-    /**
-     * 输入：
-     * ["LFUCache", "put", "put", "get", "put", "get", "get", "put", "get", "get", "get"]
-     * [[2], [1, 1], [2, 2], [1], [3, 3], [2], [3], [4, 4], [1], [3], [4]]
-     * 输出：
-     * [null, null, null, 1, null, -1, 3, null, -1, 3, 4]
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        _460 fourHundredSixty = new _460(2);
-        fourHundredSixty.put(1, 1);
-        fourHundredSixty.put(2, 2);
-        System.out.println(fourHundredSixty.get(1));
-        fourHundredSixty.put(3, 3);
-        System.out.println(fourHundredSixty.get(2));
-        System.out.println(fourHundredSixty.get(3));
-        fourHundredSixty.put(4, 4);
-        System.out.println(fourHundredSixty.get(1));
-        System.out.println(fourHundredSixty.get(3));
-        System.out.println(fourHundredSixty.get(4));
-    }
 }

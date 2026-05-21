@@ -59,29 +59,4 @@ public class _676 {
         return false;
     }
 
-    /**
-     * Example 1:
-     *
-     * Input
-     * ["MagicDictionary", "buildDict", "search", "search", "search", "search"]
-     * [[], [["hello", "leetcode"]], ["hello"], ["hhllo"], ["hell"], ["leetcoded"]]
-     * Output
-     * [null, null, false, true, false, false]
-     *
-     * Explanation
-     * MagicDictionary magicDictionary = new MagicDictionary();
-     * magicDictionary.buildDict(["hello", "leetcode"]);
-     * magicDictionary.search("hello"); // return False
-     * magicDictionary.search("hhllo"); // We can change the second 'h' to 'e' to match "hello" so we return True
-     * magicDictionary.search("hell"); // return False
-     * magicDictionary.search("leetcoded"); // return False
-     * @param args
-     */
-    public static void main(String[] args) {
-        _676 t = new _676();
-        t.buildDict(new String[]{"hello", "leetcode"});
-        // System.out.println(t.search("hello"));
-        System.out.println(t.search("hhllo"));
-    }
-
 }

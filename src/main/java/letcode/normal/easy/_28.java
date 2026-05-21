@@ -96,26 +96,4 @@ public class _28 {
         return indexj >= targetArr.length ? indexi - targetArr.length : -1;
     }
 
-    /**
-     * 示例 1：
-     *
-     * 输入：haystack = "hello", needle = "ll"
-     * 输出：2
-     * 示例 2：
-     *
-     * 输入：haystack = "aaaaa", needle = "bba"
-     * 输出：-1
-     * 示例 3：
-     *
-     * 输入：haystack = "", needle = ""
-     * 输出：0
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/implement-strstr
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(strStrUseKMP("mississippi", "issi"));
-    }
 }

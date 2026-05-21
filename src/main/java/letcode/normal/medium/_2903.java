@@ -45,38 +45,4 @@ public class _2903 {
     }
 
 
-    /**
-     * 示例 1：
-     *
-     * 输入：nums = [5,1,4,1], indexDifference = 2, valueDifference = 4
-     * 输出：[0,3]
-     * 解释：在示例中，可以选择 i = 0 和 j = 3 。
-     * abs(0 - 3) >= 2 且 abs(nums[0] - nums[3]) >= 4 。
-     * 因此，[0,3] 是一个符合题目要求的答案。
-     * [3,0] 也是符合题目要求的答案。
-     * 示例 2：
-     *
-     * 输入：nums = [2,1], indexDifference = 0, valueDifference = 0
-     * 输出：[0,0]
-     * 解释：
-     * 在示例中，可以选择 i = 0 和 j = 0 。
-     * abs(0 - 0) >= 0 且 abs(nums[0] - nums[0]) >= 0 。
-     * 因此，[0,0] 是一个符合题目要求的答案。
-     * [0,1]、[1,0] 和 [1,1] 也是符合题目要求的答案。
-     * 示例 3：
-     *
-     * 输入：nums = [1,2,3], indexDifference = 2, valueDifference = 4
-     * 输出：[-1,-1]
-     * 解释：在示例中，可以证明无法找出 2 个满足所有条件的下标。
-     * 因此，返回 [-1,-1] 。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatArray(new _2903().findIndices(
-                TestCaseInputUtils.getIntArr("[3]"),
-                1,
-                1
-        )));
-    }
-
 }

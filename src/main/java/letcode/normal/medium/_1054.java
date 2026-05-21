@@ -68,22 +68,4 @@ public class _1054 {
         return ans;
     }
 
-    /**
-     * 示例 1：
-     * 输入：[1,1,1,2,2,2]
-     * 输出：[2,1,2,1,2,1]
-     *
-     * 示例 2：
-     * 输入：[1,1,1,1,2,2,3,3]
-     * 输出：[1,3,1,3,2,1,2,1]
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/distant-barcodes
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatArray(new _1054().rearrangeBarcodes(new int[]{2, 2, 1, 3})));
-    }
-
 }

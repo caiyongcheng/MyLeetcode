@@ -38,23 +38,4 @@ public class _1077 {
         return tops.length - Math.max(onTopCount, onBottomCount);
     }
 
-    /**
-     * Input: tops = [2,1,2,4,2,2], bottoms = [5,2,6,2,3,2]
-     * Output: 2
-     * Explanation:
-     * The first figure represents the dominoes as given by tops and bottoms: before we do any rotations.
-     * If we rotate the second and fourth dominoes, we can make every value in the top row equal to 2, as indicated by the second figure.
-     * Example 2:
-     * <p>
-     * Input: tops = [3,5,1,2,3], bottoms = [3,6,3,3,4]
-     * Output: -1
-     * Explanation:
-     * In this case, it is not possible to rotate the dominoes to make one row of values equal.
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
-    }
-
 }

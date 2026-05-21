@@ -121,47 +121,6 @@ public class _352 {
         return left;
     }
 
-    /**
-     * 输入：
-     * ["SummaryRanges", "addNum", "getIntervals", "addNum", "getIntervals", "addNum", "getIntervals", "addNum", "getIntervals", "addNum", "getIntervals"]
-     * [[], [1], [], [3], [], [7], [], [2], [], [6], []]
-     * 输出：
-     * [null, null, [[1, 1]], null, [[1, 1], [3, 3]], null, [[1, 1], [3, 3], [7, 7]], null, [[1, 3], [7, 7]], null, [[1, 3], [6, 7]]]
-     * <p>
-     * 解释：
-     * SummaryRanges summaryRanges = new SummaryRanges();
-     * summaryRanges.addNum(1);      // arr = [1]
-     * summaryRanges.getIntervals(); // 返回 [[1, 1]]
-     * summaryRanges.addNum(3);      // arr = [1, 3]
-     * summaryRanges.getIntervals(); // 返回 [[1, 1], [3, 3]]
-     * summaryRanges.addNum(7);      // arr = [1, 3, 7]
-     * summaryRanges.getIntervals(); // 返回 [[1, 1], [3, 3], [7, 7]]
-     * summaryRanges.addNum(2);      // arr = [1, 2, 3, 7]
-     * summaryRanges.getIntervals(); // 返回 [[1, 3], [7, 7]]
-     * summaryRanges.addNum(6);      // arr = [1, 2, 3, 6, 7]
-     * summaryRanges.getIntervals(); // 返回 [[1, 3], [6, 7]]
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/data-stream-as-disjoint-intervals
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        _352 test = new _352();
-        test.addNum(1);
-        display(test.getIntervals());
-        test.addNum(3);
-        display(test.getIntervals());
-        test.addNum(7);
-        display(test.getIntervals());
-        test.addNum(2);
-        display(test.getIntervals());
-        test.addNum(6);
-        display(test.getIntervals());
-    }
-
-
     public static void display(int[][] arr) {
         System.out.print("[ ");
         Arrays.stream(arr).map(Arrays::toString).forEach(System.out::print);

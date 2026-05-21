@@ -42,20 +42,6 @@ import java.util.List;
  */
 public class _424 {
 
-    /**
-     * 输入:
-     * [4,3,2,7,8,2,3,1]
-     * 输出:
-     * [2,3]
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _424().findDuplicates(
-                new int[]{4, 3, 2, 7, 8, 2, 3, 1}
-        ));
-    }
-
     public List<Integer> findDuplicates(int[] nums) {
         final ArrayList<Integer> integers = new ArrayList<>(nums.length);
         for (int num : nums) {

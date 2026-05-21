@@ -61,18 +61,4 @@ public class _1640 {
         return true;
     }
 
-    /**
-     * [91,4,64,78]
-     * [[78],[4,64],[91]]
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1640().canFormArray(
-                new int[]{91, 4, 64, 78},
-                new int[][]{{78}, {4, 64}, {91}}
-        ));
-    }
-
-
 }

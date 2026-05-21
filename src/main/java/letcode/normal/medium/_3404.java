@@ -43,34 +43,4 @@ public class _3404 {
         return word.substring(answerIdx, Math.min(answerIdx + length - numFriends + 1, length));
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: word = "dbca", numFriends = 2
-     *
-     * Output: "dbc"
-     *
-     * Explanation:
-     *
-     * All possible splits are:
-     *
-     * "d" and "bca".
-     * "db" and "ca".
-     * "dbc" and "a".
-     * Example 2:
-     *
-     * Input: word = "gggg", numFriends = 4
-     *
-     * Output: "g"
-     *
-     * Explanation:
-     *
-     * The only possible split is: "g", "g", "g", and "g".
-     * @param args
-     */
-    public static void main(String[] args) {
-        // TestUtil.test("=gh,=1");
-        TestUtil.test();
-    }
-
 }

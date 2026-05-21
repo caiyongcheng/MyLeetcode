@@ -58,27 +58,4 @@ public class _405 {
     }
 
 
-    /**
-     * 示例 1：
-     * 输入:
-     * 26
-     * 输出:
-     * <p>
-     * "1a"
-     * <p>
-     * 示例 2：
-     * 输入:
-     * -1
-     * <p>
-     * 输出:
-     * "ffffffff"
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(Integer.MAX_VALUE);
-        System.out.println(Integer.MIN_VALUE);
-        System.out.println(new _405().toHex(-1));
-    }
-
 }

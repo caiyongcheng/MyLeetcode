@@ -104,36 +104,4 @@ public class _731 {
     }
 
 
-    /**
-     * MyCalendar();
-     * MyCalendar.book(10, 20); // returns true
-     * MyCalendar.book(50, 60); // returns true
-     * MyCalendar.book(10, 40); // returns true
-     * MyCalendar.book(5, 15); // returns false
-     * MyCalendar.book(5, 10); // returns true
-     * MyCalendar.book(25, 55); // returns true
-     * 解释：
-     * 前两个日程安排可以添加至日历中。 第三个日程安排会导致双重预订，但可以添加至日历中。
-     * 第四个日程安排活动（5,15）不能添加至日历中，因为它会导致三重预订。
-     * 第五个日程安排（5,10）可以添加至日历中，因为它未使用已经双重预订的时间10。
-     * 第六个日程安排（25,55）可以添加至日历中，因为时间 [25,40] 将和第三个日程安排双重预订；
-     * 时间 [40,50] 将单独预订，时间 [50,55）将和第二个日程安排双重预订。
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode.cn/problems/my-calendar-ii
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        _731 MyCalendar = new _731();
-        System.out.println(MyCalendar.book(10, 20));
-        System.out.println(MyCalendar.book(50, 60));
-        System.out.println(MyCalendar.book(10, 40));
-        System.out.println(MyCalendar.book(5, 15));
-        System.out.println(MyCalendar.book(5, 10));
-        System.out.println(MyCalendar.book(25, 55));
-    }
-
-
 }

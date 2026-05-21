@@ -103,30 +103,4 @@ public class N_472 {
         return Integer.MIN_VALUE;
     }
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：words = ["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]
-     * 输出：["catsdogcats","dogcatsdog","ratcatdogcat"]
-     * 解释："catsdogcats" 由 "cats", "dog" 和 "cats" 组成;
-     * "dogcatsdog" 由 "dog", "cats" 和 "dog" 组成;
-     * "ratcatdogcat" 由 "rat", "cat", "dog" 和 "cat" 组成。
-     * 示例 2：
-     * <p>
-     * 输入：words = ["cat","dog","catdog"]
-     * 输出：["catdog"]
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/concatenated-words
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(FormatPrintUtils.formatList(new N_472().findAllConcatenatedWordsInADict(
-                new String[]{"cat", "dog", "catdog"}
-        )));
-    }
-
-
 }

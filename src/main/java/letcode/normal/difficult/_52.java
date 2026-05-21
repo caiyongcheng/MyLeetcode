@@ -92,20 +92,4 @@ public class _52 {
         return ans;
     }
 
-    /**
-     示例 1：
-     输入：n = 4
-     输出：2
-     解释：如上图所示，4 皇后问题存在两个不同的解法。
-     示例 2：
-     输入：n = 1
-     输出：1
-     * @param args
-     */
-    public static void main(String[] args) {
-        //TestUtil.test(_52.class);
-        System.out.println(new _52().totalNQueens(6));
-    }
-
-
 }

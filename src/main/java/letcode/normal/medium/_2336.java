@@ -44,20 +44,4 @@ public class _2336 {
     }
 
 
-    /**
-     输入
-     ["SmallestInfiniteSet", "addBack", "popSmallest", "popSmallest", "popSmallest", "addBack", "popSmallest", "popSmallest", "popSmallest"]
-     [[], [2], [], [], [], [1], [], [], []]
-     输出
-     [null, null, 1, 2, 3, null, 1, 4, 5]
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestUtil.operation(
-                new _2336(),
-                "[\"SmallestInfiniteSet\", \"addBack\", \"popSmallest\", \"popSmallest\", \"popSmallest\", \"addBack\", \"popSmallest\", \"popSmallest\", \"popSmallest\"]",
-                "[[], [2], [], [], [], [1], [], [], []]"
-        ));
-    }
-
 }

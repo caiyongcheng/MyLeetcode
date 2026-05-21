@@ -20,32 +20,4 @@ public class _3274 {
                 == (Math.abs(coordinate1.charAt(1) - coordinate2.charAt(1)) & 1);
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: coordinate1 = "a1", coordinate2 = "c3"
-     *
-     * Output: true
-     *
-     * Explanation:
-     *
-     * Both squares are black.
-     *
-     * Example 2:
-     *
-     * Input: coordinate1 = "a1", coordinate2 = "h3"
-     *
-     * Output: false
-     *
-     * Explanation:
-     *
-     * Square "a1" is black and "h3" is white.
-     *
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3274.class);
-    }
-
 }

@@ -26,36 +26,4 @@ public class _3330 {
         return ans;
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: word = "abbcccc"
-     *
-     * Output: 5
-     *
-     * Explanation:
-     *
-     * The possible strings are: "abbcccc", "abbccc", "abbcc", "abbc", and "abcccc".
-     *
-     * Example 2:
-     *
-     * Input: word = "abcd"
-     *
-     * Output: 1
-     *
-     * Explanation:
-     *
-     * The only possible string is "abcd".
-     *
-     * Example 3:
-     *
-     * Input: word = "aaaa"
-     *
-     * Output: 4
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
-    }
-
 }

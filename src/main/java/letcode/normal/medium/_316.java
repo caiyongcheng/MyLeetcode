@@ -72,18 +72,4 @@ public class _316 {
         return String.valueOf(characters);
     }
 
-    /**
-     * 示例 1：
-     * 输入：s = "bcabc"
-     * 输出："abc"
-     *
-     * 示例 2：
-     * 输入：s = "cbacdcbc"
-     * 输出："acdb"
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _316().removeDuplicateLetters("edebbed"));
-    }
-
 }

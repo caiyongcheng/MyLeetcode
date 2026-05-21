@@ -62,19 +62,4 @@ public class _645 {
     }
 
 
-    /**
-     * 示例 1：
-     *
-     * 输入：nums = [1,2,2,4]
-     * 输出：[2,3]
-     *
-     * 示例 2：
-     * 输入：nums = [1,1]
-     * 输出：[1,2]
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatArray(new _645().findErrorNums(new int[]{1, 1})));
-    }
-
 }

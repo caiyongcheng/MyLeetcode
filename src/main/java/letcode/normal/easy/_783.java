@@ -72,16 +72,4 @@ public class _783 {
     }
 
 
-    /**
-     * 输入：root = [4,2,6,1,3]
-     * 输出：1
-     *
-     * 输入：root = [1,0,48,null,null,12,49]
-     * 输出：1
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _783().minDiffInBST(new TreeNode(new Integer[]{71,62,84,14,null,null,88})));
-    }
-
 }

@@ -76,41 +76,4 @@ public class _1379 {
     }
 
 
-    /**
-     * 输入: tree = [7,4,3,null,null,6,19], target = 3
-     * 输出: 3
-     * 解释: 上图画出了树 original 和 cloned。target 节点在树 original 中，用绿色标记。答案是树 cloned 中的黄颜色的节点（其他示例类似）。
-     *
-     * 示例 2:
-     * 输入: tree = [7], target =  7
-     * 输出: 7
-     *
-     * 示例 3:
-     * 输入: tree = [8,null,6,null,5,null,4,null,3,null,2,null,1], target = 4
-     * 输出: 4
-     *
-     * 示例 4:
-     * 输入: tree = [1,2,3,4,5,6,7,8,9,10], target = 5
-     * 输出: 5
-     *
-     * 示例 5:
-     * 输入: tree = [1,2,null,3], target = 2
-     * 输出: 2
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/find-a-corresponding-node-of-a-binary-tree-in-a-clone-of-that-tree
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        TreeNode r1 = new TreeNode(new Integer[]{1,2,null,3});
-        TreeNode r2 = new TreeNode(new Integer[]{1,2,null,3});
-        TreeNode right = r1.left;
-        System.out.println(new _1379().getTargetCopy(
-                r1,
-                r2,
-                right
-        ));
-    }
-
 }

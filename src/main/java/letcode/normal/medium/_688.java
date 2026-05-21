@@ -83,36 +83,4 @@ public class _688 {
     }
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入: n = 3, k = 2, row = 0, column = 0
-     * 输出: 0.0625
-     * 解释: 有两步(到(1,2)，(2,1))可以让骑士留在棋盘上。
-     * 在每一个位置上，也有两种移动可以让骑士留在棋盘上。
-     * 骑士留在棋盘上的总概率是0.0625。
-     * 示例 2：
-     * <p>
-     * 输入: n = 1, k = 0, row = 0, column = 0
-     * 输出: 1.00000
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/knight-probability-in-chessboard
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * x x x
-     * x x x
-     * x x x
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _688().knightProbability(
-                3,
-                1,
-                0,
-                0
-        ));
-    }
-
-
 }

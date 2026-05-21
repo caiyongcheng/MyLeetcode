@@ -56,30 +56,4 @@ public class _3233 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: l = 5, r = 7
-     *
-     * Output: 3
-     *
-     * Explanation:
-     *
-     * There are no special numbers in the range [5, 7].
-     *
-     * Example 2:
-     *
-     * Input: l = 4, r = 16
-     *
-     * Output: 11
-     *
-     * Explanation:
-     *
-     * The special numbers in the range [4, 16] are 4 and 9.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3233.class);
-    }
-
 }

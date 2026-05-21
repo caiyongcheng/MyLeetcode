@@ -37,23 +37,4 @@ public class _2864 {
         return sb.toString();
     }
 
-    /**
-     * 示例 1：
-     *
-     * 输入：s = "010"
-     * 输出："001"
-     * 解释：因为字符串 s 中仅有一个 '1' ，其必须出现在最后一位上。所以答案是 "001" 。
-     * 示例 2：
-     *
-     * 输入：s = "0101"
-     * 输出："1001"
-     * 解释：其中一个 '1' 必须出现在最后一位上。而由剩下的数字可以生产的最大数字是 "100" 。所以答案是 "1001" 。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2864().maximumOddBinaryNumber(
-                "0101"
-        ));
-    }
-
 }

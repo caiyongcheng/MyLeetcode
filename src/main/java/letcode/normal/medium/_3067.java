@@ -72,23 +72,4 @@ public class _3067 {
         return matchPointCount;
     }
 
-    /**
-     * 输入：edges = [[0,1,1],[1,2,5],[2,3,13],[3,4,9],[4,5,2]], signalSpeed = 1
-     * 输出：[0,4,6,6,4,0]
-     * 解释：由于 signalSpeed 等于 1 ，count[c] 等于所有从 c 开始且没有公共边的路径对数目。
-     * 在输入图中，count[c] 等于服务器 c 左边服务器数目乘以右边服务器数目。
-     * 输入：edges = [[0,6,3],[6,5,3],[0,3,1],[3,2,7],[3,1,6],[3,4,2]], signalSpeed = 3
-     * 输出：[2,0,0,0,0,0,2]
-     * 解释：通过服务器 0 ，有 2 个可连接服务器对(4, 5) 和 (4, 6) 。
-     * 通过服务器 6 ，有 2 个可连接服务器对 (4, 5) 和 (0, 5) 。
-     * 所有服务器对都必须通过服务器 0 或 6 才可连接，所以其他服务器对应的可连接服务器对数目都为 0 。
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatArray(new _3067().countPairsOfConnectableServers(
-                TestCaseInputUtils.get2DimensionIntArr("[[0,6,3],[6,5,3],[0,3,1],[3,2,7],[3,1,6],[3,4,2]]"),
-                3
-        )));
-    }
-
-
 }

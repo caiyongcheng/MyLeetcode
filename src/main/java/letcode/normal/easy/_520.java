@@ -49,24 +49,4 @@ public class _520 {
     }
 
 
-    /**
-     * 示例 1：
-     *
-     * 输入：word = "USA"
-     * 输出：true
-     * 示例 2：
-     *
-     * 输入：word = "FlaG"
-     * 输出：false
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _520().detectCapitalUse(
-                "USA"
-        ));
-        System.out.println(new _520().detectCapitalUse(
-                "FlaG"
-        ));
-    }
-
 }

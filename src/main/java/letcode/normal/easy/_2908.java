@@ -50,34 +50,4 @@ public class _2908 {
     }
 
 
-    /**
-     * 示例 1：
-     *
-     * 输入：nums = [8,6,1,5,3]
-     * 输出：9
-     * 解释：三元组 (2, 3, 4) 是一个元素和等于 9 的山形三元组，因为：
-     * - 2 < 3 < 4
-     * - nums[2] < nums[3] 且 nums[4] < nums[3]
-     * 这个三元组的元素和等于 nums[2] + nums[3] + nums[4] = 9 。可以证明不存在元素和小于 9 的山形三元组。
-     * 示例 2：
-     *
-     * 输入：nums = [5,4,8,7,10,2]
-     * 输出：13
-     * 解释：三元组 (1, 3, 5) 是一个元素和等于 13 的山形三元组，因为：
-     * - 1 < 3 < 5
-     * - nums[1] < nums[3] 且 nums[5] < nums[3]
-     * 这个三元组的元素和等于 nums[1] + nums[3] + nums[5] = 13 。可以证明不存在元素和小于 13 的山形三元组。
-     * 示例 3：
-     *
-     * 输入：nums = [6,5,4,3,4,5]
-     * 输出：-1
-     * 解释：可以证明 nums 中不存在山形三元组。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2908().minimumSum(
-                TestCaseInputUtils.getIntArr("[8,6,1,5,3]")
-        ));
-    }
-
 }

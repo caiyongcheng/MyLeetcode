@@ -27,26 +27,4 @@ public class _1954 {
     }
 
 
-    /**
-     * 输入：neededApples = 1
-     * 输出：8
-     * 解释：边长长度为 1 的正方形不包含任何苹果。
-     * 但是边长为 2 的正方形包含 12 个苹果（如上图所示）。
-     * 周长为 2 * 4 = 8 。
-     * 示例 2：
-     *
-     * 输入：neededApples = 13
-     * 输出：16
-     * 示例 3：
-     *
-     * 输入：neededApples = 1000000000
-     * 输出：5040
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(1 * 2 * 6);
-        System.out.println(2 * 3 * 6);
-        System.out.println(new _1954().minimumPerimeter(1000000000));
-    }
-
 }

@@ -40,29 +40,4 @@ public class _3128 {
         return ans;
     }
 
-    /**
-     * Example 1:
-     * Input: grid = [[0,1,0],[0,1,1],[0,1,0]]
-     * Output: 2
-     * Explanation:
-     * There are two right triangles.
-     * Example 2:
-     * Input: grid = [[1,0,0,0],[0,1,0,1],[1,0,0,0]]
-     * Output: 0
-     * Explanation:
-     * There are no right triangles.
-     * Example 3:
-     * Input: grid = [[1,0,1],[1,0,0],[1,0,0]]
-     *
-     * Output: 2
-     *
-     * Explanation:
-     *
-     * There are two right triangles.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3128.class);
-        //TestUtil.testWithTestFile(_3128.class);
-    }
 }

@@ -54,31 +54,4 @@ public class _3132 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: nums1 = [4,20,16,12,8], nums2 = [14,18,10]
-     *
-     * Output: -2
-     *
-     * Explanation:
-     *
-     * After removing elements at indices [0,4] and adding -2, nums1 becomes [18,14,10].
-     *
-     * Example 2:
-     *
-     * Input: nums1 = [3,5,5,3], nums2 = [7,7]
-     *
-     * Output: 2
-     *
-     * Explanation:
-     *
-     * After removing elements at indices [0,3] and adding 2, nums1 becomes [7,7].
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3132.class);
-    }
-
-
 }

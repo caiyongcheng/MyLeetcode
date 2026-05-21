@@ -111,26 +111,4 @@ public class _130 {
         }
     }
 
-    /**
-     * 输入：board = {{'X','X','X','X'},{'X','O','O','X'},{'X','X','O','X'},{'X','O','X','X'}}
-     * 输出：{{'X','X','X','X'},{'X','X','X','X'},{'X','X','X','X'},{'X','O','X','X'}}
-
-     
-     * 示例 2：
-     * 输入：board = {{'X'}}
-     * 输出：{{'X'}}
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/surrounded-regions
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        char[][] ints = {{'X'}};
-        new _130().solve(ints);
-        for (char[] anInt : ints) {
-            System.out.println(Arrays.toString(anInt));
-        }
-    }
-
 }

@@ -41,30 +41,4 @@ public class _494 {
     }
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：nums = [1,1,1,1,1], target = 3
-     * 输出：5
-     * 解释：一共有 5 种方法让最终目标和为 3 。
-     * -1 + 1 + 1 + 1 + 1 = 3
-     * +1 - 1 + 1 + 1 + 1 = 3
-     * +1 + 1 - 1 + 1 + 1 = 3
-     * +1 + 1 + 1 - 1 + 1 = 3
-     * +1 + 1 + 1 + 1 - 1 = 3
-     * 示例 2：
-     * <p>
-     * 输入：nums = [1], target = 1
-     * 输出：1
-     * <p>
-     * 1, 0
-     * 1
-     */
-    public static void main(String[] args) {
-        System.out.println(new _494().findTargetSumWays(
-                TestCaseInputUtils.getIntArr("[1, 0]"),
-                1
-        ));
-    }
-
 }

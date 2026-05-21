@@ -64,32 +64,4 @@ public class _412 {
         return ans;
     }
 
-    /**
-     * 示例：
-     * n = 15,
-     * 返回:
-     * [
-     * "1",
-     * "2",
-     * "Fizz",
-     * "4",
-     * "Buzz",
-     * "Fizz",
-     * "7",
-     * "8",
-     * "Fizz",
-     * "Buzz",
-     * "11",
-     * "Fizz",
-     * "13",
-     * "14",
-     * "FizzBuzz"
-     * ]
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatList(new _412().fizzBuzz(15)));
-    }
-
 }

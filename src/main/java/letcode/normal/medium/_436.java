@@ -85,39 +85,4 @@ public class _436 {
     }
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：intervals = {{1,2}}
-     * 输出：{-1}
-     * 解释：集合中只有一个区间，所以输出-1。
-     * 示例 2：
-     * <p>
-     * 输入：intervals = {{3,4},{2,3},{1,2}}
-     * 输出：{-1,0,1}
-     * 解释：对于 {3,4} ，没有满足条件的“右侧”区间。
-     * 对于 {2,3} ，区间{3,4}具有最小的“右”起点;
-     * 对于 {1,2} ，区间{2,3}具有最小的“右”起点。
-     * 示例 3：
-     * <p>
-     * 输入：intervals = {{1,4},{2,3},{3,4}}
-     * 输出：{-1,2,-1}
-     * 解释：对于区间 {1,4} 和 {3,4} ，没有满足条件的“右侧”区间。
-     * 对于 {2,3} ，区间 {3,4} 有最小的“右”起点。
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode.cn/problems/find-right-interval
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        _436 fourHundredThirtySix = new _436();
-        System.out.println(TestCaseOutputUtils.formatArray(fourHundredThirtySix.findRightInterval(
-                //[[1,2],[2,3],[0,1],[3,4]]
-                new int[][]{{1, 1}, {3, 4}}
-        )));
-    }
-
-
 }

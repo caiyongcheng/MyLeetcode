@@ -1,0 +1,1 @@
+ 示例 1： 输入：s = "aaabbb" 输出：2 解释：首先打印 "aaa" 然后打印 "bbb"。 示例 2： 输入：s = "aba" 输出：2 解释：首先打印 "aaa" 然后在第二个位置打印 "b" 覆盖掉原来的字符 'a'。 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/strange-printer 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。

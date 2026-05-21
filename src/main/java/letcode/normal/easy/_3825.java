@@ -28,32 +28,4 @@ public class _3825 {
         return ans;
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: height = [1,2,3,4,5], threshold = 2
-     *
-     * Output: [3,4]
-     *
-     * Explanation:
-     *
-     * Mountain 3 is stable because height[2] == 3 is greater than threshold == 2.
-     * Mountain 4 is stable because height[3] == 4 is greater than threshold == 2.
-     * Example 2:
-     *
-     * Input: height = [10,1,10,1,10], threshold = 3
-     *
-     * Output: [1,3]
-     *
-     * Example 3:
-     *
-     * Input: height = [10,1,10,1,10], threshold = 10
-     *
-     * Output: []
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3825.class);
-    }
-
 }

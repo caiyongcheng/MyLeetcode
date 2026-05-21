@@ -77,38 +77,4 @@ public class _1319 {
     }
 
 
-    /**
-     * 示例 1：
-     *
-     * 输入：n = 4, connections = {{0,1},{0,2},{1,2}}
-     * 输出：1
-     * 解释：拔下计算机 1 和 2 之间的线缆，并将它插到计算机 1 和 3 上。
-     *
-     * 示例 2：
-     *
-     * 输入：n = 6, connections = {{0,1},{0,2},{0,3},{1,2},{1,3}}
-     * 输出：2
-     *
-     * 示例 3：
-     * 输入：n = 6, connections = {{0,1},{0,2},{0,3},{1,2}}
-     * 输出：-1
-     * 解释：线缆数量不足。
-     *
-     * 示例 4：
-     * 输入：n = 5, connections = {{0,1},{0,2},{3,4},{2,3}}
-     * 输出：0
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/number-of-operations-to-make-network-connected
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1319().makeConnected(
-                6,
-                new int[][]{{0,1},{0,2},{0,3},{1,2},{1,3}}
-        ));
-    }
-
-
 }

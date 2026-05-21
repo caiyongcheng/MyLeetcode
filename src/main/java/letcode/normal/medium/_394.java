@@ -93,31 +93,4 @@ public class _394 {
     }
 
 
-    /**
-     * 示例 1：
-     *
-     * 输入：s = "3[a]2[bc]"
-     * 输出："aaabcbc"
-     * 示例 2：
-     *
-     * 输入：s = "3[a2[c]]"
-     * 输出："accaccacc"
-     * 示例 3：
-     *
-     * 输入：s = "2[abc]3[cd]ef"
-     * 输出："abcabccdcdcdef"
-     * 示例 4：
-     *
-     * 输入：s = "abc3[cd]xyz"
-     * 输出："abccdcdcdxyz"
-     *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/decode-string
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _394().decodeString("100[leetcode]"));
-    }
-
 }

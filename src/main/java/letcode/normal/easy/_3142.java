@@ -29,47 +29,4 @@ public class _3142 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: grid = [[1,0,2],[1,0,2]]
-     *
-     * Output: true
-     *
-     * Explanation:
-     *
-     *
-     *
-     * All the cells in the grid satisfy the conditions.
-     *
-     * Example 2:
-     *
-     * Input: grid = [[1,1,1],[0,0,0]]
-     *
-     * Output: false
-     *
-     * Explanation:
-     *
-     *
-     *
-     * All cells in the first row are equal.
-     *
-     * Example 3:
-     *
-     * Input: grid = [[1],[2],[3]]
-     *
-     * Output: false
-     *
-     * Explanation:
-     *
-     *
-     *
-     * Cells in the first column have different values.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3142.class);
-    }
-
-
 }

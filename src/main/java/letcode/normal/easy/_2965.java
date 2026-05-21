@@ -35,24 +35,4 @@ public class _2965 {
 
     }
 
-    /**
-     * 示例 1：
-     *
-     * 输入：grid = [[1,3],[2,2]]
-     * 输出：[2,4]
-     * 解释：数字 2 重复，数字 4 缺失，所以答案是 [2,4] 。
-     * 示例 2：
-     *
-     * 输入：grid = [[9,1,7],[8,9,2],[3,4,6]]
-     * 输出：[9,5]
-     * 解释：数字 9 重复，数字 5 缺失，所以答案是 [9,5] 。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestCaseOutputUtils.formatArray(new _2965().findMissingAndRepeatedValues(
-                TestCaseInputUtils.get2DimensionIntArr("[[9,1,7],[8,9,2],[3,4,6]]")
-        )));
-    }
-
-
 }

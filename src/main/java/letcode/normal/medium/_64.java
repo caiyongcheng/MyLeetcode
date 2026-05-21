@@ -74,18 +74,4 @@ public class _64 {
         return grid[y_length - 1][x_length - 1];
     }
 
-    /*
-       {
-         {1,3,1},
-         {1,5,1},
-         {4,2,1}
-       }
-     */
-    public static void main(String[] args) {
-        System.out.println(minPathSum(new int[][]{
-                {1, 2, 5},
-                {1, 3, 1},
-        }));
-    }
-
 }

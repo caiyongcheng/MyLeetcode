@@ -106,39 +106,4 @@ public class _2047 {
         return true;
     }
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：sentence = "cat and  dog"
-     * 输出：3
-     * 解释：句子中的有效单词是 "cat"、"and" 和 "dog"
-     * 示例 2：
-     * <p>
-     * 输入：sentence = "!this  1-s b8d!"
-     * 输出：0
-     * 解释：句子中没有有效单词
-     * "!this" 不是有效单词，因为它以一个标点开头
-     * "1-s" 和 "b8d" 也不是有效单词，因为它们都包含数字
-     * 示例 3：
-     * <p>
-     * 输入：sentence = "alice and  bob are playing stone-game10"
-     * 输出：5
-     * 解释：句子中的有效单词是 "alice"、"and"、"bob"、"are" 和 "playing"
-     * "stone-game10" 不是有效单词，因为它含有数字
-     * 示例 4：
-     * <p>
-     * 输入：sentence = "he bought 2 pencils, 3 erasers, and 1  pencil-sharpener."
-     * 输出：6
-     * 解释：句子中的有效单词是 "he"、"bought"、"pencils,"、"erasers,"、"and" 和 "pencil-sharpener."
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/number-of-valid-words-in-a-sentence
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2047().countValidWords("b-a-c f-d"));
-    }
-
 }

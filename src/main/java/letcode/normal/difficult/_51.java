@@ -115,24 +115,4 @@ public class _51 {
         }
     }
 
-    /**
-     * 输入：n = 4
-     * 输出：[[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]
-     * 解释：如上图所示，4 皇后问题存在两个不同的解法。
-     * 示例 2：
-     * <p>
-     * 输入：n = 1
-     * 输出：[["Q"]]
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        List<List<String>> lists = new _51().solveNQueens(4);
-        lists.stream().map(list -> String.join("\n", list)).forEach(ans -> {
-            System.out.println(ans);
-            System.out.println("==========================");
-        });
-    }
-
-
 }

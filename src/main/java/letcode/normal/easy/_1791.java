@@ -53,25 +53,4 @@ public class _1791 {
         return 0;
     }
 
-    /**
-     * 输入：edges = {{1,2},{2,3},{4,2}}
-     * 输出：2
-     * 解释：如上图所示，节点 2 与其他每个节点都相连，所以节点 2 是中心节点。
-     * 示例 2：
-     * <p>
-     * 输入：edges = {{1,2},{5,1},{1,3},{1,4}}
-     * 输出：1
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/find-center-of-star-graph
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _1791().findCenter(
-                new int[][]{{1, 2}, {5, 1}, {1, 3}, {1, 4}}
-        ));
-    }
-
 }

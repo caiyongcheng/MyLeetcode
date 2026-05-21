@@ -72,26 +72,4 @@ public class _2386 {
         }
     }
 
-    /**
-     * 示例 1：
-     *
-     * 输入：nums = [2,4,-2], k = 5
-     * 输出：2
-     * 解释：所有可能获得的子序列和列出如下，按递减顺序排列：
-     * - 6、4、4、2、2、0、0、-2
-     * 数组的第 5 大和是 2 。
-     * 示例 2：
-     *
-     * 输入：nums = [1,-2,3,4,-10,12], k = 16
-     * 输出：10
-     * 解释：数组的第 16 大和是 10 。
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _2386().kSum(
-                TestCaseInputUtils.getIntArr("[1,-2,3,4,-10,12]"),
-                16
-        ));
-    }
-
 }

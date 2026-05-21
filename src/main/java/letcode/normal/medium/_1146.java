@@ -97,25 +97,4 @@ public class _1146 {
         return optRecord.get(mid)[1];
     }
 
-    /**
-     * 示例：
-     *
-     * 输入：["SnapshotArray","set","snap","set","get"]
-     *      [[3],[0,5],[],[0,6],[0,0]]
-     * 输出：[null,null,0,null,5]
-     * 解释：
-     * SnapshotArray snapshotArr = new SnapshotArray(3); // 初始化一个长度为 3 的快照数组
-     * snapshotArr.set(0,5);  // 令 array[0] = 5
-     * snapshotArr.snap();  // 获取快照，返回 snap_id = 0
-     * snapshotArr.set(0,6);
-     * snapshotArr.get(0,0);  // 获取 snap_id = 0 的快照中 array[0] 的值，返回 5
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(TestUtil.operation(
-                new _1146(3),
-                "[\"SnapshotArray\",\"set\",\"snap\",\"set\",\"get\",\"snap\",\"get\"]",
-                "[[3],[0,5],[],[0,6],[0,0],[],[0,1]]"
-        ));
-    }
 }

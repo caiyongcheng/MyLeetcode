@@ -56,30 +56,4 @@ public class _3133 {
         return Long.parseLong(binStr.toString(), 2);
     }
 
-    /**
-     * Example 1:
-     *
-     * Input: n = 3, x = 4
-     *
-     * Output: 6
-     *
-     * Explanation:
-     *
-     * nums can be [4,5,6] and its last element is 6.
-     *
-     * Example 2:
-     *
-     * Input: n = 2, x = 7
-     *
-     * Output: 15
-     *
-     * Explanation:
-     *
-     * nums can be [7,15] and its last element is 15.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test(_3133.class);
-    }
-
 }

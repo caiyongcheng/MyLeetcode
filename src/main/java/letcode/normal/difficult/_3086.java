@@ -226,35 +226,4 @@ public class _3086 {
         return maxConsecutiveOnes;
     }
 
-    /**
-     * 示例 1：
-     * 输入：nums = [1,1,0,0,0,1,1,0,0,1], k = 3, maxChanges = 1
-     * 输出：3
-     * 解释：如果游戏开始时 Alice 在 aliceIndex == 1 的位置上，按照以下步骤执行每个动作，他可以利用 3 次行动拾取 3 个 1 ：
-     * 游戏开始时 Alice 拾取了一个 1 ，nums[1] 变成了 0。此时 nums 变为 [1,1,1,0,0,1,1,0,0,1] 。
-     * 选择 j == 2 并执行第一种类型的动作。nums 变为 [1,0,1,0,0,1,1,0,0,1]
-     * 选择 x == 2 和 y == 1 ，并执行第二种类型的动作。nums 变为 [1,1,0,0,0,1,1,0,0,1] 。由于 y == aliceIndex，Alice 拾取了一个 1 ，nums 变为  [1,0,0,0,0,1,1,0,0,1] 。
-     * 选择 x == 0 和 y == 1 ，并执行第二种类型的动作。nums 变为 [0,1,0,0,0,1,1,0,0,1] 。由于 y == aliceIndex，Alice 拾取了一个 1 ，nums 变为  [0,0,0,0,0,1,1,0,0,1] 。
-     * 请注意，Alice 也可能执行其他的 3 次行动序列达成拾取 3 个 1 。
-     * 示例 2：
-     * 输入：nums = [0,0,0,0], k = 2, maxChanges = 3
-     * 输出：4
-     * 解释：如果游戏开始时 Alice 在 aliceIndex == 0 的位置上，按照以下步骤执行每个动作，他可以利用 4 次行动拾取 2 个 1 ：
-     * 选择 j == 1 并执行第一种类型的动作。nums 变为 [0,1,0,0] 。
-     * 选择 x == 1 和 y == 0 ，并执行第二种类型的动作。nums 变为 [1,0,0,0] 。由于 y == aliceIndex，Alice 拾起了一个 1 ，nums 变为 [0,0,0,0] 。
-     * 再次选择 j == 1 并执行第一种类型的动作。nums 变为 [0,1,0,0] 。
-     * 再次选择 x == 1 和 y == 0 ，并执行第二种类型的动作。nums 变为 [1,0,0,0] 。由于y == aliceIndex，Alice 拾起了一个 1 ，nums 变为 [0,0,0,0] 。
-     *
-     * [1,0,1,0,1]
-     * 3
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _3086().minimumMoves2(
-                TestCaseInputUtils.getIntArr("[1,1,0,0,0,1,1,0,0,1]"),
-                3,
-                1
-        ));
-    }
-
 }

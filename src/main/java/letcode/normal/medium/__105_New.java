@@ -45,29 +45,4 @@ public class __105_New {
         return root;
     }
 
-    /**
-     * 示例 1:
-     *
-     *
-     * 输入: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
-     * 输出: [3,9,20,null,null,15,7]
-     * 示例 2:
-     *
-     * 输入: preorder = [-1], inorder = [-1]
-     * 输出: [-1]
-     * @param args
-     */
-    public static void main(String[] args) {
-        TreeNode treeNode = new __105_New().buildTree(
-                TestCaseInputUtils.getIntArr("[3,9,20,15,7]"),
-                TestCaseInputUtils.getIntArr("[9,3,15,20,7]")
-        );
-        System.out.println(treeNode.toString());
-/*        TreeNode treeNode = new __105_New().buildTree(
-                TestCaseUtils.getIntArr("[1,2,3]"),
-                TestCaseUtils.getIntArr("[3,2,1]")
-        );
-        System.out.println(treeNode.toString());*/
-    }
-
 }

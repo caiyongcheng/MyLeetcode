@@ -44,20 +44,4 @@ public class _894 {
     }
 
 
-    /**
-     * 输入：n = 7
-     * 输出：[[0,0,0,null,null,0,0,null,null,0,0],[0,0,0,null,null,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,null,null,null,null,0,0],[0,0,0,0,0,null,null,0,0]]
-     * 示例 2：
-     *
-     * 输入：n = 3
-     * 输出：[[0,0,0]]
-     * @param args
-     */
-    public static void main(String[] args) {
-        List<TreeNode> ans = new _894().allPossibleFBT(7);
-        for (TreeNode root : ans) {
-            System.out.println(root.toString());
-        }
-    }
-
 }

@@ -96,26 +96,4 @@ public class _838 {
     }
 
 
-    /**
-     * 示例 1：
-     * <p>
-     * 输入：dominoes = "RR.L"
-     * 输出："RR.L"
-     * 解释：第一张多米诺骨牌没有给第二张施加额外的力。
-     * 示例 2：
-     * <p>
-     * <p>
-     * 输入：dominoes = ".L.R...LR..L.."
-     * 输出："LL.RR.LLRRLL.."
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/push-dominoes
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(new _838().pushDominoes("RR.L"));
-    }
-
 }

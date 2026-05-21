@@ -56,25 +56,4 @@ public class _1717 {
     }
 
 
-    /**
-     * Example 1:
-     *
-     * Input: s = "cdbcbbaaabab", x = 4, y = 5
-     * Output: 19
-     * Explanation:
-     * - Remove the "ba" underlined in "cdbcbbaaabab". Now, s = "cdbcbbaaab" and 5 points are added to the score.
-     * - Remove the "ab" underlined in "cdbcbbaaab". Now, s = "cdbcbbaa" and 4 points are added to the score.
-     * - Remove the "ba" underlined in "cdbcbbaa". Now, s = "cdbcba" and 5 points are added to the score.
-     * - Remove the "ba" underlined in "cdbcba". Now, s = "cdbc" and 5 points are added to the score.
-     * Total score = 5 + 4 + 5 + 5 = 19.
-     * Example 2:
-     *
-     * Input: s = "aabbaaxybbaabb", x = 5, y = 4
-     * Output: 20
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestUtil.test();
-    }
-
 }
