@@ -49,6 +49,11 @@ Run via TestUtilRunner
 
 每次运行前都会弹出测试用例确认框，可以按原来的 `TestUtil.test()` 输入格式编辑用例。
 
+对话框选项：
+
+- **运行 / 调试**：调试使用 `DefaultDebugExecutor`，可在题解类中打断点，无需手写 `main`。
+- **输出方式**：仅控制台、仅插件弹窗、控制台 + 插件弹窗（后两种在 `build/testutil-plugin-output/` 落盘后再弹窗展示）。
+
 默认用例来源优先级：
 
 1. 当前题解类 `main` 方法前的注释用例。

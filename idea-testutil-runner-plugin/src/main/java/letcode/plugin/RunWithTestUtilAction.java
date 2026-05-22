@@ -1,6 +1,8 @@
 package letcode.plugin;
 
 import com.intellij.execution.ExecutionException;
+import com.intellij.execution.ExecutionListener;
+import com.intellij.execution.ExecutionManager;
 import com.intellij.execution.Executor;
 import com.intellij.execution.ProgramRunnerUtil;
 import com.intellij.execution.RunManager;
@@ -8,10 +10,14 @@ import com.intellij.execution.RunnerAndConfigurationSettings;
 import com.intellij.execution.application.ApplicationConfiguration;
 import com.intellij.execution.application.ApplicationConfigurationType;
 import com.intellij.execution.configurations.ConfigurationFactory;
+import com.intellij.execution.configurations.RunProfile;
+import com.intellij.execution.executors.DefaultDebugExecutor;
 import com.intellij.execution.executors.DefaultRunExecutor;
+import com.intellij.execution.process.ProcessHandler;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
@@ -25,21 +31,30 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.util.PsiTreeUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 在编辑器或项目视图中，用 TestUtilRunner 运行当前 Java 题解类。
+ * 在编辑器或项目视图中，用 TestUtilRunner 运行/调试当前 Java 题解类。
  */
 public class RunWithTestUtilAction extends AnAction {
 
@@ -47,6 +62,10 @@ public class RunWithTestUtilAction extends AnAction {
     private static final String ACTION_TITLE = "Run via TestUtilRunner";
     // 与 TestCaseInputUtils.TEST_CASE_FILE_PATH_TEMPLATE 保持一致
     private static final String TEST_CASE_FILE_PATH_TEMPLATE = "src/main/resources/TestCase%s.txt";
+    private static final String OUTPUT_DIR_RELATIVE = "build/testutil-plugin-output";
+
+    private static final Set<Project> LISTENER_REGISTERED = ConcurrentHashMap.newKeySet();
+    private static final Map<String, PendingPluginOutput> PENDING_OUTPUTS = new ConcurrentHashMap<>();
 
     @Override
     public void actionPerformed(AnActionEvent e) {
@@ -78,7 +97,14 @@ public class RunWithTestUtilAction extends AnAction {
         try {
             saveInput(project, simpleName, input);
             Module module = ModuleUtilCore.findModuleForPsiElement(psiClass);
-            runWithTestUtil(project, psiClass, qualifiedName, input, module);
+            LaunchMode launchMode = dialog.getLaunchMode();
+            OutputMode outputMode = dialog.getOutputMode();
+            Path outputFile = outputMode == OutputMode.CONSOLE ? null : createOutputFile(project);
+            String configName = "TestUtilRunner: " + psiClass.getName();
+            if (outputFile != null) {
+                registerPendingOutput(project, configName, outputFile);
+            }
+            runWithTestUtil(project, psiClass, qualifiedName, input, module, launchMode, outputMode, outputFile, configName);
         } catch (Exception ex) {
             Messages.showErrorDialog(project, ex.getMessage(), ACTION_TITLE);
         }
@@ -222,16 +248,78 @@ public class RunWithTestUtilAction extends AnAction {
         return Paths.get(basePath, relative.split("/"));
     }
 
-    private static void runWithTestUtil(Project project, PsiClass psiClass, String qualifiedName, String input, Module module)
-            throws ExecutionException {
+    @Nullable
+    private static Path createOutputFile(Project project) throws Exception {
+        String basePath = project.getBasePath();
+        if (basePath == null || basePath.isEmpty()) {
+            return null;
+        }
+        Path dir = Paths.get(basePath, OUTPUT_DIR_RELATIVE.split("/"));
+        Files.createDirectories(dir);
+        return dir.resolve("run-" + System.currentTimeMillis() + ".txt");
+    }
+
+    private static void registerPendingOutput(Project project, String configName, Path outputFile) {
+        ensureExecutionListener(project);
+        PENDING_OUTPUTS.put(configName, new PendingPluginOutput(project, outputFile));
+    }
+
+    private static void ensureExecutionListener(Project project) {
+        if (!LISTENER_REGISTERED.add(project)) {
+            return;
+        }
+        project.getMessageBus().connect().subscribe(ExecutionManager.EXECUTION_TOPIC, new ExecutionListener() {
+            @Override
+            public void processTerminated(@NotNull String executorId,
+                                          @NotNull com.intellij.execution.runners.ExecutionEnvironment env,
+                                          @NotNull ProcessHandler handler,
+                                          int exitCode) {
+                RunProfile profile = env.getRunProfile();
+                if (!(profile instanceof ApplicationConfiguration)) {
+                    return;
+                }
+                String name = ((ApplicationConfiguration) profile).getName();
+                PendingPluginOutput pending = PENDING_OUTPUTS.remove(name);
+                if (pending == null) {
+                    return;
+                }
+                ApplicationManager.getApplication().invokeLater(() ->
+                        showCapturedOutput(pending.project, pending.outputFile, exitCode));
+            }
+        });
+    }
+
+    private static void showCapturedOutput(Project project, Path outputFile, int exitCode) {
+        String content = "";
+        try {
+            if (outputFile != null && Files.exists(outputFile)) {
+                content = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8);
+            }
+        } catch (Exception ex) {
+            content = "读取输出文件失败: " + ex.getMessage();
+        }
+        if (content.isEmpty()) {
+            content = "(无输出，退出码 " + exitCode + ")";
+        }
+        new CapturedOutputDialog(project, "TestUtil 输出 (退出码 " + exitCode + ")", content).show();
+    }
+
+    private static void runWithTestUtil(Project project,
+                                        PsiClass psiClass,
+                                        String qualifiedName,
+                                        String input,
+                                        Module module,
+                                        LaunchMode launchMode,
+                                        OutputMode outputMode,
+                                        @Nullable Path outputFile,
+                                        String configName) throws ExecutionException {
         RunManager runManager = RunManager.getInstance(project);
         ConfigurationFactory factory = ApplicationConfigurationType.getInstance().getConfigurationFactories()[0];
-        String configName = "TestUtilRunner: " + psiClass.getName();
         RunnerAndConfigurationSettings settings = runManager.createConfiguration(configName, factory);
         ApplicationConfiguration config = (ApplicationConfiguration) settings.getConfiguration();
 
         config.setMainClassName(MAIN_CLASS);
-        config.setProgramParameters(buildProgramParameters(qualifiedName, input));
+        config.setProgramParameters(buildProgramParameters(qualifiedName, input, outputMode, outputFile));
         if (project.getBasePath() != null) {
             config.setWorkingDirectory(project.getBasePath());
         }
@@ -242,21 +330,74 @@ public class RunWithTestUtilAction extends AnAction {
         // 创建临时运行配置，避免每次右键都污染 Run Configurations 列表。
         runManager.setTemporaryConfiguration(settings);
         runManager.setSelectedConfiguration(settings);
-        Executor executor = DefaultRunExecutor.getRunExecutorInstance();
+        Executor executor = launchMode == LaunchMode.DEBUG
+                ? DefaultDebugExecutor.getDebugExecutorInstance()
+                : DefaultRunExecutor.getRunExecutorInstance();
         ProgramRunnerUtil.executeConfiguration(project, settings, executor);
     }
 
-    private static String buildProgramParameters(String qualifiedName, String input) {
-        if (input == null || input.isEmpty()) {
-            return qualifiedName;
+    private static String buildProgramParameters(String qualifiedName,
+                                                 String input,
+                                                 OutputMode outputMode,
+                                                 @Nullable Path outputFile) {
+        StringBuilder params = new StringBuilder(qualifiedName);
+        if (input != null && !input.isEmpty()) {
+            String encoded = Base64.getEncoder().encodeToString(input.getBytes(StandardCharsets.UTF_8));
+            params.append(" --base64 ").append(encoded);
         }
-        String encoded = Base64.getEncoder().encodeToString(input.getBytes(StandardCharsets.UTF_8));
-        return qualifiedName + " --base64 " + encoded;
+        if (outputMode != OutputMode.CONSOLE) {
+            params.append(" --output-mode ").append(outputMode.cliValue);
+            if (outputFile != null) {
+                params.append(" --output-file ").append(quoteParam(outputFile.toAbsolutePath().toString()));
+            }
+        }
+        return params.toString();
+    }
+
+    private static String quoteParam(String value) {
+        return "\"" + value.replace("\"", "\\\"") + "\"";
+    }
+
+    private enum LaunchMode {
+        RUN,
+        DEBUG
+    }
+
+    private enum OutputMode {
+        CONSOLE("console", "仅控制台"),
+        PLUGIN("plugin", "仅插件弹窗"),
+        BOTH("both", "控制台 + 插件弹窗");
+
+        private final String cliValue;
+        private final String label;
+
+        OutputMode(String cliValue, String label) {
+            this.cliValue = cliValue;
+            this.label = label;
+        }
+
+        @Override
+        public String toString() {
+            return label;
+        }
+    }
+
+    private static final class PendingPluginOutput {
+        private final Project project;
+        private final Path outputFile;
+
+        private PendingPluginOutput(Project project, Path outputFile) {
+            this.project = project;
+            this.outputFile = outputFile;
+        }
     }
 
     private static class TestCaseDialog extends DialogWrapper {
 
         private final JTextArea textArea;
+        private final JRadioButton runButton;
+        private final JRadioButton debugButton;
+        private final JComboBox<OutputMode> outputModeBox;
 
         TestCaseDialog(Project project, String className, String input) {
             super(project);
@@ -264,6 +405,12 @@ public class RunWithTestUtilAction extends AnAction {
             textArea = new JTextArea(input == null ? "" : input, 14, 80);
             textArea.setLineWrap(true);
             textArea.setWrapStyleWord(true);
+            runButton = new JRadioButton("运行 (Run)", true);
+            debugButton = new JRadioButton("调试 (Debug)");
+            ButtonGroup launchGroup = new ButtonGroup();
+            launchGroup.add(runButton);
+            launchGroup.add(debugButton);
+            outputModeBox = new JComboBox<>(OutputMode.values());
             init();
         }
 
@@ -271,12 +418,51 @@ public class RunWithTestUtilAction extends AnAction {
             return textArea.getText();
         }
 
+        LaunchMode getLaunchMode() {
+            return debugButton.isSelected() ? LaunchMode.DEBUG : LaunchMode.RUN;
+        }
+
+        OutputMode getOutputMode() {
+            return (OutputMode) outputModeBox.getSelectedItem();
+        }
+
         @Nullable
         @Override
         protected JComponent createCenterPanel() {
-            JPanel panel = new JPanel(new BorderLayout());
+            JPanel panel = new JPanel(new BorderLayout(0, 8));
             panel.add(new JScrollPane(textArea), BorderLayout.CENTER);
+
+            JPanel options = new JPanel(new GridLayout(0, 1, 0, 4));
+            JPanel launchPanel = new JPanel(new GridLayout(1, 0, 8, 0));
+            launchPanel.add(runButton);
+            launchPanel.add(debugButton);
+            options.add(new JLabel("启动方式:"));
+            options.add(launchPanel);
+            options.add(new JLabel("输出方式:"));
+            options.add(outputModeBox);
+            panel.add(options, BorderLayout.SOUTH);
             return panel;
+        }
+    }
+
+    private static class CapturedOutputDialog extends DialogWrapper {
+
+        private final String content;
+
+        CapturedOutputDialog(Project project, String title, String content) {
+            super(project);
+            this.content = content;
+            setTitle(title);
+            init();
+        }
+
+        @Nullable
+        @Override
+        protected JComponent createCenterPanel() {
+            JTextArea textArea = new JTextArea(content, 24, 100);
+            textArea.setEditable(false);
+            textArea.setLineWrap(false);
+            return new JScrollPane(textArea);
         }
     }
 }
