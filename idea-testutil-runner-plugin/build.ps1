@@ -41,10 +41,41 @@ if (-not (Test-Path $IdeaHome)) {
     throw "IDEA home not found: $IdeaHome"
 }
 
-$javac = (Get-Command javac -ErrorAction Stop).Source
+function Resolve-Javac {
+    $candidates = @()
+    if ($env:JAVA_HOME) {
+        $candidates += Join-Path $env:JAVA_HOME "bin/javac"
+        if ($IsLinux -or $IsMacOS) {
+            $candidates += Join-Path $env:JAVA_HOME "bin/javac.exe"
+        }
+    }
+    $cmd = Get-Command javac -ErrorAction SilentlyContinue
+    if ($cmd) {
+        $candidates += $cmd.Source
+    }
+    if ($IsLinux) {
+        $candidates += "/usr/lib/jvm/java-21-openjdk-amd64/bin/javac"
+    }
+    foreach ($path in $candidates | Select-Object -Unique) {
+        if (-not $path -or -not (Test-Path $path)) {
+            continue
+        }
+        $version = & $path -version 2>&1 | Out-String
+        if ($version -match 'version "21[.\d]*"') {
+            return $path
+        }
+    }
+    if ($cmd) {
+        return $cmd.Source
+    }
+    throw "javac not found (Java 21 recommended for IntelliJ 2023.3+)"
+}
+
+$javac = Resolve-Javac
 $libJars = Get-ChildItem -Path (Join-Path $IdeaHome "lib") -Filter "*.jar" -File
 $javaJars = Get-ChildItem -Path (Join-Path $IdeaHome "plugins\java\lib") -Filter "*.jar" -File -Recurse
-$classpath = (($libJars + $javaJars) | ForEach-Object { $_.FullName.Replace('\', '/') }) -join ";"
+$pathSeparator = if ($IsLinux -or $IsMacOS) { ':' } else { ';' }
+$classpath = (($libJars + $javaJars) | ForEach-Object { $_.FullName.Replace('\', '/') }) -join $pathSeparator
 
 if (Test-Path $BuildDir) {
     Remove-Item -LiteralPath $BuildDir -Recurse -Force

@@ -300,6 +300,8 @@ public class RunWithTestUtilAction extends AnAction {
         }
         if (content.isEmpty()) {
             content = "(无输出，退出码 " + exitCode + ")";
+        } else {
+            content = AnsiStripper.strip(content);
         }
         new CapturedOutputDialog(project, "TestUtil 输出 (退出码 " + exitCode + ")", content).show();
     }
@@ -459,10 +461,7 @@ public class RunWithTestUtilAction extends AnAction {
         @Nullable
         @Override
         protected JComponent createCenterPanel() {
-            JTextArea textArea = new JTextArea(content, 24, 100);
-            textArea.setEditable(false);
-            textArea.setLineWrap(false);
-            return new JScrollPane(textArea);
+            return PluginOutputUi.wrapOutputArea(PluginOutputUi.createReadOnlyOutputArea(content, 24, 100));
         }
     }
 }

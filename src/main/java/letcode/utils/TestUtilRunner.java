@@ -10,11 +10,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.regex.Pattern;
 
 /**
  * IDEA 插件运行入口：插件传入当前题解类名后，由这里统一交给 TestUtil 执行。
  */
 public class TestUtilRunner {
+
+    private static final Pattern ANSI_ESCAPE = Pattern.compile(
+            "\u001B\\[[0-9;?]*[ -/]*[@-~]|\u001B[@-Z\\\\-_]|\u001B\\].*?(?:\u0007|\u001B\\\\)|\u009B[0-9;?]*[ -/]*[@-~]"
+    );
 
     public static void main(String[] args) {
         if (args == null || args.length == 0 || args[0] == null || args[0].trim().isEmpty()) {
@@ -78,10 +83,19 @@ public class TestUtilRunner {
             if (parent != null) {
                 Files.createDirectories(parent);
             }
-            Files.write(outputFile, buffer.toByteArray());
+            Files.write(outputFile, stripAnsi(buffer.toByteArray()));
         } catch (IOException ignored) {
             // 输出文件写入失败时不阻断进程退出码。
         }
+    }
+
+    /** 写入插件输出文件前剥离 ANSI，避免弹窗出现转义码。 */
+    private static byte[] stripAnsi(byte[] bytes) {
+        if (bytes == null || bytes.length == 0) {
+            return bytes == null ? new byte[0] : bytes;
+        }
+        String text = new String(bytes, StandardCharsets.UTF_8);
+        return ANSI_ESCAPE.matcher(text).replaceAll("").getBytes(StandardCharsets.UTF_8);
     }
 
     private static PrintStream tee(PrintStream primary, PrintStream secondary) {
