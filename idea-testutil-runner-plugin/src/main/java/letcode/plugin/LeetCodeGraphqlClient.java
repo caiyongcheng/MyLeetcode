@@ -29,7 +29,7 @@ final class LeetCodeGraphqlClient {
     private static final String QUESTION_DETAIL_QUERY =
             "query questionData($titleSlug: String!) {"
                     + " question(titleSlug: $titleSlug) {"
-                    + " questionFrontendId title translatedTitle difficulty"
+                    + " questionId questionFrontendId title translatedTitle difficulty"
                     + " content translatedContent sampleTestCase exampleTestcases"
                     + " codeSnippets { lang langSlug code }"
                     + " } }";
@@ -116,6 +116,28 @@ final class LeetCodeGraphqlClient {
             throw new IOException("Question detail is empty: " + titleSlug);
         }
         return question;
+    }
+
+    /** 提交题解所需的内部 questionId（非 questionFrontendId）。 */
+    @NotNull
+    String fetchQuestionId(@NotNull String titleSlug) throws IOException {
+        JsonObject question = fetchQuestionDetail(titleSlug);
+        String questionId = jsonValueAsString(question.get("questionId"));
+        if (questionId == null || questionId.isEmpty()) {
+            throw new IOException("Question questionId is empty: " + titleSlug);
+        }
+        return questionId;
+    }
+
+    @Nullable
+    private static String jsonValueAsString(@Nullable JsonElement element) {
+        if (element == null || element.isJsonNull()) {
+            return null;
+        }
+        if (element.isJsonPrimitive()) {
+            return element.getAsJsonPrimitive().getAsString();
+        }
+        return element.toString();
     }
 
     private JsonObject postGraphql(String query, @Nullable Map<String, String> variables) throws IOException {

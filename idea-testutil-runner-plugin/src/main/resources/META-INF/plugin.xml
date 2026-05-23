@@ -26,5 +26,13 @@
                 description="Fetch today's LeetCode daily challenge and generate Java solution stub">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
         </action>
+        <action id="letcode.leetcode.submit.action"
+                class="letcode.plugin.SubmitLeetCodeSolutionAction"
+                text="Submit LeetCode Solution"
+                description="Submit current Java solution to LeetCode and show judge result">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
     </actions>
 </idea-plugin>

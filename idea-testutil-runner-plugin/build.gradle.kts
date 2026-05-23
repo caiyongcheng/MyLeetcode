@@ -28,6 +28,6 @@ tasks {
         untilBuild.set("243.*")
     }
     buildSearchableOptions {
-        enabled.set(false)
+        enabled = false
     }
 }
