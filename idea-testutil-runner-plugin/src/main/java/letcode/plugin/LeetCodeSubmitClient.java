@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -32,16 +31,12 @@ final class LeetCodeSubmitClient {
 
     @NotNull
     String submit(@NotNull String titleSlug, @NotNull String questionId, @NotNull String typedCode) throws IOException {
-        validateAuth();
+        LeetCodeHttpHeaders.validateAuth(settings);
         String url = baseUrl + "/problems/" + titleSlug + "/submit/";
-        String body = "lang=java"
-                + "&question_id=" + URLEncoder.encode(questionId, "UTF-8")
-                + "&typed_code=" + URLEncoder.encode(typedCode, "UTF-8");
+        String body = LeetCodeHttpHeaders.buildSubmitJsonBody(questionId, typedCode, "java");
         HttpURLConnection connection = openPost(url, titleSlug);
         try {
             byte[] payload = body.getBytes(StandardCharsets.UTF_8);
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-            connection.setRequestProperty("Content-Length", String.valueOf(payload.length));
             try (OutputStream out = connection.getOutputStream()) {
                 out.write(payload);
             }
@@ -50,7 +45,7 @@ final class LeetCodeSubmitClient {
             if (status < 200 || status >= 300) {
                 throw new IOException("提交失败 HTTP " + status + ": " + truncate(responseText, 500));
             }
-            return parseSubmissionId(responseText);
+            return parseSubmissionId(responseText, status);
         } finally {
             connection.disconnect();
         }
@@ -107,7 +102,13 @@ final class LeetCodeSubmitClient {
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
         connection.setInstanceFollowRedirects(true);
-        applyHeaders(connection, titleSlug);
+        LeetCodeHttpHeaders.applyBrowserLikeHeaders(
+                connection,
+                settings,
+                baseUrl,
+                titleSlug,
+                "application/json; charset=UTF-8"
+        );
         return connection;
     }
 
@@ -115,47 +116,8 @@ final class LeetCodeSubmitClient {
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setRequestMethod("GET");
         connection.setInstanceFollowRedirects(true);
-        applyHeaders(connection, null);
+        LeetCodeHttpHeaders.applyBrowserLikeHeaders(connection, settings, baseUrl, null, null);
         return connection;
-    }
-
-    private void applyHeaders(HttpURLConnection connection, @Nullable String titleSlug) {
-        if (!settings.bearerToken.isEmpty()) {
-            connection.setRequestProperty("Authorization", "Bearer " + settings.bearerToken.trim());
-        }
-        if (!settings.cookie.isEmpty()) {
-            connection.setRequestProperty("Cookie", settings.cookie.trim());
-        }
-        if (!settings.csrfToken.isEmpty()) {
-            connection.setRequestProperty("x-csrftoken", settings.csrfToken.trim());
-            connection.setRequestProperty("X-CSRFToken", settings.csrfToken.trim());
-        }
-        for (java.util.Map.Entry<String, String> header : LeetCodeGraphqlClient.parseExtraHeaders(settings.extraHeaders).entrySet()) {
-            connection.setRequestProperty(header.getKey(), header.getValue());
-        }
-        connection.setRequestProperty("Accept", "application/json");
-        connection.setRequestProperty("User-Agent", "letcode-testutil-runner-plugin");
-        if (titleSlug != null && !titleSlug.isEmpty()) {
-            connection.setRequestProperty("Referer", baseUrl + "/problems/" + titleSlug + "/");
-            connection.setRequestProperty("Origin", baseUrl);
-        }
-    }
-
-    private void validateAuth() throws IOException {
-        if (settings.cookie.trim().isEmpty() && settings.bearerToken.trim().isEmpty()) {
-            throw new IOException("未配置 Cookie 或 Bearer Token，无法提交到 LeetCode");
-        }
-        if (settings.csrfToken.trim().isEmpty() && !cookieContainsCsrf(settings.cookie)) {
-            throw new IOException("未配置 CSRF Token（x-csrftoken），LeetCode 提交通常需要登录态");
-        }
-    }
-
-    private static boolean cookieContainsCsrf(String cookie) {
-        if (cookie == null) {
-            return false;
-        }
-        String lower = cookie.toLowerCase();
-        return lower.contains("csrftoken=") || lower.contains("csrf=");
     }
 
     private static boolean isPending(@Nullable String state) {
@@ -170,10 +132,20 @@ final class LeetCodeSubmitClient {
                 || "QUEUED".equals(upper);
     }
 
-    private static String parseSubmissionId(String responseText) throws IOException {
-        JsonElement root = new JsonParser().parse(responseText);
+    private static String parseSubmissionId(String responseText, int httpStatus) throws IOException {
+        JsonElement root;
+        try {
+            root = new JsonParser().parse(responseText);
+        } catch (Exception ex) {
+            throw new IOException(
+                    "提交响应不是有效 JSON（HTTP " + httpStatus + "）: " + truncate(responseText, 300),
+                    ex
+            );
+        }
         if (!root.isJsonObject()) {
-            throw new IOException("提交响应不是 JSON 对象: " + truncate(responseText, 300));
+            throw new IOException(
+                    "提交响应不是 JSON 对象（HTTP " + httpStatus + "）: " + truncate(responseText, 300)
+            );
         }
         JsonObject obj = root.getAsJsonObject();
         String id = LeetCodeGraphqlClient.textOrNull(obj.get("submission_id"));
@@ -186,7 +158,9 @@ final class LeetCodeSubmitClient {
         if (obj.has("error") && !obj.get("error").isJsonNull()) {
             throw new IOException("提交失败: " + obj.get("error"));
         }
-        throw new IOException("提交响应缺少 submission_id: " + truncate(responseText, 300));
+        throw new IOException(
+                "提交响应缺少 submission_id（HTTP " + httpStatus + "）: " + truncate(responseText, 300)
+        );
     }
 
     @NotNull

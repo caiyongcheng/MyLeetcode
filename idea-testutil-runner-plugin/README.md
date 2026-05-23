@@ -54,9 +54,24 @@ Tools -> Generate LeetCode Daily Question
 在弹窗中配置：
 
 - `GraphQL Endpoint`：默认 `https://leetcode.cn/graphql/`
-- `Cookie`：从浏览器登录 LeetCode 后复制请求 Cookie
-- `CSRF Token`：通常取 Cookie 中的 `csrftoken`
-- `Extra Headers`：可选，一行一个 `Name: value`
+- `Cookie`：从浏览器登录 LeetCode 后复制请求 Cookie（可选，若已粘贴 F12 请求头则可留空）
+- `CSRF Token`：通常取 Cookie 中的 `csrftoken`，或 F12 中的 `x-csrftoken`（可选，若 Extra Headers 已包含则可留空）
+- `Extra Headers`：可选。支持一行一个 `名称: 值`，也可直接粘贴浏览器 F12 Network 里 GraphQL 或提交请求的 **Request Headers** 整段（插件会忽略 `POST ... HTTP/1.1`、`Request URL` 等非头行，并跳过 `Host`、`Content-Length` 等不适合由 Java 设置的字段）
+
+**F12 粘贴示例（仅格式示意，请使用你自己浏览器里的值，勿提交到 git）：**
+
+```text
+accept: application/json
+content-type: application/json
+cookie: LEETCODE_SESSION=...; csrftoken=...
+origin: https://leetcode.cn
+referer: https://leetcode.cn/problems/two-sum/
+user-agent: Mozilla/5.0 ...
+x-csrftoken: ...
+random-uuid: ...
+```
+
+也可只填 `Cookie` + `CSRF Token`，不填 Extra Headers。
 
 配置保存在 IDEA 项目属性中，不写入 git。
 
@@ -139,4 +154,4 @@ Submit LeetCode Solution
  */
 ```
 
-如果提示未登录或缺少 CSRF，请重新复制浏览器中的 LeetCode Cookie 和 `csrftoken` 到插件配置。
+如果提示未登录或缺少 CSRF，请将浏览器 F12 中对应请求的 Request Headers 粘贴到 **Extra Headers**，或分别填写 **Cookie** 与 **CSRF Token**（`csrftoken` / `x-csrftoken`）。

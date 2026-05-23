@@ -15,6 +15,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static letcode.plugin.LeetCodeHttpHeaders.applyBrowserLikeHeaders;
+import static letcode.plugin.LeetCodeHttpHeaders.escapeJsonString;
+
 /**
  * LeetCode GraphQL 客户端：按项目配置组装请求头并解析响应。
  */
@@ -57,15 +60,15 @@ final class LeetCodeGraphqlClient {
         JsonObject data = postGraphql(DAILY_SLUG_QUERY, null);
         JsonObject active = data.getAsJsonObject("activeDailyCodingChallengeQuestion");
         if (active == null || active.isJsonNull()) {
-            throw new IOException("Daily question not found (activeDailyCodingChallengeQuestion is empty)");
+            throw new IOException("未找到每日一题（activeDailyCodingChallengeQuestion 为空）");
         }
         JsonObject question = active.getAsJsonObject("question");
         if (question == null || question.isJsonNull()) {
-            throw new IOException("Daily question object is empty");
+            throw new IOException("每日一题对象为空");
         }
         String slug = textOrNull(question.get("titleSlug"));
         if (slug == null || slug.isEmpty()) {
-            throw new IOException("Daily question titleSlug is empty");
+            throw new IOException("每日一题 titleSlug 为空");
         }
         return slug;
     }
@@ -76,26 +79,26 @@ final class LeetCodeGraphqlClient {
             JsonObject data = postGraphql(CN_DAILY_SLUG_QUERY, null);
             JsonElement todayRecordEl = data.get("todayRecord");
             if (todayRecordEl == null || !todayRecordEl.isJsonArray() || todayRecordEl.getAsJsonArray().size() == 0) {
-                throw new IOException("todayRecord is empty");
+                throw new IOException("todayRecord 为空");
             }
             JsonObject record = todayRecordEl.getAsJsonArray().get(0).getAsJsonObject();
             JsonObject question = record.getAsJsonObject("question");
             if (question == null || question.isJsonNull()) {
-                throw new IOException("todayRecord.question is empty");
+                throw new IOException("todayRecord.question 为空");
             }
             String slug = firstNonEmpty(
                     textOrNull(question.get("titleSlug")),
                     textOrNull(question.get("questionTitleSlug"))
             );
             if (slug == null || slug.isEmpty()) {
-                throw new IOException("todayRecord question titleSlug is empty");
+                throw new IOException("todayRecord 中 titleSlug 为空");
             }
             return slug;
         } catch (IOException todayRecordError) {
             throw new IOException(
-                    "fetch daily question failed. activeDailyCodingChallengeQuestion: "
+                    "获取每日一题失败。activeDailyCodingChallengeQuestion: "
                             + activeDailyError.getMessage()
-                            + "; todayRecord: "
+                            + "；todayRecord: "
                             + todayRecordError.getMessage(),
                     todayRecordError
             );
@@ -113,7 +116,7 @@ final class LeetCodeGraphqlClient {
         JsonObject data = postGraphql(QUESTION_DETAIL_QUERY, variables);
         JsonObject question = data.getAsJsonObject("question");
         if (question == null || question.isJsonNull()) {
-            throw new IOException("Question detail is empty: " + titleSlug);
+            throw new IOException("题目详情为空: " + titleSlug);
         }
         return question;
     }
@@ -124,7 +127,7 @@ final class LeetCodeGraphqlClient {
         JsonObject question = fetchQuestionDetail(titleSlug);
         String questionId = jsonValueAsString(question.get("questionId"));
         if (questionId == null || questionId.isEmpty()) {
-            throw new IOException("Question questionId is empty: " + titleSlug);
+            throw new IOException("题目 questionId 为空: " + titleSlug);
         }
         return questionId;
     }
@@ -146,8 +149,13 @@ final class LeetCodeGraphqlClient {
         try {
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
-            connection.setRequestProperty("Content-Type", "application/json");
-            applyHeaders(connection);
+            applyBrowserLikeHeaders(
+                    connection,
+                    settings,
+                    LeetCodeSubmitClient.resolveBaseUrl(settings.endpoint),
+                    null,
+                    "application/json"
+            );
             byte[] payload = body.getBytes(StandardCharsets.UTF_8);
             try (OutputStream out = connection.getOutputStream()) {
                 out.write(payload);
@@ -166,48 +174,6 @@ final class LeetCodeGraphqlClient {
     private static HttpURLConnection openConnection(String endpoint) throws IOException {
         URL url = new URL(endpoint.trim());
         return (HttpURLConnection) url.openConnection();
-    }
-
-    private void applyHeaders(HttpURLConnection connection) {
-        if (!settings.bearerToken.isEmpty()) {
-            connection.setRequestProperty("Authorization", "Bearer " + settings.bearerToken.trim());
-        }
-        if (!settings.cookie.isEmpty()) {
-            connection.setRequestProperty("Cookie", settings.cookie.trim());
-        }
-        if (!settings.csrfToken.isEmpty()) {
-            connection.setRequestProperty("x-csrftoken", settings.csrfToken.trim());
-        }
-        for (Map.Entry<String, String> header : parseExtraHeaders(settings.extraHeaders).entrySet()) {
-            connection.setRequestProperty(header.getKey(), header.getValue());
-        }
-    }
-
-    static Map<String, String> parseExtraHeaders(String raw) {
-        Map<String, String> headers = new LinkedHashMap<>();
-        if (raw == null || raw.isEmpty()) {
-            return headers;
-        }
-        String[] lines = raw.split("\\R");
-        for (String line : lines) {
-            if (line == null) {
-                continue;
-            }
-            String trimmed = line.trim();
-            if (trimmed.isEmpty()) {
-                continue;
-            }
-            int colon = trimmed.indexOf(':');
-            if (colon <= 0 || colon >= trimmed.length() - 1) {
-                continue;
-            }
-            String name = trimmed.substring(0, colon).trim();
-            String value = trimmed.substring(colon + 1).trim();
-            if (!name.isEmpty()) {
-                headers.put(name, value);
-            }
-        }
-        return headers;
     }
 
     private static String buildRequestBody(String query, @Nullable Map<String, String> variables) {
@@ -253,42 +219,6 @@ final class LeetCodeGraphqlClient {
         }
         byte[] buf = stream.readAllBytes();
         return new String(buf, StandardCharsets.UTF_8);
-    }
-
-    private static String escapeJsonString(String value) {
-        if (value == null) {
-            return "null";
-        }
-        StringBuilder sb = new StringBuilder(value.length() + 16);
-        sb.append('"');
-        for (int i = 0; i < value.length(); i++) {
-            char c = value.charAt(i);
-            switch (c) {
-                case '"':
-                    sb.append("\\\"");
-                    break;
-                case '\\':
-                    sb.append("\\\\");
-                    break;
-                case '\n':
-                    sb.append("\\n");
-                    break;
-                case '\r':
-                    sb.append("\\r");
-                    break;
-                case '\t':
-                    sb.append("\\t");
-                    break;
-                default:
-                    if (c < 0x20) {
-                        sb.append(String.format("\\u%04x", (int) c));
-                    } else {
-                        sb.append(c);
-                    }
-            }
-        }
-        sb.append('"');
-        return sb.toString();
     }
 
     @Nullable
