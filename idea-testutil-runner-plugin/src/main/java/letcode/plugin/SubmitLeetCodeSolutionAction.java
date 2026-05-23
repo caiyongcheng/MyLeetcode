@@ -102,8 +102,9 @@ public class SubmitLeetCodeSolutionAction extends AnAction {
     @Override
     public void update(@NotNull AnActionEvent e) {
         boolean hasProject = e.getProject() != null;
+        // Tools 菜单没有稳定的 PSI 上下文，保持入口可见，点击后再校验当前题解类。
         e.getPresentation().setVisible(hasProject);
-        e.getPresentation().setEnabled(hasProject && resolveTargetClass(e) != null);
+        e.getPresentation().setEnabled(hasProject);
     }
 
     private static void showResult(Project project, LeetCodeSubmissionResult result) {
