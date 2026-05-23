@@ -41,5 +41,7 @@ hs_err_pid*
 
 /out/
 /.idea/
+/build/
 idea-testutil-runner-plugin/build/
+idea-testutil-runner-plugin/.gradle/
 !/src/main/java/work/Note.java
