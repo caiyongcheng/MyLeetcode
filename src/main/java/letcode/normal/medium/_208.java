@@ -58,5 +58,49 @@ public class _208 {
 
     private final CharNode root;
 
+    /** Initialize your data structure here. */
+    public _208() {
+        root = new CharNode('-');
+    }
+
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        char[] chars = word.toCharArray();
+        CharNode current = root;
+        for (char aChar : chars) {
+            if (current.nexts[aChar - 'a'] == null) {
+                current.nexts[aChar - 'a'] = new CharNode(aChar);
+            }
+            current = current.nexts[aChar - 'a'];
+        }
+        current.nexts[26] = new CharNode('/');
+    }
+
+    /** Returns if the word is in the trie. */
+    public boolean search(String word) {
+        char[] chars = word.toCharArray();
+        CharNode current = root;
+        for (char aChar : chars) {
+            if (current.nexts[aChar - 'a'] == null) {
+                return false;
+            }
+            current = current.nexts[aChar - 'a'];
+        }
+        return current.nexts[26] != null;
+    }
+
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public boolean startsWith(String prefix) {
+        char[] chars = prefix.toCharArray();
+        CharNode current = root;
+        for (char aChar : chars) {
+            if (current.nexts[aChar - 'a'] == null) {
+                return false;
+            }
+            current = current.nexts[aChar - 'a'];
+        }
+        return true;
+    }
+
 
 }
