@@ -29,11 +29,11 @@ import java.awt.Insets;
 import java.nio.file.Path;
 
 /**
- * Tools menu: fetch LeetCode daily question and generate Java skeleton in the project.
+ * Tools 菜单：拉取 LeetCode 每日一题并在项目中生成 Java 题解骨架。
  */
 public class GenerateLeetCodeDailyQuestionAction extends AnAction {
 
-    private static final String ACTION_TITLE = "Generate LeetCode Daily Question";
+    private static final String ACTION_TITLE = "生成 LeetCode 每日一题";
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
@@ -43,7 +43,7 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
         }
         String basePath = project.getBasePath();
         if (basePath == null || basePath.isEmpty()) {
-            Messages.showErrorDialog(project, "Project base path is not available.", ACTION_TITLE);
+            Messages.showErrorDialog(project, "无法获取项目根目录。", ACTION_TITLE);
             return;
         }
 
@@ -55,15 +55,15 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
         dialog.applyTo(settings);
         settings.save(project);
 
-        ProgressManager.getInstance().run(new Task.Backgroundable(project, "Generating LeetCode daily question", true) {
+        ProgressManager.getInstance().run(new Task.Backgroundable(project, "正在生成 LeetCode 每日一题", true) {
             @Override
             public void run(@NotNull ProgressIndicator indicator) {
                 indicator.setIndeterminate(true);
                 try {
                     LeetCodeGraphqlClient client = new LeetCodeGraphqlClient(settings);
-                    indicator.setText("Fetching daily question slug...");
+                    indicator.setText("正在获取每日一题 slug...");
                     String titleSlug = client.fetchDailyTitleSlug();
-                    indicator.setText("Fetching question detail: " + titleSlug);
+                    indicator.setText("正在获取题目详情: " + titleSlug);
                     JsonObject question = client.fetchQuestionDetail(titleSlug);
                     String frontendId = LeetCodeGraphqlClient.textOrNull(question.get("questionFrontendId"));
                     boolean sameDailyAsLast = frontendId != null
@@ -97,7 +97,7 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
         if (result.alreadyExists) {
             Messages.showInfoMessage(
                     project,
-                    "File already exists (not overwritten):\n" + result.javaPath,
+                    "文件已存在（未覆盖）:\n" + result.javaPath,
                     ACTION_TITLE
             );
             return;
@@ -108,11 +108,11 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
         }
         GitAddHelper.addGeneratedFiles(project, basePath, result.javaPath, result.testCasePath);
 
-        StringBuilder msg = new StringBuilder("Generated:\n").append(result.javaPath);
+        StringBuilder msg = new StringBuilder("已生成:\n").append(result.javaPath);
         if (result.testCasePath != null) {
             msg.append("\n").append(result.testCasePath);
         }
-        msg.append("\nProblem: ").append(titleSlug);
+        msg.append("\n题目: ").append(titleSlug);
         Messages.showInfoMessage(project, msg.toString(), ACTION_TITLE);
     }
 
@@ -136,13 +136,13 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
 
         LeetCodeConfigDialog(Project project, LeetCodeSettings settings) {
             super(project);
-            setTitle("LeetCode Daily Question Settings");
+            setTitle("LeetCode 每日一题设置");
             endpointField = new JTextField(settings.endpoint, 48);
             bearerField = new JTextField(settings.bearerToken, 48);
             cookieArea = new JTextArea(settings.cookie, 3, 48);
             csrfField = new JTextField(settings.csrfToken, 48);
             extraHeadersArea = new JTextArea(settings.extraHeaders, 4, 48);
-            overwriteBox = new JCheckBox("Overwrite existing Java file", settings.overwriteExisting);
+            overwriteBox = new JCheckBox("覆盖已存在的 Java 文件", settings.overwriteExisting);
             init();
         }
 
@@ -168,16 +168,16 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
             c.weightx = 1;
             c.gridx = 0;
 
-            addRow(panel, c, 0, "GraphQL Endpoint:", endpointField);
-            addRow(panel, c, 1, "Bearer Token (optional):", bearerField);
-            addRow(panel, c, 2, "Cookie (optional):", wrap(cookieArea, 3));
-            addRow(panel, c, 3, "CSRF Token (optional):", csrfField);
-            addRow(panel, c, 4, "Extra Headers (one per line, Name: value):", wrap(extraHeadersArea, 4));
+            addRow(panel, c, 0, "GraphQL 接口:", endpointField);
+            addRow(panel, c, 1, "Bearer Token（可选）:", bearerField);
+            addRow(panel, c, 2, "Cookie（可选）:", wrap(cookieArea, 3));
+            addRow(panel, c, 3, "CSRF Token（可选）:", csrfField);
+            addRow(panel, c, 4, "Extra Headers（每行「名称: 值」，可粘贴 F12 请求头）:", wrap(extraHeadersArea, 4));
             c.gridy = 5;
             panel.add(overwriteBox, c);
             c.gridy = 6;
             c.weighty = 1;
-            panel.add(new JLabel("<html>Settings are stored in IDE project properties (not in git).</html>"), c);
+            panel.add(new JLabel("<html>配置保存在 IDEA 项目属性中，不会写入 git。</html>"), c);
             return panel;
         }
 

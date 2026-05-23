@@ -71,7 +71,7 @@ public class SubmitLeetCodeSolutionAction extends AnAction {
         final String topClassName = className;
         LeetCodeSettings settings = LeetCodeSettings.load(project);
 
-        ProgressManager.getInstance().run(new Task.Backgroundable(project, "Submitting to LeetCode", true) {
+        ProgressManager.getInstance().run(new Task.Backgroundable(project, "正在提交到 LeetCode", true) {
             @Override
             public void run(@NotNull ProgressIndicator indicator) {
                 indicator.setIndeterminate(false);

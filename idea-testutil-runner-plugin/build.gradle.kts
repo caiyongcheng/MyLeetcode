@@ -23,6 +23,9 @@ intellij {
 }
 
 tasks {
+    withType<JavaCompile> {
+        options.encoding = "UTF-8"
+    }
     patchPluginXml {
         sinceBuild.set("233")
         untilBuild.set("243.*")

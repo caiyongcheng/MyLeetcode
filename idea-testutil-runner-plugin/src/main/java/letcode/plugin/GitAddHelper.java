@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  */
 final class GitAddHelper {
 
-    private static final String DIALOG_TITLE = "Generate LeetCode Daily Question";
+    private static final String DIALOG_TITLE = "生成 LeetCode 每日一题";
 
     private GitAddHelper() {
     }
@@ -49,15 +49,15 @@ final class GitAddHelper {
             boolean finished = process.waitFor(30, TimeUnit.SECONDS);
             if (!finished) {
                 process.destroyForcibly();
-                showWarning(project, "git add timed out for:\n" + String.join("\n", relPaths));
+                showWarning(project, "git add 超时:\n" + String.join("\n", relPaths));
                 return;
             }
             if (process.exitValue() != 0) {
                 String output = new String(process.getInputStream().readAllBytes());
-                showWarning(project, "git add failed (exit " + process.exitValue() + "):\n" + output.trim());
+                showWarning(project, "git add 失败（退出码 " + process.exitValue() + "）:\n" + output.trim());
             }
         } catch (Exception ex) {
-            showWarning(project, "git add failed: " + ex.getMessage());
+            showWarning(project, "git add 失败: " + ex.getMessage());
         }
     }
 
