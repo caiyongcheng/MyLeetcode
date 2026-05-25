@@ -39,13 +39,13 @@ public class SubmitLeetCodeSolutionAction extends AnAction {
 
         PsiClass psiClass = resolveTargetClass(e);
         if (psiClass == null) {
-            Messages.showErrorDialog(project, "无法解析当前 Java 类", ACTION_TITLE);
+            Messages.showErrorDialog(project, "Cannot resolve the current Java class.", ACTION_TITLE);
             return;
         }
 
         String className = psiClass.getName();
         if (className == null || className.isEmpty()) {
-            Messages.showErrorDialog(project, "当前类名无效", ACTION_TITLE);
+            Messages.showErrorDialog(project, "Invalid class name.", ACTION_TITLE);
             return;
         }
 
@@ -53,8 +53,8 @@ public class SubmitLeetCodeSolutionAction extends AnAction {
         if (titleSlug == null || titleSlug.isEmpty()) {
             Messages.showErrorDialog(
                     project,
-                    "未在文件 Javadoc 中找到 Link（例如 Link: https://leetcode.cn/problems/two-sum/）。\n"
-                            + "请使用「Generate LeetCode Daily Question」生成题解，或手动补充 Link 行。",
+                    "No Link found in file Javadoc (e.g. Link: https://leetcode.cn/problems/two-sum/).\n"
+                            + "Use \"Generate LeetCode Daily Question\" or add a Link line manually.",
                     ACTION_TITLE
             );
             return;
@@ -62,7 +62,7 @@ public class SubmitLeetCodeSolutionAction extends AnAction {
 
         PsiFile file = psiClass.getContainingFile();
         if (file == null) {
-            Messages.showErrorDialog(project, "无法读取当前文件内容", ACTION_TITLE);
+            Messages.showErrorDialog(project, "Cannot read the current file.", ACTION_TITLE);
             return;
         }
 
@@ -71,23 +71,23 @@ public class SubmitLeetCodeSolutionAction extends AnAction {
         final String topClassName = className;
         LeetCodeSettings settings = LeetCodeSettings.load(project);
 
-        ProgressManager.getInstance().run(new Task.Backgroundable(project, "正在提交到 LeetCode", true) {
+        ProgressManager.getInstance().run(new Task.Backgroundable(project, "Submitting to LeetCode", true) {
             @Override
             public void run(@NotNull ProgressIndicator indicator) {
                 indicator.setIndeterminate(false);
                 try {
-                    indicator.setText("准备提交代码...");
+                    indicator.setText("Preparing submission...");
                     String typedCode = LeetCodeSolutionTransformer.toSubmitCode(source, topClassName);
 
                     LeetCodeGraphqlClient graphql = new LeetCodeGraphqlClient(settings);
-                    indicator.setText("获取题目 questionId: " + slug);
+                    indicator.setText("Fetching questionId: " + slug);
                     String questionId = graphql.fetchQuestionId(slug);
 
                     LeetCodeSubmitClient submitClient = new LeetCodeSubmitClient(settings);
-                    indicator.setText("提交到 LeetCode...");
+                    indicator.setText("Submitting to LeetCode...");
                     String submissionId = submitClient.submit(slug, questionId, typedCode);
 
-                    indicator.setText("等待判题结果...");
+                    indicator.setText("Waiting for judge result...");
                     LeetCodeSubmissionResult result = submitClient.pollUntilDone(submissionId);
                     ApplicationManager.getApplication().invokeLater(() ->
                             showResult(project, result));
@@ -108,7 +108,7 @@ public class SubmitLeetCodeSolutionAction extends AnAction {
     }
 
     private static void showResult(Project project, LeetCodeSubmissionResult result) {
-        String title = result.accepted ? "LeetCode Accepted" : "LeetCode 未通过";
+        String title = result.accepted ? "LeetCode Accepted" : "LeetCode Failed";
         new SubmissionResultDialog(project, title, result.formatForDialog()).show();
     }
 
