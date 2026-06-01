@@ -123,16 +123,7 @@ final class LeetCodeDailyGenerator {
         if (!body.contains("class " + className)) {
             return "public class " + className + " {\n\n}\n";
         }
-        return insertBlankLineAfterClassOpen(body, className).trim() + "\n";
-    }
-
-    private static String insertBlankLineAfterClassOpen(String body, String className) {
-        Pattern open = Pattern.compile(
-                "(public\\s+class\\s+" + Pattern.quote(className) + "\\s*\\{)\\s*",
-                Pattern.MULTILINE
-        );
-        Matcher matcher = open.matcher(body);
-        return matcher.find() ? matcher.replaceFirst("$1\n\n") : body;
+        return JavaSnippetFormatter.format(body);
     }
 
     @Nullable

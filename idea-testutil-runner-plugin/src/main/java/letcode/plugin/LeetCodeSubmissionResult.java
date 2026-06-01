@@ -92,24 +92,28 @@ final class LeetCodeSubmissionResult {
     }
 
     @NotNull
-    String formatForDialog() {
+    String formatForDialog(@Nullable GitCommitPushResult gitResult) {
         StringBuilder sb = new StringBuilder(256);
         if (accepted) {
             sb.append("Accepted");
-            appendLine(sb, "状态", statusMsg);
-            appendLine(sb, "提交 ID", submissionId);
-            appendLine(sb, "运行时间", runtime);
-            appendLine(sb, "内存", memory);
-            return sb.toString();
+            appendLine(sb, "Status", statusMsg);
+            appendLine(sb, "Submission ID", submissionId);
+            appendLine(sb, "Runtime", runtime);
+            appendLine(sb, "Memory", memory);
+        } else {
+            appendLine(sb, "Status", statusMsg);
+            appendLine(sb, "Submission ID", submissionId);
+            appendLine(sb, "Failed testcase", failedTestcase);
+            appendLine(sb, "Last testcase", lastTestcase);
+            appendLine(sb, "Actual output", actualOutput);
+            appendLine(sb, "Expected output", expectedOutput);
+            appendLine(sb, "Runtime", runtime);
+            appendLine(sb, "Memory", memory);
         }
-        appendLine(sb, "状态", statusMsg);
-        appendLine(sb, "提交 ID", submissionId);
-        appendLine(sb, "失败用例", failedTestcase);
-        appendLine(sb, "最后执行用例", lastTestcase);
-        appendLine(sb, "实际输出", actualOutput);
-        appendLine(sb, "预期输出", expectedOutput);
-        appendLine(sb, "运行时间", runtime);
-        appendLine(sb, "内存", memory);
+        if (accepted && gitResult != null) {
+            sb.append("\n--- Git ---\n");
+            sb.append(gitResult.formatForDialog());
+        }
         String text = sb.toString().trim();
         return text.isEmpty() ? statusMsg : text;
     }

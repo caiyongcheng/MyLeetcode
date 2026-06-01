@@ -83,7 +83,7 @@ random-uuid: ...
 Tools -> Generate LeetCode Daily Question
 ```
 
-插件会拉取当天每日一题，生成 Java 题解骨架和可解析出的示例用例。生成文件的 Javadoc 中会包含：
+插件会拉取当天每日一题，生成 Java 题解骨架和可解析出的示例用例。LeetCode 返回的紧凑 Java snippet 会先格式化为项目缩进风格（class 后空行、方法 4 空格、方法体 8 空格），生成后还会用 IDE 代码风格再格式化一次。生成文件的 Javadoc 中会包含：
 
 ```java
 /**
@@ -137,6 +137,8 @@ Submit LeetCode Solution
 4. POST 到 `/problems/<titleSlug>/submit/`
 5. 轮询 `/submissions/detail/<submission_id>/check/`
 6. 弹窗展示判题结果
+
+**Accepted 后**插件会自动 `git add` 当前题解 Java 文件及对应 `TestCase_<类名>.txt`（若存在），按 package 难度生成 commit message（如 `feat<easy>: question of the day`），commit 并 push 到 upstream；无 upstream 时 push 到 `origin <currentBranch>`。若无本地变更则提示 `Accepted, but no local changes to commit`。未 Accepted 时不执行 git 操作。
 
 通过时会显示 Accepted 信息；未通过时会尽量展示 LeetCode 返回的：
 

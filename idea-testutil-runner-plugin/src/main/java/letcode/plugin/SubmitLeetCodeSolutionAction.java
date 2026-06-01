@@ -22,6 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.JComponent;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * 将当前 Java 题解提交到 LeetCode 并展示判题结果。
@@ -69,6 +71,8 @@ public class SubmitLeetCodeSolutionAction extends AnAction {
         final String source = file.getText();
         final String slug = titleSlug;
         final String topClassName = className;
+        final String projectBasePath = project.getBasePath();
+        final Path javaPath = resolveJavaPath(file);
         LeetCodeSettings settings = LeetCodeSettings.load(project);
 
         ProgressManager.getInstance().run(new Task.Backgroundable(project, "Submitting to LeetCode", true) {
@@ -89,8 +93,22 @@ public class SubmitLeetCodeSolutionAction extends AnAction {
 
                     indicator.setText("Waiting for judge result...");
                     LeetCodeSubmissionResult result = submitClient.pollUntilDone(submissionId);
+                    GitCommitPushResult gitResult = null;
+                    if (result.accepted && projectBasePath != null && !projectBasePath.isEmpty() && javaPath != null) {
+                        indicator.setText("Committing accepted solution...");
+                        String packageName = file instanceof PsiJavaFile ? ((PsiJavaFile) file).getPackageName() : null;
+                        Path testCasePath = GitAddHelper.resolveTestCasePath(projectBasePath, topClassName);
+                        String commitMessage = GitAddHelper.buildCommitMessage(packageName, javaPath);
+                        gitResult = GitAddHelper.commitAndPushAcceptedSolution(
+                                projectBasePath,
+                                javaPath,
+                                testCasePath,
+                                commitMessage
+                        );
+                    }
+                    GitCommitPushResult finalGitResult = gitResult;
                     ApplicationManager.getApplication().invokeLater(() ->
-                            showResult(project, result));
+                            showResult(project, result, finalGitResult));
                 } catch (Exception ex) {
                     ApplicationManager.getApplication().invokeLater(() ->
                             Messages.showErrorDialog(project, ex.getMessage(), ACTION_TITLE));
@@ -107,9 +125,19 @@ public class SubmitLeetCodeSolutionAction extends AnAction {
         e.getPresentation().setEnabled(hasProject);
     }
 
-    private static void showResult(Project project, LeetCodeSubmissionResult result) {
+    private static void showResult(Project project,
+                                   LeetCodeSubmissionResult result,
+                                   @Nullable GitCommitPushResult gitResult) {
         String title = result.accepted ? "LeetCode Accepted" : "LeetCode Failed";
-        new SubmissionResultDialog(project, title, result.formatForDialog()).show();
+        new SubmissionResultDialog(project, title, result.formatForDialog(gitResult)).show();
+    }
+
+    @Nullable
+    private static Path resolveJavaPath(@NotNull PsiFile file) {
+        if (file.getVirtualFile() == null) {
+            return null;
+        }
+        return Paths.get(file.getVirtualFile().getPath());
     }
 
     @Nullable

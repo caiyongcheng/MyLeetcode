@@ -12,6 +12,9 @@ import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -102,6 +105,7 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
             );
             return;
         }
+        formatGeneratedJavaFile(project, vf);
         if (result.questionFrontendId != null) {
             settings.lastDailyQuestionFrontendId = result.questionFrontendId;
             settings.save(project);
@@ -118,6 +122,19 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
 
     private static void refreshPath(Path path) {
         LocalFileSystem.getInstance().refreshIoFiles(java.util.Collections.singletonList(path.toFile()));
+    }
+
+    // 生成后用 IDE 代码风格再格式化一次，保证与项目一致
+    private static void formatGeneratedJavaFile(@NotNull Project project, @Nullable VirtualFile vf) {
+        if (vf == null) {
+            return;
+        }
+        ApplicationManager.getApplication().runWriteAction(() -> {
+            PsiFile psiFile = PsiManager.getInstance(project).findFile(vf);
+            if (psiFile != null) {
+                CodeStyleManager.getInstance(project).reformat(psiFile);
+            }
+        });
     }
 
     @Override
