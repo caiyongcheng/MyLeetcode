@@ -1,1 +1,34 @@
- 示例 1： 输入：cost = [1,2,3] 输出：5 解释：我们购买价格为 2 和 3 的糖果，然后免费获得价格为 1 的糖果。 总开销为 2 + 3 = 5 。这是开销最小的 唯一 方案。 注意，我们不能购买价格为 1 和 3 的糖果，并免费获得价格为 2 的糖果。 这是因为免费糖果的价格必须小于等于购买的 2 个糖果价格的较小值。 示例 2： 输入：cost = [6,5,7,9,2,2] 输出：23 解释：最小总开销购买糖果方案为： - 购买价格为 9 和 7 的糖果 - 免费获得价格为 6 的糖果 - 购买价格为 5 和 2 的糖果 - 免费获得价格为 2 的最后一个糖果 因此，最小总开销为 9 + 7 + 5 + 2 = 23 。 示例 3： 输入：cost = [5,5] 输出：10 解释：由于只有 2 个糖果，我们需要将它们都购买，而且没有免费糖果。 所以总最小开销为 5 + 5 = 10 。
+Example 1:
+Input: cost = [1,2,3]
+Output: 5
+Explanation: We buy the candies with costs 2 and 3, and take the candy with cost 1 for free.
+The total cost of buying all candies is 2 + 3 = 5. This is the only way we can buy the candies.
+Note that we cannot buy candies with costs 1 and 3, and then take the candy with cost 2 for free.
+The cost of the free candy has to be less than or equal to the minimum cost of the purchased candies.
+
+Example 2:
+Input: cost = [6,5,7,9,2,2]
+Output: 23
+Explanation: The way in which we can get the minimum cost is described below:
+- Buy candies with costs 9 and 7
+- Take the candy with cost 6 for free
+- We buy candies with costs 5 and 2
+- Take the last remaining candy with cost 2 for free
+Hence, the minimum cost to buy all candies is 9 + 7 + 5 + 2 = 23.
+
+Example 3:
+Input: cost = [5,5]
+Output: 10
+Explanation: Since there are only 2 candies, we buy both of them. There is not a third candy we can take for free.
+Hence, the minimum cost to buy all candies is 5 + 5 = 10.
+ 
+
+ 
+
+ Constraints: 
+
+ 
+ 
+- 1 <= cost.length <= 100 
+ 
+- 1 <= cost[i] <= 100
