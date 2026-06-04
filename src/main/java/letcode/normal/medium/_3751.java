@@ -15,11 +15,14 @@ import letcode.utils.SolutionTestMethod;
 @SolutionTestMethod(method = "totalWaviness")
 public class _3751 {
 
-    private int[] digital = new int[6];
-    private int numDigitalLen;
 
     public int totalWaviness(int num1, int num2) {
         int totalWaviness = 0;
+
+        if (num1 < 100) {
+            num1 = 100;
+        }
+
         while (num1 <= num2) {
             totalWaviness += calculateWaviness(num1);
             ++num1;
@@ -30,20 +33,26 @@ public class _3751 {
     public int calculateWaviness(int num) {
 
         int Waviness = 0;
-        numDigitalLen = 0;
+
+        int firstNum = num % 10;
+        num /= 10;
+        int secondNum = num % 10;
+        num /= 10;
+        int thirdNum = num % 10;
+
 
         while (num > 0) {
-            digital[numDigitalLen++] = num % 10;
             num /= 10;
-        }
-
-        for (int i = 1; i < numDigitalLen - 1; i++) {
-            if (digital[i] > digital[i - 1] && digital[i] > digital[i + 1]) {
+            if (secondNum > firstNum && secondNum > thirdNum) {
                 ++Waviness;
-            } else if (digital[i] < digital[i - 1] && digital[i] < digital[i + 1]) {
+            } else if (secondNum < firstNum && secondNum < thirdNum) {
                 ++Waviness;
             }
+            firstNum = secondNum;
+            secondNum = thirdNum;
+            thirdNum = num % 10;
         }
+
         return Waviness;
     }
 }
