@@ -1,4 +1,4 @@
-package letcode.normal.difficult;
+package letcode.normal.unansweredquestions.difficult;
 
 /**
  * 3559. Number of Ways to Assign Edge Weights II
@@ -10,7 +10,7 @@ package letcode.normal.difficult;
  * Initially, all edges have a weight of 0. You must assign each edge a weight of either 1 or 2 .
  * The cost of a path between any two nodes u and v is the total we...
  */
-public class _3559 {
+public class N_3559 {
 
     public int[] assignEdgeWeights(int[][] edges, int[][] queries) {
         return null;
