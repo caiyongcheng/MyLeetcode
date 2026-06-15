@@ -15,7 +15,7 @@ import java.util.Comparator;
  * The value of a subarray nums[l..r] is defined as: max(nums[l..r]) - min(nums[l..r]) .
  * The total value is the sum of the values of all chosen subarrays. Retur...
  */
-public class _3691 {
+public class N_3691 {
 
     public long maxTotalValue(int[] nums, int k) {
         Integer[] idxArr = new Integer[nums.length];
