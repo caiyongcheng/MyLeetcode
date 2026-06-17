@@ -16,7 +16,9 @@ public class _3612 {
         char[] charArray = s.toCharArray();
         for (char c : charArray) {
             if (c == '*') {
-                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+                if (stringBuilder.length() > 0) {
+                    stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+                }
             } else if (c == '#') {
                 stringBuilder.append(stringBuilder);
             } else if (c == '%') {
