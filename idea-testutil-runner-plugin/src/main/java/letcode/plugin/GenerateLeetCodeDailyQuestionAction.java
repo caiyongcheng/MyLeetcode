@@ -15,6 +15,9 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.codeStyle.CodeStyleManager;
+import com.intellij.ui.components.JBScrollPane;
+import com.intellij.ui.components.JBTextArea;
+import com.intellij.util.ui.JBUI;
 import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,12 +26,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.nio.file.Path;
 
 /**
@@ -146,19 +147,23 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
 
         private final JTextField endpointField;
         private final JTextField bearerField;
-        private final JTextArea cookieArea;
+        private final JBTextArea cookieArea;
         private final JTextField csrfField;
-        private final JTextArea extraHeadersArea;
+        private final JBTextArea extraHeadersArea;
         private final JCheckBox overwriteBox;
 
         LeetCodeConfigDialog(Project project, LeetCodeSettings settings) {
             super(project);
             setTitle("LeetCode 每日一题设置");
-            endpointField = new JTextField(settings.endpoint, 48);
-            bearerField = new JTextField(settings.bearerToken, 48);
-            cookieArea = new JTextArea(settings.cookie, 3, 48);
-            csrfField = new JTextField(settings.csrfToken, 48);
-            extraHeadersArea = new JTextArea(settings.extraHeaders, 4, 48);
+            Dimension fieldSize = JBUI.size(520, JBUI.scale(28));
+            endpointField = new JTextField(settings.endpoint);
+            endpointField.setPreferredSize(fieldSize);
+            bearerField = new JTextField(settings.bearerToken);
+            bearerField.setPreferredSize(fieldSize);
+            cookieArea = createInputArea(settings.cookie, 3);
+            csrfField = new JTextField(settings.csrfToken);
+            csrfField.setPreferredSize(fieldSize);
+            extraHeadersArea = createInputArea(settings.extraHeaders, 4);
             overwriteBox = new JCheckBox("覆盖已存在的 Java 文件", settings.overwriteExisting);
             init();
         }
@@ -179,38 +184,55 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
         @Override
         protected JComponent createCenterPanel() {
             JPanel panel = new JPanel(new GridBagLayout());
+            panel.setBorder(JBUI.Borders.empty(4));
             GridBagConstraints c = new GridBagConstraints();
-            c.insets = new Insets(4, 4, 4, 4);
+            c.insets = JBUI.insets(2, 0, 8, 0);
             c.fill = GridBagConstraints.HORIZONTAL;
             c.weightx = 1;
             c.gridx = 0;
+            c.anchor = GridBagConstraints.NORTHWEST;
 
             addRow(panel, c, 0, "GraphQL 接口:", endpointField);
             addRow(panel, c, 1, "Bearer Token（可选）:", bearerField);
             addRow(panel, c, 2, "Cookie（可选）:", wrap(cookieArea, 3));
             addRow(panel, c, 3, "CSRF Token（可选）:", csrfField);
             addRow(panel, c, 4, "Extra Headers（每行「名称: 值」，可粘贴 F12 请求头）:", wrap(extraHeadersArea, 4));
-            c.gridy = 5;
+            c.gridy = 10;
+            c.weighty = 0;
             panel.add(overwriteBox, c);
-            c.gridy = 6;
+            c.gridy = 11;
             c.weighty = 1;
-            panel.add(new JLabel("<html>配置保存在 IDEA 项目属性中，不会写入 git。</html>"), c);
+            panel.add(new JLabel("<html><body style='width:520px'>配置保存在 IDEA 项目属性中，不会写入 git。</body></html>"), c);
             return panel;
+        }
+
+        private static JBTextArea createInputArea(String text, int rows) {
+            JBTextArea area = new JBTextArea(text == null ? "" : text);
+            area.setLineWrap(true);
+            area.setWrapStyleWord(true);
+            area.setRows(rows);
+            return area;
         }
 
         private static void addRow(JPanel panel, GridBagConstraints c, int row, String label, JComponent field) {
             c.gridy = row * 2;
             c.weighty = 0;
-            panel.add(new JLabel(label), c);
+            c.fill = GridBagConstraints.HORIZONTAL;
+            panel.add(new JLabel("<html><body style='width:520px'>" + escapeHtml(label) + "</body></html>"), c);
             c.gridy = row * 2 + 1;
             panel.add(field, c);
         }
 
-        private static JScrollPane wrap(JTextArea area, int rows) {
-            area.setLineWrap(true);
-            area.setWrapStyleWord(true);
+        private static JBScrollPane wrap(JBTextArea area, int rows) {
             area.setRows(rows);
-            return new JScrollPane(area);
+            int lineHeight = JBUI.scale(20);
+            JBScrollPane scrollPane = new JBScrollPane(area);
+            scrollPane.setPreferredSize(JBUI.size(520, lineHeight * rows + JBUI.scale(8)));
+            return scrollPane;
+        }
+
+        private static String escapeHtml(String text) {
+            return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
         }
     }
 }

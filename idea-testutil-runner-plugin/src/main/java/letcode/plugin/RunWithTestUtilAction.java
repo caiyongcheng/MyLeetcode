@@ -25,6 +25,9 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.ui.components.JBScrollPane;
+import com.intellij.ui.components.JBTextArea;
+import com.intellij.util.ui.JBUI;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -40,8 +43,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.nio.charset.StandardCharsets;
@@ -396,7 +397,7 @@ public class RunWithTestUtilAction extends AnAction {
 
     private static class TestCaseDialog extends DialogWrapper {
 
-        private final JTextArea textArea;
+        private final JBTextArea textArea;
         private final JRadioButton runButton;
         private final JRadioButton debugButton;
         private final JComboBox<OutputMode> outputModeBox;
@@ -404,7 +405,8 @@ public class RunWithTestUtilAction extends AnAction {
         TestCaseDialog(Project project, String className, String input) {
             super(project);
             setTitle("TestUtil 测试用例 - " + className);
-            textArea = new JTextArea(input == null ? "" : input, 14, 80);
+            textArea = new JBTextArea(input == null ? "" : input);
+            textArea.setRows(14);
             textArea.setLineWrap(true);
             textArea.setWrapStyleWord(true);
             runButton = new JRadioButton("运行 (Run)", true);
@@ -431,8 +433,11 @@ public class RunWithTestUtilAction extends AnAction {
         @Nullable
         @Override
         protected JComponent createCenterPanel() {
-            JPanel panel = new JPanel(new BorderLayout(0, 8));
-            panel.add(new JScrollPane(textArea), BorderLayout.CENTER);
+            JPanel panel = new JPanel(new BorderLayout(0, JBUI.scale(8)));
+            panel.setBorder(JBUI.Borders.empty(4));
+            JBScrollPane scrollPane = new JBScrollPane(textArea);
+            scrollPane.setPreferredSize(JBUI.size(640, JBUI.scale(320)));
+            panel.add(scrollPane, BorderLayout.CENTER);
 
             JPanel options = new JPanel(new GridLayout(0, 1, 0, 4));
             JPanel launchPanel = new JPanel(new GridLayout(1, 0, 8, 0));
