@@ -10,7 +10,7 @@ package letcode.normal.medium;
 public class _1344 {
 
     public double angleClock(int hour, int minutes) {
-        double diffAngle = Math.abs(minutes * 6 - hour * 30 + minutes * 0.5);
+        double diffAngle = Math.abs(minutes * 6 - hour * 30 - minutes * 0.5);
         return diffAngle > 180 ? 360 - diffAngle : diffAngle;
     }
 
