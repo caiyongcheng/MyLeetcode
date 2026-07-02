@@ -1,8 +1,8 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestUtil;
-
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.SequencedCollection;
 
 /**
  * 3286. Find a Safe Walk Through a Grid
@@ -56,22 +56,5 @@ public class _3286 {
     }
 
 
-    /*
-    [
-    [1,1,1],
-    [1,0,0],
-    [0,1,1],
-    [0,1,1],
-    [1,1,1]
-    ]
-     */
-    static void main() {
-        TestUtil.test("=    [\n" +
-                "    [1,1,1],\n" +
-                "    [1,0,0],\n" +
-                "    [0,1,1],\n" +
-                "    [0,1,1],\n" +
-                "    [1,1,1]\n" +
-                "    ], =6");
-    }
+
 }
