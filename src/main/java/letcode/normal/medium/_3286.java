@@ -1,6 +1,6 @@
 package letcode.normal.medium;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.List;
 import java.util.SequencedCollection;
 
@@ -23,12 +23,22 @@ public class _3286 {
     };
 
     public boolean findSafeWalk(List<List<Integer>> grid, int health) {
-        SequencedCollection<int[]> seq = new LinkedList<>();
-        seq.addLast(new int[]{0, 0, health - grid.get(0).get(0)});
 
         int rowLen = grid.size();
         int colLen = grid.get(0).size();
-        int[][] visited = new int[rowLen][colLen];
+        int[][] map = new int[rowLen][colLen];
+        for (int row = 0; row < rowLen; row++) {
+            List<Integer> rowData = grid.get(row);
+            for (int col = 0; col < colLen; col++) {
+                map[row][col] = rowData.get(col);
+            }
+        }
+
+        int[][] healthMap = new int[rowLen][colLen];
+        healthMap[0][0] = health - map[0][0];
+
+        SequencedCollection<int[]> seq = new ArrayDeque<>();
+        seq.addLast(new int[]{0, 0, healthMap[0][0]});
 
         while (!seq.isEmpty()) {
             int[] curPoint = seq.removeFirst();
@@ -38,14 +48,14 @@ public class _3286 {
                 if (nextRow < 0 || nextRow >= rowLen || nextCol < 0 || nextCol >= colLen) {
                     continue;
                 }
-                int nextHealth = curPoint[2] - grid.get(nextRow).get(nextCol);
+                int nextHealth = curPoint[2] - map[nextRow][nextCol];
                 if (nextHealth <= 0) {
                     continue;
                 }
-                if (visited[nextRow][nextCol] >= nextHealth) {
+                if (healthMap[nextRow][nextCol] >= nextHealth) {
                     continue;
                 }
-                visited[nextRow][nextCol] = nextHealth;
+                healthMap[nextRow][nextCol] = nextHealth;
                 if (nextRow == rowLen - 1 && nextCol == colLen - 1) {
                     return true;
                 }
