@@ -59,7 +59,11 @@ public class _3286 {
                 if (nextRow == rowLen - 1 && nextCol == colLen - 1) {
                     return true;
                 }
-                seq.addLast(new int[]{nextRow, nextCol, nextHealth});
+                if (map[nextRow][nextCol] == 1) {
+                    seq.addLast(new int[]{nextRow, nextCol, nextHealth});
+                } else {
+                    seq.addFirst(new int[]{nextRow, nextCol, nextHealth});
+                }
             }
         }
         return false;
