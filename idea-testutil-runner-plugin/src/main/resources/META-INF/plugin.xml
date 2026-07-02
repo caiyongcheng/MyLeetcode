@@ -1,15 +1,24 @@
 <idea-plugin>
     <id>letcode.testutil.runner</id>
     <name>LeetCode TestUtil Runner</name>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <vendor email="noreply@example.com">Local</vendor>
     <idea-version since-build="233"/>
     <description><![CDATA[
         Run or debug current Java class through letcode.utils.TestUtilRunner.
+        Fetch LeetCode daily/random questions and submit solutions.
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="LeetCode"
+                    factoryClass="letcode.plugin.LeetCodeToolWindowFactory"
+                    anchor="right"
+                    icon="/icons/leetcode_toolwindow.svg"
+                    secondary="true"/>
+    </extensions>
 
     <actions>
         <action id="letcode.testutil.runner.action"
