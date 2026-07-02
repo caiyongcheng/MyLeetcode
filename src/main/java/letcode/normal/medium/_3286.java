@@ -42,6 +42,9 @@ public class _3286 {
 
         while (!seq.isEmpty()) {
             int[] curPoint = seq.removeFirst();
+            if (curPoint[2] < healthMap[curPoint[0]][curPoint[1]]) {
+                continue;
+            }
             for (int[] nextStep : MOVE) {
                 int nextRow = curPoint[0] + nextStep[0];
                 int nextCol = curPoint[1] + nextStep[1];
