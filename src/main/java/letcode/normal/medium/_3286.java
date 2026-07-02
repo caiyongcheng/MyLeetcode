@@ -1,8 +1,8 @@
 package letcode.normal.medium;
 
-import java.util.Comparator;
+import java.util.ArrayDeque;
 import java.util.List;
-import java.util.PriorityQueue;
+import java.util.SequencedCollection;
 
 /**
  * 3286. Find a Safe Walk Through a Grid
@@ -37,11 +37,11 @@ public class _3286 {
         int[][] healthMap = new int[rowLen][colLen];
         healthMap[0][0] = health - map[0][0];
 
-        PriorityQueue<int[]> queue = new PriorityQueue<>(Comparator.comparingInt(x -> x[2]));
-        queue.offer(new int[]{0, 0, healthMap[0][0]});
+        SequencedCollection<int[]> seq = new ArrayDeque<>();
+        seq.addLast(new int[]{0, 0, healthMap[0][0]});
 
-        while (!queue.isEmpty()) {
-            int[] curPoint = queue.poll();
+        while (!seq.isEmpty()) {
+            int[] curPoint = seq.removeFirst();
             for (int[] nextStep : MOVE) {
                 int nextRow = curPoint[0] + nextStep[0];
                 int nextCol = curPoint[1] + nextStep[1];
@@ -59,7 +59,7 @@ public class _3286 {
                 if (nextRow == rowLen - 1 && nextCol == colLen - 1) {
                     return true;
                 }
-                queue.add(new int[]{nextRow, nextCol, nextHealth});
+                seq.addLast(new int[]{nextRow, nextCol, nextHealth});
             }
         }
         return false;
