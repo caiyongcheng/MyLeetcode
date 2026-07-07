@@ -47,22 +47,20 @@ package letcode.normal.easy;
 public class _3754 {
 
     public long sumAndMultiply(int n) {
-        int[] digitals = new int[13];
-        int digitalLen = 0;
+
+        int index = 1;
+        int digital = 0;
         int digitalSum = 0;
         int removeZeroN = 0;
 
         while (n != 0) {
-            digitals[digitalLen++] = n % 10;
-            n /= 10;
-        }
-
-        while (digitalLen > -1) {
-            digitalSum += digitals[digitalLen];
-            if (digitals[digitalLen] != 0) {
-                removeZeroN = removeZeroN * 10 + digitals[digitalLen];
+            digital = n % 10;
+            digitalSum += digital;
+            removeZeroN = digital * index + removeZeroN;
+            if (digital != 0) {
+                index *= 10;
             }
-            --digitalLen;
+            n /= 10;
         }
 
         return 1L * digitalSum * removeZeroN;
