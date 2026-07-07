@@ -1,1 +1,8 @@
- 示例： 输入：intervals = {{1,4},{3,6},{2,8}} 输出：2 解释：区间 [3,6] 被区间 [2,8] 覆盖，所以它被删除了。
+Example 1:
+Input: intervals = [[1,4],[3,6],[2,8]]
+Output: 2
+Explanation: Interval [3,6] is covered by [2,8], therefore it is removed.
+
+Example 2:
+Input: intervals = [[1,4],[2,3]]
+Output: 1
