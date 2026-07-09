@@ -90,7 +90,7 @@ public class _3532 {
             }
         }
 
-        // 二分查找
+        // 比对所属的class
         boolean[] ans = new boolean[queries.length];
         for (int i = 0; i < ans.length; i++) {
             ans[i] = classifies[queries[i][0]] == classifies[queries[i][1]];
