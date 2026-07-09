@@ -77,46 +77,25 @@ package letcode.normal.medium;
 public class _3532 {
 
     public boolean[] pathExistenceQueries(int n, int[] nums, int maxDiff, int[][] queries) {
-        // 类似并查集的思路
-        int[] limits = new int[n + 1];
-        int limitsSize = 0;
 
+        int[] classifies = new int[n];
+        int curClass = 0;
+
+        // 划分连通性
         for (int i = 1; i < nums.length; i++) {
             if (nums[i] - nums[i - 1] > maxDiff) {
-                limits[limitsSize++] = i;
+                classifies[i] = ++curClass;
+            } else {
+                classifies[i] = curClass;
             }
         }
-        limits[limitsSize] = nums.length;
 
+        // 二分查找
         boolean[] ans = new boolean[queries.length];
         for (int i = 0; i < ans.length; i++) {
-            ans[i] = getNextSet(limits, limitsSize, queries[i][0]) == getNextSet(limits, limitsSize, queries[i][1]);
+            ans[i] = classifies[queries[i][0]] == classifies[queries[i][1]];
         }
         return ans;
-    }
-
-    private int getNextSet(int[] limits, int limitsSize, int targetIdx) {
-        if (limits[0] > targetIdx) {
-            return 0;
-        }
-        if (limits[limitsSize - 1] <= targetIdx) {
-            return limitsSize;
-        }
-        int left = 0;
-        int right = limitsSize;
-        int mid;
-        while (true) {
-            mid = (left + right) >> 1;
-            if (mid == left) {
-                break;
-            }
-            if (targetIdx < limits[mid]) {
-                right = mid;
-            } else {
-                left = mid;
-            }
-        }
-        return right;
     }
 
 }
