@@ -43,6 +43,28 @@ idea-testutil-runner-plugin\build\package\LeetCode-TestUtil-Runner
 
 到 IDEA 配置目录的 `plugins` 下。
 
+## 功能入口
+
+### 右侧工具窗口（推荐）
+
+IDEA 右侧边栏会出现橙色 **LeetCode** 图标（与 Maven 同级），点击后通过 Tab 切换：
+
+| Tab | 功能 |
+|-----|------|
+| 拉题 | 生成每日一题；按难度（简单/中等/困难/不限）随机拉取一题 |
+| 运行 | 用 TestUtilRunner 运行当前题解 |
+| 提交 | 提交当前题解到 LeetCode |
+| 设置 | 配置 GraphQL / Cookie / 请求头等 |
+
+### 菜单与右键
+
+仍保留原有入口：
+
+```text
+Tools -> Generate LeetCode Daily Question
+右键题解文件 -> Run via TestUtilRunner / Submit LeetCode Solution
+```
+
 ## 配置 LeetCode 登录信息
 
 先执行一次：

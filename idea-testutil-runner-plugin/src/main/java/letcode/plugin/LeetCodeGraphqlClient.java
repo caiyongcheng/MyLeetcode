@@ -1,5 +1,6 @@
 package letcode.plugin;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -12,8 +13,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static letcode.plugin.LeetCodeHttpHeaders.applyBrowserLikeHeaders;
 import static letcode.plugin.LeetCodeHttpHeaders.escapeJsonString;
@@ -36,6 +36,18 @@ final class LeetCodeGraphqlClient {
                     + " content translatedContent sampleTestCase exampleTestcases"
                     + " codeSnippets { lang langSlug code }"
                     + " } }";
+
+    private static final String CN_PROBLEM_LIST_QUERY =
+            "query problemsetQuestionList($limit: Int, $skip: Int, $filters: QuestionListFilterInput) {"
+                    + " problemsetQuestionList(categorySlug: \"\", limit: $limit, skip: $skip, filters: $filters) {"
+                    + " total questions { titleSlug paidOnly } } }";
+
+    private static final String GLOBAL_PROBLEM_LIST_QUERY =
+            "query problemsetQuestionList($limit: Int, $skip: Int, $filters: QuestionListFilterInput) {"
+                    + " problemsetQuestionList: questionList(categorySlug: \"\", limit: $limit, skip: $skip, filters: $filters) {"
+                    + " total: totalNum questions: data { titleSlug paidOnly: isPaidOnly } } } }";
+
+    private static final int RANDOM_PICK_ATTEMPTS = 12;
 
     private final LeetCodeSettings settings;
 
@@ -110,9 +122,27 @@ final class LeetCodeGraphqlClient {
     }
 
     @NotNull
+    String fetchRandomTitleSlug(@NotNull LeetCodeDifficulty difficulty) throws IOException {
+        String filter = difficulty.filterValue(isCnEndpoint());
+        int total = fetchProblemListTotal(filter);
+        if (total <= 0) {
+            throw new IOException("未找到符合条件的题目");
+        }
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        for (int attempt = 0; attempt < RANDOM_PICK_ATTEMPTS; attempt++) {
+            int skip = random.nextInt(total);
+            String slug = fetchProblemSlugAt(filter, skip);
+            if (slug != null) {
+                return slug;
+            }
+        }
+        throw new IOException("随机题目均为会员题或获取失败，请重试");
+    }
+
+    @NotNull
     JsonObject fetchQuestionDetail(@NotNull String titleSlug) throws IOException {
-        Map<String, String> variables = new LinkedHashMap<>();
-        variables.put("titleSlug", titleSlug);
+        JsonObject variables = new JsonObject();
+        variables.addProperty("titleSlug", titleSlug);
         JsonObject data = postGraphql(QUESTION_DETAIL_QUERY, variables);
         JsonObject question = data.getAsJsonObject("question");
         if (question == null || question.isJsonNull()) {
@@ -143,7 +173,75 @@ final class LeetCodeGraphqlClient {
         return element.toString();
     }
 
-    private JsonObject postGraphql(String query, @Nullable Map<String, String> variables) throws IOException {
+    private int fetchProblemListTotal(@Nullable String difficultyFilter) throws IOException {
+        JsonObject list = fetchProblemListNode(difficultyFilter, 1, 0);
+        JsonElement totalEl = list.get("total");
+        if (totalEl == null || totalEl.isJsonNull()) {
+            totalEl = list.get("total");
+        }
+        if (totalEl != null && totalEl.isJsonPrimitive()) {
+            return totalEl.getAsInt();
+        }
+        throw new IOException("无法获取题目总数");
+    }
+
+    @Nullable
+    private String fetchProblemSlugAt(@Nullable String difficultyFilter, int skip) throws IOException {
+        JsonObject list = fetchProblemListNode(difficultyFilter, 1, skip);
+        JsonArray questions = extractQuestions(list);
+        if (questions == null || questions.size() == 0) {
+            return null;
+        }
+        JsonObject question = questions.get(0).getAsJsonObject();
+        if (isPaidOnly(question)) {
+            return null;
+        }
+        return textOrNull(question.get("titleSlug"));
+    }
+
+    @NotNull
+    private JsonObject fetchProblemListNode(@Nullable String difficultyFilter, int limit, int skip) throws IOException {
+        JsonObject variables = new JsonObject();
+        variables.addProperty("limit", limit);
+        variables.addProperty("skip", skip);
+        JsonObject filters = new JsonObject();
+        if (difficultyFilter != null && !difficultyFilter.isEmpty()) {
+            filters.addProperty("difficulty", difficultyFilter);
+        }
+        variables.add("filters", filters);
+        String query = isCnEndpoint() ? CN_PROBLEM_LIST_QUERY : GLOBAL_PROBLEM_LIST_QUERY;
+        JsonObject data = postGraphql(query, variables);
+        JsonObject list = data.getAsJsonObject("problemsetQuestionList");
+        if (list == null || list.isJsonNull()) {
+            throw new IOException("题目列表为空");
+        }
+        return list;
+    }
+
+    @Nullable
+    private static JsonArray extractQuestions(@NotNull JsonObject list) {
+        JsonElement questionsEl = list.get("questions");
+        if (questionsEl == null || questionsEl.isJsonNull()) {
+            return null;
+        }
+        if (questionsEl.isJsonArray()) {
+            return questionsEl.getAsJsonArray();
+        }
+        if (questionsEl.isJsonObject()) {
+            JsonElement dataEl = questionsEl.getAsJsonObject().get("data");
+            if (dataEl != null && dataEl.isJsonArray()) {
+                return dataEl.getAsJsonArray();
+            }
+        }
+        return null;
+    }
+
+    private static boolean isPaidOnly(@NotNull JsonObject question) {
+        JsonElement paidOnly = question.get("paidOnly");
+        return paidOnly != null && paidOnly.isJsonPrimitive() && paidOnly.getAsBoolean();
+    }
+
+    private JsonObject postGraphql(String query, @Nullable JsonObject variables) throws IOException {
         String body = buildRequestBody(query, variables);
         HttpURLConnection connection = openConnection(settings.endpoint);
         try {
@@ -176,21 +274,11 @@ final class LeetCodeGraphqlClient {
         return (HttpURLConnection) url.openConnection();
     }
 
-    private static String buildRequestBody(String query, @Nullable Map<String, String> variables) {
+    private static String buildRequestBody(String query, @Nullable JsonObject variables) {
         StringBuilder json = new StringBuilder(128);
         json.append("{\"query\":").append(escapeJsonString(query));
-        if (variables != null && !variables.isEmpty()) {
-            json.append(",\"variables\":{");
-            boolean first = true;
-            for (Map.Entry<String, String> entry : variables.entrySet()) {
-                if (!first) {
-                    json.append(',');
-                }
-                first = false;
-                json.append(escapeJsonString(entry.getKey())).append(':')
-                        .append(escapeJsonString(entry.getValue()));
-            }
-            json.append('}');
+        if (variables != null) {
+            json.append(",\"variables\":").append(variables);
         }
         json.append('}');
         return json.toString();

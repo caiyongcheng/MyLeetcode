@@ -4,16 +4,15 @@ plugins {
 }
 
 group = "letcode.plugin"
-version = "1.0.0"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
 }
 
 java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 intellij {
@@ -33,4 +32,11 @@ tasks {
     buildSearchableOptions {
         enabled = false
     }
+    test {
+        useJUnitPlatform()
+    }
+}
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
 }
