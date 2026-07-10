@@ -23,13 +23,23 @@ import java.util.regex.Pattern;
 final class LeetCodeDailyGenerator {
 
     private static final Pattern EXAMPLE_BLOCK = Pattern.compile(
-            "Example\\s*(\\d+)\\s*:\\s*([\\s\\S]*?)(?=Example\\s*\\d+\\s*:|\\z)",
+            "(?:Example|示例)\\s*(\\d+)\\s*[:：]\\s*([\\s\\S]*?)(?=(?:Example|示例)\\s*\\d+\\s*[:：]|\\z)",
             Pattern.CASE_INSENSITIVE
     );
-    private static final Pattern INPUT_LINE = Pattern.compile("(?:^|\\n)\\s*Input\\s*:\\s*(.+)", Pattern.CASE_INSENSITIVE);
-    private static final Pattern OUTPUT_LINE = Pattern.compile("(?:^|\\n)\\s*Output\\s*:\\s*(.+)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern INPUT_LINE = Pattern.compile(
+            "(?:^|\\n)\\s*(?:Input|输入)\\s*[:：]\\s*(.+)",
+            Pattern.CASE_INSENSITIVE
+    );
+    private static final Pattern OUTPUT_LINE = Pattern.compile(
+            "(?:^|\\n)\\s*(?:Output|输出)\\s*[:：]\\s*(.+)",
+            Pattern.CASE_INSENSITIVE
+    );
     private static final Pattern EXPLANATION_LINE = Pattern.compile(
-            "(?:^|\\n)\\s*Explanation\\s*:\\s*([\\s\\S]*)",
+            "(?:^|\\n)\\s*(?:Explanation|解释)\\s*[:：]\\s*([\\s\\S]*)",
+            Pattern.CASE_INSENSITIVE
+    );
+    private static final Pattern EXAMPLE_HEADING = Pattern.compile(
+            "(?:Example|示例)\\s*\\d+",
             Pattern.CASE_INSENSITIVE
     );
 
@@ -56,12 +66,8 @@ final class LeetCodeDailyGenerator {
             return GenerationResult.existing(javaPath);
         }
 
-        String title = firstNonEmpty(
-                LeetCodeGraphqlClient.textOrNull(question.get("title")),
-                LeetCodeGraphqlClient.textOrNull(question.get("translatedTitle")),
-                titleSlug
-        );
-        String description = buildBriefDescription(question, titleSlug);
+        String title = pickTitle(question, titleSlug);
+        String description = buildDescriptionLines(question, titleSlug);
         String javaSource = buildJavaSource(pkg, className, frontendId, title, difficulty, titleSlug, description, question);
         Files.createDirectories(javaPath.getParent());
         Files.write(javaPath, javaSource.getBytes(StandardCharsets.UTF_8));
@@ -101,8 +107,11 @@ final class LeetCodeDailyGenerator {
         file.append(" * ").append(escapeJavadoc(frontendId)).append(". ").append(escapeJavadoc(title)).append('\n');
         file.append(" * Difficulty: ").append(escapeJavadoc(difficulty)).append('\n');
         file.append(" * Link: ").append(escapeJavadoc(link)).append('\n');
-        if (!description.isEmpty()) {
-            file.append(" * ").append(escapeJavadoc(description)).append('\n');
+        for (String line : description.split("\n")) {
+            String trimmed = line.trim();
+            if (!trimmed.isEmpty()) {
+                file.append(" * ").append(escapeJavadoc(trimmed)).append('\n');
+            }
         }
         file.append(" */\n");
         file.append(body);
@@ -156,10 +165,8 @@ final class LeetCodeDailyGenerator {
     }
 
     @Nullable
-    private static String tryBuildTestCaseContent(JsonObject question) {
-        String content = LeetCodeGraphqlClient.textOrNull(question.get("content"));
-        String translated = LeetCodeGraphqlClient.textOrNull(question.get("translatedContent"));
-        String plain = firstNonEmpty(htmlToPlain(content), htmlToPlain(translated));
+    private String tryBuildTestCaseContent(JsonObject question) {
+        String plain = pickPlainText(question);
         String fromHtml = extractExamplesFromPlain(plain);
         return isValidTestUtilCase(fromHtml) ? fromHtml : null;
     }
@@ -174,7 +181,9 @@ final class LeetCodeDailyGenerator {
         while (matcher.find()) {
             String formatted = formatExampleBlock(matcher.group(2).trim());
             if (formatted != null) {
-                blocks.add("Example " + matcher.group(1) + ":\n" + formatted);
+                String heading = matcher.group(1);
+                boolean chinese = plain.contains("示例");
+                blocks.add((chinese ? "示例 " : "Example ") + heading + ":\n" + formatted);
             }
         }
         if (!blocks.isEmpty()) {
@@ -193,7 +202,10 @@ final class LeetCodeDailyGenerator {
         }
         String input = inputMatcher.group(1).trim();
         String output = outputMatcher.group(1).trim();
-        int explanationStart = block.indexOf("Explanation", outputMatcher.start());
+        int explanationStart = indexOfIgnoreCase(block, "Explanation", outputMatcher.start());
+        if (explanationStart < 0) {
+            explanationStart = block.indexOf("解释", outputMatcher.start());
+        }
         if (explanationStart >= 0 && explanationStart > outputMatcher.start()) {
             Matcher outOnly = OUTPUT_LINE.matcher(block.substring(outputMatcher.start(), explanationStart));
             if (outOnly.find()) {
@@ -213,25 +225,103 @@ final class LeetCodeDailyGenerator {
     }
 
     private static boolean isValidTestUtilCase(@Nullable String text) {
-        return text != null && !text.isEmpty() && text.contains("Input:") && text.contains("Output:");
+        if (text == null || text.isEmpty()) {
+            return false;
+        }
+        boolean hasInput = text.contains("Input:") || text.contains("输入:");
+        boolean hasOutput = text.contains("Output:") || text.contains("输出:");
+        return hasInput && hasOutput;
     }
 
-    private static String buildBriefDescription(JsonObject question, String titleSlug) {
-        String content = LeetCodeGraphqlClient.textOrNull(question.get("content"));
-        String translated = LeetCodeGraphqlClient.textOrNull(question.get("translatedContent"));
-        String plain = firstNonEmpty(htmlToPlain(content), htmlToPlain(translated));
+    private String buildDescriptionLines(JsonObject question, String titleSlug) {
+        String plain = pickPlainText(question);
         if (plain.isEmpty()) {
             return titleSlug;
         }
         int exampleIdx = indexOfExample(plain);
         String head = exampleIdx >= 0 ? plain.substring(0, exampleIdx) : plain;
-        head = head.replaceAll("\\s+", " ").trim();
-        return head.length() > 400 ? head.substring(0, 400) + "..." : head;
+        head = head.replaceAll("[ \\t\\x0B\\f\\r]+", " ").trim();
+        if (head.isEmpty()) {
+            return titleSlug;
+        }
+        return wrapDescription(head, 120, 12);
+    }
+
+    private String pickTitle(JsonObject question, String titleSlug) {
+        String title = LeetCodeGraphqlClient.textOrNull(question.get("title"));
+        String translatedTitle = LeetCodeGraphqlClient.textOrNull(question.get("translatedTitle"));
+        if (preferTranslatedContent()) {
+            return firstNonEmpty(translatedTitle, title, titleSlug);
+        }
+        return firstNonEmpty(title, translatedTitle, titleSlug);
+    }
+
+    private String pickPlainText(JsonObject question) {
+        String content = LeetCodeGraphqlClient.textOrNull(question.get("content"));
+        String translated = LeetCodeGraphqlClient.textOrNull(question.get("translatedContent"));
+        if (preferTranslatedContent()) {
+            return firstNonEmpty(htmlToPlain(translated), htmlToPlain(content));
+        }
+        return firstNonEmpty(htmlToPlain(content), htmlToPlain(translated));
+    }
+
+    private boolean preferTranslatedContent() {
+        return settings.endpoint != null && settings.endpoint.toLowerCase(Locale.ROOT).contains("leetcode.cn");
+    }
+
+    private static String wrapDescription(String text, int maxLineLength, int maxLines) {
+        String[] paragraphs = text.split("\\s{2,}|\\n+");
+        StringBuilder result = new StringBuilder();
+        int lines = 0;
+        for (String paragraph : paragraphs) {
+            String trimmed = paragraph.trim();
+            if (trimmed.isEmpty()) {
+                continue;
+            }
+            while (!trimmed.isEmpty() && lines < maxLines) {
+                if (trimmed.length() <= maxLineLength) {
+                    appendDescriptionLine(result, trimmed);
+                    lines++;
+                    break;
+                }
+                int breakAt = trimmed.lastIndexOf(' ', maxLineLength);
+                if (breakAt <= 0) {
+                    breakAt = Math.min(maxLineLength, trimmed.length());
+                }
+                appendDescriptionLine(result, trimmed.substring(0, breakAt).trim());
+                trimmed = trimmed.substring(breakAt).trim();
+                lines++;
+            }
+            if (lines >= maxLines) {
+                break;
+            }
+        }
+        if (lines >= maxLines && text.length() > result.length()) {
+            if (result.length() > 0 && result.charAt(result.length() - 1) != '\n') {
+                result.append('\n');
+            }
+            result.append("...");
+        }
+        return result.toString().trim();
+    }
+
+    private static void appendDescriptionLine(StringBuilder result, String line) {
+        if (line.isEmpty()) {
+            return;
+        }
+        if (result.length() > 0) {
+            result.append('\n');
+        }
+        result.append(line);
     }
 
     private static int indexOfExample(String plain) {
-        Matcher matcher = Pattern.compile("Example\\s*\\d+", Pattern.CASE_INSENSITIVE).matcher(plain);
+        Matcher matcher = EXAMPLE_HEADING.matcher(plain);
         return matcher.find() ? matcher.start() : -1;
+    }
+
+    private static int indexOfIgnoreCase(String text, String needle, int fromIndex) {
+        return text.toLowerCase(Locale.ROOT).indexOf(needle.toLowerCase(Locale.ROOT), fromIndex);
     }
 
     static String htmlToPlain(String html) {
@@ -240,8 +330,10 @@ final class LeetCodeDailyGenerator {
         }
         String text = html;
         text = text.replaceAll("(?is)<(script|style)[^>]*>.*?</\\1>", " ");
+        text = text.replaceAll("(?i)<pre[^>]*>", "\n");
+        text = text.replaceAll("(?i)</pre>", "\n");
         text = text.replaceAll("(?i)<br\\s*/?>", "\n");
-        text = text.replaceAll("(?i)</p>", "\n");
+        text = text.replaceAll("(?i)</p>", "\n\n");
         text = text.replaceAll("(?i)<li>", "\n- ");
         text = text.replaceAll("<[^>]+>", " ");
         text = text.replace("&nbsp;", " ");
@@ -251,6 +343,7 @@ final class LeetCodeDailyGenerator {
         text = text.replace("&quot;", "\"");
         text = text.replace("&#39;", "'");
         text = text.replaceAll("[ \\t\\x0B\\f\\r]+", " ");
+        text = text.replaceAll(" *\\n *", "\n");
         text = text.replaceAll("\\n{3,}", "\n\n");
         return text.trim();
     }
