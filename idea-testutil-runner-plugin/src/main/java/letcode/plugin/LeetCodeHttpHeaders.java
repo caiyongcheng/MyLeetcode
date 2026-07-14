@@ -17,7 +17,7 @@ final class LeetCodeHttpHeaders {
 
     private static final String DEFAULT_USER_AGENT =
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                    + "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+                    + "(KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36 Edg/150.0.0.0";
 
     private LeetCodeHttpHeaders() {
     }
@@ -87,7 +87,7 @@ final class LeetCodeHttpHeaders {
         if (settings.bearerToken != null && !settings.bearerToken.trim().isEmpty()) {
             return true;
         }
-        return !effectiveCookie(settings).isEmpty();
+        return hasLeetCodeSession(effectiveCookie(settings));
     }
 
     static boolean hasCsrf(@NotNull LeetCodeSettings settings) {
@@ -98,11 +98,18 @@ final class LeetCodeHttpHeaders {
     }
 
     static void validateAuth(@NotNull LeetCodeSettings settings) throws IOException {
+        if (LeetCodeBrowserSession.canUseBrowserSession(settings)) {
+            return;
+        }
         if (!hasAuth(settings)) {
             throw new IOException(
                     "未配置登录信息。请填写 Cookie，或将浏览器 F12 Network 中请求的 Request Headers "
                             + "整段粘贴到 Extra Headers（每行「名称: 值」），也可配置 Bearer Token。"
             );
+        }
+        if ((settings.bearerToken == null || settings.bearerToken.trim().isEmpty())
+                && !hasLeetCodeSession(effectiveCookie(settings))) {
+            throw new IOException("Cookie 缺少 LEETCODE_SESSION，请重新登录 LeetCode。");
         }
         if (!hasCsrf(settings)) {
             throw new IOException(
@@ -143,6 +150,8 @@ final class LeetCodeHttpHeaders {
         putIfAbsent(headers, "origin", baseUrl);
         if (titleSlug != null && !titleSlug.isEmpty()) {
             putIfAbsent(headers, "referer", baseUrl + "/problems/" + titleSlug + "/");
+        } else {
+            putIfAbsent(headers, "referer", baseUrl + "/problemset/");
         }
         putIfAbsent(headers, "random-uuid", UUID.randomUUID().toString());
 
@@ -295,8 +304,28 @@ final class LeetCodeHttpHeaders {
         return lower.contains("csrftoken=") || lower.contains("csrf=");
     }
 
+    static boolean hasLeetCodeSession(@NotNull String cookie) {
+        return cookieContains(cookie, "LEETCODE_SESSION");
+    }
+
+    private static boolean cookieContains(@NotNull String cookie, @NotNull String cookieName) {
+        String lowerName = cookieName.toLowerCase(Locale.ROOT);
+        for (String part : cookie.split(";")) {
+            int eq = part.indexOf('=');
+            if (eq <= 0) {
+                continue;
+            }
+            String name = part.substring(0, eq).trim().toLowerCase(Locale.ROOT);
+            if (lowerName.equals(name)) {
+                String value = part.substring(eq + 1).trim();
+                return !value.isEmpty();
+            }
+        }
+        return false;
+    }
+
     @NotNull
-    private static String extractCsrfFromCookie(@NotNull String cookie) {
+    static String extractCsrfFromCookie(@NotNull String cookie) {
         if (cookie.isEmpty()) {
             return "";
         }

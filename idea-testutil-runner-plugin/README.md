@@ -58,6 +58,10 @@ Tools -> Generate LeetCode Daily Question
 - `CSRF Token`：通常取 Cookie 中的 `csrftoken`，或 F12 中的 `x-csrftoken`（可选，若 Extra Headers 已包含则可留空）
 - `Extra Headers`：可选。支持一行一个 `名称: 值`，也可直接粘贴浏览器 F12 Network 里 GraphQL 或提交请求的 **Request Headers** 整段（插件会忽略 `POST ... HTTP/1.1`、`Request URL` 等非头行，并跳过 `Host`、`Content-Length` 等不适合由 Java 设置的字段）
 
+如果 Cookie 过期，生成每日一题或提交时会打开 IDEA 内嵌 LeetCode 登录页。登录完成后点击 **我已登录，刷新 Cookie**，插件会通过浏览器上下文调用 `userStatus` 验证 `isSignedIn`，并标记内嵌会话可用于后续 GraphQL/提交（即使 CookieManager 读不到 HttpOnly 的 `LEETCODE_SESSION`）。仍会尽力保存可读取的 Cookie 与 CSRF 到设置，供 native fallback 使用。
+
+leetcode.cn 每日一题通过 `todayRecord` GraphQL 查询获取；公开读取（每日 slug 与题目详情）优先走原生 HttpURLConnection（现代 User-Agent 与 `Referer: .../problemset/`），失败时再回退内嵌浏览器。非中国站仍使用 `activeDailyCodingChallengeQuestion`。公开读取不强制配置 Cookie/CSRF。内嵌浏览器（JCEF）主要用于登录与提交。
+
 **F12 粘贴示例（仅格式示意，请使用你自己浏览器里的值，勿提交到 git）：**
 
 ```text

@@ -16,10 +16,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static letcode.plugin.LeetCodeHttpHeaders.applyBrowserLikeHeaders;
-import static letcode.plugin.LeetCodeHttpHeaders.escapeJsonString;
 
 /**
- * LeetCode GraphQL 客户端：按项目配置组装请求头并解析响应。
+ * LeetCode GraphQL 客户端：leetcode.cn 公开读取优先走原生 HttpURLConnection，提交相关走认证路径。
  */
 final class LeetCodeGraphqlClient {
 
@@ -38,26 +37,24 @@ final class LeetCodeGraphqlClient {
                     + " } }";
 
     private final LeetCodeSettings settings;
+    private final String baseUrl;
 
     LeetCodeGraphqlClient(@NotNull LeetCodeSettings settings) {
         this.settings = settings;
+        this.baseUrl = LeetCodeSubmitClient.resolveBaseUrl(settings.endpoint);
     }
 
     @NotNull
     String fetchDailyTitleSlug() throws IOException {
-        try {
-            return fetchDailyTitleSlugFromActiveDaily();
-        } catch (IOException activeDailyError) {
-            if (!isCnEndpoint()) {
-                throw activeDailyError;
-            }
-            return fetchDailyTitleSlugFromTodayRecord(activeDailyError);
+        if (isCnEndpoint()) {
+            return fetchDailyTitleSlugFromTodayRecord();
         }
+        return fetchDailyTitleSlugFromActiveDaily();
     }
 
     @NotNull
     private String fetchDailyTitleSlugFromActiveDaily() throws IOException {
-        JsonObject data = postGraphql(DAILY_SLUG_QUERY, null);
+        JsonObject data = postGraphqlPublic(DAILY_SLUG_QUERY, null, null);
         JsonObject active = data.getAsJsonObject("activeDailyCodingChallengeQuestion");
         if (active == null || active.isJsonNull()) {
             throw new IOException("未找到每日一题（activeDailyCodingChallengeQuestion 为空）");
@@ -74,35 +71,25 @@ final class LeetCodeGraphqlClient {
     }
 
     @NotNull
-    private String fetchDailyTitleSlugFromTodayRecord(IOException activeDailyError) throws IOException {
-        try {
-            JsonObject data = postGraphql(CN_DAILY_SLUG_QUERY, null);
-            JsonElement todayRecordEl = data.get("todayRecord");
-            if (todayRecordEl == null || !todayRecordEl.isJsonArray() || todayRecordEl.getAsJsonArray().size() == 0) {
-                throw new IOException("todayRecord 为空");
-            }
-            JsonObject record = todayRecordEl.getAsJsonArray().get(0).getAsJsonObject();
-            JsonObject question = record.getAsJsonObject("question");
-            if (question == null || question.isJsonNull()) {
-                throw new IOException("todayRecord.question 为空");
-            }
-            String slug = firstNonEmpty(
-                    textOrNull(question.get("titleSlug")),
-                    textOrNull(question.get("questionTitleSlug"))
-            );
-            if (slug == null || slug.isEmpty()) {
-                throw new IOException("todayRecord 中 titleSlug 为空");
-            }
-            return slug;
-        } catch (IOException todayRecordError) {
-            throw new IOException(
-                    "获取每日一题失败。activeDailyCodingChallengeQuestion: "
-                            + activeDailyError.getMessage()
-                            + "；todayRecord: "
-                            + todayRecordError.getMessage(),
-                    todayRecordError
-            );
+    private String fetchDailyTitleSlugFromTodayRecord() throws IOException {
+        JsonObject data = postGraphqlPublic(CN_DAILY_SLUG_QUERY, null, null);
+        JsonElement todayRecordEl = data.get("todayRecord");
+        if (todayRecordEl == null || !todayRecordEl.isJsonArray() || todayRecordEl.getAsJsonArray().size() == 0) {
+            throw new IOException("todayRecord 为空");
         }
+        JsonObject record = todayRecordEl.getAsJsonArray().get(0).getAsJsonObject();
+        JsonObject question = record.getAsJsonObject("question");
+        if (question == null || question.isJsonNull()) {
+            throw new IOException("todayRecord.question 为空");
+        }
+        String slug = firstNonEmpty(
+                textOrNull(question.get("titleSlug")),
+                textOrNull(question.get("questionTitleSlug"))
+        );
+        if (slug == null || slug.isEmpty()) {
+            throw new IOException("todayRecord 中 titleSlug 为空");
+        }
+        return slug;
     }
 
     private boolean isCnEndpoint() {
@@ -113,7 +100,7 @@ final class LeetCodeGraphqlClient {
     JsonObject fetchQuestionDetail(@NotNull String titleSlug) throws IOException {
         Map<String, String> variables = new LinkedHashMap<>();
         variables.put("titleSlug", titleSlug);
-        JsonObject data = postGraphql(QUESTION_DETAIL_QUERY, variables);
+        JsonObject data = postGraphqlPublic(QUESTION_DETAIL_QUERY, variables, titleSlug);
         JsonObject question = data.getAsJsonObject("question");
         if (question == null || question.isJsonNull()) {
             throw new IOException("题目详情为空: " + titleSlug);
@@ -124,7 +111,13 @@ final class LeetCodeGraphqlClient {
     /** 提交题解所需的内部 questionId（非 questionFrontendId）。 */
     @NotNull
     String fetchQuestionId(@NotNull String titleSlug) throws IOException {
-        JsonObject question = fetchQuestionDetail(titleSlug);
+        Map<String, String> variables = new LinkedHashMap<>();
+        variables.put("titleSlug", titleSlug);
+        JsonObject data = postGraphqlAuthenticated(QUESTION_DETAIL_QUERY, variables, titleSlug);
+        JsonObject question = data.getAsJsonObject("question");
+        if (question == null || question.isJsonNull()) {
+            throw new IOException("题目详情为空: " + titleSlug);
+        }
         String questionId = jsonValueAsString(question.get("questionId"));
         if (questionId == null || questionId.isEmpty()) {
             throw new IOException("题目 questionId 为空: " + titleSlug);
@@ -143,8 +136,92 @@ final class LeetCodeGraphqlClient {
         return element.toString();
     }
 
-    private JsonObject postGraphql(String query, @Nullable Map<String, String> variables) throws IOException {
-        String body = buildRequestBody(query, variables);
+    @NotNull
+    private JsonObject postGraphqlPublic(String query,
+                                         @Nullable Map<String, String> variables,
+                                         @Nullable String titleSlug) throws IOException {
+        return postGraphql(query, variables, titleSlug, false);
+    }
+
+    @NotNull
+    private JsonObject postGraphqlAuthenticated(String query,
+                                                @Nullable Map<String, String> variables,
+                                                @Nullable String titleSlug) throws IOException {
+        return postGraphql(query, variables, titleSlug, true);
+    }
+
+    @NotNull
+    private JsonObject postGraphql(String query,
+                                   @Nullable Map<String, String> variables,
+                                   @Nullable String titleSlug,
+                                   boolean requireAuth) throws IOException {
+        String body = LeetCodeGraphqlBodies.buildGraphqlBody(query, variables);
+        String graphqlUrl = settings.endpoint.trim();
+        String pageUrl = resolvePageUrl(titleSlug);
+
+        if (requireAuth && LeetCodeBrowserSession.canUseBrowserSession(settings)) {
+            try {
+                return parseData(postViaBrowser(pageUrl, graphqlUrl, body));
+            } catch (IOException browserError) {
+                if (LeetCodeLoginCookieRefresher.isAuthExpired(browserError)) {
+                    LeetCodeBrowserSession.clearBrowserSession(settings);
+                    throw browserError;
+                }
+                if (LeetCodeHttpHeaders.hasAuth(settings)) {
+                    return parseData(postViaHttp(body, titleSlug, true));
+                }
+                throw browserError;
+            }
+        }
+
+        if (!requireAuth && isCnEndpoint()) {
+            try {
+                return parseData(postViaHttp(body, titleSlug, false));
+            } catch (IOException httpError) {
+                if (LeetCodeBrowserHttpClient.isSupported()) {
+                    try {
+                        return parseData(postViaBrowser(pageUrl, graphqlUrl, body));
+                    } catch (IOException browserError) {
+                        httpError.addSuppressed(browserError);
+                    }
+                }
+                throw httpError;
+            }
+        }
+
+        if (!requireAuth && LeetCodeBrowserHttpClient.isSupported()) {
+            try {
+                return parseData(postViaBrowser(pageUrl, graphqlUrl, body));
+            } catch (IOException browserError) {
+                return parseData(postViaHttp(body, titleSlug, false));
+            }
+        }
+
+        if (requireAuth) {
+            LeetCodeHttpHeaders.validateAuth(settings);
+        }
+        return parseData(postViaHttp(body, titleSlug, requireAuth));
+    }
+
+    @NotNull
+    private String postViaBrowser(@NotNull String pageUrl,
+                                  @NotNull String graphqlUrl,
+                                  @NotNull String body) throws IOException {
+        LeetCodeBrowserHttpClient.HttpResult result =
+                LeetCodeBrowserHttpClient.postJson(pageUrl, graphqlUrl, body);
+        if (result.status < 200 || result.status >= 300) {
+            throw new IOException("HTTP " + result.status + ": " + truncate(result.body, 500));
+        }
+        return result.body;
+    }
+
+    @NotNull
+    private String postViaHttp(@NotNull String body,
+                               @Nullable String titleSlug,
+                               boolean requireAuth) throws IOException {
+        if (requireAuth) {
+            LeetCodeHttpHeaders.validateAuth(settings);
+        }
         HttpURLConnection connection = openConnection(settings.endpoint);
         try {
             connection.setRequestMethod("POST");
@@ -152,8 +229,8 @@ final class LeetCodeGraphqlClient {
             applyBrowserLikeHeaders(
                     connection,
                     settings,
-                    LeetCodeSubmitClient.resolveBaseUrl(settings.endpoint),
-                    null,
+                    baseUrl,
+                    titleSlug,
                     "application/json"
             );
             byte[] payload = body.getBytes(StandardCharsets.UTF_8);
@@ -165,35 +242,23 @@ final class LeetCodeGraphqlClient {
             if (status < 200 || status >= 300) {
                 throw new IOException("HTTP " + status + ": " + truncate(responseText, 500));
             }
-            return parseData(responseText);
+            return responseText;
         } finally {
             connection.disconnect();
         }
     }
 
+    @NotNull
+    private String resolvePageUrl(@Nullable String titleSlug) {
+        if (titleSlug != null && !titleSlug.isEmpty()) {
+            return baseUrl + "/problems/" + titleSlug + "/";
+        }
+        return baseUrl + "/problemset/";
+    }
+
     private static HttpURLConnection openConnection(String endpoint) throws IOException {
         URL url = new URL(endpoint.trim());
         return (HttpURLConnection) url.openConnection();
-    }
-
-    private static String buildRequestBody(String query, @Nullable Map<String, String> variables) {
-        StringBuilder json = new StringBuilder(128);
-        json.append("{\"query\":").append(escapeJsonString(query));
-        if (variables != null && !variables.isEmpty()) {
-            json.append(",\"variables\":{");
-            boolean first = true;
-            for (Map.Entry<String, String> entry : variables.entrySet()) {
-                if (!first) {
-                    json.append(',');
-                }
-                first = false;
-                json.append(escapeJsonString(entry.getKey())).append(':')
-                        .append(escapeJsonString(entry.getValue()));
-            }
-            json.append('}');
-        }
-        json.append('}');
-        return json.toString();
     }
 
     private static JsonObject parseData(String responseText) throws IOException {

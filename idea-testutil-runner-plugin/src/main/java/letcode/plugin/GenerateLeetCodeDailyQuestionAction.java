@@ -19,6 +19,7 @@ import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -63,25 +64,32 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
             public void run(@NotNull ProgressIndicator indicator) {
                 indicator.setIndeterminate(true);
                 try {
-                    LeetCodeGraphqlClient client = new LeetCodeGraphqlClient(settings);
-                    indicator.setText("正在获取每日一题 slug...");
-                    String titleSlug = client.fetchDailyTitleSlug();
-                    indicator.setText("正在获取题目详情: " + titleSlug);
-                    JsonObject question = client.fetchQuestionDetail(titleSlug);
-                    String frontendId = LeetCodeGraphqlClient.textOrNull(question.get("questionFrontendId"));
-                    boolean sameDailyAsLast = frontendId != null
-                            && frontendId.equals(settings.lastDailyQuestionFrontendId);
-                    LeetCodeDailyGenerator generator = new LeetCodeDailyGenerator(basePath, settings);
-                    LeetCodeDailyGenerator.GenerationResult result =
-                            generator.generate(question, titleSlug, sameDailyAsLast);
-                    ApplicationManager.getApplication().invokeLater(() ->
-                            handleResult(project, basePath, settings, result, titleSlug));
+                    runGenerate(project, basePath, settings, indicator);
                 } catch (Exception ex) {
                     ApplicationManager.getApplication().invokeLater(() ->
                             Messages.showErrorDialog(project, ex.getMessage(), ACTION_TITLE));
                 }
             }
         });
+    }
+
+    private static void runGenerate(Project project,
+                                    String basePath,
+                                    LeetCodeSettings settings,
+                                    ProgressIndicator indicator) throws Exception {
+        LeetCodeGraphqlClient client = new LeetCodeGraphqlClient(settings);
+        indicator.setText("正在获取每日一题 slug...");
+        String titleSlug = client.fetchDailyTitleSlug();
+        indicator.setText("正在获取题目详情: " + titleSlug);
+        JsonObject question = client.fetchQuestionDetail(titleSlug);
+        String frontendId = LeetCodeGraphqlClient.textOrNull(question.get("questionFrontendId"));
+        boolean sameDailyAsLast = frontendId != null
+                && frontendId.equals(settings.lastDailyQuestionFrontendId);
+        LeetCodeDailyGenerator generator = new LeetCodeDailyGenerator(basePath, settings);
+        LeetCodeDailyGenerator.GenerationResult result =
+                generator.generate(question, titleSlug, sameDailyAsLast);
+        ApplicationManager.getApplication().invokeLater(() ->
+                handleResult(project, basePath, settings, result, titleSlug));
     }
 
     private static void handleResult(Project project,
@@ -150,9 +158,14 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
         private final JTextField csrfField;
         private final JTextArea extraHeadersArea;
         private final JCheckBox overwriteBox;
+        private final JButton refreshCookieButton;
+        private final Project project;
+        private final LeetCodeSettings settings;
 
         LeetCodeConfigDialog(Project project, LeetCodeSettings settings) {
             super(project);
+            this.project = project;
+            this.settings = settings;
             setTitle("LeetCode 每日一题设置");
             endpointField = new JTextField(settings.endpoint, 48);
             bearerField = new JTextField(settings.bearerToken, 48);
@@ -160,6 +173,8 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
             csrfField = new JTextField(settings.csrfToken, 48);
             extraHeadersArea = new JTextArea(settings.extraHeaders, 4, 48);
             overwriteBox = new JCheckBox("覆盖已存在的 Java 文件", settings.overwriteExisting);
+            refreshCookieButton = new JButton("打开 LeetCode 登录并刷新 Cookie");
+            refreshCookieButton.addActionListener(event -> refreshCookieFromLogin());
             init();
         }
 
@@ -179,31 +194,51 @@ public class GenerateLeetCodeDailyQuestionAction extends AnAction {
         @Override
         protected JComponent createCenterPanel() {
             JPanel panel = new JPanel(new GridBagLayout());
-            GridBagConstraints c = new GridBagConstraints();
-            c.insets = new Insets(4, 4, 4, 4);
-            c.fill = GridBagConstraints.HORIZONTAL;
-            c.weightx = 1;
-            c.gridx = 0;
-
-            addRow(panel, c, 0, "GraphQL 接口:", endpointField);
-            addRow(panel, c, 1, "Bearer Token（可选）:", bearerField);
-            addRow(panel, c, 2, "Cookie（可选）:", wrap(cookieArea, 3));
-            addRow(panel, c, 3, "CSRF Token（可选）:", csrfField);
-            addRow(panel, c, 4, "Extra Headers（每行「名称: 值」，可粘贴 F12 请求头）:", wrap(extraHeadersArea, 4));
-            c.gridy = 5;
-            panel.add(overwriteBox, c);
-            c.gridy = 6;
-            c.weighty = 1;
-            panel.add(new JLabel("<html>配置保存在 IDEA 项目属性中，不会写入 git。</html>"), c);
+            addRow(panel, 0, "GraphQL 接口:", endpointField);
+            addRow(panel, 1, "Bearer Token（可选）:", bearerField);
+            addRow(panel, 2, "Cookie（可选）:", wrap(cookieArea, 3));
+            addRow(panel, 3, "CSRF Token（可选）:", csrfField);
+            addRow(panel, 4, "Extra Headers:", wrap(extraHeadersArea, 4));
+            addFullRow(panel, 5, refreshCookieButton);
+            addFullRow(panel, 6, overwriteBox);
+            addFullRow(panel, 7, new JLabel("<html>Extra Headers 支持一行一个「名称: 值」，也可以粘贴 F12 请求头；配置不会写入 git。</html>"));
             return panel;
         }
 
-        private static void addRow(JPanel panel, GridBagConstraints c, int row, String label, JComponent field) {
-            c.gridy = row * 2;
-            c.weighty = 0;
-            panel.add(new JLabel(label), c);
-            c.gridy = row * 2 + 1;
-            panel.add(field, c);
+        private void refreshCookieFromLogin() {
+            applyTo(settings);
+            if (LeetCodeLoginCookieRefresher.refresh(project, settings)) {
+                cookieArea.setText(settings.cookie);
+                csrfField.setText(settings.csrfToken);
+            }
+        }
+
+        private static void addRow(JPanel panel, int row, String label, JComponent field) {
+            GridBagConstraints labelConstraints = new GridBagConstraints();
+            labelConstraints.gridx = 0;
+            labelConstraints.gridy = row;
+            labelConstraints.insets = new Insets(4, 4, 4, 8);
+            labelConstraints.anchor = GridBagConstraints.WEST;
+            panel.add(new JLabel(label), labelConstraints);
+
+            GridBagConstraints fieldConstraints = new GridBagConstraints();
+            fieldConstraints.gridx = 1;
+            fieldConstraints.gridy = row;
+            fieldConstraints.insets = new Insets(4, 4, 4, 4);
+            fieldConstraints.fill = GridBagConstraints.HORIZONTAL;
+            fieldConstraints.weightx = 1;
+            panel.add(field, fieldConstraints);
+        }
+
+        private static void addFullRow(JPanel panel, int row, JComponent component) {
+            GridBagConstraints constraints = new GridBagConstraints();
+            constraints.gridx = 0;
+            constraints.gridy = row;
+            constraints.gridwidth = 2;
+            constraints.insets = new Insets(4, 4, 4, 4);
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            constraints.weightx = 1;
+            panel.add(component, constraints);
         }
 
         private static JScrollPane wrap(JTextArea area, int rows) {

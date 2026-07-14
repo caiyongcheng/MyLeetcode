@@ -31,9 +31,30 @@ final class LeetCodeSubmitClient {
 
     @NotNull
     String submit(@NotNull String titleSlug, @NotNull String questionId, @NotNull String typedCode) throws IOException {
-        LeetCodeHttpHeaders.validateAuth(settings);
         String url = baseUrl + "/problems/" + titleSlug + "/submit/";
         String body = LeetCodeHttpHeaders.buildSubmitJsonBody(questionId, typedCode, "java");
+
+        if (LeetCodeBrowserSession.canUseBrowserSession(settings)) {
+            try {
+                String pageUrl = baseUrl + "/problems/" + titleSlug + "/";
+                LeetCodeBrowserHttpClient.HttpResult result =
+                        LeetCodeBrowserHttpClient.postJson(pageUrl, url, body);
+                if (result.status < 200 || result.status >= 300) {
+                    throw new IOException("提交失败 HTTP " + result.status + ": " + truncate(result.body, 500));
+                }
+                return parseSubmissionId(result.body, result.status);
+            } catch (IOException browserError) {
+                if (LeetCodeLoginCookieRefresher.isAuthExpired(browserError)) {
+                    LeetCodeBrowserSession.clearBrowserSession(settings);
+                    throw browserError;
+                }
+                if (!LeetCodeHttpHeaders.hasAuth(settings)) {
+                    throw browserError;
+                }
+            }
+        }
+
+        LeetCodeHttpHeaders.validateAuth(settings);
         HttpURLConnection connection = openPost(url, titleSlug);
         try {
             byte[] payload = body.getBytes(StandardCharsets.UTF_8);
@@ -80,6 +101,27 @@ final class LeetCodeSubmitClient {
 
     private JsonObject fetchCheck(@NotNull String submissionId) throws IOException {
         String url = baseUrl + "/submissions/detail/" + submissionId + "/check/";
+        String pageUrl = baseUrl + "/problemset/";
+
+        if (LeetCodeBrowserSession.canUseBrowserSession(settings)) {
+            try {
+                LeetCodeBrowserHttpClient.HttpResult result =
+                        LeetCodeBrowserHttpClient.getJson(pageUrl, url);
+                if (result.status < 200 || result.status >= 300) {
+                    throw new IOException("轮询判题 HTTP " + result.status + ": " + truncate(result.body, 500));
+                }
+                return parseJsonObject(result.body);
+            } catch (IOException browserError) {
+                if (LeetCodeLoginCookieRefresher.isAuthExpired(browserError)) {
+                    LeetCodeBrowserSession.clearBrowserSession(settings);
+                    throw browserError;
+                }
+                if (!LeetCodeHttpHeaders.hasAuth(settings)) {
+                    throw browserError;
+                }
+            }
+        }
+
         HttpURLConnection connection = openGet(url);
         try {
             int status = connection.getResponseCode();
@@ -87,14 +129,18 @@ final class LeetCodeSubmitClient {
             if (status < 200 || status >= 300) {
                 throw new IOException("轮询判题 HTTP " + status + ": " + truncate(responseText, 500));
             }
-            JsonElement root = new JsonParser().parse(responseText);
-            if (!root.isJsonObject()) {
-                throw new IOException("判题响应不是 JSON 对象");
-            }
-            return root.getAsJsonObject();
+            return parseJsonObject(responseText);
         } finally {
             connection.disconnect();
         }
+    }
+
+    private static JsonObject parseJsonObject(@NotNull String responseText) throws IOException {
+        JsonElement root = new JsonParser().parse(responseText);
+        if (!root.isJsonObject()) {
+            throw new IOException("判题响应不是 JSON 对象");
+        }
+        return root.getAsJsonObject();
     }
 
     private HttpURLConnection openPost(String url, String titleSlug) throws IOException {
