@@ -105,8 +105,8 @@ if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 
-Copy-Item -LiteralPath (Join-Path $PluginDir "src\main\resources\META-INF") `
-    -Destination (Join-Path $ClassesDir "META-INF") -Recurse -Force
+Get-ChildItem -LiteralPath (Join-Path $PluginDir "src\main\resources") |
+    Copy-Item -Destination $ClassesDir -Recurse -Force
 
 New-ZipFromDirectory -SourceDir $ClassesDir -Destination $PluginJarZip
 Move-Item -LiteralPath $PluginJarZip -Destination $PluginJar -Force

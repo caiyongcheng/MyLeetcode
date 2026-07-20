@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "letcode.plugin"
-version = "1.0.8"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
@@ -28,7 +28,6 @@ tasks {
     }
     patchPluginXml {
         sinceBuild.set("233")
-        untilBuild.set("243.*")
     }
     buildSearchableOptions {
         enabled = false

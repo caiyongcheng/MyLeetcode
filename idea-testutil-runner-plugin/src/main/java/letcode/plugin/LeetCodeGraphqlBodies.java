@@ -15,18 +15,37 @@ final class LeetCodeGraphqlBodies {
 
     @NotNull
     static String buildGraphqlBody(@NotNull String query, @Nullable Map<String, String> variables) {
+        return buildGraphqlBody(query, variables, null);
+    }
+
+    @NotNull
+    static String buildGraphqlBody(@NotNull String query,
+                                   @Nullable Map<String, String> variables,
+                                   @Nullable Map<String, String> rawJsonVariables) {
         StringBuilder json = new StringBuilder(128);
         json.append("{\"query\":").append(LeetCodeHttpHeaders.escapeJsonString(query));
-        if (variables != null && !variables.isEmpty()) {
+        if ((variables != null && !variables.isEmpty()) || (rawJsonVariables != null && !rawJsonVariables.isEmpty())) {
             json.append(",\"variables\":{");
             boolean first = true;
-            for (Map.Entry<String, String> entry : variables.entrySet()) {
-                if (!first) {
-                    json.append(',');
+            if (variables != null) {
+                for (Map.Entry<String, String> entry : variables.entrySet()) {
+                    if (!first) {
+                        json.append(',');
+                    }
+                    first = false;
+                    json.append(LeetCodeHttpHeaders.escapeJsonString(entry.getKey())).append(':')
+                            .append(LeetCodeHttpHeaders.escapeJsonString(entry.getValue()));
                 }
-                first = false;
-                json.append(LeetCodeHttpHeaders.escapeJsonString(entry.getKey())).append(':')
-                        .append(LeetCodeHttpHeaders.escapeJsonString(entry.getValue()));
+            }
+            if (rawJsonVariables != null) {
+                for (Map.Entry<String, String> entry : rawJsonVariables.entrySet()) {
+                    if (!first) {
+                        json.append(',');
+                    }
+                    first = false;
+                    json.append(LeetCodeHttpHeaders.escapeJsonString(entry.getKey())).append(':')
+                            .append(entry.getValue());
+                }
             }
             json.append('}');
         }

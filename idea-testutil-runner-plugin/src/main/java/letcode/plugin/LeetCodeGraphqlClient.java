@@ -1,8 +1,11 @@
 package letcode.plugin;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.intellij.openapi.project.Project;
 import com.google.gson.JsonParser;
+import com.intellij.ui.jcef.JBCefBrowser;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,7 +15,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static letcode.plugin.LeetCodeHttpHeaders.applyBrowserLikeHeaders;
@@ -36,10 +41,19 @@ final class LeetCodeGraphqlClient {
                     + " codeSnippets { lang langSlug code }"
                     + " } }";
 
+    private static final String PROBLEMSET_LIST_QUERY =
+            "query problemsetQuestionList($categorySlug: String!, $limit: Int!, $skip: Int!, $filters: QuestionListFilterInput) {"
+                    + " problemsetQuestionList(categorySlug: $categorySlug, limit: $limit, skip: $skip, filters: $filters) {"
+                    + " total: totalNum"
+                    + " questions: data { questionFrontendId: frontendQuestionId titleSlug difficulty paidOnly }"
+                    + " } }";
+
     private final LeetCodeSettings settings;
+    private final Project project;
     private final String baseUrl;
 
-    LeetCodeGraphqlClient(@NotNull LeetCodeSettings settings) {
+    LeetCodeGraphqlClient(@NotNull Project project, @NotNull LeetCodeSettings settings) {
+        this.project = project;
         this.settings = settings;
         this.baseUrl = LeetCodeSubmitClient.resolveBaseUrl(settings.endpoint);
     }
@@ -97,6 +111,53 @@ final class LeetCodeGraphqlClient {
     }
 
     @NotNull
+    List<QuestionListItem> fetchProblemsetByDifficulty(@NotNull String difficulty,
+                                                       int limit,
+                                                       int skip) throws IOException {
+        Map<String, String> variables = new LinkedHashMap<>();
+        variables.put("categorySlug", "");
+        Map<String, String> rawJsonVariables = new LinkedHashMap<>();
+        rawJsonVariables.put("limit", String.valueOf(limit));
+        rawJsonVariables.put("skip", String.valueOf(skip));
+        rawJsonVariables.put("filters", "{\"difficulty\":\"" + difficulty + "\"}");
+
+        return parseProblemsetList(postGraphqlPublic(PROBLEMSET_LIST_QUERY, variables, rawJsonVariables, null));
+    }
+
+    @NotNull
+    private static List<QuestionListItem> parseProblemsetList(@NotNull JsonObject data) throws IOException {
+        JsonObject list = data.getAsJsonObject("problemsetQuestionList");
+        if (list == null || list.isJsonNull()) {
+            throw new IOException("problemsetQuestionList 为空");
+        }
+        JsonElement questionsEl = list.get("questions");
+        if (questionsEl == null || questionsEl.isJsonNull()) {
+            throw new IOException("problemsetQuestionList.questions 为空");
+        }
+        if (!questionsEl.isJsonArray()) {
+            throw new IOException("problemsetQuestionList.questions 不是数组");
+        }
+        JsonArray questions = questionsEl.getAsJsonArray();
+        List<QuestionListItem> items = new ArrayList<>();
+        for (JsonElement element : questions) {
+            if (!element.isJsonObject()) {
+                continue;
+            }
+            JsonObject question = element.getAsJsonObject();
+            String frontendId = textOrNull(question.get("questionFrontendId"));
+            String titleSlug = textOrNull(question.get("titleSlug"));
+            if (titleSlug == null || titleSlug.isEmpty()) {
+                continue;
+            }
+            boolean paidOnly = question.has("paidOnly")
+                    && !question.get("paidOnly").isJsonNull()
+                    && question.get("paidOnly").getAsBoolean();
+            items.add(new QuestionListItem(frontendId, titleSlug, textOrNull(question.get("difficulty")), paidOnly));
+        }
+        return items;
+    }
+
+    @NotNull
     JsonObject fetchQuestionDetail(@NotNull String titleSlug) throws IOException {
         Map<String, String> variables = new LinkedHashMap<>();
         variables.put("titleSlug", titleSlug);
@@ -144,6 +205,14 @@ final class LeetCodeGraphqlClient {
     }
 
     @NotNull
+    private JsonObject postGraphqlPublic(String query,
+                                         @Nullable Map<String, String> variables,
+                                         @Nullable Map<String, String> rawJsonVariables,
+                                         @Nullable String titleSlug) throws IOException {
+        return postGraphql(query, variables, rawJsonVariables, titleSlug, false);
+    }
+
+    @NotNull
     private JsonObject postGraphqlAuthenticated(String query,
                                                 @Nullable Map<String, String> variables,
                                                 @Nullable String titleSlug) throws IOException {
@@ -155,16 +224,25 @@ final class LeetCodeGraphqlClient {
                                    @Nullable Map<String, String> variables,
                                    @Nullable String titleSlug,
                                    boolean requireAuth) throws IOException {
-        String body = LeetCodeGraphqlBodies.buildGraphqlBody(query, variables);
+        return postGraphql(query, variables, null, titleSlug, requireAuth);
+    }
+
+    @NotNull
+    private JsonObject postGraphql(String query,
+                                   @Nullable Map<String, String> variables,
+                                   @Nullable Map<String, String> rawJsonVariables,
+                                   @Nullable String titleSlug,
+                                   boolean requireAuth) throws IOException {
+        String body = LeetCodeGraphqlBodies.buildGraphqlBody(query, variables, rawJsonVariables);
         String graphqlUrl = settings.endpoint.trim();
         String pageUrl = resolvePageUrl(titleSlug);
 
-        if (requireAuth && LeetCodeBrowserSession.canUseBrowserSession(settings)) {
+        if (requireAuth && LeetCodeBrowserSession.canUseBrowserSession(project, settings)) {
             try {
                 return parseData(postViaBrowser(pageUrl, graphqlUrl, body));
             } catch (IOException browserError) {
                 if (LeetCodeLoginCookieRefresher.isAuthExpired(browserError)) {
-                    LeetCodeBrowserSession.clearBrowserSession(settings);
+                    LeetCodeBrowserSession.clearBrowserSession(project, settings);
                     throw browserError;
                 }
                 if (LeetCodeHttpHeaders.hasAuth(settings)) {
@@ -207,8 +285,11 @@ final class LeetCodeGraphqlClient {
     private String postViaBrowser(@NotNull String pageUrl,
                                   @NotNull String graphqlUrl,
                                   @NotNull String body) throws IOException {
+        JBCefBrowser browser = LeetCodeBrowserSession.getActiveBrowser(project, settings);
         LeetCodeBrowserHttpClient.HttpResult result =
-                LeetCodeBrowserHttpClient.postJson(pageUrl, graphqlUrl, body);
+                browser == null
+                        ? LeetCodeBrowserHttpClient.postJson(pageUrl, graphqlUrl, body)
+                        : LeetCodeBrowserHttpClient.postJson(browser, graphqlUrl, body);
         if (result.status < 200 || result.status >= 300) {
             throw new IOException("HTTP " + result.status + ": " + truncate(result.body, 500));
         }
@@ -316,5 +397,22 @@ final class LeetCodeGraphqlClient {
             return text;
         }
         return text.substring(0, max) + "...";
+    }
+
+    static final class QuestionListItem {
+        final String questionFrontendId;
+        final String titleSlug;
+        final String difficulty;
+        final boolean paidOnly;
+
+        QuestionListItem(@Nullable String questionFrontendId,
+                         @NotNull String titleSlug,
+                         @Nullable String difficulty,
+                         boolean paidOnly) {
+            this.questionFrontendId = questionFrontendId;
+            this.titleSlug = titleSlug;
+            this.difficulty = difficulty;
+            this.paidOnly = paidOnly;
+        }
     }
 }
