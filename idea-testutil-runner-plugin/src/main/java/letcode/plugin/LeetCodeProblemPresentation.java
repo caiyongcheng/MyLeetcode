@@ -14,6 +14,7 @@ final class LeetCodeProblemPresentation {
     final String difficulty;
     final String titleSlug;
     final String plainDescription;
+    @Nullable
     final LeetCodeDailyGenerator.GenerationResult result;
 
     LeetCodeProblemPresentation(@NotNull String frontendId,
@@ -21,7 +22,7 @@ final class LeetCodeProblemPresentation {
                                 @NotNull String difficulty,
                                 @NotNull String titleSlug,
                                 @NotNull String plainDescription,
-                                @NotNull LeetCodeDailyGenerator.GenerationResult result) {
+                                @Nullable LeetCodeDailyGenerator.GenerationResult result) {
         this.frontendId = frontendId;
         this.title = title;
         this.difficulty = difficulty;
@@ -34,9 +35,22 @@ final class LeetCodeProblemPresentation {
     static LeetCodeProblemPresentation from(@NotNull JsonObject question,
                                             @NotNull String titleSlug,
                                             @NotNull LeetCodeDailyGenerator.GenerationResult result) {
+        return create(question, titleSlug, result);
+    }
+
+    @NotNull
+    static LeetCodeProblemPresentation preview(@NotNull JsonObject question,
+                                               @NotNull String titleSlug) {
+        return create(question, titleSlug, null);
+    }
+
+    @NotNull
+    private static LeetCodeProblemPresentation create(@NotNull JsonObject question,
+                                                      @NotNull String titleSlug,
+                                                      @Nullable LeetCodeDailyGenerator.GenerationResult result) {
         String frontendId = firstNonEmpty(
                 LeetCodeGraphqlClient.textOrNull(question.get("questionFrontendId")),
-                result.questionFrontendId,
+                result == null ? null : result.questionFrontendId,
                 ""
         );
         String title = firstNonEmpty(

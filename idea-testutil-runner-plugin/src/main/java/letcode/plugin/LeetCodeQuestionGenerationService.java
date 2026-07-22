@@ -40,6 +40,11 @@ final class LeetCodeQuestionGenerationService {
         void onComplete(@NotNull LeetCodeProblemPresentation presentation);
     }
 
+    @FunctionalInterface
+    interface PreviewCompletionListener {
+        void onComplete(@NotNull LeetCodeProblemPresentation presentation);
+    }
+
     static void runDailyGenerate(@NotNull Project project,
                                  @NotNull String basePath,
                                  @NotNull LeetCodeSettings settings,
@@ -189,6 +194,73 @@ final class LeetCodeQuestionGenerationService {
         ApplicationManager.getApplication().invokeLater(() ->
                 handleResult(project, basePath, settings, result, titleSlug, false,
                         "下载指定题目", presentation, listener));
+    }
+
+    static void runRandomPreview(@NotNull Project project,
+                                 @NotNull String basePath,
+                                 @NotNull LeetCodeSettings settings,
+                                 @NotNull String difficultyLabel,
+                                 @NotNull ProgressIndicator indicator,
+                                 @NotNull PreviewCompletionListener listener) throws Exception {
+        String graphqlDifficulty = toGraphqlDifficulty(difficultyLabel);
+        LeetCodeGraphqlClient client = new LeetCodeGraphqlClient(project, settings);
+        LeetCodeQuestionSelector selector = new LeetCodeQuestionSelector(basePath);
+        Random random = new Random();
+
+        for (int page = 0; page < MAX_PAGES; page++) {
+            indicator.setText("正在获取 " + difficultyLabel + " 题目列表（第 " + (page + 1) + " 页）...");
+            List<LeetCodeGraphqlClient.QuestionListItem> pageItems =
+                    client.fetchProblemsetByDifficulty(graphqlDifficulty, PAGE_SIZE, page * PAGE_SIZE);
+            if (pageItems.isEmpty()) {
+                break;
+            }
+            List<LeetCodeGraphqlClient.QuestionListItem> candidates = new ArrayList<>();
+            for (LeetCodeGraphqlClient.QuestionListItem item : pageItems) {
+                if (!item.paidOnly && item.questionFrontendId != null
+                        && !item.questionFrontendId.isEmpty() && !selector.exists(item.questionFrontendId)) {
+                    candidates.add(item);
+                }
+            }
+            Collections.shuffle(candidates, random);
+            for (LeetCodeGraphqlClient.QuestionListItem picked : candidates) {
+                indicator.setText("正在获取题目详情: " + picked.titleSlug);
+                JsonObject question = client.fetchQuestionDetail(picked.titleSlug);
+                String frontendId = LeetCodeGraphqlClient.textOrNull(question.get("questionFrontendId"));
+                if (frontendId == null || selector.exists(frontendId)) {
+                    continue;
+                }
+                LeetCodeProblemPresentation presentation = LeetCodeProblemPresentation.preview(question, picked.titleSlug);
+                ApplicationManager.getApplication().invokeLater(() -> listener.onComplete(presentation));
+                return;
+            }
+            if (pageItems.size() < PAGE_SIZE) {
+                break;
+            }
+        }
+        throw new IOException("没有可用的 " + difficultyLabel
+                + " 题目（项目中已包含、均为付费题，或列表已遍历完毕）");
+    }
+
+    static void runSpecifiedPreview(@NotNull Project project,
+                                    @NotNull LeetCodeSettings settings,
+                                    @NotNull String frontendId,
+                                    @NotNull ProgressIndicator indicator,
+                                    @NotNull PreviewCompletionListener listener) throws Exception {
+        LeetCodeGraphqlClient client = new LeetCodeGraphqlClient(project, settings);
+        indicator.setText("正在按题号检索: " + frontendId);
+        LeetCodeGraphqlClient.QuestionListItem item = client.fetchQuestionListItemByFrontendId(frontendId);
+        if (item.paidOnly) {
+            throw new IOException("题号 " + frontendId + " 为付费题目，无法下载");
+        }
+        indicator.setText("正在获取题目详情: " + item.titleSlug);
+        JsonObject question = client.fetchQuestionDetail(item.titleSlug);
+        String actualFrontendId = LeetCodeGraphqlClient.textOrNull(question.get("questionFrontendId"));
+        if (!frontendId.equals(actualFrontendId)) {
+            throw new IOException("题号不一致：请求 " + frontendId + "，实际得到 "
+                    + (actualFrontendId == null ? "空" : actualFrontendId));
+        }
+        LeetCodeProblemPresentation presentation = LeetCodeProblemPresentation.preview(question, item.titleSlug);
+        ApplicationManager.getApplication().invokeLater(() -> listener.onComplete(presentation));
     }
 
     private static void handleResult(@NotNull Project project,

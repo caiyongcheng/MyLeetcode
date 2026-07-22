@@ -48,6 +48,7 @@ final class LeetCodeToolWindowPanel extends JPanel {
     private final JButton randomButton;
     private final JTextField frontendIdField;
     private final JButton specifiedButton;
+    private final JButton downloadPreviewButton;
     private final JButton testButton;
     private final JButton submitButton;
     private final JButton openSolutionButton;
@@ -73,10 +74,12 @@ final class LeetCodeToolWindowPanel extends JPanel {
         dailyButton = new JButton("每日一题", AllIcons.Actions.Refresh);
         difficultyBox = new JComboBox<>(DIFFICULTIES);
         difficultyBox.setSelectedItem("Medium");
-        randomButton = new JButton("获取", AllIcons.Actions.Find);
+        randomButton = new JButton("预览", AllIcons.Actions.Find);
         frontendIdField = new JTextField();
         frontendIdField.setColumns(6);
-        specifiedButton = new JButton("下载", AllIcons.Actions.Download);
+        specifiedButton = new JButton("预览", AllIcons.Actions.Find);
+        downloadPreviewButton = new JButton("下载当前题目", AllIcons.Actions.Download);
+        downloadPreviewButton.setEnabled(false);
         testButton = new JButton("运行 TestUtil", AllIcons.Actions.Execute);
         submitButton = new JButton("提交题解", AllIcons.Actions.Upload);
         openSolutionButton = new JButton("打开题解", AllIcons.Actions.EditSource);
@@ -104,6 +107,7 @@ final class LeetCodeToolWindowPanel extends JPanel {
         dailyButton.addActionListener(event -> onDailyClicked());
         randomButton.addActionListener(event -> onRandomClicked());
         specifiedButton.addActionListener(event -> onSpecifiedClicked());
+        downloadPreviewButton.addActionListener(event -> onDownloadPreviewClicked());
         testButton.addActionListener(event -> onTestClicked());
         submitButton.addActionListener(event -> onSubmitClicked());
         openSolutionButton.addActionListener(event -> onOpenSolutionClicked());
@@ -156,6 +160,7 @@ final class LeetCodeToolWindowPanel extends JPanel {
         addFullWidth(meta, constraints, row++, previewTitleLabel);
         addFullWidth(meta, constraints, row++, previewDifficultyLabel);
         addFullWidth(meta, constraints, row++, previewMetaLabel);
+        addFullWidth(meta, constraints, row++, downloadPreviewButton);
         addFullWidth(meta, constraints, row, openSolutionButton);
 
         JScrollPane scroll = new JScrollPane(previewBody);
@@ -272,7 +277,7 @@ final class LeetCodeToolWindowPanel extends JPanel {
     }
 
     private void onRandomClicked() {
-        String basePath = requireBasePath("获取随机新题");
+        String basePath = requireBasePath("预览随机新题");
         if (basePath == null) {
             return;
         }
@@ -282,31 +287,43 @@ final class LeetCodeToolWindowPanel extends JPanel {
         }
         LeetCodeSettings settings = LeetCodeSettings.load(project);
         final String selectedDifficulty = difficulty;
-        runGenerationTask("正在获取随机新题", "获取随机新题",
-                indicator -> LeetCodeQuestionGenerationService.runRandomGenerate(
-                        project, basePath, settings, selectedDifficulty, indicator, this::onGenerationComplete));
+        clearPreviewForNewRequest();
+        runGenerationTask("正在预览随机新题", "预览随机新题",
+                indicator -> LeetCodeQuestionGenerationService.runRandomPreview(
+                        project, basePath, settings, selectedDifficulty, indicator, this::onPreviewComplete));
     }
 
     private void onSpecifiedClicked() {
-        String basePath = requireBasePath("下载指定题目");
-        if (basePath == null) {
-            return;
-        }
         String frontendId = frontendIdField.getText() == null ? "" : frontendIdField.getText().trim();
         if (frontendId.isEmpty()) {
-            Messages.showErrorDialog(project, "请输入题号。", "下载指定题目");
+            Messages.showErrorDialog(project, "请输入题号。", "预览指定题目");
             return;
         }
         if (!frontendId.matches("^[1-9]\\d*$")) {
-            Messages.showErrorDialog(project, "题号必须是正整数。", "下载指定题目");
+            Messages.showErrorDialog(project, "题号必须是正整数。", "预览指定题目");
             return;
         }
         LeetCodeSettings settings = LeetCodeSettings.load(project);
         final String id = frontendId;
         clearPreviewForNewRequest();
-        runGenerationTask("正在下载指定题目", "下载指定题目",
+        runGenerationTask("正在预览指定题目", "预览指定题目",
+                indicator -> LeetCodeQuestionGenerationService.runSpecifiedPreview(
+                        project, settings, id, indicator, this::onPreviewComplete));
+    }
+
+    private void onDownloadPreviewClicked() {
+        if (currentPresentation == null || currentPresentation.frontendId.isEmpty()) {
+            return;
+        }
+        String basePath = requireBasePath("下载当前题目");
+        if (basePath == null) {
+            return;
+        }
+        LeetCodeSettings settings = LeetCodeSettings.load(project);
+        String frontendId = currentPresentation.frontendId;
+        runGenerationTask("正在下载题目 " + frontendId, "下载当前题目",
                 indicator -> LeetCodeQuestionGenerationService.runSpecifiedGenerate(
-                        project, basePath, settings, id, indicator, this::onGenerationComplete));
+                        project, basePath, settings, frontendId, indicator, this::onGenerationComplete));
     }
 
     /** 避免下载失败后继续展示上一题，误导为本次检索结果。 */
@@ -317,6 +334,7 @@ final class LeetCodeToolWindowPanel extends JPanel {
         previewDifficultyLabel.setText("难度: —");
         previewMetaLabel.setText("链接: —");
         previewBody.setText(EMPTY_PREVIEW);
+        downloadPreviewButton.setEnabled(false);
         openSolutionButton.setEnabled(false);
     }
 
@@ -349,6 +367,13 @@ final class LeetCodeToolWindowPanel extends JPanel {
         setStatus(statusForResult(presentation.result));
     }
 
+    private void onPreviewComplete(@NotNull LeetCodeProblemPresentation presentation) {
+        currentPresentation = presentation;
+        applyPreview(presentation);
+        downloadPreviewButton.setEnabled(true);
+        setStatus("已获取，确认后可下载");
+    }
+
     private void applyPreview(@NotNull LeetCodeProblemPresentation presentation) {
         previewIdLabel.setText("题号: " + emptyAsDash(presentation.frontendId));
         previewTitleLabel.setText("标题: " + emptyAsDash(presentation.title));
@@ -356,7 +381,7 @@ final class LeetCodeToolWindowPanel extends JPanel {
         String link = presentation.titleSlug.isEmpty()
                 ? "—"
                 : "https://leetcode.cn/problems/" + presentation.titleSlug + "/";
-        String path = presentation.result.javaPath == null
+        String path = presentation.result == null || presentation.result.javaPath == null
                 ? "—"
                 : presentation.result.javaPath.toString();
         previewMetaLabel.setText("<html>链接: " + escapeHtml(link)
@@ -366,11 +391,12 @@ final class LeetCodeToolWindowPanel extends JPanel {
                 : presentation.plainDescription;
         previewBody.setText(body);
         previewBody.setCaretPosition(0);
-        openSolutionButton.setEnabled(presentation.result.javaPath != null);
+        openSolutionButton.setEnabled(presentation.result != null && presentation.result.javaPath != null);
     }
 
     private void onOpenSolutionClicked() {
-        if (currentPresentation == null || currentPresentation.result.javaPath == null) {
+        if (currentPresentation == null || currentPresentation.result == null
+                || currentPresentation.result.javaPath == null) {
             return;
         }
         Path javaPath = currentPresentation.result.javaPath;
@@ -406,7 +432,10 @@ final class LeetCodeToolWindowPanel extends JPanel {
     }
 
     @NotNull
-    private static String statusForResult(@NotNull LeetCodeDailyGenerator.GenerationResult result) {
+    private static String statusForResult(@Nullable LeetCodeDailyGenerator.GenerationResult result) {
+        if (result == null) {
+            return "已获取，确认后可下载";
+        }
         if (result.isJavaCreated()) {
             return "已生成";
         }
@@ -432,6 +461,7 @@ final class LeetCodeToolWindowPanel extends JPanel {
         difficultyBox.setEnabled(enabled);
         frontendIdField.setEnabled(enabled);
         specifiedButton.setEnabled(enabled);
+        downloadPreviewButton.setEnabled(enabled && currentPresentation != null);
         settingsButton.setEnabled(enabled);
     }
 
