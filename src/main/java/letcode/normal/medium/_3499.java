@@ -1,7 +1,5 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestUtil;
-
 /**
  * 3499. Maximize Active Section with Trade I
  * Difficulty: Medium
@@ -86,37 +84,26 @@ import letcode.utils.TestUtil;
 public class _3499 {
 
     public int maxActiveSectionsAfterTrade(String s) {
-        int length = s.length();
-        int activeCnt = 0;
-        int maxChangeCnt = 0;
-        int lastUnactiveCnt = 0;
-        int curUnactiveCnt = 0;
-
+        int n = s.length();
+        int ones = 0;
+        int maxGain = 0;
+        int prevZeros = Integer.MIN_VALUE;
         int i = 0;
-        while (i < length) {
+        while (i < n) {
+            int j = i;
+            while (j < n && s.charAt(j) == s.charAt(i)) {
+                j++;
+            }
+            int len = j - i;
             if (s.charAt(i) == '1') {
-                if (lastUnactiveCnt > 0) {
-                    maxChangeCnt = Math.max(lastUnactiveCnt + curUnactiveCnt, maxChangeCnt);
-                }
-                lastUnactiveCnt = curUnactiveCnt;
-                curUnactiveCnt = 0;
-                while (i < length && s.charAt(i) == '1') {
-                    ++activeCnt;
-                    ++i;
-                }
+                ones += len;
+            } else {
+                maxGain = Math.max(maxGain, prevZeros + len);
+                prevZeros = len;
             }
-            while (i < length && s.charAt(i) == '0') {
-                ++curUnactiveCnt;
-                ++i;
-            }
+            i = j;
         }
-        if (s.charAt(length - 1) == '0' && lastUnactiveCnt > 0) {
-            maxChangeCnt = Math.max(lastUnactiveCnt + curUnactiveCnt, maxChangeCnt);
-        }
-        return maxChangeCnt + activeCnt;
+        return ones + maxGain;
     }
 
-    static void main() {
-        TestUtil.test("=0100");
-    }
 }
