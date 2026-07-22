@@ -84,26 +84,39 @@ package letcode.normal.medium;
 public class _3499 {
 
     public int maxActiveSectionsAfterTrade(String s) {
-        int n = s.length();
+        char[] cs = s.toCharArray();
+        int n = cs.length;
         int ones = 0;
         int maxGain = 0;
-        int prevZeros = Integer.MIN_VALUE;
+        int prevZeros = 0;
+        int curZeros = 0;
         int i = 0;
-        char ch;
         while (i < n) {
-            int j = i;
-            ch = s.charAt(i);
-            while (j < n && s.charAt(j) == ch) {
-                j++;
-            }
-            int len = j - i;
-            if (s.charAt(i) == '1') {
-                ones += len;
+            if (cs[i] == '1') {
+                if (prevZeros > 0 && curZeros > 0) {
+                    int gain = prevZeros + curZeros;
+                    if (gain > maxGain) {
+                        maxGain = gain;
+                    }
+                }
+                prevZeros = curZeros;
+                curZeros = 0;
+                while (i < n && cs[i] == '1') {
+                    ++ones;
+                    ++i;
+                }
             } else {
-                maxGain = Math.max(maxGain, prevZeros + len);
-                prevZeros = len;
+                while (i < n && cs[i] == '0') {
+                    ++curZeros;
+                    ++i;
+                }
             }
-            i = j;
+        }
+        if (prevZeros > 0 && curZeros > 0) {
+            int gain = prevZeros + curZeros;
+            if (gain > maxGain) {
+                maxGain = gain;
+            }
         }
         return ones + maxGain;
     }
