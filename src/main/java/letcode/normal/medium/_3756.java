@@ -107,6 +107,28 @@ package letcode.normal.medium;
  */
 public class _3756 {
 
+    static int MOD = 1_000_000_000 + 7;
+
     public int[] sumAndMultiply(String s, int[][] queries) {
+
+        int length = s.length();
+        int[] num = new int[length];
+        for (int i = 0; i < length; i++) {
+            num[i] = num[i] = s.charAt(i) - '0';
+        }
+
+        // 计算前缀和
+        int[] preSum = new int[length];
+        preSum[0] = num[0];
+        for (int i = 1; i < length; i++) {
+            preSum[i] = (preSum[i - 1] + num[i]) % MOD;
+        }
+
+        /*
+        prefix * 10 ^ length(suffix) = p * mod + res
+        [(prefix mod) * p] mod = t
+         */
+        return num;
+
     }
 }

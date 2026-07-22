@@ -2,16 +2,17 @@ package letcode.plugin;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.util.ui.JBUI;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -26,7 +27,6 @@ final class LeetCodeConfigDialog extends DialogWrapper {
     private final JTextArea cookieArea;
     private final JTextField csrfField;
     private final JTextArea extraHeadersArea;
-    private final JCheckBox overwriteBox;
     private final JButton refreshCookieButton;
     private final Project project;
     private final LeetCodeSettings settings;
@@ -38,10 +38,9 @@ final class LeetCodeConfigDialog extends DialogWrapper {
         setTitle(title);
         endpointField = new JTextField(settings.endpoint, 48);
         bearerField = new JTextField(settings.bearerToken, 48);
-        cookieArea = new JTextArea(settings.cookie, 3, 48);
+        cookieArea = new JTextArea(settings.cookie, 5, 48);
         csrfField = new JTextField(settings.csrfToken, 48);
-        extraHeadersArea = new JTextArea(settings.extraHeaders, 4, 48);
-        overwriteBox = new JCheckBox("覆盖已存在的 Java 文件", settings.overwriteExisting);
+        extraHeadersArea = new JTextArea(settings.extraHeaders, 6, 48);
         refreshCookieButton = new JButton("打开 LeetCode 登录并刷新 Cookie");
         refreshCookieButton.addActionListener(event -> refreshCookieFromLogin());
         init();
@@ -56,22 +55,28 @@ final class LeetCodeConfigDialog extends DialogWrapper {
         settings.cookie = cookieArea.getText().trim();
         settings.csrfToken = csrfField.getText().trim();
         settings.extraHeaders = extraHeadersArea.getText().trim();
-        settings.overwriteExisting = overwriteBox.isSelected();
     }
 
     @Nullable
     @Override
     protected JComponent createCenterPanel() {
-        JPanel panel = new JPanel(new GridBagLayout());
-        addRow(panel, 0, "GraphQL 接口:", endpointField);
-        addRow(panel, 1, "Bearer Token（可选）:", bearerField);
-        addRow(panel, 2, "Cookie（可选）:", wrap(cookieArea, 3));
-        addRow(panel, 3, "CSRF Token（可选）:", csrfField);
-        addRow(panel, 4, "Extra Headers:", wrap(extraHeadersArea, 4));
-        addFullRow(panel, 5, refreshCookieButton);
-        addFullRow(panel, 6, overwriteBox);
-        addFullRow(panel, 7, new JLabel("<html>Extra Headers 支持一行一个「名称: 值」，也可以粘贴 F12 请求头；配置不会写入 git。</html>"));
-        return panel;
+        JPanel form = new JPanel(new GridBagLayout());
+        int row = 0;
+        row = addLabeledField(form, row, "GraphQL 接口", endpointField);
+        row = addLabeledField(form, row, "Bearer Token（可选）", bearerField);
+        row = addLabeledField(form, row, "Cookie（可选）", wrap(cookieArea));
+        row = addLabeledField(form, row, "CSRF Token（可选）", csrfField);
+        row = addLabeledField(form, row, "Extra Headers", wrap(extraHeadersArea));
+        row = addFullWidth(form, row, refreshCookieButton);
+        row = addFullWidth(form, row, new JLabel("已有题目仅更新题目注释，不覆盖实现和测试用例。"));
+        addFullWidth(form, row, new JLabel(
+                "<html>Extra Headers 支持一行一个「名称: 值」，也可以粘贴 F12 请求头；配置不会写入 git。</html>"));
+
+        JScrollPane scroll = new JScrollPane(form);
+        scroll.setBorder(JBUI.Borders.empty());
+        scroll.setPreferredSize(new Dimension(520, 420));
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
+        return scroll;
     }
 
     private void refreshCookieFromLogin() {
@@ -82,38 +87,40 @@ final class LeetCodeConfigDialog extends DialogWrapper {
         }
     }
 
-    private static void addRow(JPanel panel, int row, String label, JComponent field) {
+    private static int addLabeledField(JPanel panel, int row, String label, JComponent field) {
         GridBagConstraints labelConstraints = new GridBagConstraints();
         labelConstraints.gridx = 0;
         labelConstraints.gridy = row;
-        labelConstraints.insets = new Insets(4, 4, 4, 8);
+        labelConstraints.insets = new Insets(8, 4, 2, 4);
         labelConstraints.anchor = GridBagConstraints.WEST;
+        labelConstraints.fill = GridBagConstraints.HORIZONTAL;
+        labelConstraints.weightx = 1;
         panel.add(new JLabel(label), labelConstraints);
 
         GridBagConstraints fieldConstraints = new GridBagConstraints();
-        fieldConstraints.gridx = 1;
-        fieldConstraints.gridy = row;
-        fieldConstraints.insets = new Insets(4, 4, 4, 4);
+        fieldConstraints.gridx = 0;
+        fieldConstraints.gridy = row + 1;
+        fieldConstraints.insets = new Insets(0, 4, 4, 4);
         fieldConstraints.fill = GridBagConstraints.HORIZONTAL;
         fieldConstraints.weightx = 1;
         panel.add(field, fieldConstraints);
+        return row + 2;
     }
 
-    private static void addFullRow(JPanel panel, int row, JComponent component) {
+    private static int addFullWidth(JPanel panel, int row, JComponent component) {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = row;
-        constraints.gridwidth = 2;
-        constraints.insets = new Insets(4, 4, 4, 4);
+        constraints.insets = new Insets(8, 4, 4, 4);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 1;
         panel.add(component, constraints);
+        return row + 1;
     }
 
-    private static JScrollPane wrap(JTextArea area, int rows) {
+    private static JScrollPane wrap(JTextArea area) {
         area.setLineWrap(true);
         area.setWrapStyleWord(true);
-        area.setRows(rows);
         return new JScrollPane(area);
     }
 }

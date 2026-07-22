@@ -1,4 +1,4 @@
-package letcode.normal.difficult;
+package letcode.normal.unansweredquestions.difficult;
 
 /**
  * 3534. Path Existence Queries in a Graph II

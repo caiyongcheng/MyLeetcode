@@ -2,6 +2,7 @@ package letcode.plugin;
 
 import com.google.gson.JsonObject;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.project.Project;
@@ -23,33 +24,47 @@ import java.util.Locale;
 import java.util.Random;
 
 /**
- * 每日题与随机题的共享生成流程。
+ * 每日题、随机题与指定题的共享生成流程。
  */
 final class LeetCodeQuestionGenerationService {
 
-    private static final int PAGE_SIZE = 50;
-    private static final int MAX_PAGES = 10;
+    private static final int PAGE_SIZE = 100;
+    // 题库按题号排序，用户本地已刷数百题时需要继续翻页，不能只检查前 500 题。
+    private static final int MAX_PAGES = 100;
 
     private LeetCodeQuestionGenerationService() {
+    }
+
+    @FunctionalInterface
+    interface GenerationCompletionListener {
+        void onComplete(@NotNull LeetCodeProblemPresentation presentation);
     }
 
     static void runDailyGenerate(@NotNull Project project,
                                  @NotNull String basePath,
                                  @NotNull LeetCodeSettings settings,
                                  @NotNull ProgressIndicator indicator) throws Exception {
+        runDailyGenerate(project, basePath, settings, indicator, null);
+    }
+
+    static void runDailyGenerate(@NotNull Project project,
+                                 @NotNull String basePath,
+                                 @NotNull LeetCodeSettings settings,
+                                 @NotNull ProgressIndicator indicator,
+                                 @Nullable GenerationCompletionListener listener) throws Exception {
         LeetCodeGraphqlClient client = new LeetCodeGraphqlClient(project, settings);
         indicator.setText("正在获取每日一题 slug...");
         String titleSlug = client.fetchDailyTitleSlug();
         indicator.setText("正在获取题目详情: " + titleSlug);
         JsonObject question = client.fetchQuestionDetail(titleSlug);
-        String frontendId = LeetCodeGraphqlClient.textOrNull(question.get("questionFrontendId"));
-        boolean sameDailyAsLast = frontendId != null
-                && frontendId.equals(settings.lastDailyQuestionFrontendId);
         LeetCodeDailyGenerator generator = new LeetCodeDailyGenerator(basePath, settings);
-        LeetCodeDailyGenerator.GenerationResult result =
-                generator.generate(question, titleSlug, sameDailyAsLast);
+        LeetCodeDailyGenerator.GenerationResult result = generator.generate(question, titleSlug);
+        LeetCodeProblemPresentation presentation = listener == null
+                ? null
+                : LeetCodeProblemPresentation.from(question, titleSlug, result);
         ApplicationManager.getApplication().invokeLater(() ->
-                handleResult(project, basePath, settings, result, titleSlug, true, "生成 LeetCode 每日一题"));
+                handleResult(project, basePath, settings, result, titleSlug, true,
+                        "生成 LeetCode 每日一题", presentation, listener));
     }
 
     static void runRandomGenerate(@NotNull Project project,
@@ -57,6 +72,15 @@ final class LeetCodeQuestionGenerationService {
                                   @NotNull LeetCodeSettings settings,
                                   @NotNull String difficultyLabel,
                                   @NotNull ProgressIndicator indicator) throws Exception {
+        runRandomGenerate(project, basePath, settings, difficultyLabel, indicator, null);
+    }
+
+    static void runRandomGenerate(@NotNull Project project,
+                                  @NotNull String basePath,
+                                  @NotNull LeetCodeSettings settings,
+                                  @NotNull String difficultyLabel,
+                                  @NotNull ProgressIndicator indicator,
+                                  @Nullable GenerationCompletionListener listener) throws Exception {
         String graphqlDifficulty = toGraphqlDifficulty(difficultyLabel);
         LeetCodeGraphqlClient client = new LeetCodeGraphqlClient(project, settings);
         LeetCodeQuestionSelector selector = new LeetCodeQuestionSelector(basePath);
@@ -101,20 +125,70 @@ final class LeetCodeQuestionGenerationService {
                 }
 
                 LeetCodeDailyGenerator.GenerationResult result =
-                        generator.generate(question, picked.titleSlug, false);
-                if (result.alreadyExists) {
+                        generator.generate(question, picked.titleSlug);
+                if (!result.isJavaCreated()) {
                     continue;
                 }
 
                 String titleSlug = picked.titleSlug;
+                LeetCodeProblemPresentation presentation = listener == null
+                        ? null
+                        : LeetCodeProblemPresentation.from(question, titleSlug, result);
                 ApplicationManager.getApplication().invokeLater(() ->
-                        handleResult(project, basePath, settings, result, titleSlug, false, "获取随机新题"));
+                        handleResult(project, basePath, settings, result, titleSlug, false,
+                                "获取随机新题", presentation, listener));
                 return;
+            }
+
+            // 最后一页不足一整页时，后续请求不会再返回新题。
+            if (pageItems.size() < PAGE_SIZE) {
+                break;
             }
         }
 
         throw new IOException("没有可用的 " + difficultyLabel
                 + " 题目（项目中已包含、均为付费题，或列表已遍历完毕）");
+    }
+
+    static void runSpecifiedGenerate(@NotNull Project project,
+                                     @NotNull String basePath,
+                                     @NotNull LeetCodeSettings settings,
+                                     @NotNull String frontendId,
+                                     @NotNull ProgressIndicator indicator) throws Exception {
+        runSpecifiedGenerate(project, basePath, settings, frontendId, indicator, null);
+    }
+
+    static void runSpecifiedGenerate(@NotNull Project project,
+                                     @NotNull String basePath,
+                                     @NotNull LeetCodeSettings settings,
+                                     @NotNull String frontendId,
+                                     @NotNull ProgressIndicator indicator,
+                                     @Nullable GenerationCompletionListener listener) throws Exception {
+        LeetCodeGraphqlClient client = new LeetCodeGraphqlClient(project, settings);
+        indicator.setText("正在按题号检索: " + frontendId);
+        LeetCodeGraphqlClient.QuestionListItem item = client.fetchQuestionListItemByFrontendId(frontendId);
+        if (item.paidOnly) {
+            throw new IOException("题号 " + frontendId + " 为付费题目，无法下载");
+        }
+
+        indicator.setText("正在获取题目详情: " + item.titleSlug);
+        JsonObject question = client.fetchQuestionDetail(item.titleSlug);
+        String actualFrontendId = LeetCodeGraphqlClient.textOrNull(question.get("questionFrontendId"));
+        if (actualFrontendId == null || !frontendId.equals(actualFrontendId)) {
+            throw new IOException("题号不一致：请求 " + frontendId + "，实际得到 "
+                    + (actualFrontendId == null ? "空" : actualFrontendId));
+        }
+
+        LeetCodeDailyGenerator generator = new LeetCodeDailyGenerator(basePath, settings);
+        LeetCodeDailyGenerator.GenerationResult result =
+                generator.generate(question, item.titleSlug);
+        String titleSlug = item.titleSlug;
+        LeetCodeProblemPresentation presentation = listener == null
+                ? null
+                : LeetCodeProblemPresentation.from(question, titleSlug, result);
+        ApplicationManager.getApplication().invokeLater(() ->
+                handleResult(project, basePath, settings, result, titleSlug, false,
+                        "下载指定题目", presentation, listener));
     }
 
     private static void handleResult(@NotNull Project project,
@@ -123,7 +197,9 @@ final class LeetCodeQuestionGenerationService {
                                      @NotNull LeetCodeDailyGenerator.GenerationResult result,
                                      @NotNull String titleSlug,
                                      boolean updateLastDailyId,
-                                     @NotNull String actionTitle) {
+                                     @NotNull String actionTitle,
+                                     @Nullable LeetCodeProblemPresentation presentation,
+                                     @Nullable GenerationCompletionListener listener) {
         refreshPath(result.javaPath);
         if (result.testCasePath != null) {
             refreshPath(result.testCasePath);
@@ -132,27 +208,47 @@ final class LeetCodeQuestionGenerationService {
         if (vf != null) {
             FileEditorManager.getInstance(project).openFile(vf, true);
         }
-        if (result.alreadyExists) {
-            Messages.showInfoMessage(
-                    project,
-                    "文件已存在（未覆盖）:\n" + result.javaPath,
-                    actionTitle
-            );
-            return;
-        }
-        formatGeneratedJavaFile(project, vf);
+
         if (updateLastDailyId && result.questionFrontendId != null) {
             settings.lastDailyQuestionFrontendId = result.questionFrontendId;
             settings.save(project);
         }
-        GitAddHelper.addGeneratedFiles(project, basePath, result.javaPath, result.testCasePath);
 
-        StringBuilder msg = new StringBuilder("已生成:\n").append(result.javaPath);
-        if (result.testCasePath != null) {
-            msg.append("\n").append(result.testCasePath);
+        if (result.isJavaCreated()) {
+            formatGeneratedJavaFile(project, vf);
+            GitAddHelper.addGeneratedFiles(project, basePath, result.javaPath, result.testCasePath);
+            if (listener != null && presentation != null) {
+                listener.onComplete(presentation);
+                return;
+            }
+            StringBuilder msg = new StringBuilder("已生成:\n").append(result.javaPath);
+            if (result.testCasePath != null) {
+                msg.append("\n").append(result.testCasePath);
+            }
+            msg.append("\n题目: ").append(titleSlug);
+            Messages.showInfoMessage(project, msg.toString(), actionTitle);
+            return;
         }
-        msg.append("\n题目: ").append(titleSlug);
-        Messages.showInfoMessage(project, msg.toString(), actionTitle);
+
+        if (listener != null && presentation != null) {
+            listener.onComplete(presentation);
+            return;
+        }
+
+        if (result.isMetadataUpdated()) {
+            Messages.showInfoMessage(
+                    project,
+                    "已更新题目注释，保留原有实现\n" + result.javaPath + "\n题目: " + titleSlug,
+                    actionTitle
+            );
+            return;
+        }
+
+        Messages.showInfoMessage(
+                project,
+                "题目注释无需更新，保留原有实现\n" + result.javaPath + "\n题目: " + titleSlug,
+                actionTitle
+        );
     }
 
     private static void refreshPath(Path path) {
@@ -163,7 +259,8 @@ final class LeetCodeQuestionGenerationService {
         if (vf == null) {
             return;
         }
-        ApplicationManager.getApplication().runWriteAction(() -> {
+        // 格式化会修改 PSI，必须在可撤销的 IDEA 写命令中执行。
+        WriteCommandAction.runWriteCommandAction(project, () -> {
             PsiFile psiFile = PsiManager.getInstance(project).findFile(vf);
             if (psiFile != null) {
                 CodeStyleManager.getInstance(project).reformat(psiFile);

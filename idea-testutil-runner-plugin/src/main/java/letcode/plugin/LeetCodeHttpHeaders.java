@@ -98,9 +98,6 @@ final class LeetCodeHttpHeaders {
     }
 
     static void validateAuth(@NotNull LeetCodeSettings settings) throws IOException {
-        if (LeetCodeBrowserSession.canUseBrowserSession(settings)) {
-            return;
-        }
         if (!hasAuth(settings)) {
             throw new IOException(
                     "未配置登录信息。请填写 Cookie，或将浏览器 F12 Network 中请求的 Request Headers "

@@ -27,6 +27,9 @@ import static letcode.plugin.LeetCodeHttpHeaders.applyBrowserLikeHeaders;
  */
 final class LeetCodeGraphqlClient {
 
+    private static final int QUESTION_LOOKUP_PAGE_SIZE = 100;
+    private static final int QUESTION_LOOKUP_MAX_PAGES = 100;
+
     private static final String DAILY_SLUG_QUERY =
             "query { activeDailyCodingChallengeQuestion { question { titleSlug } } }";
 
@@ -44,8 +47,9 @@ final class LeetCodeGraphqlClient {
     private static final String PROBLEMSET_LIST_QUERY =
             "query problemsetQuestionList($categorySlug: String!, $limit: Int!, $skip: Int!, $filters: QuestionListFilterInput) {"
                     + " problemsetQuestionList(categorySlug: $categorySlug, limit: $limit, skip: $skip, filters: $filters) {"
-                    + " total: totalNum"
-                    + " questions: data { questionFrontendId: frontendQuestionId titleSlug difficulty paidOnly }"
+                    // LeetCode CN 已将 QuestionListNode 的 totalNum/data 改为 total/questions。
+                    + " total"
+                    + " questions { questionFrontendId: frontendQuestionId titleSlug difficulty paidOnly }"
                     + " } }";
 
     private final LeetCodeSettings settings;
@@ -124,6 +128,35 @@ final class LeetCodeGraphqlClient {
         return parseProblemsetList(postGraphqlPublic(PROBLEMSET_LIST_QUERY, variables, rawJsonVariables, null));
     }
 
+    /**
+     * 按前端题号检索题库列表项。
+     *
+     * LeetCode CN 的 searchKeywords 不支持题号检索，必须遍历题库页后精确匹配。
+     */
+    @NotNull
+    QuestionListItem fetchQuestionListItemByFrontendId(@NotNull String frontendId) throws IOException {
+        Map<String, String> variables = new LinkedHashMap<>();
+        variables.put("categorySlug", "");
+        for (int page = 0; page < QUESTION_LOOKUP_MAX_PAGES; page++) {
+            Map<String, String> rawJsonVariables = new LinkedHashMap<>();
+            rawJsonVariables.put("limit", String.valueOf(QUESTION_LOOKUP_PAGE_SIZE));
+            rawJsonVariables.put("skip", String.valueOf(page * QUESTION_LOOKUP_PAGE_SIZE));
+            rawJsonVariables.put("filters", "{}");
+
+            List<QuestionListItem> items =
+                    parseProblemsetList(postGraphqlPublic(PROBLEMSET_LIST_QUERY, variables, rawJsonVariables, null));
+            for (QuestionListItem item : items) {
+                if (frontendId.equals(item.questionFrontendId)) {
+                    return item;
+                }
+            }
+            if (items.size() < QUESTION_LOOKUP_PAGE_SIZE) {
+                break;
+            }
+        }
+        throw new IOException("未找到题号 " + frontendId + " 对应的题目");
+    }
+
     @NotNull
     private static List<QuestionListItem> parseProblemsetList(@NotNull JsonObject data) throws IOException {
         JsonObject list = data.getAsJsonObject("problemsetQuestionList");
@@ -144,7 +177,11 @@ final class LeetCodeGraphqlClient {
                 continue;
             }
             JsonObject question = element.getAsJsonObject();
-            String frontendId = textOrNull(question.get("questionFrontendId"));
+            // 中国站有时忽略 GraphQL 别名，直接返回原字段 frontendQuestionId。
+            String frontendId = firstNonEmpty(
+                    textOrNull(question.get("questionFrontendId")),
+                    textOrNull(question.get("frontendQuestionId"))
+            );
             String titleSlug = textOrNull(question.get("titleSlug"));
             if (titleSlug == null || titleSlug.isEmpty()) {
                 continue;
@@ -253,18 +290,20 @@ final class LeetCodeGraphqlClient {
         }
 
         if (!requireAuth && isCnEndpoint()) {
-            try {
-                return parseData(postViaHttp(body, titleSlug, false));
-            } catch (IOException httpError) {
-                if (LeetCodeBrowserHttpClient.isSupported()) {
+            // 中国站直连可能拿到风控页或被 CDN 改写的响应，优先复用 IDE 的同源浏览器上下文。
+            if (LeetCodeBrowserHttpClient.isSupported()) {
+                try {
+                    return parseData(postViaBrowser(pageUrl, graphqlUrl, body));
+                } catch (IOException browserError) {
                     try {
-                        return parseData(postViaBrowser(pageUrl, graphqlUrl, body));
-                    } catch (IOException browserError) {
-                        httpError.addSuppressed(browserError);
+                        return parseData(postViaHttp(body, titleSlug, false));
+                    } catch (IOException httpError) {
+                        browserError.addSuppressed(httpError);
+                        throw browserError;
                     }
                 }
-                throw httpError;
             }
+            return parseData(postViaHttp(body, titleSlug, false));
         }
 
         if (!requireAuth && LeetCodeBrowserHttpClient.isSupported()) {

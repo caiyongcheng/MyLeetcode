@@ -1,4 +1,4 @@
-package letcode.normal.difficult;
+package letcode.normal.unansweredquestions.difficult;
 
 /**
  * 3700. Number of ZigZag Arrays II

@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.JComponent;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -80,41 +81,89 @@ public class SubmitLeetCodeSolutionAction extends AnAction {
             public void run(@NotNull ProgressIndicator indicator) {
                 indicator.setIndeterminate(false);
                 try {
-                    indicator.setText("Preparing submission...");
-                    String typedCode = LeetCodeSolutionTransformer.toSubmitCode(source, topClassName);
-
-                    LeetCodeGraphqlClient graphql = new LeetCodeGraphqlClient(settings);
-                    indicator.setText("Fetching questionId: " + slug);
-                    String questionId = graphql.fetchQuestionId(slug);
-
-                    LeetCodeSubmitClient submitClient = new LeetCodeSubmitClient(settings);
-                    indicator.setText("Submitting to LeetCode...");
-                    String submissionId = submitClient.submit(slug, questionId, typedCode);
-
-                    indicator.setText("Waiting for judge result...");
-                    LeetCodeSubmissionResult result = submitClient.pollUntilDone(submissionId);
-                    GitCommitPushResult gitResult = null;
-                    if (result.accepted && projectBasePath != null && !projectBasePath.isEmpty() && javaPath != null) {
-                        indicator.setText("Committing accepted solution...");
-                        String packageName = file instanceof PsiJavaFile ? ((PsiJavaFile) file).getPackageName() : null;
-                        Path testCasePath = GitAddHelper.resolveTestCasePath(projectBasePath, topClassName);
-                        String commitMessage = GitAddHelper.buildCommitMessage(packageName, javaPath);
-                        gitResult = GitAddHelper.commitAndPushAcceptedSolution(
-                                projectBasePath,
-                                javaPath,
-                                testCasePath,
-                                commitMessage
-                        );
-                    }
-                    GitCommitPushResult finalGitResult = gitResult;
-                    ApplicationManager.getApplication().invokeLater(() ->
-                            showResult(project, result, finalGitResult));
+                    runSubmitWithAuthRetry(
+                            project,
+                            settings,
+                            indicator,
+                            source,
+                            topClassName,
+                            slug,
+                            projectBasePath,
+                            javaPath,
+                            file
+                    );
                 } catch (Exception ex) {
                     ApplicationManager.getApplication().invokeLater(() ->
                             Messages.showErrorDialog(project, ex.getMessage(), ACTION_TITLE));
                 }
             }
         });
+    }
+
+    private static void runSubmitWithAuthRetry(Project project,
+                                               LeetCodeSettings settings,
+                                               ProgressIndicator indicator,
+                                               String source,
+                                               String topClassName,
+                                               String slug,
+                                               @Nullable String projectBasePath,
+                                               @Nullable Path javaPath,
+                                               PsiFile file) throws Exception {
+        Exception lastError = null;
+        int maxAttempts = 3;
+        for (int attempt = 0; attempt < maxAttempts; attempt++) {
+            try {
+                indicator.setText("Preparing submission...");
+                String typedCode = LeetCodeSolutionTransformer.toSubmitCode(source, topClassName);
+
+                LeetCodeGraphqlClient graphql = new LeetCodeGraphqlClient(project, settings);
+                indicator.setText("Fetching questionId: " + slug);
+                String questionId = graphql.fetchQuestionId(slug);
+
+                LeetCodeSubmitClient submitClient = new LeetCodeSubmitClient(project, settings);
+                indicator.setText("Submitting to LeetCode...");
+                String submissionId = submitClient.submit(slug, questionId, typedCode);
+
+                indicator.setText("Waiting for judge result...");
+                LeetCodeSubmissionResult result = submitClient.pollUntilDone(submissionId);
+                GitCommitPushResult gitResult = null;
+                if (result.accepted && projectBasePath != null && !projectBasePath.isEmpty() && javaPath != null) {
+                    indicator.setText("Committing accepted solution...");
+                    String packageName = file instanceof PsiJavaFile ? ((PsiJavaFile) file).getPackageName() : null;
+                    Path testCasePath = GitAddHelper.resolveTestCasePath(projectBasePath, topClassName);
+                    String commitMessage = GitAddHelper.buildCommitMessage(packageName, javaPath);
+                    gitResult = GitAddHelper.commitAndPushAcceptedSolution(
+                            projectBasePath,
+                            javaPath,
+                            testCasePath,
+                            commitMessage
+                    );
+                }
+                GitCommitPushResult finalGitResult = gitResult;
+                ApplicationManager.getApplication().invokeLater(() ->
+                        showResult(project, result, finalGitResult));
+                return;
+            } catch (Exception ex) {
+                lastError = ex;
+                if (attempt < maxAttempts - 1 && LeetCodeLoginCookieRefresher.isAuthExpired(ex)
+                        && refreshLoginOnUi(project, settings)) {
+                    indicator.setText("登录信息已刷新，正在重试...");
+                    continue;
+                }
+                throw ex;
+            }
+        }
+        if (lastError != null) {
+            throw lastError;
+        }
+    }
+
+    private static boolean refreshLoginOnUi(Project project, LeetCodeSettings settings)
+            throws InvocationTargetException, InterruptedException {
+        final boolean[] refreshed = {false};
+        ApplicationManager.getApplication().invokeAndWait(() ->
+                refreshed[0] = LeetCodeLoginCookieRefresher.refresh(project, settings));
+        return refreshed[0];
     }
 
     @Override

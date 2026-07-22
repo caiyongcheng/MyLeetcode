@@ -1,4 +1,4 @@
-package letcode.normal.difficult;
+package letcode.normal.unansweredquestions.difficult;
 
 /**
  * 3336. Find the Number of Subsequences With Equal GCD
@@ -77,5 +77,6 @@ package letcode.normal.difficult;
 public class _3336 {
 
     public int subsequencePairCount(int[] nums) {
+        return 0;
     }
 }

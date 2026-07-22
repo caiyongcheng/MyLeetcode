@@ -18,7 +18,6 @@ final class LeetCodeSettings {
     private static final String KEY_EXTRA_HEADERS = "letcode.leetcode.extraHeaders";
     private static final String KEY_OVERWRITE = "letcode.leetcode.overwrite";
     private static final String KEY_LAST_DAILY_ID = "letcode.leetcode.lastDailyQuestionFrontendId";
-    private static final String KEY_USE_EMBEDDED_BROWSER_SESSION = "letcode.leetcode.useEmbeddedBrowserSession";
 
     String endpoint = DEFAULT_ENDPOINT;
     String bearerToken = "";
@@ -26,7 +25,7 @@ final class LeetCodeSettings {
     String csrfToken = "";
     String extraHeaders = "";
     boolean overwriteExisting;
-    /** 内嵌 JCEF 登录会话可用时优先走浏览器上下文请求（重启后 CEF 会话可能失效）。 */
+    /** 内嵌 JCEF 登录会话仅在当前 IDE 进程内有效，不能持久化。 */
     boolean useEmbeddedBrowserSession;
     /** 上次成功生成的每日题 questionFrontendId，用于同日重复拉取时强制覆盖。 */
     String lastDailyQuestionFrontendId = "";
@@ -40,8 +39,6 @@ final class LeetCodeSettings {
         settings.csrfToken = nullToEmpty(props.getValue(KEY_CSRF));
         settings.extraHeaders = nullToEmpty(props.getValue(KEY_EXTRA_HEADERS));
         settings.overwriteExisting = Boolean.parseBoolean(props.getValue(KEY_OVERWRITE, "false"));
-        settings.useEmbeddedBrowserSession = Boolean.parseBoolean(
-                props.getValue(KEY_USE_EMBEDDED_BROWSER_SESSION, "false"));
         settings.lastDailyQuestionFrontendId = nullToEmpty(props.getValue(KEY_LAST_DAILY_ID));
         return settings;
     }
@@ -54,7 +51,6 @@ final class LeetCodeSettings {
         props.setValue(KEY_CSRF, trimToEmpty(csrfToken, ""));
         props.setValue(KEY_EXTRA_HEADERS, trimToEmpty(extraHeaders, ""));
         props.setValue(KEY_OVERWRITE, Boolean.toString(overwriteExisting));
-        props.setValue(KEY_USE_EMBEDDED_BROWSER_SESSION, Boolean.toString(useEmbeddedBrowserSession));
         props.setValue(KEY_LAST_DAILY_ID, trimToEmpty(lastDailyQuestionFrontendId, ""));
     }
 

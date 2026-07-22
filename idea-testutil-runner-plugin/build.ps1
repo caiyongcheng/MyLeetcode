@@ -3,6 +3,10 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+# javac 的版本信息输出到 stderr；环境设置 JAVA_TOOL_OPTIONS 时不要把提示误判成构建失败。
+if (Test-Path Env:JAVA_TOOL_OPTIONS) {
+    Remove-Item Env:JAVA_TOOL_OPTIONS
+}
 
 $PluginDir = $PSScriptRoot
 $BuildDir = Join-Path $PluginDir "build"
@@ -44,10 +48,8 @@ if (-not (Test-Path $IdeaHome)) {
 function Resolve-Javac {
     $candidates = @()
     if ($env:JAVA_HOME) {
+        $candidates += Join-Path $env:JAVA_HOME "bin/javac.exe"
         $candidates += Join-Path $env:JAVA_HOME "bin/javac"
-        if ($IsLinux -or $IsMacOS) {
-            $candidates += Join-Path $env:JAVA_HOME "bin/javac.exe"
-        }
     }
     $cmd = Get-Command javac -ErrorAction SilentlyContinue
     if ($cmd) {
@@ -61,21 +63,28 @@ function Resolve-Javac {
             continue
         }
         $version = & $path -version 2>&1 | Out-String
-        if ($version -match 'version "21[.\d]*"') {
+        # 可使用高版本 JDK 编译，但最终插件必须兼容 IDEA 2023.3 的 Java 17 运行时。
+        # javac -version 形如: javac 25.0.3；部分发行版也会带 version "..."
+        if ($version -match '(?:javac |version ")(?:2[1-9]|[3-9]\d)(?:[.\d]*)') {
             return $path
         }
     }
     if ($cmd) {
         return $cmd.Source
     }
-    throw "javac not found (Java 21 recommended for IntelliJ 2023.3+)"
+    throw "javac not found (Java 21+ required; Java 25+ for IntelliJ 2026.2)"
 }
 
 $javac = Resolve-Javac
 $libJars = Get-ChildItem -Path (Join-Path $IdeaHome "lib") -Filter "*.jar" -File
 $javaJars = Get-ChildItem -Path (Join-Path $IdeaHome "plugins\java\lib") -Filter "*.jar" -File -Recurse
+$jcefJars = @()
+$jcefLib = Join-Path $IdeaHome "plugins\jcef-plugin\lib"
+if (Test-Path $jcefLib) {
+    $jcefJars = Get-ChildItem -Path $jcefLib -Filter "*.jar" -File -Recurse
+}
 $pathSeparator = if ($IsLinux -or $IsMacOS) { ':' } else { ';' }
-$classpath = (($libJars + $javaJars) | ForEach-Object { $_.FullName.Replace('\', '/') }) -join $pathSeparator
+$classpath = (($libJars + $javaJars + $jcefJars) | ForEach-Object { $_.FullName.Replace('\', '/') }) -join $pathSeparator
 
 if (Test-Path $BuildDir) {
     Remove-Item -LiteralPath $BuildDir -Recurse -Force
@@ -91,6 +100,8 @@ if (-not $sources) {
 }
 
 $argLines = @(
+    "--release"
+    "17"
     "-encoding"
     "UTF-8"
     "-cp"

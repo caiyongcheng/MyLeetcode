@@ -2,6 +2,8 @@ package letcode.plugin;
 
 import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ModalityState;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
@@ -31,6 +33,7 @@ import java.util.concurrent.TimeUnit;
 final class LeetCodeLoginCookieRefresher {
 
     private static final String LOGIN_PATH = "/accounts/login/";
+    private static final Logger LOG = Logger.getInstance(LeetCodeLoginCookieRefresher.class);
 
     private LeetCodeLoginCookieRefresher() {
     }
@@ -88,19 +91,22 @@ final class LeetCodeLoginCookieRefresher {
     private static final class LoginDialog extends DialogWrapper {
 
         private static final String OK_BUTTON_TEXT = "我已登录，刷新 Cookie";
-        private static final String OK_BUTTON_VERIFYING_TEXT = "正在验证登录状态...";
+        private static final String OK_BUTTON_VERIFYING_TEXT = "正在保存登录会话...";
 
+        private final Project project;
         private final String baseUrl;
         private final LeetCodeSettings settings;
         private final JBCefBrowser browser;
         private volatile boolean verifying;
         private volatile boolean disposed;
+        private volatile boolean browserSessionRetained;
 
         LoginDialog(@NotNull Project project, @NotNull String baseUrl, @NotNull LeetCodeSettings settings) {
             super(project);
+            this.project = project;
             this.baseUrl = baseUrl;
             this.settings = settings;
-            this.browser = new JBCefBrowser(baseUrl + LOGIN_PATH);
+            this.browser = LeetCodeJcefBrowserFactory.createBrowser(baseUrl + LOGIN_PATH);
             setTitle("LeetCode 登录");
             setOKButtonText(OK_BUTTON_TEXT);
             setCancelButtonText("取消");
@@ -127,89 +133,61 @@ final class LeetCodeLoginCookieRefresher {
             setOKActionEnabled(false);
             setOKButtonText(OK_BUTTON_VERIFYING_TEXT);
 
+            // 用户已确认登录，直接复用当前 JCEF 会话。真正的认证校验由后续提交请求完成，
+            // 避免 userStatus 请求被网络层挂起后让登录窗口永久卡住。
+            LeetCodeBrowserSession.markBrowserSessionActive(project, settings, browser);
+            browserSessionRetained = true;
+            LoginDialog.super.doOKAction();
+
             ApplicationManager.getApplication().executeOnPooledThread(() -> {
                 try {
-                    if (disposed) {
-                        return;
+                    // Cookie 持久化不能依赖 GraphQL 校验；网络/WAF 拦截校验请求时，已登录会话仍应保留。
+                    String cookie = readReadableLeetCodeCookie();
+                    if (!cookie.isEmpty()) {
+                        ApplicationManager.getApplication().invokeLater(() -> saveCookie(cookie), ModalityState.any());
+                    } else {
+                        LOG.warn("LeetCode embedded session has no readable cookies after login confirmation");
                     }
+
                     LeetCodeBrowserHttpClient.UserStatus status =
                             LeetCodeBrowserHttpClient.verifyUserStatus(browser, settings.endpoint.trim());
-                    if (disposed) {
-                        return;
-                    }
                     if (!status.signedIn) {
-                        ApplicationManager.getApplication().invokeLater(() -> handleNotSignedIn(status));
+                        LOG.warn("LeetCode embedded session is not signed in after login confirmation");
+                        LeetCodeBrowserSession.clearBrowserSession(project, settings);
                         return;
                     }
-                    String cookie = readReadableLeetCodeCookie();
-                    if (disposed) {
-                        return;
-                    }
-                    ApplicationManager.getApplication().invokeLater(() -> handleVerificationSuccess(cookie));
+                    LOG.info("LeetCode embedded session verified for user: "
+                            + (status.username == null ? "unknown" : status.username));
                 } catch (Exception ex) {
-                    ApplicationManager.getApplication().invokeLater(() -> handleVerificationFailure(ex));
+                    // 验证只用于诊断和 Cookie 持久化，绝不能再次阻塞已关闭的登录窗口。
+                    LOG.warn("LeetCode embedded session verification failed", ex);
                 }
             });
         }
 
-        private void handleNotSignedIn(@NotNull LeetCodeBrowserHttpClient.UserStatus status) {
-            if (disposed) {
-                return;
-            }
-            restoreOkButton();
-            Messages.showErrorDialog(
-                    "登录页面已打开，但 LeetCode 会话尚未建立（userStatus.isSignedIn=false）。\n"
-                            + "请确认已完成登录，或稍等页面跳转后再试。\n"
-                            + "HTTP " + status.httpStatus,
-                    "LeetCode 登录"
-            );
-        }
-
-        private void handleVerificationFailure(@NotNull Exception ex) {
-            if (disposed) {
-                return;
-            }
-            restoreOkButton();
-            LeetCodeBrowserSession.clearBrowserSession(settings);
-            Messages.showErrorDialog(
-                    "验证登录状态失败: " + safeErrorMessage(ex),
-                    "LeetCode 登录"
-            );
-        }
-
-        private void handleVerificationSuccess(@NotNull String cookie) {
-            if (disposed) {
+        private void saveCookie(@NotNull String cookie) {
+            if (project.isDisposed()) {
                 return;
             }
             settings.cookie = cookie;
             settings.csrfToken = LeetCodeHttpHeaders.extractCsrfFromCookie(cookie);
-            LeetCodeBrowserSession.markBrowserSessionActive(settings);
-            LoginDialog.super.doOKAction();
-        }
-
-        private void restoreOkButton() {
-            verifying = false;
-            setOKActionEnabled(true);
-            setOKButtonText(OK_BUTTON_TEXT);
+            settings.save(project);
         }
 
         @Override
         protected void dispose() {
             disposed = true;
-            browser.dispose();
+            if (!browserSessionRetained) {
+                LeetCodeJcefBrowserFactory.disposeBrowser(browser);
+            }
             super.dispose();
         }
 
         @NotNull
         private String readReadableLeetCodeCookie() throws Exception {
             JBCefCookieManager manager = browser.getJBCefCookieManager();
-            List<JBCefCookie> cookies = new ArrayList<>();
-            cookies.addAll(readUrlCookies(manager, baseUrl));
-            cookies.addAll(readUrlCookies(manager, baseUrl + "/"));
-            cookies.addAll(readUrlCookies(manager, baseUrl + LOGIN_PATH));
-            cookies.addAll(readUrlCookies(manager, baseUrl + "/problemset/"));
-            cookies.addAll(readUrlCookies(manager, baseUrl + "/graphql/"));
-            cookies.addAll(manager.getCookies());
+            // 根域 URL 已覆盖同域和父域 Cookie，避免多次串行等待造成后台任务长时间滞留。
+            List<JBCefCookie> cookies = new ArrayList<>(readUrlCookies(manager, baseUrl + "/"));
 
             Map<String, JBCefCookie> byName = new LinkedHashMap<>();
             for (JBCefCookie cookie : cookies) {
@@ -239,20 +217,10 @@ final class LeetCodeLoginCookieRefresher {
 
         @NotNull
         private static List<JBCefCookie> readUrlCookies(@NotNull JBCefCookieManager manager,
-                                                        @NotNull String url) throws Exception {
+                                                         @NotNull String url) throws Exception {
             return manager.getCookies(url, true).get(8, TimeUnit.SECONDS);
         }
+
     }
 
-    @NotNull
-    private static String safeErrorMessage(@NotNull Exception ex) {
-        String message = ex.getMessage();
-        if (message == null || message.isEmpty()) {
-            return ex.getClass().getSimpleName();
-        }
-        if (message.length() > 300) {
-            return message.substring(0, 300) + "...";
-        }
-        return message;
-    }
 }

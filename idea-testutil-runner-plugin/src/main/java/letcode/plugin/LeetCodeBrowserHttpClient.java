@@ -5,16 +5,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.intellij.ui.jcef.JBCefApp;
 import com.intellij.ui.jcef.JBCefBrowser;
-import com.intellij.ui.jcef.JBCefBrowserBase;
 import com.intellij.ui.jcef.JBCefClient;
 import com.intellij.ui.jcef.JBCefJSQuery;
-import org.cef.browser.CefBrowser;
-import org.cef.handler.CefLoadHandler;
-import org.cef.handler.CefLoadHandlerAdapter;
+import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -26,6 +24,7 @@ final class LeetCodeBrowserHttpClient {
 
     private static final long PAGE_LOAD_TIMEOUT_SEC = 30L;
     private static final long REQUEST_TIMEOUT_SEC = 45L;
+    private static final Logger LOG = Logger.getInstance(LeetCodeBrowserHttpClient.class);
 
     private LeetCodeBrowserHttpClient() {
     }
@@ -65,8 +64,19 @@ final class LeetCodeBrowserHttpClient {
     }
 
     @NotNull
+    static HttpResult postJson(@NotNull JBCefBrowser browser, @NotNull String requestUrl, @NotNull String jsonBody)
+            throws IOException {
+        return executeFetch(browser, requestUrl, "POST", jsonBody);
+    }
+
+    @NotNull
     static HttpResult getJson(@NotNull String pageUrl, @NotNull String requestUrl) throws IOException {
         return execute(pageUrl, requestUrl, "GET", null);
+    }
+
+    @NotNull
+    static HttpResult getJson(@NotNull JBCefBrowser browser, @NotNull String requestUrl) throws IOException {
+        return executeFetch(browser, requestUrl, "GET", null);
     }
 
     @NotNull
@@ -93,64 +103,36 @@ final class LeetCodeBrowserHttpClient {
                                       @NotNull String requestUrl,
                                       @NotNull String method,
                                       @Nullable String jsonBody) throws IOException {
-        JBCefBrowser browser = new JBCefBrowser();
+        JBCefBrowser browser = LeetCodeJcefBrowserFactory.createBrowser(pageUrl);
         try {
             browser.createImmediately();
             ensurePageLoaded(browser, pageUrl);
             return executeFetch(browser, requestUrl, method, jsonBody);
         } finally {
-            browser.dispose();
+            LeetCodeJcefBrowserFactory.disposeBrowser(browser);
         }
     }
 
     static void ensurePageLoaded(@NotNull JBCefBrowser browser, @NotNull String pageUrl) throws IOException {
-        CefBrowser cefBrowser = browser.getCefBrowser();
-        CountDownLatch latch = new CountDownLatch(1);
-        AtomicReference<String> loadError = new AtomicReference<>();
-
-        JBCefClient client = browser.getJBCefClient();
-        CefLoadHandlerAdapter handler = new CefLoadHandlerAdapter() {
-            @Override
-            public void onLoadingStateChange(CefBrowser browser,
-                                             boolean isLoading,
-                                             boolean canGoBack,
-                                             boolean canGoForward) {
-                if (!isLoading) {
-                    latch.countDown();
-                }
-            }
-
-            @Override
-            public void onLoadError(CefBrowser browser,
-                                    org.cef.browser.CefFrame frame,
-                                    CefLoadHandler.ErrorCode errorCode,
-                                    String errorText,
-                                    String failedUrl) {
-                if (failedUrl != null && (failedUrl.equals(pageUrl) || failedUrl.startsWith(pageUrl))) {
-                    loadError.set("页面加载失败: " + safeMessage(errorText));
-                    latch.countDown();
-                }
-            }
-        };
-        client.addLoadHandler(handler, cefBrowser);
+        Object cefBrowser = browser.getCefBrowser();
         try {
-            String currentUrl = cefBrowser.getURL();
+            String currentUrl = (String) invokeCefMethod(cefBrowser, "getURL");
             if (currentUrl == null || currentUrl.isEmpty() || !currentUrl.startsWith(pageUrl)) {
                 browser.loadURL(pageUrl);
-            } else if (!cefBrowser.isLoading()) {
-                latch.countDown();
             }
-            if (!latch.await(PAGE_LOAD_TIMEOUT_SEC, TimeUnit.SECONDS)) {
-                throw new IOException("浏览器页面加载超时（" + PAGE_LOAD_TIMEOUT_SEC + "s）");
-            }
-            if (loadError.get() != null) {
-                throw new IOException(loadError.get());
+
+            long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(PAGE_LOAD_TIMEOUT_SEC);
+            while ((Boolean) invokeCefMethod(cefBrowser, "isLoading")) {
+                if (System.nanoTime() >= deadline) {
+                    throw new IOException("浏览器页面加载超时（" + PAGE_LOAD_TIMEOUT_SEC + "s）");
+                }
+                Thread.sleep(100L);
             }
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
             throw new IOException("浏览器页面加载被中断", ex);
-        } finally {
-            client.removeLoadHandler(handler, cefBrowser);
+        } catch (ReflectiveOperationException ex) {
+            throw new IOException("无法访问 IDEA JCEF 页面状态", ex);
         }
     }
 
@@ -159,7 +141,9 @@ final class LeetCodeBrowserHttpClient {
                                            @NotNull String requestUrl,
                                            @NotNull String method,
                                            @Nullable String jsonBody) throws IOException {
-        JBCefJSQuery jsQuery = JBCefJSQuery.create((JBCefBrowserBase) browser);
+        LOG.info("LeetCode browser request started: " + method + " " + requestUrl);
+        // 直接使用公开的 JBCefBrowser 重载，避免依赖新版平台未对插件暴露的 BrowserBase 类。
+        JBCefJSQuery jsQuery = JBCefJSQuery.create(browser);
         CountDownLatch latch = new CountDownLatch(1);
         AtomicReference<String> callbackPayload = new AtomicReference<>();
         AtomicReference<String> callbackError = new AtomicReference<>();
@@ -203,7 +187,10 @@ final class LeetCodeBrowserHttpClient {
                             + ";});"
                             + "})();";
 
-            browser.getCefBrowser().executeJavaScript(script, browser.getCefBrowser().getURL(), 0);
+            Object cefBrowser = browser.getCefBrowser();
+            String sourceUrl = (String) invokeCefMethod(cefBrowser, "getURL");
+            invokeCefMethod(cefBrowser, "executeJavaScript",
+                    new Class<?>[]{String.class, String.class, int.class}, script, sourceUrl, 0);
 
             if (!latch.await(REQUEST_TIMEOUT_SEC, TimeUnit.SECONDS)) {
                 throw new IOException("浏览器请求超时（" + REQUEST_TIMEOUT_SEC + "s）");
@@ -215,13 +202,36 @@ final class LeetCodeBrowserHttpClient {
             if (payload == null || payload.isEmpty()) {
                 throw new IOException("浏览器请求未返回结果");
             }
-            return parseCallbackPayload(payload);
+            HttpResult result = parseCallbackPayload(payload);
+            LOG.info("LeetCode browser request completed: " + method + " " + requestUrl
+                    + ", HTTP " + result.status);
+            return result;
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
             throw new IOException("浏览器请求被中断", ex);
+        } catch (ReflectiveOperationException ex) {
+            throw new IOException("无法调用 IDEA JCEF 浏览器", ex);
+        } catch (IOException ex) {
+            LOG.warn("LeetCode browser request failed: " + method + " " + requestUrl, ex);
+            throw ex;
         } finally {
             jsQuery.dispose();
         }
+    }
+
+    @NotNull
+    private static Object invokeCefMethod(@NotNull Object cefBrowser, @NotNull String methodName,
+                                          Class<?>... parameterTypes) throws ReflectiveOperationException {
+        Method method = cefBrowser.getClass().getMethod(methodName, parameterTypes);
+        return method.invoke(cefBrowser);
+    }
+
+    @NotNull
+    private static Object invokeCefMethod(@NotNull Object cefBrowser, @NotNull String methodName,
+                                          @NotNull Class<?>[] parameterTypes, Object... arguments)
+            throws ReflectiveOperationException {
+        Method method = cefBrowser.getClass().getMethod(methodName, parameterTypes);
+        return method.invoke(cefBrowser, arguments);
     }
 
     @NotNull

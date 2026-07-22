@@ -3,6 +3,8 @@ package letcode.plugin;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.intellij.openapi.project.Project;
+import com.intellij.ui.jcef.JBCefBrowser;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,9 +24,11 @@ final class LeetCodeSubmitClient {
     private static final long POLL_TIMEOUT_MS = 120_000L;
 
     private final LeetCodeSettings settings;
+    private final Project project;
     private final String baseUrl;
 
-    LeetCodeSubmitClient(@NotNull LeetCodeSettings settings) {
+    LeetCodeSubmitClient(@NotNull Project project, @NotNull LeetCodeSettings settings) {
+        this.project = project;
         this.settings = settings;
         this.baseUrl = resolveBaseUrl(settings.endpoint);
     }
@@ -34,18 +38,21 @@ final class LeetCodeSubmitClient {
         String url = baseUrl + "/problems/" + titleSlug + "/submit/";
         String body = LeetCodeHttpHeaders.buildSubmitJsonBody(questionId, typedCode, "java");
 
-        if (LeetCodeBrowserSession.canUseBrowserSession(settings)) {
+        if (LeetCodeBrowserSession.canUseBrowserSession(project, settings)) {
             try {
                 String pageUrl = baseUrl + "/problems/" + titleSlug + "/";
+                JBCefBrowser browser = LeetCodeBrowserSession.getActiveBrowser(project, settings);
                 LeetCodeBrowserHttpClient.HttpResult result =
-                        LeetCodeBrowserHttpClient.postJson(pageUrl, url, body);
+                        browser == null
+                                ? LeetCodeBrowserHttpClient.postJson(pageUrl, url, body)
+                                : LeetCodeBrowserHttpClient.postJson(browser, url, body);
                 if (result.status < 200 || result.status >= 300) {
                     throw new IOException("提交失败 HTTP " + result.status + ": " + truncate(result.body, 500));
                 }
                 return parseSubmissionId(result.body, result.status);
             } catch (IOException browserError) {
                 if (LeetCodeLoginCookieRefresher.isAuthExpired(browserError)) {
-                    LeetCodeBrowserSession.clearBrowserSession(settings);
+                    LeetCodeBrowserSession.clearBrowserSession(project, settings);
                     throw browserError;
                 }
                 if (!LeetCodeHttpHeaders.hasAuth(settings)) {
@@ -103,17 +110,20 @@ final class LeetCodeSubmitClient {
         String url = baseUrl + "/submissions/detail/" + submissionId + "/check/";
         String pageUrl = baseUrl + "/problemset/";
 
-        if (LeetCodeBrowserSession.canUseBrowserSession(settings)) {
+        if (LeetCodeBrowserSession.canUseBrowserSession(project, settings)) {
             try {
+                JBCefBrowser browser = LeetCodeBrowserSession.getActiveBrowser(project, settings);
                 LeetCodeBrowserHttpClient.HttpResult result =
-                        LeetCodeBrowserHttpClient.getJson(pageUrl, url);
+                        browser == null
+                                ? LeetCodeBrowserHttpClient.getJson(pageUrl, url)
+                                : LeetCodeBrowserHttpClient.getJson(browser, url);
                 if (result.status < 200 || result.status >= 300) {
                     throw new IOException("轮询判题 HTTP " + result.status + ": " + truncate(result.body, 500));
                 }
                 return parseJsonObject(result.body);
             } catch (IOException browserError) {
                 if (LeetCodeLoginCookieRefresher.isAuthExpired(browserError)) {
-                    LeetCodeBrowserSession.clearBrowserSession(settings);
+                    LeetCodeBrowserSession.clearBrowserSession(project, settings);
                     throw browserError;
                 }
                 if (!LeetCodeHttpHeaders.hasAuth(settings)) {

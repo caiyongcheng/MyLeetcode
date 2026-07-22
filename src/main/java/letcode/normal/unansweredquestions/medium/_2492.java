@@ -1,4 +1,4 @@
-package letcode.normal.medium;
+package letcode.normal.unansweredquestions.medium;
 
 /**
  * 2492. Minimum Score of a Path Between Two Cities

@@ -1,8 +1,5 @@
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 
 /**
@@ -82,28 +79,13 @@ public class Main {
     }
 
     public static void main(String[] args) {
-/*        Scanner scanner = new Scanner(System.in);
-        arr = new int[14];
-        String s = scanner.nextLine();
-        int length = s.length();
-        for (int i = 0; i < length; i++) {
-            char ch = s.charAt(i);
-            if (ch >= '1' && ch <= '9') {
-                arr[ch - '0']++;
-            } else if (ch == '0') {
-                arr[10]++;
-            } else if (ch == 'J') {
-                arr[11]++;
-            } else if (ch == 'Q') {
-                arr[12]++;
-            } else if (ch == 'K') {
-                arr[13]++;
-            }
+        StringBuilder partSql = new StringBuilder();
+        String template = "select %s, '%s', %s, %s.%s%s%s%s from dual union all \n";
+        for (int i = 0; i < 10000; i++) {
+            partSql.append(template.formatted(i, i, i, i, i, i, i, i));
         }
-        System.out.println(dp(1));*/
+        System.out.println(partSql.toString());
 
-        String str = "417509531_101722158912,417509531_102206161251,417509531_102348164943,417509531_102530167726,417509531_102631170833,417509531_102813173478,417509531_102907176482,417509531_103003179645,799160602_101722158912,799160602_102206161251,799160602_102348164943,799160602_102530167726,799160602_102631170833,799160602_102813173478,799160602_103003179645,417509435_101722158912,417509435_102206161251,417509435_102348164943,417509435_102530167726,417509435_102631170833,417509435_102907176482,417509435_103003179645,41750954X_101722158912,41750954X_102206161251,41750954X_102348164943,41750954X_102530167726,41750954X_102631170833,41750954X_102813173478,41750954X_102907176482,41750954X_103003179645";
-        System.out.println(Arrays.stream(str.split(",")).collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
     }
 
 }
