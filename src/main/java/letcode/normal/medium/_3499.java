@@ -89,9 +89,11 @@ public class _3499 {
         int maxGain = 0;
         int prevZeros = Integer.MIN_VALUE;
         int i = 0;
+        char ch;
         while (i < n) {
             int j = i;
-            while (j < n && s.charAt(j) == s.charAt(i)) {
+            ch = s.charAt(i);
+            while (j < n && s.charAt(j) == ch) {
                 j++;
             }
             int len = j - i;
