@@ -65,17 +65,20 @@ public class _3513 {
 
     public int uniqueXorTriplets(int[] nums) {
         /*
-        如果 nums.length < 3 那么结果是固定的
-        如果 nums.length >= 3
-        对于 [1, nums] 之中的数，有 x ^ x = 0, 0 ^ nums[i] = nums[i]
-        对于 大于nums.length且最小的2的幂次方 2^y 来说
-        如果 nums.length < 2^y, 在y位上，有 0 ^ 0 ^ 0 = 0, 那么异或结果肯定小于 2^y
-        需要考虑的是 [nums.length+1, 2^y) 这部分的数怎么获得
-        对于 位于[nums.length+1, 2^y)的数k, 如果他的某一个是 0，那么取 0^0^0,如果某一个是1,那么取0^0^1。
-        按照这种取值方式，最大需要的数是 2^(y-1), 有 2^(y-1) <= nums.length < 2^y。
-        所以结果为 2^y, 因为0也要考虑到
+         n < 3 时直接返回 n
+
+         n >= 3 时，令 2^k 为大于 n 的最小 2 的幂：
+         1. 异或上界 —— 所有元素 ≤ n < 2^k，三数异或结果 < 2^k
+         2. [0, n] 全覆盖 —— x ^ x ^ x = x 得 [1, n]；1 ^ 2 ^ 3 = 0 得 0
+         3. [n+1, 2^k-1] 的构造：
+            设 P = 2^(k-1)，对任意 v ∈ [n+1, 2^k-1]，v 在第 k 位为 1
+            取 c = P（≤ n），则需 a ^ b = v ^ P ∈ [1, P-1] ⊆ [1, n]
+            [1, P-1] 内任意值均可由其中两数异或得到（x ^ 1 或 2 ^ 3 等方式）
+            故三数异或 = a ^ b ^ c = v
+
+         综上可取值为 [0, 2^k-1]，共 2^k 个
          */
-        return nums.length < 3 ? nums.length : (1 << (32 - Integer.numberOfLeadingZeros(2)));
+        return nums.length < 3 ? nums.length : (Integer.highestOneBit(nums.length) << 1);
     }
 
 }
