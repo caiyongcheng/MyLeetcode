@@ -24,6 +24,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -38,16 +39,17 @@ import java.nio.file.Path;
 final class LeetCodeToolWindowPanel extends JPanel {
 
     private static final String[] DIFFICULTIES = {"Easy", "Medium", "Hard"};
-    private static final String EMPTY_PREVIEW = "暂无题目";
+    private static final String EMPTY_PREVIEW = "";
 
     private final Project project;
     private final JLabel loginStatusLabel;
     private final JButton settingsButton;
     private final JButton dailyButton;
+    private final JComboBox<String> sourceCombo;
     private final JComboBox<String> difficultyBox;
-    private final JButton randomButton;
     private final JTextField frontendIdField;
-    private final JButton specifiedButton;
+    private final JPanel sourceParamPanel;
+    private final JButton fetchButton;
     private final JButton downloadPreviewButton;
     private final JButton testButton;
     private final JButton submitButton;
@@ -72,12 +74,15 @@ final class LeetCodeToolWindowPanel extends JPanel {
         settingsButton.setMargin(JBUI.insets(2));
 
         dailyButton = new JButton("每日一题", AllIcons.Actions.Refresh);
+        sourceCombo = new JComboBox<>(new String[]{"随机题", "指定题"});
         difficultyBox = new JComboBox<>(DIFFICULTIES);
         difficultyBox.setSelectedItem("Medium");
-        randomButton = new JButton("预览", AllIcons.Actions.Find);
         frontendIdField = new JTextField();
         frontendIdField.setColumns(6);
-        specifiedButton = new JButton("预览", AllIcons.Actions.Find);
+        sourceParamPanel = new JPanel(new CardLayout());
+        sourceParamPanel.add(difficultyBox, "随机题");
+        sourceParamPanel.add(frontendIdField, "指定题");
+        fetchButton = new JButton("获取题目", AllIcons.Actions.Find);
         downloadPreviewButton = new JButton("下载当前题目", AllIcons.Actions.Download);
         downloadPreviewButton.setEnabled(false);
         testButton = new JButton("运行 TestUtil", AllIcons.Actions.Execute);
@@ -105,14 +110,14 @@ final class LeetCodeToolWindowPanel extends JPanel {
         refreshLoginStatus();
         settingsButton.addActionListener(event -> onSettingsClicked());
         dailyButton.addActionListener(event -> onDailyClicked());
-        randomButton.addActionListener(event -> onRandomClicked());
-        specifiedButton.addActionListener(event -> onSpecifiedClicked());
+        sourceCombo.addActionListener(event -> onSourceChanged());
+        fetchButton.addActionListener(event -> onFetchClicked());
         downloadPreviewButton.addActionListener(event -> onDownloadPreviewClicked());
         testButton.addActionListener(event -> onTestClicked());
         submitButton.addActionListener(event -> onSubmitClicked());
         openSolutionButton.addActionListener(event -> onOpenSolutionClicked());
         // 工具窗口打开后优先输入题号，避免键盘焦点仍停留在编辑器。
-        ApplicationManager.getApplication().invokeLater(frontendIdField::requestFocusInWindow);
+        ApplicationManager.getApplication().invokeLater(sourceCombo::requestFocusInWindow);
     }
 
     private JPanel buildHeader() {
@@ -143,8 +148,7 @@ final class LeetCodeToolWindowPanel extends JPanel {
         int row = 0;
 
         addFullWidth(controls, constraints, row++, dailyButton);
-        addFullWidth(controls, constraints, row++, buildRandomRow());
-        addFullWidth(controls, constraints, row++, buildSpecifiedRow());
+        addFullWidth(controls, constraints, row++, buildUnifiedFetchRow());
         addFullWidth(controls, constraints, row++, buildCurrentClassRow());
         addFullWidth(controls, constraints, row, statusLabel);
         return controls;
@@ -173,48 +177,29 @@ final class LeetCodeToolWindowPanel extends JPanel {
         return preview;
     }
 
-    private JPanel buildRandomRow() {
-        JPanel randomRow = new JPanel(new GridBagLayout());
+    private JPanel buildUnifiedFetchRow() {
+        JPanel row = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = baseConstraints();
-        constraints.insets = new Insets(2, 0, 2, 0);
+        constraints.weighty = 0;
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0;
-        randomRow.add(new JLabel("随机题"), constraints);
+
+        sourceCombo.setPreferredSize(new Dimension(84, sourceCombo.getPreferredSize().height));
+        row.add(sourceCombo, constraints);
 
         constraints.gridx = 1;
-        constraints.insets = new Insets(2, 8, 2, 6);
-        difficultyBox.setPreferredSize(new Dimension(92, difficultyBox.getPreferredSize().height));
-        randomRow.add(difficultyBox, constraints);
-
-        constraints.gridx = 2;
-        constraints.insets = new Insets(2, 0, 2, 0);
+        constraints.insets = new Insets(0, 6, 0, 6);
         constraints.weightx = 1;
         constraints.fill = GridBagConstraints.HORIZONTAL;
-        randomRow.add(randomButton, constraints);
-        return randomRow;
-    }
-
-    private JPanel buildSpecifiedRow() {
-        JPanel specifiedRow = new JPanel(new GridBagLayout());
-        GridBagConstraints constraints = baseConstraints();
-        constraints.insets = new Insets(2, 0, 2, 0);
-        constraints.fill = GridBagConstraints.NONE;
-        constraints.weightx = 0;
-        specifiedRow.add(new JLabel("指定题"), constraints);
-
-        constraints.gridx = 1;
-        constraints.insets = new Insets(2, 8, 2, 6);
-        constraints.weightx = 1;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        frontendIdField.setPreferredSize(new Dimension(72, frontendIdField.getPreferredSize().height));
-        specifiedRow.add(frontendIdField, constraints);
+        sourceParamPanel.setPreferredSize(new Dimension(20, difficultyBox.getPreferredSize().height));
+        row.add(sourceParamPanel, constraints);
 
         constraints.gridx = 2;
-        constraints.insets = new Insets(2, 0, 2, 0);
+        constraints.insets = new Insets(0, 0, 0, 0);
         constraints.weightx = 0;
         constraints.fill = GridBagConstraints.NONE;
-        specifiedRow.add(specifiedButton, constraints);
-        return specifiedRow;
+        row.add(fetchButton, constraints);
+        return row;
     }
 
     private JPanel buildCurrentClassRow() {
@@ -276,7 +261,28 @@ final class LeetCodeToolWindowPanel extends JPanel {
                         project, basePath, settings, indicator, this::onGenerationComplete));
     }
 
-    private void onRandomClicked() {
+    private void onFetchClicked() {
+        String source = (String) sourceCombo.getSelectedItem();
+        if ("随机题".equals(source)) {
+            fetchRandomPreview();
+        } else {
+            fetchSpecifiedPreview();
+        }
+    }
+
+    /** 切换题目来源时，切换对应的参数控件（难度下拉框 / 题号输入框）。 */
+    private void onSourceChanged() {
+        String source = (String) sourceCombo.getSelectedItem();
+        CardLayout cl = (CardLayout) sourceParamPanel.getLayout();
+        cl.show(sourceParamPanel, source);
+        if ("指定题".equals(source)) {
+            frontendIdField.requestFocusInWindow();
+        } else {
+            difficultyBox.requestFocusInWindow();
+        }
+    }
+
+    private void fetchRandomPreview() {
         String basePath = requireBasePath("预览随机新题");
         if (basePath == null) {
             return;
@@ -293,7 +299,7 @@ final class LeetCodeToolWindowPanel extends JPanel {
                         project, basePath, settings, selectedDifficulty, indicator, this::onPreviewComplete));
     }
 
-    private void onSpecifiedClicked() {
+    private void fetchSpecifiedPreview() {
         String frontendId = frontendIdField.getText() == null ? "" : frontendIdField.getText().trim();
         if (frontendId.isEmpty()) {
             Messages.showErrorDialog(project, "请输入题号。", "预览指定题目");
@@ -457,10 +463,10 @@ final class LeetCodeToolWindowPanel extends JPanel {
 
     private void setGenerationEnabled(boolean enabled) {
         dailyButton.setEnabled(enabled);
-        randomButton.setEnabled(enabled);
+        sourceCombo.setEnabled(enabled);
         difficultyBox.setEnabled(enabled);
         frontendIdField.setEnabled(enabled);
-        specifiedButton.setEnabled(enabled);
+        fetchButton.setEnabled(enabled);
         downloadPreviewButton.setEnabled(enabled && currentPresentation != null);
         settingsButton.setEnabled(enabled);
     }
