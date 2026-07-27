@@ -16,8 +16,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static letcode.plugin.LeetCodeHttpHeaders.applyBrowserLikeHeaders;
@@ -49,7 +51,8 @@ final class LeetCodeGraphqlClient {
                     + " problemsetQuestionList(categorySlug: $categorySlug, limit: $limit, skip: $skip, filters: $filters) {"
                     // LeetCode CN 已将 QuestionListNode 的 totalNum/data 改为 total/questions。
                     + " total"
-                    + " questions { questionFrontendId: frontendQuestionId titleSlug difficulty paidOnly }"
+                    // status 仅在认证请求下反映当前账号做题状态（ac / notac / null）。
+                    + " questions { questionFrontendId: frontendQuestionId titleSlug difficulty paidOnly status }"
                     + " } }";
 
     private final LeetCodeSettings settings;
@@ -114,10 +117,13 @@ final class LeetCodeGraphqlClient {
         return settings.endpoint != null && settings.endpoint.toLowerCase().contains("leetcode.cn");
     }
 
+    /**
+     * 按难度分页拉取题库（认证请求，含账号 status）。返回服务端 total 与当前页 questions。
+     */
     @NotNull
-    List<QuestionListItem> fetchProblemsetByDifficulty(@NotNull String difficulty,
-                                                       int limit,
-                                                       int skip) throws IOException {
+    ProblemsetPage fetchProblemsetByDifficulty(@NotNull String difficulty,
+                                               int limit,
+                                               int skip) throws IOException {
         Map<String, String> variables = new LinkedHashMap<>();
         variables.put("categorySlug", "");
         Map<String, String> rawJsonVariables = new LinkedHashMap<>();
@@ -125,7 +131,8 @@ final class LeetCodeGraphqlClient {
         rawJsonVariables.put("skip", String.valueOf(skip));
         rawJsonVariables.put("filters", "{\"difficulty\":\"" + difficulty + "\"}");
 
-        return parseProblemsetList(postGraphqlPublic(PROBLEMSET_LIST_QUERY, variables, rawJsonVariables, null));
+        return parseProblemsetPage(
+                postGraphqlAuthenticated(PROBLEMSET_LIST_QUERY, variables, rawJsonVariables, null));
     }
 
     /**
@@ -137,20 +144,21 @@ final class LeetCodeGraphqlClient {
     QuestionListItem fetchQuestionListItemByFrontendId(@NotNull String frontendId) throws IOException {
         Map<String, String> variables = new LinkedHashMap<>();
         variables.put("categorySlug", "");
-        for (int page = 0; page < QUESTION_LOOKUP_MAX_PAGES; page++) {
+        // 按题号检索走 public 分页，不依赖账号 status。
+        for (int pageIndex = 0; pageIndex < QUESTION_LOOKUP_MAX_PAGES; pageIndex++) {
             Map<String, String> rawJsonVariables = new LinkedHashMap<>();
             rawJsonVariables.put("limit", String.valueOf(QUESTION_LOOKUP_PAGE_SIZE));
-            rawJsonVariables.put("skip", String.valueOf(page * QUESTION_LOOKUP_PAGE_SIZE));
+            rawJsonVariables.put("skip", String.valueOf(pageIndex * QUESTION_LOOKUP_PAGE_SIZE));
             rawJsonVariables.put("filters", "{}");
 
-            List<QuestionListItem> items =
-                    parseProblemsetList(postGraphqlPublic(PROBLEMSET_LIST_QUERY, variables, rawJsonVariables, null));
-            for (QuestionListItem item : items) {
+            ProblemsetPage pageResult = parseProblemsetPage(
+                    postGraphqlPublic(PROBLEMSET_LIST_QUERY, variables, rawJsonVariables, null));
+            for (QuestionListItem item : pageResult.questions) {
                 if (frontendId.equals(item.questionFrontendId)) {
                     return item;
                 }
             }
-            if (items.size() < QUESTION_LOOKUP_PAGE_SIZE) {
+            if (pageResult.questions.size() < QUESTION_LOOKUP_PAGE_SIZE) {
                 break;
             }
         }
@@ -158,10 +166,14 @@ final class LeetCodeGraphqlClient {
     }
 
     @NotNull
-    private static List<QuestionListItem> parseProblemsetList(@NotNull JsonObject data) throws IOException {
+    private static ProblemsetPage parseProblemsetPage(@NotNull JsonObject data) throws IOException {
         JsonObject list = data.getAsJsonObject("problemsetQuestionList");
         if (list == null || list.isJsonNull()) {
             throw new IOException("problemsetQuestionList 为空");
+        }
+        int total = 0;
+        if (list.has("total") && !list.get("total").isJsonNull()) {
+            total = list.get("total").getAsInt();
         }
         JsonElement questionsEl = list.get("questions");
         if (questionsEl == null || questionsEl.isJsonNull()) {
@@ -189,9 +201,15 @@ final class LeetCodeGraphqlClient {
             boolean paidOnly = question.has("paidOnly")
                     && !question.get("paidOnly").isJsonNull()
                     && question.get("paidOnly").getAsBoolean();
-            items.add(new QuestionListItem(frontendId, titleSlug, textOrNull(question.get("difficulty")), paidOnly));
+            items.add(new QuestionListItem(
+                    frontendId,
+                    titleSlug,
+                    textOrNull(question.get("difficulty")),
+                    paidOnly,
+                    textOrNull(question.get("status"))
+            ));
         }
-        return items;
+        return new ProblemsetPage(total, Collections.unmodifiableList(items));
     }
 
     @NotNull
@@ -254,6 +272,14 @@ final class LeetCodeGraphqlClient {
                                                 @Nullable Map<String, String> variables,
                                                 @Nullable String titleSlug) throws IOException {
         return postGraphql(query, variables, titleSlug, true);
+    }
+
+    @NotNull
+    private JsonObject postGraphqlAuthenticated(String query,
+                                                @Nullable Map<String, String> variables,
+                                                @Nullable Map<String, String> rawJsonVariables,
+                                                @Nullable String titleSlug) throws IOException {
+        return postGraphql(query, variables, rawJsonVariables, titleSlug, true);
     }
 
     @NotNull
@@ -438,20 +464,44 @@ final class LeetCodeGraphqlClient {
         return text.substring(0, max) + "...";
     }
 
+    /** 题库分页：服务端 total + 当前页 questions。 */
+    static final class ProblemsetPage {
+        final int total;
+        final List<QuestionListItem> questions;
+
+        ProblemsetPage(int total, @NotNull List<QuestionListItem> questions) {
+            this.total = total;
+            this.questions = questions;
+        }
+    }
+
     static final class QuestionListItem {
         final String questionFrontendId;
         final String titleSlug;
         final String difficulty;
         final boolean paidOnly;
+        /** 账号做题状态：ac / notac / null（未开始）；仅认证题库查询可靠。 */
+        final String status;
 
         QuestionListItem(@Nullable String questionFrontendId,
                          @NotNull String titleSlug,
                          @Nullable String difficulty,
-                         boolean paidOnly) {
+                         boolean paidOnly,
+                         @Nullable String status) {
             this.questionFrontendId = questionFrontendId;
             this.titleSlug = titleSlug;
             this.difficulty = difficulty;
             this.paidOnly = paidOnly;
+            this.status = status;
+        }
+
+        /** 已解答仅识别 AC/accepted；未开始与尝试未通过均视为未解答。 */
+        boolean isAccepted() {
+            if (status == null || status.trim().isEmpty()) {
+                return false;
+            }
+            String normalized = status.trim().toLowerCase(Locale.ROOT);
+            return "ac".equals(normalized) || "accepted".equals(normalized);
         }
     }
 }
