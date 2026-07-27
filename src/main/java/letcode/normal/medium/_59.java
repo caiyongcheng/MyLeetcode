@@ -1,7 +1,5 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestUtil;
-
 /**
  * 59. Spiral Matrix II
  * Difficulty: Medium
@@ -56,9 +54,5 @@ public class _59 {
             }
         }
         return matrix;
-    }
-
-    static void main() {
-        TestUtil.test("=10");
     }
 }
