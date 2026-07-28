@@ -2,9 +2,9 @@
 
 ## Project Structure & Module Organization
 
-This repository is a Java 8 Maven project for LeetCode solutions and helper utilities.
+This repository is a Java 21 Maven project for LeetCode solutions and helper utilities.
 
-- `src/main/java/letcode/`: solution classes, grouped by source and difficulty, such as `normal/easy`, `normal/medium`, `normal/difficult`, `offer`, `lcp`, and `lcr`.
+- `src/main/java/letcode/`: solution classes, grouped by source and difficulty, such as `normal/easy`, `normal/medium`, `normal/difficult`, `offer`, `lcp`, and `lcr`. Incomplete solutions use `N_` prefix and are placed in `normal/unansweredquestions/`.
 - `src/main/java/datastructure/`: reusable data structures and supporting exceptions.
 - `src/main/java/letcode/utils/`: shared test utilities, codecs, runner code, and node models.
 - `src/main/resources/`: text-based test cases, commonly named `TestCase<ClassName>.txt`, for example `TestCase_632.txt`.
@@ -26,7 +26,7 @@ Run commands from the repository root unless the command changes directory expli
 
 ## Coding Style & Naming Conventions
 
-Use Java 8-compatible code and follow the existing compact solution style. Use 4-space indentation. Keep solution classes close to the current naming pattern: LeetCode numbered classes usually use `_123.java`; unresolved or generated variants may use `N_123.java`. Prefer package placement by problem family and difficulty.
+Use Java 21-compatible code and follow the existing compact solution style. Use 4-space indentation. Keep solution classes close to the current naming pattern: LeetCode numbered classes usually use `_123.java`; unresolved or generated variants use `N_123.java` and belong in `normal/unansweredquestions/<difficulty>/`. Prefer package placement by problem family and difficulty.
 
 Keep changes focused. Add short Chinese comments only for non-obvious algorithm intent, important edge cases, or runner/test utility behavior.
 

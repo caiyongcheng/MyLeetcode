@@ -1,4 +1,4 @@
-package letcode.lcr.medium;
+package letcode.normal.unansweredquestions.medium;
 
 /**
  * 单词数组 words 的 有效编码 由任意助记字符串 s 和下标数组 indices 组成，且满足：  words.length == indices.length 助记字符串 s 以 '#' 字符结尾 对于每个下标 indices[i] ，
