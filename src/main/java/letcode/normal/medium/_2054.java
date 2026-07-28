@@ -1,5 +1,8 @@
 package letcode.normal.medium;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * 2054. Two Best Non-Overlapping Events
  * Difficulty: Medium
@@ -47,5 +50,43 @@ package letcode.normal.medium;
 public class _2054 {
 
     public int maxTwoEvents(int[][] events) {
+
+        int[][] orderByStartTime = new int[events.length][3];
+        int ans = 0;
+
+        for (int i = 0; i < events.length; i++) {
+            orderByStartTime[i][0] = events[i][0];
+            orderByStartTime[i][1] = events[i][1];
+            orderByStartTime[i][2] = events[i][2];
+            ans = Math.max(ans, events[i][2]);
+        }
+
+        Arrays.sort(events, Comparator.comparingInt(e -> e[0]));
+        Arrays.sort(orderByStartTime, Comparator.comparingInt(e -> e[1]));
+
+        int first = 0;
+        int second = 0;
+        int i = 0;
+        for (int[] event : events) {
+            while (i < events.length && event[0] > orderByStartTime[i][1]) {
+                if (orderByStartTime[i][2] > orderByStartTime[first][2]) {
+                    second = first;
+                    first = i;
+                } else if (orderByStartTime[i][2] > orderByStartTime[second][2]) {
+                    second = i;
+                }
+                ++i;
+            }
+            if (event[0] > orderByStartTime[first][1]) {
+                ans = Math.max(ans, event[2] + orderByStartTime[first][2]);
+            } else if (event[0] > orderByStartTime[second][1]) {
+                ans = Math.max(ans, event[2] + orderByStartTime[second][2]);
+            }
+
+        }
+
+        return ans;
+
     }
+
 }
