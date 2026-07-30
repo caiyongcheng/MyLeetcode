@@ -72,7 +72,6 @@ public class _3014 {
 
         Arrays.sort(char2Cnt, (i, j) -> j - i);
         int ans = 0;
-        int cost = 1;
 
         for (int i = 0; i < char2Cnt.length; i++) {
             ans += (i / 8 + 1) * char2Cnt[i];
