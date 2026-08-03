@@ -1,7 +1,5 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestUtil;
-
 import java.util.Arrays;
 
 /**
@@ -62,7 +60,4 @@ public class _3290 {
         return dp[4];
     }
 
-    public static void main(String[] args) {
-        TestUtil.test("=[100000,100000,100000,100000],=[-100000,-100000,-100000,-100000]");
-    }
 }
