@@ -45,11 +45,10 @@ public class _2587 {
         int ans = 0;
         for (int i = nums.length - 1; i >= 0; i--) {
             sum += nums[i];
-            if (sum > 0) {
-                ++ans;
-            } else {
-                break;
+            if (sum <= 0) {
+                return ans;
             }
+            ++ans;
         }
 
         return ans;
