@@ -76,12 +76,12 @@ final class LeetCodeGraphqlClient {
     @NotNull
     private String fetchDailyTitleSlugFromActiveDaily() throws IOException {
         JsonObject data = postGraphqlPublic(DAILY_SLUG_QUERY, null, null);
-        JsonObject active = data.getAsJsonObject("activeDailyCodingChallengeQuestion");
-        if (active == null || active.isJsonNull()) {
+        JsonObject active = objectOrNull(data, "activeDailyCodingChallengeQuestion");
+        if (active == null) {
             throw new IOException("未找到每日一题（activeDailyCodingChallengeQuestion 为空）");
         }
-        JsonObject question = active.getAsJsonObject("question");
-        if (question == null || question.isJsonNull()) {
+        JsonObject question = objectOrNull(active, "question");
+        if (question == null) {
             throw new IOException("每日一题对象为空");
         }
         String slug = textOrNull(question.get("titleSlug"));
@@ -98,9 +98,13 @@ final class LeetCodeGraphqlClient {
         if (todayRecordEl == null || !todayRecordEl.isJsonArray() || todayRecordEl.getAsJsonArray().size() == 0) {
             throw new IOException("todayRecord 为空");
         }
-        JsonObject record = todayRecordEl.getAsJsonArray().get(0).getAsJsonObject();
-        JsonObject question = record.getAsJsonObject("question");
-        if (question == null || question.isJsonNull()) {
+        JsonElement firstRecord = todayRecordEl.getAsJsonArray().get(0);
+        if (!firstRecord.isJsonObject()) {
+            throw new IOException("todayRecord 首元素不是对象");
+        }
+        JsonObject record = firstRecord.getAsJsonObject();
+        JsonObject question = objectOrNull(record, "question");
+        if (question == null) {
             throw new IOException("todayRecord.question 为空");
         }
         String slug = firstNonEmpty(
@@ -124,12 +128,27 @@ final class LeetCodeGraphqlClient {
     ProblemsetPage fetchProblemsetByDifficulty(@NotNull String difficulty,
                                                int limit,
                                                int skip) throws IOException {
+        return fetchProblemsetPage(limit, skip, "{\"difficulty\":\"" + difficulty + "\"}");
+    }
+
+    /**
+     * 分页拉取全部题库（认证请求，含账号 status），用于随机题状态快照。
+     */
+    @NotNull
+    ProblemsetPage fetchAllProblemsetWithStatus(int limit, int skip) throws IOException {
+        return fetchProblemsetPage(limit, skip, "{}");
+    }
+
+    @NotNull
+    private ProblemsetPage fetchProblemsetPage(int limit,
+                                               int skip,
+                                               @NotNull String filtersJson) throws IOException {
         Map<String, String> variables = new LinkedHashMap<>();
         variables.put("categorySlug", "");
         Map<String, String> rawJsonVariables = new LinkedHashMap<>();
         rawJsonVariables.put("limit", String.valueOf(limit));
         rawJsonVariables.put("skip", String.valueOf(skip));
-        rawJsonVariables.put("filters", "{\"difficulty\":\"" + difficulty + "\"}");
+        rawJsonVariables.put("filters", filtersJson);
 
         return parseProblemsetPage(
                 postGraphqlAuthenticated(PROBLEMSET_LIST_QUERY, variables, rawJsonVariables, null));
@@ -167,8 +186,8 @@ final class LeetCodeGraphqlClient {
 
     @NotNull
     private static ProblemsetPage parseProblemsetPage(@NotNull JsonObject data) throws IOException {
-        JsonObject list = data.getAsJsonObject("problemsetQuestionList");
-        if (list == null || list.isJsonNull()) {
+        JsonObject list = objectOrNull(data, "problemsetQuestionList");
+        if (list == null) {
             throw new IOException("problemsetQuestionList 为空");
         }
         int total = 0;
@@ -217,8 +236,8 @@ final class LeetCodeGraphqlClient {
         Map<String, String> variables = new LinkedHashMap<>();
         variables.put("titleSlug", titleSlug);
         JsonObject data = postGraphqlPublic(QUESTION_DETAIL_QUERY, variables, titleSlug);
-        JsonObject question = data.getAsJsonObject("question");
-        if (question == null || question.isJsonNull()) {
+        JsonObject question = objectOrNull(data, "question");
+        if (question == null) {
             throw new IOException("题目详情为空: " + titleSlug);
         }
         return question;
@@ -230,8 +249,8 @@ final class LeetCodeGraphqlClient {
         Map<String, String> variables = new LinkedHashMap<>();
         variables.put("titleSlug", titleSlug);
         JsonObject data = postGraphqlAuthenticated(QUESTION_DETAIL_QUERY, variables, titleSlug);
-        JsonObject question = data.getAsJsonObject("question");
-        if (question == null || question.isJsonNull()) {
+        JsonObject question = objectOrNull(data, "question");
+        if (question == null) {
             throw new IOException("题目详情为空: " + titleSlug);
         }
         String questionId = jsonValueAsString(question.get("questionId"));
@@ -413,8 +432,9 @@ final class LeetCodeGraphqlClient {
             throw new IOException("GraphQL response is not a JSON object");
         }
         JsonObject obj = root.getAsJsonObject();
-        if (obj.has("errors") && obj.get("errors").isJsonArray() && obj.getAsJsonArray("errors").size() > 0) {
-            throw new IOException("GraphQL errors: " + obj.getAsJsonArray("errors"));
+        JsonArray errors = arrayOrNull(obj, "errors");
+        if (errors != null && errors.size() > 0) {
+            throw new IOException("GraphQL errors: " + errors);
         }
         JsonElement dataEl = obj.get("data");
         if (dataEl == null || !dataEl.isJsonObject()) {
@@ -441,6 +461,26 @@ final class LeetCodeGraphqlClient {
             return element.getAsString();
         }
         return element.toString();
+    }
+
+    @Nullable
+    static JsonObject objectOrNull(@NotNull JsonObject parent, @NotNull String memberName) {
+        // Gson 的 getAsJsonObject(String) 在成员缺失时会触发内部空指针，统一在此拦截。
+        JsonElement el = parent.get(memberName);
+        if (el == null || !el.isJsonObject()) {
+            return null;
+        }
+        return el.getAsJsonObject();
+    }
+
+    @Nullable
+    static JsonArray arrayOrNull(@NotNull JsonObject parent, @NotNull String memberName) {
+        // 与对象访问保持一致，错误响应中的缺失字段应由调用方转为业务错误。
+        JsonElement el = parent.get(memberName);
+        if (el == null || !el.isJsonArray()) {
+            return null;
+        }
+        return el.getAsJsonArray();
     }
 
     @Nullable

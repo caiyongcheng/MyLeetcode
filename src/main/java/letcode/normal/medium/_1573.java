@@ -64,14 +64,15 @@ public class _1573 {
         }
 
         int splitOneCnt = oneCnt / 3;
-        int[] firstSplitExtentRange = getSplitExtendRange(charArray, 0, splitOneCnt);
-        int[] secondSplitExtentRange = getSplitExtendRange(charArray, firstSplitExtentRange[1], splitOneCnt);
+        int[] firstSplitExtendRange = getSplitExtendRange(charArray, 0, splitOneCnt);
+        int[] secondSplitExtendRange = getSplitExtendRange(charArray, firstSplitExtendRange[1], splitOneCnt);
 
-        int firstChooseCnt = firstSplitExtentRange[1] - firstSplitExtentRange[0];
-        int secondChooseCnt = secondSplitExtentRange[1] - secondSplitExtentRange[0];
+        int firstChooseCnt = firstSplitExtendRange[1] - firstSplitExtendRange[0];
+        int secondChooseCnt = secondSplitExtendRange[1] - secondSplitExtendRange[0];
 
         return (int) (((long) firstChooseCnt) * secondChooseCnt % MOD);
     }
+
 
     private int[] getSplitExtendRange(char[] charArr, int startIdx, int oneCntLimit) {
         int oneCnt = 0;

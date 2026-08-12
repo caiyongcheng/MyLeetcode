@@ -9,6 +9,7 @@ import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.ui.JBUI;
@@ -31,6 +32,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
@@ -405,8 +407,13 @@ final class LeetCodeToolWindowPanel extends JPanel {
                 || currentPresentation.result.javaPath == null) {
             return;
         }
-        Path javaPath = currentPresentation.result.javaPath;
-        VirtualFile vf = LocalFileSystem.getInstance().refreshAndFindFileByPath(javaPath.toString());
+        Path javaPath = currentPresentation.result.javaPath.toAbsolutePath().normalize();
+        String vfsPath = FileUtil.toSystemIndependentName(javaPath.toString());
+        LocalFileSystem lfs = LocalFileSystem.getInstance();
+        VirtualFile vf = lfs.findFileByPath(vfsPath);
+        if (vf == null && Files.isRegularFile(javaPath)) {
+            vf = lfs.refreshAndFindFileByPath(vfsPath);
+        }
         if (vf == null) {
             Messages.showErrorDialog(project, "找不到题解文件:\n" + javaPath, "打开题解");
             return;

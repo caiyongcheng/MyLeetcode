@@ -56,16 +56,16 @@ public class _2958 {
     public int maxSubarrayLength(int[] nums, int k) {
         int ans = Math.min(nums.length, k);
 
-        Map<Integer, Integer> num2Cnt = new HashMap<>();
+        Map<Integer, Integer> num2CntMap = new HashMap<>();
         int left = 0;
         int right = 0;
 
         while (right < nums.length) {
-            int curCnt = num2Cnt.getOrDefault(nums[right], 0) + 1;
+            int curCnt = num2CntMap.getOrDefault(nums[right], 0) + 1;
             if (curCnt > k) {
                 ans = Math.max(ans, right - left);
                 while (left < nums.length && nums[left] != nums[right]) {
-                    num2Cnt.put(nums[left], num2Cnt.getOrDefault(nums[left], 1) - 1);
+                    num2CntMap.put(nums[left], num2CntMap.getOrDefault(nums[left], 1) - 1);
                     ++left;
                 }
                 if (nums[left] == nums[right]) {
@@ -73,8 +73,12 @@ public class _2958 {
                     ++left;
                 }
             }
-            num2Cnt.put(nums[right], curCnt);
+            num2CntMap.put(nums[right], curCnt);
             ++right;
+        }
+
+        if (num2CntMap.getOrDefault(nums[nums.length - 1], 0) <= k) {
+            ans = Math.max(ans, nums.length - left);
         }
 
         return ans;

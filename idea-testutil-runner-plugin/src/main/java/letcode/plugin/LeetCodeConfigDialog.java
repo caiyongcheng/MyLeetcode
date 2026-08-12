@@ -10,8 +10,10 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -27,6 +29,9 @@ final class LeetCodeConfigDialog extends DialogWrapper {
     private final JTextArea cookieArea;
     private final JTextField csrfField;
     private final JTextArea extraHeadersArea;
+    private final JSpinner cacheTtlHoursSpinner;
+    private final JButton invalidateCacheButton;
+    private final JLabel cacheStatusLabel;
     private final JButton refreshCookieButton;
     private final Project project;
     private final LeetCodeSettings settings;
@@ -41,6 +46,11 @@ final class LeetCodeConfigDialog extends DialogWrapper {
         cookieArea = new JTextArea(settings.cookie, 5, 48);
         csrfField = new JTextField(settings.csrfToken, 48);
         extraHeadersArea = new JTextArea(settings.extraHeaders, 6, 48);
+        cacheTtlHoursSpinner = new JSpinner(new SpinnerNumberModel(
+                Math.max(0, settings.randomQuestionCacheTtlHours), 0, 24 * 365, 1));
+        invalidateCacheButton = new JButton("立即失效随机题缓存");
+        cacheStatusLabel = new JLabel(" ");
+        invalidateCacheButton.addActionListener(event -> invalidateRandomQuestionCache());
         refreshCookieButton = new JButton("打开 LeetCode 登录并刷新 Cookie");
         refreshCookieButton.addActionListener(event -> refreshCookieFromLogin());
         init();
@@ -55,6 +65,10 @@ final class LeetCodeConfigDialog extends DialogWrapper {
         settings.cookie = cookieArea.getText().trim();
         settings.csrfToken = csrfField.getText().trim();
         settings.extraHeaders = extraHeadersArea.getText().trim();
+        settings.randomQuestionCacheTtlHours = ((Number) cacheTtlHoursSpinner.getValue()).intValue();
+        if (settings.randomQuestionCacheTtlHours < 0) {
+            settings.randomQuestionCacheTtlHours = 0;
+        }
     }
 
     @Nullable
@@ -67,6 +81,9 @@ final class LeetCodeConfigDialog extends DialogWrapper {
         row = addLabeledField(form, row, "Cookie（可选）", wrap(cookieArea));
         row = addLabeledField(form, row, "CSRF Token（可选）", csrfField);
         row = addLabeledField(form, row, "Extra Headers", wrap(extraHeadersArea));
+        row = addLabeledField(form, row, "随机题缓存有效期（小时，0=不缓存）", cacheTtlHoursSpinner);
+        row = addFullWidth(form, row, invalidateCacheButton);
+        row = addFullWidth(form, row, cacheStatusLabel);
         row = addFullWidth(form, row, refreshCookieButton);
         row = addFullWidth(form, row, new JLabel("已有题目仅更新题目注释，不覆盖实现和测试用例。"));
         addFullWidth(form, row, new JLabel(
@@ -74,9 +91,14 @@ final class LeetCodeConfigDialog extends DialogWrapper {
 
         JScrollPane scroll = new JScrollPane(form);
         scroll.setBorder(JBUI.Borders.empty());
-        scroll.setPreferredSize(new Dimension(520, 420));
+        scroll.setPreferredSize(new Dimension(520, 480));
         scroll.getVerticalScrollBar().setUnitIncrement(16);
         return scroll;
+    }
+
+    private void invalidateRandomQuestionCache() {
+        LeetCodeQuestionStatusCache.invalidate(project);
+        cacheStatusLabel.setText("随机题缓存已失效，下次随机题将重新拉取题库状态");
     }
 
     private void refreshCookieFromLogin() {

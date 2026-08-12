@@ -1,5 +1,6 @@
 package letcode.plugin;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -89,11 +90,13 @@ final class LeetCodeBrowserHttpClient {
             throw new IOException("userStatus HTTP " + result.status + ": " + truncateSafe(result.body, 300));
         }
         JsonObject data = parseGraphqlData(result.body);
-        JsonObject userStatus = data.getAsJsonObject("userStatus");
-        if (userStatus == null || userStatus.isJsonNull()) {
+        JsonObject userStatus = LeetCodeGraphqlClient.objectOrNull(data, "userStatus");
+        if (userStatus == null) {
             throw new IOException("userStatus 响应为空（HTTP " + result.status + "）");
         }
-        boolean signedIn = userStatus.has("isSignedIn") && userStatus.get("isSignedIn").getAsBoolean();
+        JsonElement signedInEl = userStatus.get("isSignedIn");
+        boolean signedIn = signedInEl != null && signedInEl.isJsonPrimitive()
+                && signedInEl.getAsBoolean();
         String username = LeetCodeGraphqlClient.textOrNull(userStatus.get("username"));
         return new UserStatus(signedIn, username, result.status);
     }
@@ -262,8 +265,9 @@ final class LeetCodeBrowserHttpClient {
             throw new IOException("GraphQL response is not a JSON object");
         }
         JsonObject obj = root.getAsJsonObject();
-        if (obj.has("errors") && obj.get("errors").isJsonArray() && obj.getAsJsonArray("errors").size() > 0) {
-            throw new IOException("GraphQL errors: " + obj.getAsJsonArray("errors"));
+        JsonArray errors = LeetCodeGraphqlClient.arrayOrNull(obj, "errors");
+        if (errors != null && errors.size() > 0) {
+            throw new IOException("GraphQL errors: " + errors);
         }
         JsonElement dataEl = obj.get("data");
         if (dataEl == null || !dataEl.isJsonObject()) {

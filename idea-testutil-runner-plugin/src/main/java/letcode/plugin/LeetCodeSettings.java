@@ -3,6 +3,7 @@ package letcode.plugin;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * LeetCode 接口配置，按项目持久化到 IDE Properties（不写入 git）。
@@ -18,6 +19,9 @@ final class LeetCodeSettings {
     private static final String KEY_EXTRA_HEADERS = "letcode.leetcode.extraHeaders";
     private static final String KEY_OVERWRITE = "letcode.leetcode.overwrite";
     private static final String KEY_LAST_DAILY_ID = "letcode.leetcode.lastDailyQuestionFrontendId";
+    private static final String KEY_RANDOM_CACHE_TTL_HOURS = "letcode.leetcode.randomQuestionCacheTtlHours";
+
+    static final int DEFAULT_RANDOM_QUESTION_CACHE_TTL_HOURS = 24;
 
     String endpoint = DEFAULT_ENDPOINT;
     String bearerToken = "";
@@ -29,6 +33,8 @@ final class LeetCodeSettings {
     boolean useEmbeddedBrowserSession;
     /** 上次成功生成的每日题 questionFrontendId，用于同日重复拉取时强制覆盖。 */
     String lastDailyQuestionFrontendId = "";
+    /** 随机题题库状态缓存有效期（小时）；0 表示禁用缓存、每次刷新。 */
+    int randomQuestionCacheTtlHours = DEFAULT_RANDOM_QUESTION_CACHE_TTL_HOURS;
 
     static LeetCodeSettings load(@NotNull Project project) {
         PropertiesComponent props = PropertiesComponent.getInstance(project);
@@ -40,6 +46,9 @@ final class LeetCodeSettings {
         settings.extraHeaders = nullToEmpty(props.getValue(KEY_EXTRA_HEADERS));
         settings.overwriteExisting = Boolean.parseBoolean(props.getValue(KEY_OVERWRITE, "false"));
         settings.lastDailyQuestionFrontendId = nullToEmpty(props.getValue(KEY_LAST_DAILY_ID));
+        settings.randomQuestionCacheTtlHours = parseNonNegativeInt(
+                props.getValue(KEY_RANDOM_CACHE_TTL_HOURS),
+                DEFAULT_RANDOM_QUESTION_CACHE_TTL_HOURS);
         return settings;
     }
 
@@ -52,6 +61,18 @@ final class LeetCodeSettings {
         props.setValue(KEY_EXTRA_HEADERS, trimToEmpty(extraHeaders, ""));
         props.setValue(KEY_OVERWRITE, Boolean.toString(overwriteExisting));
         props.setValue(KEY_LAST_DAILY_ID, trimToEmpty(lastDailyQuestionFrontendId, ""));
+        props.setValue(KEY_RANDOM_CACHE_TTL_HOURS, String.valueOf(Math.max(0, randomQuestionCacheTtlHours)));
+    }
+
+    private static int parseNonNegativeInt(@Nullable String raw, int fallback) {
+        if (raw == null || raw.trim().isEmpty()) {
+            return fallback;
+        }
+        try {
+            return Math.max(0, Integer.parseInt(raw.trim()));
+        } catch (NumberFormatException ex) {
+            return fallback;
+        }
     }
 
     private static String nullToEmpty(String value) {

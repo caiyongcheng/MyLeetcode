@@ -7,6 +7,7 @@ import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
@@ -17,6 +18,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -87,7 +90,8 @@ final class LeetCodeQuestionGenerationService {
         LeetCodeDailyGenerator generator = new LeetCodeDailyGenerator(basePath, settings);
 
         LeetCodeGraphqlClient.QuestionListItem picked =
-                pickRandomUnsolvedCandidate(client, selector, graphqlDifficulty, difficultyLabel, indicator);
+                pickRandomUnsolvedCandidate(project, client, selector, settings,
+                        graphqlDifficulty, difficultyLabel, indicator);
 
         indicator.setText("正在获取题目详情: " + picked.titleSlug);
         JsonObject question = client.fetchQuestionDetail(picked.titleSlug);
@@ -159,7 +163,8 @@ final class LeetCodeQuestionGenerationService {
         LeetCodeQuestionSelector selector = new LeetCodeQuestionSelector(basePath);
 
         LeetCodeGraphqlClient.QuestionListItem picked =
-                pickRandomUnsolvedCandidate(client, selector, graphqlDifficulty, difficultyLabel, indicator);
+                pickRandomUnsolvedCandidate(project, client, selector, settings,
+                        graphqlDifficulty, difficultyLabel, indicator);
 
         indicator.setText("正在获取题目详情: " + picked.titleSlug);
         JsonObject question = client.fetchQuestionDetail(picked.titleSlug);
@@ -196,77 +201,47 @@ final class LeetCodeQuestionGenerationService {
     }
 
     /**
-     * 按服务端 total 遍历该难度全部页，过滤付费/无题号/本地已有/账号已 AC，
-     * 再用蓄水池抽样等概率选出一道，避免偏向首个可用页的小题号。
+     * 共用缓存读取/刷新与蓄水池抽样：有效缓存时仅本地筛选，绝不分页请求题库。
      */
     @NotNull
     private static LeetCodeGraphqlClient.QuestionListItem pickRandomUnsolvedCandidate(
+            @NotNull Project project,
             @NotNull LeetCodeGraphqlClient client,
             @NotNull LeetCodeQuestionSelector selector,
+            @NotNull LeetCodeSettings settings,
             @NotNull String graphqlDifficulty,
             @NotNull String difficultyLabel,
             @NotNull ProgressIndicator indicator) throws IOException {
+        List<LeetCodeGraphqlClient.QuestionListItem> questions =
+                LeetCodeQuestionStatusCache.loadValid(project, settings.randomQuestionCacheTtlHours);
+        if (questions == null) {
+            // 缓存无效：认证分页拉全量 status，写完整快照后再筛选。
+            questions = fetchAndSaveAllProblemsetWithStatus(project, client, indicator);
+        } else {
+            indicator.setText("使用本地题库状态缓存（" + questions.size() + " 题）...");
+        }
+
         Random random = new Random();
         LeetCodeGraphqlClient.QuestionListItem picked = null;
         int candidateCount = 0;
-
-        indicator.checkCanceled();
-        indicator.setText("正在扫描 " + difficultyLabel + " 未解题目（第 1 页）...");
-        LeetCodeGraphqlClient.ProblemsetPage firstPage =
-                client.fetchProblemsetByDifficulty(graphqlDifficulty, PAGE_SIZE, 0);
-        int total = firstPage.total;
-        // total <= 0 且首页为空：无候选；首页有题时即使 total 异常也至少扫描实际返回。
-        if (total <= 0 && firstPage.questions.isEmpty()) {
-            throw new IOException("没有可用的 " + difficultyLabel
-                    + " 题目（项目中已包含、账号已通过、均为付费题，或列表已遍历完毕）");
-        }
-
-        int coverCount = Math.max(Math.max(total, 0), firstPage.questions.size());
-        int pageCount = coverCount <= 0 ? 1 : (coverCount + PAGE_SIZE - 1) / PAGE_SIZE;
-
-        for (int pageIndex = 0; pageIndex < pageCount; pageIndex++) {
+        for (LeetCodeGraphqlClient.QuestionListItem item : questions) {
             indicator.checkCanceled();
-            int pageNo = pageIndex + 1;
-            indicator.setText("正在扫描 " + difficultyLabel + " 未解题目（第 " + pageNo
-                    + " 页 / 共 " + pageCount + " 页）...");
-
-            LeetCodeGraphqlClient.ProblemsetPage pageResult = pageIndex == 0
-                    ? firstPage
-                    : client.fetchProblemsetByDifficulty(
-                            graphqlDifficulty, PAGE_SIZE, pageIndex * PAGE_SIZE);
-            if (pageResult.questions.isEmpty()) {
-                break;
+            if (!difficultyMatches(item.difficulty, graphqlDifficulty)) {
+                continue;
             }
-
-            for (LeetCodeGraphqlClient.QuestionListItem item : pageResult.questions) {
-                indicator.checkCanceled();
-                if (item.paidOnly) {
-                    continue;
-                }
-                if (item.questionFrontendId == null || item.questionFrontendId.isEmpty()) {
-                    continue;
-                }
-                if (selector.exists(item.questionFrontendId)) {
-                    continue;
-                }
-                // 账号已 AC 的题不进入候选；未开始 / 尝试未通过均可选。
-                if (item.isAccepted()) {
-                    continue;
-                }
-                candidateCount++;
-                // 蓄水池：第 k 个候选以 1/k 概率替换当前选择，保证等概率。
-                if (random.nextInt(candidateCount) == 0) {
-                    picked = item;
-                }
+            if (item.paidOnly || item.isAccepted()) {
+                continue;
             }
-
-            int scanned = pageIndex * PAGE_SIZE + pageResult.questions.size();
-            if (pageResult.questions.size() < PAGE_SIZE) {
-                break;
+            if (item.questionFrontendId == null || item.questionFrontendId.isEmpty()) {
+                continue;
             }
-            // total 低估时继续翻页至短页/空页，不设固定页数上限。
-            if (pageIndex + 1 >= pageCount && scanned > Math.max(total, 0)) {
-                pageCount = pageIndex + 2;
+            if (selector.exists(item.questionFrontendId)) {
+                continue;
+            }
+            candidateCount++;
+            // 蓄水池：第 k 个候选以 1/k 概率替换，保证等概率、不偏向低题号。
+            if (random.nextInt(candidateCount) == 0) {
+                picked = item;
             }
         }
 
@@ -276,6 +251,58 @@ final class LeetCodeQuestionGenerationService {
         }
         indicator.setText("已从 " + candidateCount + " 道未解候选中随机选出: " + picked.titleSlug);
         return picked;
+    }
+
+    /**
+     * 认证分页拉取全部题库 status 并写入完整快照。
+     */
+    @NotNull
+    private static List<LeetCodeGraphqlClient.QuestionListItem> fetchAndSaveAllProblemsetWithStatus(
+            @NotNull Project project,
+            @NotNull LeetCodeGraphqlClient client,
+            @NotNull ProgressIndicator indicator) throws IOException {
+        indicator.checkCanceled();
+        indicator.setText("正在刷新题库状态缓存（第 1 页）...");
+        LeetCodeGraphqlClient.ProblemsetPage firstPage =
+                client.fetchAllProblemsetWithStatus(PAGE_SIZE, 0);
+        int total = firstPage.total;
+        if (total <= 0 && firstPage.questions.isEmpty()) {
+            throw new IOException("刷新题库状态缓存失败：服务端返回空题库");
+        }
+
+        int pageCount = total <= 0 ? 1 : (total + PAGE_SIZE - 1) / PAGE_SIZE;
+        List<LeetCodeGraphqlClient.QuestionListItem> all = new ArrayList<>(Math.max(total, PAGE_SIZE));
+        for (LeetCodeGraphqlClient.QuestionListItem item : firstPage.questions) {
+            indicator.checkCanceled();
+            all.add(item);
+        }
+
+        for (int pageIndex = 1; pageIndex < pageCount; pageIndex++) {
+            indicator.checkCanceled();
+            int pageNo = pageIndex + 1;
+            indicator.setText("正在刷新题库状态缓存（第 " + pageNo + " 页 / 共 " + pageCount + " 页）...");
+            LeetCodeGraphqlClient.ProblemsetPage pageResult =
+                    client.fetchAllProblemsetWithStatus(PAGE_SIZE, pageIndex * PAGE_SIZE);
+            for (LeetCodeGraphqlClient.QuestionListItem item : pageResult.questions) {
+                indicator.checkCanceled();
+                all.add(item);
+            }
+            if (pageResult.questions.isEmpty() || pageResult.questions.size() < PAGE_SIZE) {
+                break;
+            }
+        }
+
+        LeetCodeQuestionStatusCache.save(project, all);
+        indicator.setText("题库状态缓存已刷新（" + all.size() + " 题）");
+        return all;
+    }
+
+    private static boolean difficultyMatches(@Nullable String itemDifficulty,
+                                             @NotNull String graphqlDifficulty) {
+        if (itemDifficulty == null || itemDifficulty.trim().isEmpty()) {
+            return false;
+        }
+        return graphqlDifficulty.equalsIgnoreCase(itemDifficulty.trim());
     }
 
     private static void handleResult(@NotNull Project project,
@@ -291,7 +318,10 @@ final class LeetCodeQuestionGenerationService {
         if (result.testCasePath != null) {
             refreshPath(result.testCasePath);
         }
-        VirtualFile vf = LocalFileSystem.getInstance().refreshAndFindFileByPath(result.javaPath.toString());
+        // 与「打开题解」一致：绝对路径 + system-independent，避免 Windows 反斜杠导致找不到。
+        String javaVfsPath = FileUtil.toSystemIndependentName(
+                result.javaPath.toAbsolutePath().normalize().toString());
+        VirtualFile vf = LocalFileSystem.getInstance().refreshAndFindFileByPath(javaVfsPath);
         if (vf != null) {
             FileEditorManager.getInstance(project).openFile(vf, true);
         }
