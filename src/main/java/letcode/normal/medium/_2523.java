@@ -2,6 +2,9 @@ package letcode.normal.medium;
 
 import letcode.utils.SolutionTestMethod;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 2523. Closest Prime Numbers in Range
  * Difficulty: Medium
@@ -40,70 +43,85 @@ import letcode.utils.SolutionTestMethod;
 
 public class _2523 {
 
-    public static final int[] screening = new int[1_000_000 + 1];
-    public static int processLen = 2;
+    public static final List<Integer> primeList = new ArrayList<>();
 
     static {
-        screening[0] = 1;
-        screening[1] = 1;
-    }
 
-    @SolutionTestMethod
-    public int[] closestPrimes(int left, int right) {
-        int[] ans = new int[]{0, 0};
+        int[] screening = new int[1_000_000 + 1];
 
-        processScreening(right);
-
-        for (int i = left; i <= right; i++) {
-            if (screening[i] == 0) {
-                if (ans[0] != 0) {
-                    ans[1] = i;
-                    break;
-                }
-                ans[0] = i;
-            }
+        for (int i = 4; i <= screening.length; i += 2) {
+            screening[i] = 1;
         }
 
-        if (ans[1] == 0) {
-            return new int[]{-1, -1};
-        }
-
-        int curPrime = ans[1];
-        for (int i = ans[1] + 1; i <= right; i++) {
-            if (screening[i] == 0) {
-                if ((i - curPrime) < (ans[1] - ans[0])) {
-                    ans[0] = curPrime;
-                    ans[1] = i;
-                }
-                curPrime = i;
-            }
-        }
-
-        return ans;
-
-
-    }
-
-    public void processScreening(int limit) {
-        if (limit < processLen) {
-            return ;
-        }
-        processLen = limit;
-        for (int i = 2; i <= processLen; i++) {
-            if (screening[i] != 0) {
+        primeList.add(2);
+        for (int i = 3; i < screening.length; i += 2) {
+            if (screening[i] == 1) {
                 continue;
             }
-            if (i << 1 > processLen) {
-                break;
-            }
-            for (int j = 2; i * j <= processLen; j++) {
+            primeList.add(i);
+            for (int j = 2; i * j < screening.length; ++j) {
                 screening[i * j] = 1;
             }
         }
 
-    }
-
-    public static void main(String[] args) {
 
     }
+
+    @SolutionTestMethod
+    public int[] closestPrimes(int left, int right) {
+
+        int[] ans = new int[]{-1, -1};
+
+        int i = binarySearch(left);
+        if (i == -1 || i >= primeList.size() - 1 || primeList.get(i + 1) > right) {
+            return ans;
+        }
+        ans[0] = primeList.get(i);
+        ans[1] = primeList.get(++i);
+
+        int curPrime = ans[1];
+        int nextPrime;
+        for (++i; i < primeList.size(); ++i) {
+            nextPrime = primeList.get(i);
+            if (nextPrime > right) {
+                break;
+            }
+            if (nextPrime - curPrime < (ans[1] - ans[0])) {
+                ans[0] = curPrime;
+                ans[1] = nextPrime;
+            }
+            curPrime = nextPrime;
+        }
+
+        return ans;
+    }
+
+
+    public int binarySearch(int target) {
+        int l = 0;
+        if (primeList.get(l) >= target) {
+            return l;
+        }
+        int r = primeList.size() - 1;
+        if (target > primeList.get(r)) {
+            return -1;
+        }
+
+        int m;
+        while (true) {
+            m = (l + r) >> 1;
+            if (l == m) {
+                break;
+            }
+            if (primeList.get(m) >= target) {
+                r = m;
+            } else {
+                l = m;
+            }
+        }
+        return r;
+    }
+
+
+
 }
