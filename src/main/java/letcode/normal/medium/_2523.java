@@ -90,6 +90,9 @@ public class _2523 {
                 ans[0] = curPrime;
                 ans[1] = nextPrime;
             }
+            if (ans[1] - ans[0] < 3) {
+                break;
+            }
             curPrime = nextPrime;
         }
 
