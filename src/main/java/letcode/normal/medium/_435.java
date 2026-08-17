@@ -45,15 +45,13 @@ public class _435 {
         Arrays.sort(intervals, (a, b) -> a[0] == b[0] ? a[1] - b[1] : a[0] - b[0]);
 
         int ans = 0;
-        int curIntervalIdx = 0;
+        int curEnd = intervals[0][1];
         for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i][0] >= intervals[curIntervalIdx][1]) {
-                curIntervalIdx = i;
-                continue;
-            }
-            ++ans;
-            if (intervals[i][1] < intervals[curIntervalIdx][1]) {
-                curIntervalIdx = i;
+            if (intervals[i][0] < curEnd) {
+                ++ans;
+                curEnd = Math.min(curEnd, intervals[i][1]);
+            } else {
+                curEnd = intervals[i][1];
             }
         }
         return ans;
