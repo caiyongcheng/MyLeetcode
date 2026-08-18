@@ -42,24 +42,27 @@ public class _840 {
 
     public int numMagicSquaresInside(int[][] grid) {
         int len = 3;
-        int sum = 15;
-        boolean match = true;
-        int rowSum = 0;
-        int colSum = 0;
-        int digonalSum1 = 0;
-        int digonalSum2 = 0;
-        int xorNum = 0;
+        int middleNum = (len * len + 1) >> 1;
+        int sum = ((1 + len * len) * (len * len) >> 1) / len;
+        int matchMask = (1 << (len * len + 1)) - 2;
+        boolean match;
+        int rowSum;
+        int colSum;
+        int diagonalSum1;
+        int diagonalSum2;
+        int bitMask;
         int ans = 0;
         for (int row = 0; row < grid.length - 2; row++) {
             for (int col = 0; col < grid[row].length - 2; col++) {
 
-                if (grid[row + 1][col + 1] != (len * len + 1) >> 1) {
+                if (grid[row + 1][col + 1] != middleNum) {
                     continue;
                 }
 
-                digonalSum1 = 0;
-                digonalSum2 = 0;
-                xorNum = 0;
+                diagonalSum1 = 0;
+                diagonalSum2 = 0;
+                bitMask = 0;
+                match = true;
 
                 // start check
                 for (int i = 0; i < len; i++) {
@@ -84,23 +87,24 @@ public class _840 {
                         break;
                     }
 
-                    digonalSum1 += grid[row + i][col + i];
-                    digonalSum2 += grid[row + i][col + len - i - 1];
+                    diagonalSum1 += grid[row + i][col + i];
+                    diagonalSum2 += grid[row + i][col + len - i - 1];
                 }
 
 
                 // check diagonals and num
-                if (!match || digonalSum1 != sum || digonalSum2 != sum) {
+                if (!match || diagonalSum1 != sum || diagonalSum2 != sum) {
                     continue;
                 }
 
                 for (int r = 0; r < len; r++) {
                     for (int l = 0; l < len; l++) {
-                        xorNum |=  (1 << grid[row + r][col + l]);
+                        bitMask |= (1 << grid[row + r][col + l]);
                     }
                 }
 
-                if (xorNum == (1 << (len * len + 1)) - 2) {
+                // 掩码 == bits 1~9 全置位（(1<<10)-2），保证9个数恰为互不相同的 1~9
+                if (bitMask == matchMask) {
                     ++ans;
                 }
             }
