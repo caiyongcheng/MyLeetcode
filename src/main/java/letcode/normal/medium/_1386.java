@@ -1,9 +1,8 @@
 package letcode.normal.medium;
 
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 1386. Cinema Seat Allocation
@@ -64,15 +63,33 @@ public class _1386 {
 
     public int maxNumberOfFamilies(int n, int[][] resermaskedSeats) {
 
-        return (n << 1) - Arrays.stream(resermaskedSeats)
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int[] resermaskedSeat : resermaskedSeats) {
+            map.put(resermaskedSeat[0], map.getOrDefault(resermaskedSeat[0], 0) | (1 << (resermaskedSeat[1])));
+        }
+
+        int ans = n << 1;
+        for (Map.Entry<Integer, Integer> reservedSeat : map.entrySet()) {
+            Integer mask = reservedSeat.getValue();
+            if (((mask >> 2) << 24) == 0) {
+
+            } else if (((mask >> 2) << 28) == 0
+                    || ((mask >> 4) << 28) == 0
+                    || ((mask >> 6) << 28) == 0) {
+                --ans;
+            } else {
+                ans -= 2;
+            }
+        }
+        return ans;
+/*        return (n << 1) - Arrays.stream(resermaskedSeats)
                 .collect(Collectors.toMap(
                         r -> r[0],
                         r -> 1 << r[1],
                         (l, r) -> l | r
                 ))
-                .entrySet()
+                .values()
                 .stream()
-                .map(Map.Entry::getValue)
                 .map(mask -> {
                     if (((mask >> 2) << 24) == 0) {
                         return 0;
@@ -83,7 +100,7 @@ public class _1386 {
                     }
                     return 2;
                 })
-                .reduce(Integer::sum).orElse(0);
+                .reduce(Integer::sum).orElse(0);*/
     }
 
 
