@@ -64,5 +64,6 @@ package letcode.normal.difficult;
 public class _1872 {
 
     public int stoneGameVIII(int[] stones) {
+        return 0;
     }
 }

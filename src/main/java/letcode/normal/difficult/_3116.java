@@ -1,8 +1,5 @@
 package letcode.normal.difficult;
 
-import letcode.utils.SolutionTestMethod;
-import org.jetbrains.annotations.NotNull;
-
 /**
  * 3116. Kth Smallest Amount With Single Denomination Combination
  * Difficulty: Hard
@@ -58,11 +55,21 @@ import org.jetbrains.annotations.NotNull;
  */
 public class _3116 {
 
-    @SolutionTestMethod
+
     public long findKthSmallest(int[] coins, int k) {
 
+        /*
+        核心
+            1、如果给定一个数x。硬币能组合的，不重复，且不大于x的组合有p种，那么就找到了第p大的数。那么可以不断二分枚举x。
+            2、怎么求数x对应的组合数，对于每个coin，根据x/coin可以求出每种硬币的组合，但是存在重复（lcm）的情况。此时使用容斥原理进行计算。
+            3、容斥原理，计算多个集合的并集元素数量。核心就是二项式保证重复次数只被计算一次。证明方法很多。
+         */
+
+        // 压缩，例如coins中有2，那么剩余的所有偶数都不需要被计算
         coins = compact(coins);
 
+        // 用mask表示组合方式 求组合的最小公倍数 再根据容斥原理计算贡献
+        // 这里可以用dp去优化 不过根据题目规模 这里的意义不是很大
         long[] lcmCache = new long[1 << coins.length];
         for (int i = 1; i < lcmCache.length; i++) {
             lcmCache[i] = 1;
@@ -70,13 +77,15 @@ public class _3116 {
                 if ((i & 1 << j) == 0) {
                     continue;
                 }
-                lcmCache[i] = getLeastCommonMultiple(lcmCache[i], coins[j]);
+                lcmCache[i] = lcm(lcmCache[i], coins[j]);
             }
+            // 容斥原理 奇数加 偶数减
             if ((Integer.bitCount(i) & 1) == 0) {
                 lcmCache[i] = -lcmCache[i];
             }
         }
 
+        // compact后已经有序 取coins[0] * k 作为上边界
         long r = (long) coins[0] * k;
         long l = 0;
         long mid = r;
@@ -88,27 +97,25 @@ public class _3116 {
             }
             if (count > k) {
                 r = mid;
-                mid = (l + r) >> 1;
             } else {
                 l = mid;
-                mid = (l + r) >> 1;
             }
+            mid = (l + r) >> 1;
         }
 
+        // 最接近mid的组合数就是结果
         long diff = Long.MAX_VALUE;
-        long ans = 0;
-        long cur = 0;
+        long cur;
         for (int coin : coins) {
             cur = mid / coin * coin;
             if (mid - cur < diff) {
                 diff = mid - cur;
-                ans = cur;
             }
         }
-        return ans;
+        return mid - diff;
     }
 
-    @NotNull
+
     private static int[] compact(int[] coins) {
         int[] count = new int[26];
         for (int coin : coins) {
@@ -142,7 +149,7 @@ public class _3116 {
         return coins;
     }
 
-    public long getLeastCommonMultiple(long x, long y) {
+    private long lcm(long x, long y) {
         long mx = x;
         long mi = y;
 
@@ -164,7 +171,7 @@ public class _3116 {
 
 
 
-    public long getCoinCount(long sum, long[] lcmCache) {
+    private long getCoinCount(long sum, long[] lcmCache) {
         long count = 0;
         for (int i = 1; i < lcmCache.length; i++) {
             count +=  sum / lcmCache[i];

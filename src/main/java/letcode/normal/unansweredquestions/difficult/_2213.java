@@ -1,4 +1,4 @@
-package letcode.normal.difficult;
+package letcode.normal.unansweredquestions.difficult;
 
 /**
  * 2213. Longest Substring of One Repeating Character
@@ -56,5 +56,6 @@ package letcode.normal.difficult;
 public class _2213 {
 
     public int[] longestRepeating(String s, String queryCharacters, int[] queryIndices) {
+        return null;
     }
 }
