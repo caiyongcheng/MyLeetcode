@@ -1,7 +1,5 @@
 package letcode.normal.medium;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * 3015. Count the Number of Houses at a Certain Distance I
  * Difficulty: Medium
@@ -81,25 +79,13 @@ public class _3015 {
         --x;
         --y;
 
-        // i < j <= x < y and x < y <= i < j is meaningless
         int oldPathCost;
         int newPathCost;
 
-        for (int i = 0; i <= x; i++) {
+        for (int i = 0; i < y; i++) {
             for (int j = x + 1; j < n; j++) {
                 oldPathCost = j - i;
-                newPathCost = (x - i) + 1 + Math.abs(j - y);
-                if (oldPathCost > newPathCost) {
-                    ans[oldPathCost - 1] -= 2;
-                    ans[newPathCost - 1] += 2;
-                }
-            }
-        }
-
-        for (int i = x + 1; i < y; i++) {
-            for (int j = x + 1; j < n; j++) {
-                oldPathCost = j - i;
-                newPathCost = (i - x) + 1 + Math.abs(j - y);
+                newPathCost = Math.abs(x - i) + 1 + Math.abs(j - y);
                 if (oldPathCost > newPathCost) {
                     ans[oldPathCost - 1] -= 2;
                     ans[newPathCost - 1] += 2;
@@ -112,7 +98,7 @@ public class _3015 {
 
     }
 
-    @NotNull
+
     private static int[] init(int n) {
         int[] ans = new int[n];
         for (int i = 0; i < ans.length - 1; i++) {
