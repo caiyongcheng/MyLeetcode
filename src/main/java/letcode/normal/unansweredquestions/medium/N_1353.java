@@ -1,4 +1,4 @@
-package letcode.normal.medium;
+package letcode.normal.unansweredquestions.medium;
 
 /**
  * @program: Leetcode
@@ -11,7 +11,7 @@ package letcode.normal.medium;
  * @author: 蔡永程
  * @create: 2021-01-15 11:03
  */
-public class _1353 {
+public class N_1353 {
 
 
     public int maxEvents(int[][] events) {

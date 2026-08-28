@@ -1,4 +1,4 @@
-package letcode.normal.medium;
+package letcode.normal.unansweredquestions.medium;
 
 /**
  * 石子游戏中，爱丽丝和鲍勃轮流进行自己的回合，爱丽丝先开始 。  有 n 块石子排成一排。
@@ -11,7 +11,7 @@ package letcode.normal.medium;
  * @version 1.0.0
  * @since 2024/2/4 14:50
  */
-public class _1690 {
+public class N_1690 {
 
     public int stoneGameVII(int[] stones) {
         /*

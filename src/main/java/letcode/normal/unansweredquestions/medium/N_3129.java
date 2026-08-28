@@ -1,4 +1,4 @@
-package letcode.normal.medium;
+package letcode.normal.unansweredquestions.medium;
 
 /**
  * You are given 3 positive integers zero, one, and limit.  A  binary array  arr is called stable if:
@@ -10,7 +10,7 @@ package letcode.normal.medium;
  * @version 1.0.0
  * @since 2024-08-06 09:01
  */
-public class _3129 {
+public class N_3129 {
 
     public int numberOfStableArrays(int zero, int one, int limit) {
         /*

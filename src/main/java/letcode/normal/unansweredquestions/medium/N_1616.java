@@ -1,4 +1,4 @@
-package letcode.normal.medium;
+package letcode.normal.unansweredquestions.medium;
 
 /**
  * @program: Leetcode
@@ -15,7 +15,7 @@ package letcode.normal.medium;
  * @author: 蔡永程
  * @create: 2020-12-31 09:21
  */
-public class _1616 {
+public class N_1616 {
 
     private static boolean isPlalindromeStr(String str) {
         if (null == str || str.length() < 2) {

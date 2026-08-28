@@ -1,4 +1,4 @@
-package letcode.normal.medium;
+package letcode.normal.unansweredquestions.medium;
 
 /**
  * 传送带上的包裹必须在 D 天内从一个港口运送到另一个港口。
@@ -9,7 +9,7 @@ package letcode.normal.medium;
  * @author CaiYongcheng
  * @since 2021-04-26 09:09
  **/
-public class _1101 {
+public class N_1101 {
 
 
     public int shipWithinDays(int[] weights, int D) {

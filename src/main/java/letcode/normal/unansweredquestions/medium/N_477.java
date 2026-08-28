@@ -1,4 +1,4 @@
-package letcode.normal.medium;
+package letcode.normal.unansweredquestions.medium;
 
 /**
  * 两个整数的汉明距离 指的是这两个数字的二进制数对应位不同的数量。  计算一个数组中，任意两个数之间汉明距离的总和。
@@ -10,7 +10,7 @@ package letcode.normal.medium;
  * @author CaiYongcheng
  * @since 2021-05-28 14:53
  **/
-public class _477 {
+public class N_477 {
 
     public int totalHammingDistance(int[] nums) {
         int ans = 0;

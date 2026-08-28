@@ -1,4 +1,4 @@
-package letcode.normal.medium;
+package letcode.normal.unansweredquestions.medium;
 
 /**
  * @author Caiyongcheng
@@ -12,7 +12,7 @@ package letcode.normal.medium;
  * 给你一个整数数组 forbidden ，其中 forbidden[i] 是跳蚤不能跳到的位置，同时给你整数 a， b 和 x ，请你返回跳蚤到家的最少跳跃次数。
  * 如果没有恰好到达 x 的可行方案，请你返回 -1 。
  */
-public class _1654 {
+public class N_1654 {
 
 
     public int minimumJumps(int[] forbidden, int a, int b, int x) {

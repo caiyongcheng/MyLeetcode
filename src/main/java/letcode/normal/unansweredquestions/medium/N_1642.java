@@ -1,4 +1,4 @@
-package letcode.normal.medium;
+package letcode.normal.unansweredquestions.medium;
 
 /**
  * @program: Leetcode
@@ -16,7 +16,7 @@ package letcode.normal.medium;
  * @author: 蔡永程
  * @create: 2020-12-08 16:50
  */
-public class _1642 {
+public class N_1642 {
 
 
     private int tableSizeFor(int cap) {

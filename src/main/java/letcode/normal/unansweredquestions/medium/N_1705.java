@@ -1,4 +1,4 @@
-package letcode.normal.medium;
+package letcode.normal.unansweredquestions.medium;
 
 /**
  * 有一棵特殊的苹果树，一连 n 天，每天都可以长出若干个苹果。
@@ -13,7 +13,7 @@ package letcode.normal.medium;
  * @author CaiYongcheng
  * @since 2021-12-24 09:11
  **/
-public class _1705 {
+public class N_1705 {
 
     public int eatenApples(int[] apples, int[] days) {
         /*

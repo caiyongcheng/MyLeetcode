@@ -1,4 +1,4 @@
-package letcode.normal.medium;
+package letcode.normal.unansweredquestions.medium;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * 1 <= n == maxHeights <= 10^3
  * 1 <= maxHeights[i] <= 10^9
  */
-public class _2865 {
+public class N_2865 {
 
     public long maximumSumOfHeights(List<Integer> maxHeights) {
         /*

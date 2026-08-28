@@ -1,4 +1,4 @@
-package letcode.normal.medium;
+package letcode.normal.unansweredquestions.medium;
 
 import datastructure.utils.FormatPrintUtils;
 
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author CaiYongcheng
  * @since 2022-07-13 09:35
  **/
-public class _735 {
+public class N_735 {
 
 
     public int[] asteroidCollision(int[] asteroids) {
