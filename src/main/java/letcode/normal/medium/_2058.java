@@ -90,12 +90,12 @@ public class _2058 {
 
         while (head.next != null) {
             if ((head.val > previousVal && head.val > head.next.val)
-                    || head.val < previousVal && head.val < head.next.val) {
+                    || (head.val < previousVal && head.val < head.next.val)) {
                 if (firstCriticalPointIdx == 0) {
                     firstCriticalPointIdx = idx;
                 }
                 if (previousCriticalPointIdx != 0) {
-                    ans[0] =  Math.min(ans[0], Math.abs(idx - previousCriticalPointIdx));
+                    ans[0] =  Math.min(ans[0], idx - previousCriticalPointIdx);
                 }
                 previousCriticalPointIdx = idx;
                 lastCriticalPointIdx = idx;
