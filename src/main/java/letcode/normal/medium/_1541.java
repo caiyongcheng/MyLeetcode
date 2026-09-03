@@ -49,52 +49,30 @@ package letcode.normal.medium;
 public class _1541 {
 
     public int minInsertions(String s) {
-
-        char[] charArray = s.toCharArray();
-        int leftScore = 0;
+        int needRight = 0;
         int insertCnt = 0;
-        for (char c : charArray) {
-            // 每个左括号前 必须是平衡结果 或者只能有n个(
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
             if (c == '(') {
-                // 每个(前不能有多余的)，如果有需要添加(进行平衡
-                if (leftScore < 0) {
-                    leftScore = -leftScore;
-                    insertCnt += (leftScore >> 1);
-                    leftScore = leftScore & 1;
-                    // 多了一个右括号, 需要加一个左括号，一个右括号
-                    if (leftScore == 1) {
-                        insertCnt += 2;
-                        leftScore = 0;
-                    }
-                } else if ((leftScore & 1) == 1) {
-                    // 少了一个右括号
+                // 新的左括号前若缺一个右括号，先补齐前一个右括号对。
+                if ((needRight & 1) == 1) {
                     ++insertCnt;
-                    --leftScore;
+                    --needRight;
                 }
-                leftScore += 2;
-            } else if (c == ')') {
-                leftScore--;
+                needRight += 2;
+            } else {
+                --needRight;
+                // 当前右括号没有可匹配的左括号，补一个左括号。
+                if (needRight < 0) {
+                    ++insertCnt;
+                    needRight += 2;
+                }
             }
         }
 
-        // 最后再进行一次验证
-        if (leftScore > 0) {
-            // 少了一个右括号 先补充一个右括号
-            if ((leftScore & 1) == 1) {
-                ++insertCnt;
-                --leftScore;
-            }
-            insertCnt += leftScore;;
-        } else if (leftScore < 0) {
-            leftScore = -leftScore;
-            insertCnt += (leftScore >> 1);
-            // 多出一个右括号 需要添加一个左括号和一个右括号
-            if ((leftScore & 1) == 1) {
-                insertCnt += 2;
-            }
-        }
+        // 扫描结束后，剩余缺口直接补齐。
+        insertCnt += needRight;
         return insertCnt;
-
-
     }
 }
