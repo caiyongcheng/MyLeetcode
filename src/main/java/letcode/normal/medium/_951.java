@@ -65,7 +65,7 @@ public class _951 {
         if (root1 == null && root2 == null) {
             return true;
         }
-        if ((root1 == null && root2 != null) || root2 == null) {
+        if (root1 == null || root2 == null) {
             return false;
         }
         return root1.val == root2.val

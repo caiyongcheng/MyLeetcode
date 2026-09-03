@@ -64,19 +64,19 @@ public class _1674 {
         int pairCnt = nums.length >> 1;
         int maxNum;
         int minNum;
-        int targetSum;
+        int pairSum;
         for (int i = 0; i < pairCnt; i++) {
             maxNum = nums[i];
             minNum = nums[nums.length - i - 1];
-            targetSum = maxNum + minNum;
+            pairSum = maxNum + minNum;
             if (maxNum < minNum) {
                 maxNum = minNum;
                 minNum = nums[i];
             }
 
             // 当前数对在 targetSum 时不需要调整
-            diff[targetSum]--;
-            diff[targetSum + 1]++;
+            diff[pairSum]--;
+            diff[pairSum + 1]++;
 
             // 在范围[min+1, max+limit]内只需要调整一次
             diff[minNum + 1]--;
