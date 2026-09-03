@@ -71,11 +71,11 @@ public class _2075 {
 
         // 按原始文本的顺序去读取
         char[] charArray = encodedText.toCharArray();
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(len);
         for (int i = 0; i < cols; i++) {
             int r = 0;
             int c = i;
-            while (r < rows && c < len && r * cols + c < len) {
+            while (r < rows && c < cols && r * cols + c < len) {
                 sb.append(charArray[r * cols + c]);
                 r++;
                 c++;
