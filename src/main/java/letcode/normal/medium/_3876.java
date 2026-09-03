@@ -73,24 +73,17 @@ public class _3876 {
         // 如果全是奇数 偶数 不做处理
         // 如果存在奇数 如果期望结果是偶数的话 总有一个最小的奇数找不到更小的奇数去想减 所以 无法达成条件
         // 考虑期望结果是奇数的情况 那么需要满足每个偶数都有小于他的奇数才行 也就是最小奇数要小于最小偶数
+        // 综上所述 只要满足 最小值是奇数即可 或者 全为偶数即可
 
-        int minOdd = Integer.MAX_VALUE;
-        int minEven = Integer.MAX_VALUE - 1;
+        boolean hasOdd = false;
+        int minValue = nums1[0];
+
         for (int num : nums1) {
-            if ((num & 1) == 1) {
-                if (num < minOdd) {
-                    minOdd = num;
-                }
-            } else if (num < minEven) {
-                minEven = num;
-            }
+            minValue = Math.min(minValue, num);
+            hasOdd = hasOdd || (num & 1) == 1;
         }
 
-        if (minOdd == Integer.MAX_VALUE || minEven == Integer.MAX_VALUE - 1) {
-            return true;
-        }
-
-        return minEven > minOdd;
+        return (minValue & 1) == 1 || !hasOdd;
 
     }
 }
