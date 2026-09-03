@@ -84,14 +84,11 @@ public class _2075 {
 
         // 根据题意去除末尾空格
         int ansStrLen = sb.length();
-        for (int strLen = ansStrLen - 1; strLen >= 0; strLen--) {
-            if (sb.charAt(strLen) == ' ') {
-                sb.deleteCharAt(strLen);
-            } else {
-                break;
-            }
+        int mainIdx = ansStrLen - 1;
+        while (mainIdx >= 0 && sb.charAt(mainIdx) == ' ') {
+            --mainIdx;
         }
 
-        return sb.toString();
+        return sb.substring(0, mainIdx + 1);
     }
 }
