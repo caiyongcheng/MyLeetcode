@@ -70,20 +70,15 @@ package letcode.normal.medium;
 public class _3876 {
 
     public boolean uniformArray(int[] nums1) {
-        // 如果全是奇数 偶数 不做处理
-        // 如果存在奇数 如果期望结果是偶数的话 总有一个最小的奇数找不到更小的奇数去想减 所以 无法达成条件
-        // 考虑期望结果是奇数的情况 那么需要满足每个偶数都有小于他的奇数才行 也就是最小奇数要小于最小偶数
-        // 综上所述 只要满足 最小值是奇数即可 或者 全为偶数即可
-
-        boolean hasOdd = false;
+        // 存在奇数时只能统一为奇数，且全局最小值必须为奇数；无奇数时保持全偶数。
+        int hasOdd = 0;
         int minValue = nums1[0];
 
         for (int num : nums1) {
             minValue = Math.min(minValue, num);
-            hasOdd = hasOdd || (num & 1) == 1;
+            hasOdd |= (num & 1);
         }
 
-        return (minValue & 1) == 1 || !hasOdd;
-
+        return (minValue & 1) != 0 || hasOdd == 0;
     }
 }
