@@ -61,70 +61,46 @@ public class _2055 {
         对应的结果是 queryLeft 之间 queryRight 这部分的值
         也就是第一个大于等于queryLeft到第一个小于等于queryRight区间的盘子数
         二分检索 + 前缀和即可
+        二分检索可以优化 可以预先计算出每个点左右挨着的盘子是哪个
          */
 
-        // 保存蜡烛坐标以及当前蜡烛到上一个蜡烛之间的盘子数量
-        List<int[]> candle2Candies = new ArrayList<>();
         char[] charArray = s.toCharArray();
+        int[][] adjacent = new int[charArray.length][2];
+
+        int lastCandleNo = 0;
+        int lastCandleIndex = -1;
+        List<Integer> candlesPreSum = new ArrayList<>();
+        candlesPreSum.add(0);
+
+        for (int i = 0; i < adjacent.length; i++) {
+            if (charArray[i] == '|') {
+                ++lastCandleNo;
+                candlesPreSum.add(i - lastCandleIndex - 1 + candlesPreSum.get(lastCandleNo - 1));
+                while (lastCandleIndex + 1 < i) {
+                    adjacent[lastCandleIndex + 1][1] = lastCandleNo;
+                    ++lastCandleIndex;
+                }
+                adjacent[i][1] = lastCandleNo;
+                lastCandleIndex = i;
+            }
+            adjacent[i][0] = lastCandleNo;
+        }
+
         int[] ans = new int[queries.length];
-
-        // 跳过左边没有蜡烛的部分
-        int startIdx = 0;
-        while (startIdx < charArray.length && charArray[startIdx] != '|') {
-            startIdx++;
-        }
-
-        // 没有根蜡烛 无法满足条件
-        if (startIdx >= charArray.length) {
-            return ans;
-        }
-
-        candle2Candies.add(new int[]{startIdx, 0});
-        for (int idx = startIdx + 1; idx < charArray.length; ++idx) {
-            if (charArray[idx] == '|') {
-                candle2Candies.add(new int[]{idx, idx - startIdx - 1});
-                startIdx = idx;
-            }
-        }
-
-        // 只有一根蜡烛 无法满足条件
-        if (candle2Candies.size() == 1) {
-            return ans;
-        }
-
-        // 计算前缀和
-        candle2Candies.add(new int[]{charArray.length, 0});
-        int[] candiesPreSum = new int[candle2Candies.size()];
-        for (int i = 1; i < candle2Candies.size(); i++) {
-            candiesPreSum[i] = candle2Candies.get(i)[1] + candiesPreSum[i - 1];
-        }
-
         for (int i = 0; i < queries.length; i++) {
-            int left = binarySearchCeil(queries[i][0], candle2Candies);
-            // 右端点包含在查询范围内，因此查找第一个大于右端点的蜡烛。
-            int right = binarySearchCeil(queries[i][1] + 1, candle2Candies) - 1;
-            if (right <= left) {
-                ans[i] = 0;
-            } else {
-                ans[i] = candiesPreSum[right] - candiesPreSum[left];
-            }
+            int leftCandleNo = adjacent[queries[i][0]][1];
+            int rightCandleNo = adjacent[queries[i][1]][0];
 
+            // 查询区间内必须存在两根有效蜡烛，且左边界不能位于最后一根蜡烛之后。
+            if (leftCandleNo == 0 || rightCandleNo <= leftCandleNo) {
+                continue;
+            }
+            ans[i] = candlesPreSum.get(rightCandleNo) - candlesPreSum.get(leftCandleNo);
         }
         return ans;
-    }
 
 
-    private int binarySearchCeil(int target, List<int[]> candle2Candies) {
-        int left = 0;
-        int right = candle2Candies.size() - 1;
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            if (candle2Candies.get(mid)[0] >= target) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
+
     }
+
 }
