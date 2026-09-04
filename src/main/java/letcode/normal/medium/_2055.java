@@ -1,8 +1,5 @@
 package letcode.normal.medium;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 2055. Plates Between Candles
  * Difficulty: Medium
@@ -54,53 +51,43 @@ import java.util.List;
 public class _2055 {
 
     public int[] platesBetweenCandles(String s, int[][] queries) {
+        int n = s.length();
+        int[] prefixSum = new int[n + 1];
+        int[] prevCandle = new int[n];
+        int[] nextCandle = new int[n];
 
-        /*
-        用1表示蜡烛 0表示盘子 那么查询子串会落在如下的范围内
-        (0{0,+} 1{0,+}){0,1} queryLeft (1+0{0,}1+){0, +} queryRight (0{0,+} 1{0,+}){0,1}
-        对应的结果是 queryLeft 之间 queryRight 这部分的值
-        也就是第一个大于等于queryLeft到第一个小于等于queryRight区间的盘子数
-        二分检索 + 前缀和即可
-        二分检索可以优化 可以预先计算出每个点左右挨着的盘子是哪个
-         */
+        for (int i = 0; i < n; i++) {
+            prefixSum[i + 1] = prefixSum[i] + (s.charAt(i) == '*' ? 1 : 0);
+        }
 
-        char[] charArray = s.toCharArray();
-        int[][] adjacent = new int[charArray.length][2];
-
-        int lastCandleNo = 0;
-        int lastCandleIndex = -1;
-        List<Integer> candlesPreSum = new ArrayList<>();
-        candlesPreSum.add(0);
-
-        for (int i = 0; i < adjacent.length; i++) {
-            if (charArray[i] == '|') {
-                ++lastCandleNo;
-                candlesPreSum.add(i - lastCandleIndex - 1 + candlesPreSum.get(lastCandleNo - 1));
-                while (lastCandleIndex + 1 < i) {
-                    adjacent[lastCandleIndex + 1][1] = lastCandleNo;
-                    ++lastCandleIndex;
-                }
-                adjacent[i][1] = lastCandleNo;
-                lastCandleIndex = i;
+        int lastCandle = -1;
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == '|') {
+                lastCandle = i;
             }
-            adjacent[i][0] = lastCandleNo;
+            prevCandle[i] = lastCandle;
+        }
+
+        int firstCandle = -1;
+        for (int i = n - 1; i >= 0; i--) {
+            if (s.charAt(i) == '|') {
+                firstCandle = i;
+            }
+            nextCandle[i] = firstCandle;
         }
 
         int[] ans = new int[queries.length];
         for (int i = 0; i < queries.length; i++) {
-            int leftCandleNo = adjacent[queries[i][0]][1];
-            int rightCandleNo = adjacent[queries[i][1]][0];
+            int leftCandle = nextCandle[queries[i][0]];
+            int rightCandle = prevCandle[queries[i][1]];
 
-            // 查询区间内必须存在两根有效蜡烛，且左边界不能位于最后一根蜡烛之后。
-            if (leftCandleNo == 0 || rightCandleNo <= leftCandleNo) {
+            if (leftCandle == -1 || rightCandle == -1 || leftCandle >= rightCandle) {
                 continue;
             }
-            ans[i] = candlesPreSum.get(rightCandleNo) - candlesPreSum.get(leftCandleNo);
+
+            // 统计两根边界蜡烛之间的盘子，不包含蜡烛本身。
+            ans[i] = prefixSum[rightCandle] - prefixSum[leftCandle + 1];
         }
         return ans;
-
-
-
     }
-
 }
