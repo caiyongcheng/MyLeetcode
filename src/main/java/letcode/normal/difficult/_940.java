@@ -38,24 +38,25 @@ package letcode.normal.difficult;
  */
 public class _940 {
 
-    private static final int MODE_NUM = 1_000_000_000 + 7;
+    private static final long MODE_NUM = 1_000_000_000 + 7;
 
     public int distinctSubseqII(String s) {
         // charArr[i] 等于 以 i + 'a' 结尾的子串数量 加上 s[i]本身
-        int[] charArr = new int[26];
+        long[] charArr = new long[26];
+
         int length = s.length();
-        int sum = 0;
+        long sum = 0;
         int chNo;
-        int temp;
+        long temp;
         for (int i = 0; i < length; i++) {
             // 以s[i]结尾的子串可以由上一轮的所有子串加上s[i]得到
             chNo = s.charAt(i) - 'a';
             temp = charArr[chNo];
-            charArr[chNo] = (sum + 1) % MODE_NUM;
+            charArr[chNo] = sum + 1;
             sum = (sum - temp + charArr[chNo] + MODE_NUM) % MODE_NUM;
         }
 
-        return sum;
+        return (int) (sum  % MODE_NUM);
 
     }
 }
