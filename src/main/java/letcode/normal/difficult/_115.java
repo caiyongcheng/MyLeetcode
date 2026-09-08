@@ -41,19 +41,22 @@ public class _115 {
 
     public int numDistinct(String s, String t) {
 
-        int[][] dp = new int[s.length() + 1][t.length() + 1];
+        // dp[j] 表示：
+        // 当前已经遍历过的 s 中，组成 t 前 j 个字符的方案数
+        int[] dp = new int[t.length() + 1];
 
-        for (int row = 0; row < dp.length; row++) {
-            dp[row][0] = 1;
-        }
+        // 组成空字符串永远有 1 种方式：什么都不选
+        dp[0] = 1;
 
-        for (int row = 1; row < dp.length; row++) {
-            for (int col = 1; col < dp[row].length; col++) {
-                dp[row][col] = dp[row - 1][col] + (s.charAt(row - 1) == t.charAt(col - 1) ? dp[row - 1][col - 1] : 0);
+        int sLen = s.length();
+        for (int i = 0; i < sLen; i++) {
+            for (int j = dp.length - 1; j >= 1; j--) {
+                if (s.charAt(i) == t.charAt(j - 1)) {
+                    dp[j] += dp[j - 1];
+                }
             }
         }
 
-        return dp[dp.length - 1][dp[0].length - 1];
-
+        return dp[t.length()];
     }
 }
