@@ -43,7 +43,6 @@ public class _940 {
     public int distinctSubseqII(String s) {
         // charArr[i] 等于 以 i + 'a' 结尾的子串数量 加上 s[i]本身
         int[] charArr = new int[26];
-
         int length = s.length();
         int sum = 0;
         int chNo;
@@ -53,7 +52,7 @@ public class _940 {
             chNo = s.charAt(i) - 'a';
             temp = charArr[chNo];
             charArr[chNo] = (sum + 1) % MODE_NUM;
-            sum = (sum + MODE_NUM - temp + charArr[chNo]) % MODE_NUM;
+            sum = (sum - temp + charArr[chNo] + MODE_NUM) % MODE_NUM;
         }
 
         return sum;
