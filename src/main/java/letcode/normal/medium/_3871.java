@@ -58,7 +58,7 @@ public class _3871 {
 
         // 按每一位的逗号计算贡献
         long ans = 0;
-        for (long base = 1000; n <= base; base *= 1000) {
+        for (long base = 1000; n >= base; base *= 1000) {
             ans += n - base + 1;
         }
         return ans;
