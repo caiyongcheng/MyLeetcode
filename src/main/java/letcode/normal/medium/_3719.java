@@ -74,7 +74,7 @@ public class _3719 {
                     ans = Math.max(ans, j - i + 1);
                 }
             }
-            for (int j = 0; j < nums.length; j++) {
+            for (int j = i; j < nums.length; j++) {
                 --numCountArr[nums[j]];
             }
             count[0] = 0;
