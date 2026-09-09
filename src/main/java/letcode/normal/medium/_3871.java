@@ -43,6 +43,8 @@ package letcode.normal.medium;
 public class _3871 {
 
     public long countCommas(long n) {
+        /*
+        按数字区间计算贡献
         long base = 1000;
         long baseCommasCnt = 1;
         long ans = 0;
@@ -52,6 +54,15 @@ public class _3871 {
             baseCommasCnt++;
         }
         return ans;
+         */
+
+        // 按每一位的逗号计算贡献
+        long ans = 0;
+        for (long base = 1000; n <= base; base *= 1000) {
+            ans += n - base + 1;
+        }
+        return ans;
+
     }
 
 }
