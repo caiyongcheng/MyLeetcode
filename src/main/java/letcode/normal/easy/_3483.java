@@ -57,23 +57,26 @@ import java.util.Set;
 public class _3483 {
 
     public int totalNumbers(int[] digits) {
-        int ans = 0;
-        return dfs(digits, 0, 1000, new HashSet<>(), new boolean[digits.length]);
+        Set<Integer> numbers = new HashSet<>();
+        dfs(digits, 0, 0, new boolean[digits.length], numbers);
+        return numbers.size();
     }
 
-    private int dfs(int[] digits, int curNum, int limit, Set<Integer> set, boolean[] visited) {
-        if (curNum >= limit / 10 && curNum < limit) {
-            return (curNum & 1) == 0 && set.add(curNum) ? 1 : 0;
+    private void dfs(int[] digits, int num, int depth,
+                     boolean[] used, Set<Integer> numbers) {
+        if (depth == 3) {
+            if (num >= 100 && (num & 1) == 0) {
+                numbers.add(num);
+            }
+            return;
         }
 
-        int cnt = 0;
         for (int i = 0; i < digits.length; i++) {
-            if (!visited[i]) {
-                visited[i] = true;
-                cnt += dfs(digits, curNum * 10 + digits[i], limit, set, visited);
-                visited[i] = false;
+            if (!used[i]) {
+                used[i] = true;
+                dfs(digits, num * 10 + digits[i], depth + 1, used, numbers);
+                used[i] = false;
             }
         }
-        return cnt;
     }
 }
