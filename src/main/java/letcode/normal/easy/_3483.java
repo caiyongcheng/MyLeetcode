@@ -1,8 +1,5 @@
 package letcode.normal.easy;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * 3483. Unique 3-Digit Even Numbers
  * Difficulty: Easy
@@ -57,26 +54,39 @@ import java.util.Set;
 public class _3483 {
 
     public int totalNumbers(int[] digits) {
-        Set<Integer> numbers = new HashSet<>();
-        dfs(digits, 0, 0, new boolean[digits.length], numbers);
-        return numbers.size();
-    }
-
-    private void dfs(int[] digits, int num, int depth,
-                     boolean[] used, Set<Integer> numbers) {
-        if (depth == 3) {
-            if (num >= 100 && (num & 1) == 0) {
-                numbers.add(num);
-            }
-            return;
+        int[] count = new int[10];
+        for (int digit : digits) {
+            count[digit]++;
         }
 
-        for (int i = 0; i < digits.length; i++) {
-            if (!used[i]) {
-                used[i] = true;
-                dfs(digits, num * 10 + digits[i], depth + 1, used, numbers);
-                used[i] = false;
+        int answer = 0;
+
+        // 百位不能为 0
+        for (int hundreds = 1; hundreds <= 9; hundreds++) {
+            if (count[hundreds] == 0) {
+                continue;
             }
+            count[hundreds]--;
+
+            for (int tens = 0; tens <= 9; tens++) {
+                if (count[tens] == 0) {
+                    continue;
+                }
+                count[tens]--;
+
+                // 个位必须是偶数
+                for (int ones = 0; ones <= 8; ones += 2) {
+                    if (count[ones] > 0) {
+                        answer++;
+                    }
+                }
+
+                count[tens]++;
+            }
+
+            count[hundreds]++;
         }
+
+        return answer;
     }
 }
