@@ -64,11 +64,27 @@ public class _2472 {
 
         for (int i = 1; i <= length; i++) {
             dp[i] = dp[i - 1];
+
+            /*
             for (int j = i - k; j >= 0; j--) {
                 if (palindrome[j][i - 1]) {
                     dp[i] = Math.max(dp[i], dp[j] + 1);
                     break;
-                }
+            }
+            原逻辑是这样，迭代每个符合条件的j，但是如果找到的回文串长度大于k+1了,
+            那么我们可以缩减成k或者k+1长度，此时使用的区间还更少，明显是更优的做法。
+            所以只需要验证k与k+1做法。
+            假设最优方案是包括了长度大于k+1的回文子串，那我们也可以将其变为长度k或k+1的，证明完毕。
+             */
+
+            // 长度 k
+            if (i >= k && palindrome[i - k][i - 1]) {
+                dp[i] = Math.max(dp[i], dp[i - k] + 1);
+            }
+
+            // 长度 k + 1
+            if (i >= k + 1 && palindrome[i - k - 1][i - 1]) {
+                dp[i] = Math.max(dp[i], dp[i - k - 1] + 1);
             }
         }
 
