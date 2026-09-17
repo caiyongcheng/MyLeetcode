@@ -101,7 +101,7 @@ public class _1477 {
             ++l;
         }
 
-        return ans > size ? -1 : ans;
+        return ans > arr.length ? -1 : ans;
 
     }
 
