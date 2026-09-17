@@ -103,6 +103,8 @@ public class _1477 {
 
         return ans > arr.length ? -1 : ans;
 
+        // 以上可以优化 遍历到某个subArray时，看作右侧的子数组，那么只需要获取左侧子数组的最小长度即可，然后再用这个subArray去更新左侧的最小长度
+
     }
 
 
