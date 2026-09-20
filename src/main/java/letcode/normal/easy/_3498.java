@@ -91,9 +91,9 @@ public class _3498 {
 
     public int reverseDegree(String s) {
         int reverseDegree = 0;
-        int len = s.length();
-        for (int i = 0; i < len; i++) {
-            reverseDegree += (i + 1) * ('z' - s.charAt(i) + 25);
+        char[] charArray = s.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            reverseDegree += (i + 1) * ('z' - s.charAt(i) + 1);
         }
         return reverseDegree;
     }
