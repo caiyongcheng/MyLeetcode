@@ -98,12 +98,10 @@ public class _3524 {
 
         long[] cur = new long[k];
         long[] ans = new long[k];
-        int mod;
         for (int num : nums) {
             long[] next = new long[k];
             for (int i = 0; i < next.length; i++) {
-                mod = (i * (num % k)) % k;
-                next[mod] += cur[i];
+                next[(i * (num % k)) % k] += cur[i];
             }
             next[num % k]++;
 
