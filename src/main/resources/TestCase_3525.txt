@@ -1,0 +1,33 @@
+Example 1:
+Input: nums = [1,2,3,4,5], k = 3, queries = [[2,2,0,2],[3,3,3,0],[0,1,0,1]]
+Output: [2,2,2]
+Explanation: - For query 0, nums becomes [1, 2, 2, 4, 5] , and the empty prefix must be removed. The possible operations are:
+
+- Remove the suffix [2, 4, 5] . nums becomes [1, 2] .
+
+- Remove the empty suffix. nums becomes [1, 2, 2, 4, 5] with a product 80, which gives remainder 2 when divided by 3.
+
+- For query 1, nums becomes [1, 2, 2, 3, 5] , and the prefix [1, 2, 2] must be removed. The possible operations are:
+
+- Remove the empty suffix. nums becomes [3, 5] .
+
+- Remove the suffix [5] . nums becomes [3] .
+
+- For query 2, nums becomes [1, 2, 2, 3, 5] , and the empty prefix must be removed. The possible operations are:
+
+- Remove the suffix [2, 2, 3, 5] . nums becomes [1] .
+
+- Remove the suffix [3, 5] . nums becomes [1, 2, 2] .
+
+Example 2:
+Input: nums = [1,2,4,8,16,32], k = 4, queries = [[0,2,0,2],[0,2,0,1]]
+Output: [1,0]
+Explanation: - For query 0, nums becomes [2, 2, 4, 8, 16, 32] . The only possible operation is:
+
+- Remove the suffix [2, 4, 8, 16, 32] .
+
+- For query 1, nums becomes [2, 2, 4, 8, 16, 32] . There is no possible way to perform the operation.
+
+Example 3:
+Input: nums = [1,1,2,1,1], k = 2, queries = [[2,1,0,1]]
+Output: [5]
