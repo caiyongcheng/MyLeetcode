@@ -62,10 +62,11 @@ public class _2333 {
         那么每次优先调整最大的diff[i]。
         同时注意，对于调整diff[i]，可用通过调整nums1[i]或nums2[i]，所以k1、k2的总计才有意义。
          */
-
+        long ans = 0;
         long[] diff = new long[nums1.length + 1];
         for (int i = 0; i < nums1.length; i++) {
             diff[i + 1] = Math.abs(nums1[i] - nums2[i]);
+            ans += diff[i + 1] * diff[i + 1];
         }
 
         Arrays.sort(diff);
@@ -85,12 +86,13 @@ public class _2333 {
                 // 可用调整次数足够
                 if (exceptOptCnt <= optCnt) {
                     optCnt -= exceptOptCnt;
-                    for (int i = diff.length - 1; i > rightIdx; i--) {
-                        diff[i] -= changeByItem;
-                    }
+                    ans -= sameLen * changeByItem * (2 * diff[diff.length - 1] - changeByItem);
+                    diff[diff.length - 1] = diff[rightIdx];
                 } else {
                     long batchCnt = optCnt / sameLen;
                     long remain = optCnt % sameLen;
+                    ans -= (sameLen - remain) * batchCnt * (2 * diff[diff.length - 1] - batchCnt);
+                    ans -= remain * (batchCnt + 1) * (2 * diff[diff.length - 1] - batchCnt - 1);
                     for (int i = diff.length - 1; i > rightIdx; i--) {
                         diff[i] -= batchCnt;
                     }
@@ -104,10 +106,6 @@ public class _2333 {
             }
         }
 
-        long ans = 0;
-        for (long l : diff) {
-            ans += l * l;
-        }
         return ans;
 
     }
