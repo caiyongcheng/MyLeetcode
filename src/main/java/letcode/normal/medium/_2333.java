@@ -100,7 +100,12 @@ public class _2333 {
 
         return ans;*/
 
-        long[] count = new long[1000001];
+        int maxDiff = 0;
+        for (int i = nums1.length - 1; i >= 0; i--) {
+            maxDiff = Math.max(maxDiff, Math.abs(nums1[i] - nums2[i]));
+        }
+
+        long[] count = new long[maxDiff + 1];
         for (int i = 0; i < nums1.length; i++) {
             count[Math.abs(nums1[i] - nums2[i])]++;
         }
