@@ -1,7 +1,5 @@
 package letcode.normal.medium;
 
-import letcode.utils.TestUtil;
-
 import java.util.Arrays;
 
 /**
@@ -112,19 +110,5 @@ public class _2333 {
         }
         return ans;
 
-    }
-
-    public static void main(String[] args) {
-        /*
-        Status: Time Limit Exceeded
-        Submission ID: 753840278
-        Last testcase: [1,4,10,12]
-        [5,8,6,9]
-        10
-        5
-        Expected output: 0
-        Memory: 42640000
-         */
-        TestUtil.test("=[1,4,10,12],=[5,8,6,9],=10,=5");
     }
 }
