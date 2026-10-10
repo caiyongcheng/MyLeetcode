@@ -93,12 +93,6 @@ public class _2333 {
                     long remain = optCnt % sameLen;
                     ans -= (sameLen - remain) * batchCnt * (2 * diff[diff.length - 1] - batchCnt);
                     ans -= remain * (batchCnt + 1) * (2 * diff[diff.length - 1] - batchCnt - 1);
-                    for (int i = diff.length - 1; i > rightIdx; i--) {
-                        diff[i] -= batchCnt;
-                    }
-                    for (int i = 0; i < remain; i++) {
-                        diff[diff.length - 1 - i]--;
-                    }
                     break;
                 }
             } else {
