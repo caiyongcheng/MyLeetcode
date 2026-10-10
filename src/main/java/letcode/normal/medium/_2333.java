@@ -1,7 +1,5 @@
 package letcode.normal.medium;
 
-import java.util.Arrays;
-
 /**
  * 2333. Minimum Sum of Squared Difference
  * Difficulty: Medium
@@ -62,7 +60,7 @@ public class _2333 {
         那么每次优先调整最大的diff[i]。
         同时注意，对于调整diff[i]，可用通过调整nums1[i]或nums2[i]，所以k1、k2的总计才有意义。
          */
-        long ans = 0;
+/*        long ans = 0;
         long[] diff = new long[nums1.length + 1];
         for (int i = 0; i < nums1.length; i++) {
             diff[i + 1] = Math.abs(nums1[i] - nums2[i]);
@@ -100,7 +98,41 @@ public class _2333 {
             }
         }
 
-        return ans;
+        return ans;*/
 
+        long[] count = new long[1000001];
+        for (int i = 0; i < nums1.length; i++) {
+            count[Math.abs(nums1[i] - nums2[i])]++;
+        }
+
+        long optCount = k1 + k2;
+        int pre = -1;
+        for (int i = count.length - 1; i >= 0; i--) {
+            if (count[i] != 0 || i == 0) {
+                if (pre == -1) {
+                    pre = i;
+                    continue;
+                }
+                long changeCnt = (pre - i) * count[pre];
+                if (changeCnt <= optCount) {
+                    optCount -= changeCnt;
+                    count[i] += count[pre];
+                    count[pre] = 0;
+                    pre = i;
+                } else {
+                    long preCnt = count[pre];
+                    count[pre] = 0;
+                    count[(int) (pre - optCount / preCnt)] += preCnt - optCount % preCnt;
+                    count[(int) (pre - optCount / preCnt - 1)] += optCount % preCnt;
+                    break;
+                }
+            }
+        }
+
+        long ans = 0;
+        for (int i = count.length - 1; i > 0; i--) {
+            ans += count[i] * i * i;
+        }
+        return ans;
     }
 }
