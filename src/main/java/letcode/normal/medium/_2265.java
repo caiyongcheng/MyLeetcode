@@ -74,13 +74,6 @@ public class _2265 {
 
     public void dfs(TreeNode root, int[] result) {
 
-        if (root.left == null && root.right == null) {
-            result[0] = root.val;
-            result[1] = 1;
-            result[2] = 1;
-            return;
-        }
-
         int[] leftResult = new int[] {0, 0, 0};
         if (root.left != null) {
             dfs(root.left, leftResult);

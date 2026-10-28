@@ -110,5 +110,48 @@ public class _3942 {
 
     }*/
 
-    
+    public int minOperations(int[] nums) {
+        int n = nums.length;
+        if (n == 1) {
+            return 0;
+        }
+
+        int zeroIdx = 0;
+        while (nums[zeroIdx] != 0) {
+            zeroIdx++;
+        }
+
+        /*
+         * 左移只改变起点，反转只改变方向，因此元素的环形相邻关系不会改变。
+         * 能够排序的排列，必须从 0 出发沿某个方向依次得到 1、2、...、n-1。
+         */
+        boolean increasing = nums[(zeroIdx + 1) % n] == 1;
+        int step = increasing ? 1 : -1;
+        int idx = zeroIdx;
+
+        for (int value = 1; value < n; value++) {
+            idx = (idx + step + n) % n;
+            if (nums[idx] != value) {
+                return -1;
+            }
+        }
+
+        if (increasing) {
+            /*
+             * 环形正序：
+             * 1. 直接左移 zeroIdx 次。
+             * 2. 反转、左移 n-zeroIdx 次、再反转，相当于整体右移，
+             *    两次反转由全部移动共享，总共 n-zeroIdx+2 次。
+             */
+            return Math.min(zeroIdx, n - zeroIdx + 2);
+        }
+
+        /*
+         * 环形倒序，需要奇数次反转；一次反转即可完成方向调整：
+         * 1. 先反转，0 位于 n-1-zeroIdx，再左移到首位，共 n-zeroIdx 次。
+         * 2. 先左移 zeroIdx+1 次，将 0 移到末尾，再反转，共 zeroIdx+2 次。
+         * 更多反转可以两两合并为移动方向的切换，不会得到更短的方案。
+         */
+        return Math.min(n - zeroIdx, zeroIdx + 2);
+    }
 }

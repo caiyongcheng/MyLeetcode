@@ -66,16 +66,13 @@ public class _3719 {
         for (int i = 0; i < nums.length; i++) {
             for (int j = i; j < nums.length; j++) {
                 idx = nums[j] & 1;
-                ++numCountArr[nums[j]];
-                if (numCountArr[nums[j]] == 1) {
+                if (numCountArr[nums[j]] != i + 1) {
                     count[idx]++;
                 }
+                numCountArr[nums[j]] = i + 1;
                 if (count[0] == count[1]) {
                     ans = Math.max(ans, j - i + 1);
                 }
-            }
-            for (int j = i; j < nums.length; j++) {
-                --numCountArr[nums[j]];
             }
             count[0] = 0;
             count[1] = 0;

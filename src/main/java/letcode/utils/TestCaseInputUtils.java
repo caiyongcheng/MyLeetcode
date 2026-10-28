@@ -380,17 +380,14 @@ public class TestCaseInputUtils {
             return getIntArr(paramsStr);
         } else if (paramType.contains("Integer[]")) {
             return getIntegerArr(paramsStr);
+        } else if (paramType.contains("char[][]")) {
+            return getArr(paramsStr, char.class);
         } else if (paramType.contains("char[]")) {
             return getCharArr(paramsStr);
         } else if (paramType.contains("Integer") || paramType.contains("int")) {
             return Integer.parseInt(paramsStr);
         } else if (paramType.contains("long[][]")) {
-            return get2DimensionArr(
-                    paramsStr,
-                    ",",
-                    TestCaseInputUtils::getLongArr,
-                    new long[0][0]
-            );
+            return getArr(paramsStr, long.class);
         } else if (paramType.contains("long[]")) {
             return getLongArr(paramsStr);
         } else if (paramType.contains("Long[]")) {

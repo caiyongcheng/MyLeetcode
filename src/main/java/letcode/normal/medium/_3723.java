@@ -84,15 +84,15 @@ public class _3723 {
         if (num * 9 < sum) {
             return "";
         }
-        char[] ans = new char[num];
-        Arrays.fill(ans, '0');
+        byte[] ans = new byte[num];
+        Arrays.fill(ans, (byte) '0');
         if (sum > 9) {
-            Arrays.fill(ans, 0, sum / 9, '9');
+            Arrays.fill(ans, 0, sum / 9, (byte) '9');
             if (sum % 9 != 0) {
-                ans[sum / 9] = (char) (sum % 9 + '0');
+                ans[sum / 9] = (byte) (sum % 9 + '0');
             }
         } else {
-            ans[0] = (char) (sum + '0');
+            ans[0] = (byte) (sum + '0');
         }
         return new String(ans);
 

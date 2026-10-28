@@ -93,7 +93,7 @@ public class _3498 {
         int reverseDegree = 0;
         char[] charArray = s.toCharArray();
         for (int i = 0; i < charArray.length; i++) {
-            reverseDegree += (i + 1) * ('z' - s.charAt(i) + 1);
+            reverseDegree += (i + 1) * ('z' - charArray[i] + 1);
         }
         return reverseDegree;
     }

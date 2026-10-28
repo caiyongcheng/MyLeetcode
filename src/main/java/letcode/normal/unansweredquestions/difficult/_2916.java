@@ -1,4 +1,4 @@
-package letcode.normal.difficult;
+package letcode.normal.unansweredquestions.difficult;
 
 /**
  * 2916. Subarrays Distinct Element Sum of Squares II
@@ -52,5 +52,6 @@ package letcode.normal.difficult;
 public class _2916 {
 
     public int sumCounts(int[] nums) {
+        return 0;
     }
 }

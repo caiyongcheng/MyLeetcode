@@ -178,6 +178,27 @@ public class TestCaseOutputUtils {
         return formatStr.append(suffix).toString();
     }
 
+
+    /**
+     * array
+     *
+     * @param array     需要获取的array对象
+     * @param prefix    格式化字符串前缀
+     * @param suffix    格式化字符串后缀
+     * @param separator 格式化字符串分隔符
+     * @return prefix array[0].toString() separator array[1].toString() suffix
+     */
+    public static String formatArray(char[] array, String prefix, String suffix, String separator) {
+        final StringBuilder formatStr = new StringBuilder(prefix);
+        for (int i = 0; i < array.length - 1; i++) {
+            formatStr.append(array[i]).append(separator);
+        }
+        if (array.length > 0) {
+            formatStr.append(array[array.length - 1]);
+        }
+        return formatStr.append(suffix).toString();
+    }
+
     /**
      * array 使用[与]作为前后缀，,作为分隔符
      *
@@ -205,6 +226,16 @@ public class TestCaseOutputUtils {
      * @return [array[0].toString(), array[1].toString()...]
      */
     public static String formatArray(boolean[] array) {
+        return formatArray(array, "[", "]", ",");
+    }
+
+    /**
+     * array 使用[与]作为前后缀，,作为分隔符
+     *
+     * @param array 需要获取的array对象
+     * @return [array[0].toString(), array[1].toString()...]
+     */
+    public static String formatArray(char[] array) {
         return formatArray(array, "[", "]", ",");
     }
 
@@ -287,6 +318,9 @@ public class TestCaseOutputUtils {
         }
         if (execRst instanceof boolean[]) {
             return formatArray((boolean[]) execRst);
+        }
+        if (execRst instanceof char[]) {
+            return formatArray((char[]) execRst);
         }
         if (execRst.getClass().isArray()) {
             return "[" + Arrays.stream((T[]) execRst).map(TestCaseOutputUtils::formatObj).collect(Collectors.joining(",")) + "]";
