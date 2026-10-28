@@ -86,14 +86,14 @@ public class _3882 {
     public int minCost(int[][] grid) {
         rowLen = grid.length;
         colLen = grid[0].length;
-        HashMap<Integer, int[]> cache = new HashMap<>();
-        int[] endXorValues = new int[xorValueLimit];
-        endXorValues[grid[rowLen - 1][colLen - 1]] = 1;
+        HashMap<Integer, boolean[]> cache = new HashMap<>();
+        boolean[] endXorValues = new boolean[xorValueLimit];
+        endXorValues[grid[rowLen - 1][colLen - 1]] = true;
         cache.put(rowLen * colLen - 1, endXorValues);
 
-        int[] startXorValues = dfs(grid, 0, 0, cache);
+        boolean[] startXorValues = dfs(grid, 0, 0, cache);
         for (int xorValue = 0; xorValue < startXorValues.length; xorValue++) {
-            if (startXorValues[xorValue] == 1) {
+            if (startXorValues[xorValue]) {
                 return xorValue;
             }
         }
@@ -101,28 +101,28 @@ public class _3882 {
     }
 
 
-    public int[] dfs(int[][] grid, int row, int col, Map<Integer, int[]> cache) {
-        int[] curXorValues = cache.get(row * colLen + col);
+    public boolean[] dfs(int[][] grid, int row, int col, Map<Integer, boolean[]> cache) {
+        boolean[] curXorValues = cache.get(row * colLen + col);
         if (curXorValues == null) {
-            curXorValues = new int[xorValueLimit];
+            curXorValues = new boolean[xorValueLimit];
         } else {
             return curXorValues;
         }
 
         if (row + 1 < rowLen) {
-            int[] downMoveXorValues = dfs(grid, row + 1, col, cache);
+            boolean[] downMoveXorValues = dfs(grid, row + 1, col, cache);
             for (int xorValue = 0; xorValue < downMoveXorValues.length; xorValue++) {
-                if (downMoveXorValues[xorValue] == 1) {
-                    curXorValues[grid[row][col] ^ xorValue] = 1;
+                if (downMoveXorValues[xorValue]) {
+                    curXorValues[grid[row][col] ^ xorValue] = true;
                 }
             }
         }
 
         if (col + 1 < colLen) {
-            int[] rightMoveXorValues = dfs(grid, row, col + 1, cache);
+            boolean[] rightMoveXorValues = dfs(grid, row, col + 1, cache);
             for (int xorValue = 0; xorValue < rightMoveXorValues.length; xorValue++) {
-                if (rightMoveXorValues[xorValue] == 1) {
-                    curXorValues[grid[row][col] ^ xorValue] = 1;
+                if (rightMoveXorValues[xorValue]) {
+                    curXorValues[grid[row][col] ^ xorValue] = true;
                 }
             }
         }
